@@ -17,6 +17,22 @@
 		EA40E3E71C3138A800072EC8 /* Http.swift in Sources */ = {isa = PBXBuildFile; fileRef = EA40E3E41C3138A800072EC8 /* Http.swift */; };
 		EA40E3E81C3138A800072EC8 /* Httpresult.swift in Sources */ = {isa = PBXBuildFile; fileRef = EA40E3E51C3138A800072EC8 /* Httpresult.swift */; };
 		EA40E3E91C3138A800072EC8 /* JSONJoy.swift in Sources */ = {isa = PBXBuildFile; fileRef = EA40E3E61C3138A800072EC8 /* JSONJoy.swift */; };
+		EA59A3C51C313C08003FBE82 /* Readme in Resources */ = {isa = PBXBuildFile; fileRef = EA59A3C41C313C08003FBE82 /* Readme */; };
+		EA59A3C71C313C2B003FBE82 /* Readme in Resources */ = {isa = PBXBuildFile; fileRef = EA59A3C61C313C2B003FBE82 /* Readme */; };
+		EA59A3C91C313C32003FBE82 /* Readme in Resources */ = {isa = PBXBuildFile; fileRef = EA59A3C81C313C32003FBE82 /* Readme */; };
+		EA59A3CD1C313C43003FBE82 /* Readme in Resources */ = {isa = PBXBuildFile; fileRef = EA59A3CC1C313C43003FBE82 /* Readme */; };
+		EA59A3CF1C313C48003FBE82 /* Readme in Resources */ = {isa = PBXBuildFile; fileRef = EA59A3CE1C313C48003FBE82 /* Readme */; };
+		EA59A3D11C313C4D003FBE82 /* Readme in Resources */ = {isa = PBXBuildFile; fileRef = EA59A3D01C313C4D003FBE82 /* Readme */; };
+		EA59A3D31C313C5F003FBE82 /* Readme in Resources */ = {isa = PBXBuildFile; fileRef = EA59A3D21C313C5F003FBE82 /* Readme */; };
+		EA59A3D51C313C64003FBE82 /* Readme in Resources */ = {isa = PBXBuildFile; fileRef = EA59A3D41C313C64003FBE82 /* Readme */; };
+		EA59A3D71C313C69003FBE82 /* Readme in Resources */ = {isa = PBXBuildFile; fileRef = EA59A3D61C313C69003FBE82 /* Readme */; };
+		EA59A3D91C313C70003FBE82 /* Readme in Resources */ = {isa = PBXBuildFile; fileRef = EA59A3D81C313C70003FBE82 /* Readme */; };
+		EA59A3DB1C313C76003FBE82 /* Readme in Resources */ = {isa = PBXBuildFile; fileRef = EA59A3DA1C313C76003FBE82 /* Readme */; };
+		EA59A3DD1C313C7B003FBE82 /* Readme in Resources */ = {isa = PBXBuildFile; fileRef = EA59A3DC1C313C7B003FBE82 /* Readme */; };
+		EA59A3DF1C313C81003FBE82 /* Readme in Resources */ = {isa = PBXBuildFile; fileRef = EA59A3DE1C313C81003FBE82 /* Readme */; };
+		EA59A3E11C313C85003FBE82 /* Readme in Resources */ = {isa = PBXBuildFile; fileRef = EA59A3E01C313C85003FBE82 /* Readme */; };
+		EA59A3E31C313C89003FBE82 /* Readme in Resources */ = {isa = PBXBuildFile; fileRef = EA59A3E21C313C89003FBE82 /* Readme */; };
+		EA59A3E51C313C90003FBE82 /* Readme in Resources */ = {isa = PBXBuildFile; fileRef = EA59A3E41C313C90003FBE82 /* Readme */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -34,6 +50,22 @@
 		EA40E3E41C3138A800072EC8 /* Http.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Http.swift; sourceTree = "<group>"; };
 		EA40E3E51C3138A800072EC8 /* Httpresult.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Httpresult.swift; sourceTree = "<group>"; };
 		EA40E3E61C3138A800072EC8 /* JSONJoy.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = JSONJoy.swift; sourceTree = "<group>"; };
+		EA59A3C41C313C08003FBE82 /* Readme */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; name = Readme; path = ../Readme; sourceTree = "<group>"; };
+		EA59A3C61C313C2B003FBE82 /* Readme */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = Readme; sourceTree = "<group>"; };
+		EA59A3C81C313C32003FBE82 /* Readme */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = Readme; sourceTree = "<group>"; };
+		EA59A3CC1C313C43003FBE82 /* Readme */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = Readme; sourceTree = "<group>"; };
+		EA59A3CE1C313C48003FBE82 /* Readme */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = Readme; sourceTree = "<group>"; };
+		EA59A3D01C313C4D003FBE82 /* Readme */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = Readme; sourceTree = "<group>"; };
+		EA59A3D21C313C5F003FBE82 /* Readme */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = Readme; sourceTree = "<group>"; };
+		EA59A3D41C313C64003FBE82 /* Readme */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = Readme; sourceTree = "<group>"; };
+		EA59A3D61C313C69003FBE82 /* Readme */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = Readme; sourceTree = "<group>"; };
+		EA59A3D81C313C70003FBE82 /* Readme */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = Readme; sourceTree = "<group>"; };
+		EA59A3DA1C313C76003FBE82 /* Readme */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = Readme; sourceTree = "<group>"; };
+		EA59A3DC1C313C7B003FBE82 /* Readme */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = Readme; sourceTree = "<group>"; };
+		EA59A3DE1C313C81003FBE82 /* Readme */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = Readme; sourceTree = "<group>"; };
+		EA59A3E01C313C85003FBE82 /* Readme */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = Readme; sourceTree = "<group>"; };
+		EA59A3E21C313C89003FBE82 /* Readme */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = Readme; sourceTree = "<group>"; };
+		EA59A3E41C313C90003FBE82 /* Readme */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = Readme; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -135,6 +167,7 @@
 		EA40E3EB1C3139E800072EC8 /* Controller */ = {
 			isa = PBXGroup;
 			children = (
+				EA59A3DE1C313C81003FBE82 /* Readme */,
 			);
 			path = Controller;
 			sourceTree = "<group>";
@@ -142,6 +175,7 @@
 		EA40E3EC1C3139E800072EC8 /* Model */ = {
 			isa = PBXGroup;
 			children = (
+				EA59A3E01C313C85003FBE82 /* Readme */,
 			);
 			path = Model;
 			sourceTree = "<group>";
@@ -149,6 +183,7 @@
 		EA40E3ED1C3139E800072EC8 /* View */ = {
 			isa = PBXGroup;
 			children = (
+				EA59A3E21C313C89003FBE82 /* Readme */,
 			);
 			path = View;
 			sourceTree = "<group>";
@@ -166,6 +201,7 @@
 		EA40E3EF1C3139FE00072EC8 /* Controller */ = {
 			isa = PBXGroup;
 			children = (
+				EA59A3D81C313C70003FBE82 /* Readme */,
 			);
 			path = Controller;
 			sourceTree = "<group>";
@@ -173,6 +209,7 @@
 		EA40E3F01C3139FE00072EC8 /* Model */ = {
 			isa = PBXGroup;
 			children = (
+				EA59A3DA1C313C76003FBE82 /* Readme */,
 			);
 			path = Model;
 			sourceTree = "<group>";
@@ -180,6 +217,7 @@
 		EA40E3F11C3139FE00072EC8 /* View */ = {
 			isa = PBXGroup;
 			children = (
+				EA59A3DC1C313C7B003FBE82 /* Readme */,
 			);
 			path = View;
 			sourceTree = "<group>";
@@ -197,6 +235,7 @@
 		EA40E3F31C313A0700072EC8 /* Controller */ = {
 			isa = PBXGroup;
 			children = (
+				EA59A3D21C313C5F003FBE82 /* Readme */,
 			);
 			path = Controller;
 			sourceTree = "<group>";
@@ -204,6 +243,7 @@
 		EA40E3F41C313A0700072EC8 /* Model */ = {
 			isa = PBXGroup;
 			children = (
+				EA59A3D41C313C64003FBE82 /* Readme */,
 			);
 			path = Model;
 			sourceTree = "<group>";
@@ -211,6 +251,7 @@
 		EA40E3F51C313A0700072EC8 /* View */ = {
 			isa = PBXGroup;
 			children = (
+				EA59A3D61C313C69003FBE82 /* Readme */,
 			);
 			path = View;
 			sourceTree = "<group>";
@@ -228,6 +269,7 @@
 		EA40E3F71C313A1700072EC8 /* Controller */ = {
 			isa = PBXGroup;
 			children = (
+				EA59A3CC1C313C43003FBE82 /* Readme */,
 			);
 			path = Controller;
 			sourceTree = "<group>";
@@ -235,6 +277,7 @@
 		EA40E3F81C313A1700072EC8 /* Model */ = {
 			isa = PBXGroup;
 			children = (
+				EA59A3CE1C313C48003FBE82 /* Readme */,
 			);
 			path = Model;
 			sourceTree = "<group>";
@@ -242,6 +285,7 @@
 		EA40E3F91C313A1700072EC8 /* View */ = {
 			isa = PBXGroup;
 			children = (
+				EA59A3D01C313C4D003FBE82 /* Readme */,
 			);
 			path = View;
 			sourceTree = "<group>";
@@ -259,6 +303,7 @@
 		EA40E3FB1C313A1F00072EC8 /* Controller */ = {
 			isa = PBXGroup;
 			children = (
+				EA59A3C41C313C08003FBE82 /* Readme */,
 			);
 			path = Controller;
 			sourceTree = "<group>";
@@ -266,6 +311,7 @@
 		EA40E3FC1C313A1F00072EC8 /* Model */ = {
 			isa = PBXGroup;
 			children = (
+				EA59A3C61C313C2B003FBE82 /* Readme */,
 			);
 			path = Model;
 			sourceTree = "<group>";
@@ -273,6 +319,7 @@
 		EA40E3FD1C313A1F00072EC8 /* View */ = {
 			isa = PBXGroup;
 			children = (
+				EA59A3C81C313C32003FBE82 /* Readme */,
 			);
 			path = View;
 			sourceTree = "<group>";
@@ -280,6 +327,7 @@
 		EA40E3FE1C313A2800072EC8 /* Third Package */ = {
 			isa = PBXGroup;
 			children = (
+				EA59A3E41C313C90003FBE82 /* Readme */,
 			);
 			path = "Third Package";
 			sourceTree = "<group>";
@@ -345,9 +393,25 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				EA59A3E31C313C89003FBE82 /* Readme in Resources */,
+				EA59A3D51C313C64003FBE82 /* Readme in Resources */,
+				EA59A3CF1C313C48003FBE82 /* Readme in Resources */,
+				EA59A3D11C313C4D003FBE82 /* Readme in Resources */,
+				EA59A3C51C313C08003FBE82 /* Readme in Resources */,
+				EA59A3DB1C313C76003FBE82 /* Readme in Resources */,
 				EA40E39F1C30D33200072EC8 /* LaunchScreen.storyboard in Resources */,
+				EA59A3D31C313C5F003FBE82 /* Readme in Resources */,
+				EA59A3DD1C313C7B003FBE82 /* Readme in Resources */,
 				EA40E39C1C30D33200072EC8 /* Assets.xcassets in Resources */,
+				EA59A3E51C313C90003FBE82 /* Readme in Resources */,
+				EA59A3C91C313C32003FBE82 /* Readme in Resources */,
 				EA40E3BE1C31197400072EC8 /* Podfile in Resources */,
+				EA59A3D91C313C70003FBE82 /* Readme in Resources */,
+				EA59A3D71C313C69003FBE82 /* Readme in Resources */,
+				EA59A3C71C313C2B003FBE82 /* Readme in Resources */,
+				EA59A3CD1C313C43003FBE82 /* Readme in Resources */,
+				EA59A3E11C313C85003FBE82 /* Readme in Resources */,
+				EA59A3DF1C313C81003FBE82 /* Readme in Resources */,
 				EA40E39A1C30D33200072EC8 /* Main.storyboard in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
