@@ -14,6 +14,9 @@
 		EA40E39C1C30D33200072EC8 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = EA40E39B1C30D33200072EC8 /* Assets.xcassets */; };
 		EA40E39F1C30D33200072EC8 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = EA40E39D1C30D33200072EC8 /* LaunchScreen.storyboard */; };
 		EA40E3BE1C31197400072EC8 /* Podfile in Resources */ = {isa = PBXBuildFile; fileRef = EA40E3BD1C31197400072EC8 /* Podfile */; };
+		EA40E3C01C31201B00072EC8 /* Http.swift in Sources */ = {isa = PBXBuildFile; fileRef = EA40E3BF1C31201B00072EC8 /* Http.swift */; };
+		EA40E3C21C31209400072EC8 /* Httpresult.swift in Sources */ = {isa = PBXBuildFile; fileRef = EA40E3C11C31209400072EC8 /* Httpresult.swift */; };
+		EA40E3C41C31216800072EC8 /* JSONJoy.swift in Sources */ = {isa = PBXBuildFile; fileRef = EA40E3C31C31216800072EC8 /* JSONJoy.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -28,6 +31,9 @@
 		EA40E39E1C30D33200072EC8 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
 		EA40E3A01C30D33200072EC8 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		EA40E3BD1C31197400072EC8 /* Podfile */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = Podfile; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.ruby; };
+		EA40E3BF1C31201B00072EC8 /* Http.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Http.swift; sourceTree = "<group>"; };
+		EA40E3C11C31209400072EC8 /* Httpresult.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Httpresult.swift; sourceTree = "<group>"; };
+		EA40E3C31C31216800072EC8 /* JSONJoy.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = JSONJoy.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -158,6 +164,7 @@
 		EA40E3AD1C30D3C700072EC8 /* Tool */ = {
 			isa = PBXGroup;
 			children = (
+				EA40E3C51C31221F00072EC8 /* Jsonjoy */,
 			);
 			name = Tool;
 			sourceTree = "<group>";
@@ -265,6 +272,16 @@
 			children = (
 			);
 			name = View;
+			sourceTree = "<group>";
+		};
+		EA40E3C51C31221F00072EC8 /* Jsonjoy */ = {
+			isa = PBXGroup;
+			children = (
+				EA40E3C31C31216800072EC8 /* JSONJoy.swift */,
+				EA40E3BF1C31201B00072EC8 /* Http.swift */,
+				EA40E3C11C31209400072EC8 /* Httpresult.swift */,
+			);
+			name = Jsonjoy;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -390,8 +407,11 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				EA40E3C41C31216800072EC8 /* JSONJoy.swift in Sources */,
 				EA40E3971C30D33200072EC8 /* ViewController.swift in Sources */,
 				EA40E3951C30D33200072EC8 /* AppDelegate.swift in Sources */,
+				EA40E3C21C31209400072EC8 /* Httpresult.swift in Sources */,
+				EA40E3C01C31201B00072EC8 /* Http.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
