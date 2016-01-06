@@ -8,6 +8,7 @@
 
 /* Begin PBXBuildFile section */
 		2FE62032EFC47F4FAA20D439 /* Pods.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = E7AFF348788309629B3DA583 /* Pods.framework */; };
+		EA210EED1C3CA28F00BA9971 /* LoginViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = EA210EEC1C3CA28F00BA9971 /* LoginViewController.swift */; };
 		EA40E3951C30D33200072EC8 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = EA40E3941C30D33200072EC8 /* AppDelegate.swift */; };
 		EA40E3971C30D33200072EC8 /* ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = EA40E3961C30D33200072EC8 /* ViewController.swift */; };
 		EA40E39A1C30D33200072EC8 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = EA40E3981C30D33200072EC8 /* Main.storyboard */; };
@@ -39,6 +40,7 @@
 		7FAF58DF0009EB15F3995775 /* Pods.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = Pods.release.xcconfig; path = "Pods/Target Support Files/Pods/Pods.release.xcconfig"; sourceTree = "<group>"; };
 		DD0CEFBF6B55340AB8318E55 /* Pods.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = Pods.debug.xcconfig; path = "Pods/Target Support Files/Pods/Pods.debug.xcconfig"; sourceTree = "<group>"; };
 		E7AFF348788309629B3DA583 /* Pods.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods.framework; sourceTree = BUILT_PRODUCTS_DIR; };
+		EA210EEC1C3CA28F00BA9971 /* LoginViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = LoginViewController.swift; sourceTree = "<group>"; };
 		EA40E3911C30D33200072EC8 /* WXT_Parents.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = WXT_Parents.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		EA40E3941C30D33200072EC8 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		EA40E3961C30D33200072EC8 /* ViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ViewController.swift; sourceTree = "<group>"; };
@@ -97,6 +99,14 @@
 			name = Pods;
 			sourceTree = "<group>";
 		};
+		EA210EEB1C3CA25500BA9971 /* Login */ = {
+			isa = PBXGroup;
+			children = (
+				EA210EEC1C3CA28F00BA9971 /* LoginViewController.swift */,
+			);
+			path = Login;
+			sourceTree = "<group>";
+		};
 		EA40E3881C30D33200072EC8 = {
 			isa = PBXGroup;
 			children = (
@@ -126,6 +136,7 @@
 		EA40E3931C30D33200072EC8 /* WXT_Parents */ = {
 			isa = PBXGroup;
 			children = (
+				EA210EEB1C3CA25500BA9971 /* Login */,
 				EA40E3941C30D33200072EC8 /* AppDelegate.swift */,
 				EA40E3961C30D33200072EC8 /* ViewController.swift */,
 				EA40E3981C30D33200072EC8 /* Main.storyboard */,
@@ -471,6 +482,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				EA210EED1C3CA28F00BA9971 /* LoginViewController.swift in Sources */,
 				EA40E3971C30D33200072EC8 /* ViewController.swift in Sources */,
 				EA40E3951C30D33200072EC8 /* AppDelegate.swift in Sources */,
 				EA40E3E91C3138A800072EC8 /* JSONJoy.swift in Sources */,
