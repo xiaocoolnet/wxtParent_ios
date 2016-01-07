@@ -8,10 +8,14 @@
 
 import UIKit
 
-class LoginViewController: UIViewController {
+class LoginViewController: UIViewController ,UITextFieldDelegate{
 
+    @IBOutlet weak var AccountText: UITextField!
+    @IBOutlet weak var PasswordText: UITextField!
     override func viewDidLoad() {
         super.viewDidLoad()
+        AccountText.delegate = self
+        PasswordText.delegate = self
 
         // Do any additional setup after loading the view.
     }
@@ -20,6 +24,23 @@ class LoginViewController: UIViewController {
         super.didReceiveMemoryWarning()
         // Dispose of any resources that can be recreated.
     }
+
+    //点击return收回键盘
+    func textFieldShouldReturn(textField: UITextField) -> Bool
+    {
+        //phoneNumberTextField.resignFirstResponder()
+        //yanzhangma.resignFirstResponder()
+        AccountText.resignFirstResponder()
+        PasswordText.resignFirstResponder()
+        return true
+    }
+    //点击空白处回收键盘
+    override func touchesBegan(touches: Set<UITouch>, withEvent event: UIEvent?) {
+        self.view.endEditing(true)
+    }
+    
+    
+
     
 
     /*
