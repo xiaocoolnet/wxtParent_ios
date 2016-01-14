@@ -7,17 +7,100 @@
 //
 
 import UIKit
+import Alamofire
 
 class LoginViewController: UIViewController ,UITextFieldDelegate{
 
     @IBOutlet weak var AccountText: UITextField!
     @IBOutlet weak var PasswordText: UITextField!
+    
+    @IBOutlet weak var LoginButton: UIButton!
     override func viewDidLoad() {
         super.viewDidLoad()
+        self.navigationController?.navigationBar.hidden = true
         AccountText.delegate = self
         PasswordText.delegate = self
+        LoginButton.addTarget(self, action: "Login", forControlEvents: UIControlEvents.TouchUpInside)
 
         // Do any additional setup after loading the view.
+    }
+    override func viewWillAppear(animated: Bool) {
+        self.navigationController?.navigationBar.hidden = true
+    }
+    func Login(){
+        
+        if(AccountText.text!.isEmpty){
+            let hud = MBProgressHUD.showHUDAddedTo(self.view, animated: true)
+            hud.mode = MBProgressHUDMode.Text
+            hud.labelText = "请输入账号"
+            hud.margin = 10.0
+            hud.removeFromSuperViewOnHide = true
+            hud.hide(true, afterDelay: 1)
+            return
+        }
+        if(PasswordText.text!.isEmpty){
+            let hud = MBProgressHUD.showHUDAddedTo(self.view, animated: true)
+            hud.mode = MBProgressHUDMode.Text
+            hud.labelText = "请输入密码"
+            hud.margin = 10.0
+            hud.removeFromSuperViewOnHide = true
+            hud.hide(true, afterDelay: 1)
+            return
+        }
+        let url = apiUrl+"applogin"
+        let param = [
+            "phone":self.AccountText.text!,
+            "password":self.PasswordText.text!
+        ]
+        Alamofire.request(.GET, url, parameters: param).response { request, response, json, error in
+                if(error != nil){
+                }
+                else{
+                    print("request是")
+                    print(request!)
+                    print("response是")
+                    print(response!)
+                    print("data是")
+                    print(json!)
+                    print("====================")
+                    let status = Httpresult(JSONDecoder(json!))
+                    print("状态是")
+                    print(status.status)
+                    if(status.status == "error"){
+                        let hud = MBProgressHUD.showHUDAddedTo(self.view, animated: true)
+                        hud.mode = MBProgressHUDMode.Text;
+                        hud.labelText = status.errorData
+                        hud.margin = 10.0
+                        hud.removeFromSuperViewOnHide = true
+                        hud.hide(true, afterDelay: 1)
+                    }
+                    
+                    if(status.status == "success"){
+                        print("Success")
+                        let hud = MBProgressHUD.showHUDAddedTo(self.view, animated: true)
+                        hud.mode = MBProgressHUDMode.Text;
+                        hud.labelText = "登录成功"
+                        hud.margin = 10.0
+                        hud.removeFromSuperViewOnHide = true
+                        hud.hide(true, afterDelay: 1)
+                        let userid = NSUserDefaults.standardUserDefaults()
+                        userid.setValue(status.data?.id, forKey: "userid")
+                        let uid = userid.valueForKey("userid")
+                        
+                        
+//                        let mainStoryboard = UIStoryboard(name: "Main", bundle: NSBundle.mainBundle())
+//                        let vc : UIViewController = mainStoryboard.instantiateViewControllerWithIdentifier("TabView") as! UIViewController
+//                        self.presentViewController(vc, animated: true, completion: nil)
+                        
+                        
+                    }
+                    
+                }
+                
+        }
+
+        
+
     }
 
     override func didReceiveMemoryWarning() {
