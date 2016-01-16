@@ -21,8 +21,6 @@ class LoginViewController: UIViewController ,UITextFieldDelegate{
         AccountText.delegate = self
         PasswordText.delegate = self
         LoginButton.addTarget(self, action: "Login", forControlEvents: UIControlEvents.TouchUpInside)
-
-        // Do any additional setup after loading the view.
     }
     override func viewWillAppear(animated: Bool) {
         self.navigationController?.navigationBar.hidden = true
