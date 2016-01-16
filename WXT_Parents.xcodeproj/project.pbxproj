@@ -8,6 +8,12 @@
 
 /* Begin PBXBuildFile section */
 		2FE62032EFC47F4FAA20D439 /* Pods.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = E7AFF348788309629B3DA583 /* Pods.framework */; };
+		EA010E611C4A25E400BBED0B /* ForgetPasswordViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = EA010E601C4A25E400BBED0B /* ForgetPasswordViewController.swift */; };
+		EA010E641C4A261E00BBED0B /* ForgetPasswordSetViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = EA010E631C4A261E00BBED0B /* ForgetPasswordSetViewController.swift */; };
+		EA010E661C4A28F400BBED0B /* Readme in Resources */ = {isa = PBXBuildFile; fileRef = EA010E651C4A28F400BBED0B /* Readme */; };
+		EA010E681C4A291900BBED0B /* Readme in Resources */ = {isa = PBXBuildFile; fileRef = EA010E671C4A291900BBED0B /* Readme */; };
+		EA010E6A1C4A295000BBED0B /* Readme in Resources */ = {isa = PBXBuildFile; fileRef = EA010E691C4A295000BBED0B /* Readme */; };
+		EA010E6C1C4A295D00BBED0B /* Readme in Resources */ = {isa = PBXBuildFile; fileRef = EA010E6B1C4A295D00BBED0B /* Readme */; };
 		EA143C7B1C44FAF800FC1F6C /* RegisterViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = EA143C7A1C44FAF800FC1F6C /* RegisterViewController.swift */; };
 		EA1E169A1C3F5ECD00C97FCF /* Url.swift in Sources */ = {isa = PBXBuildFile; fileRef = EA1E16991C3F5ECD00C97FCF /* Url.swift */; };
 		EA210EED1C3CA28F00BA9971 /* LoginViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = EA210EEC1C3CA28F00BA9971 /* LoginViewController.swift */; };
@@ -22,6 +28,8 @@
 		EA40E3E71C3138A800072EC8 /* Http.swift in Sources */ = {isa = PBXBuildFile; fileRef = EA40E3E41C3138A800072EC8 /* Http.swift */; };
 		EA40E3E81C3138A800072EC8 /* Httpresult.swift in Sources */ = {isa = PBXBuildFile; fileRef = EA40E3E51C3138A800072EC8 /* Httpresult.swift */; };
 		EA40E3E91C3138A800072EC8 /* JSONJoy.swift in Sources */ = {isa = PBXBuildFile; fileRef = EA40E3E61C3138A800072EC8 /* JSONJoy.swift */; };
+		EA4A70671C487DF100DAD9A1 /* RegisterGetCodeViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = EA4A70661C487DF100DAD9A1 /* RegisterGetCodeViewController.swift */; };
+		EA4A70691C487E1D00DAD9A1 /* RegisterSetPasswordViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = EA4A70681C487E1D00DAD9A1 /* RegisterSetPasswordViewController.swift */; };
 		EA59A3C71C313C2B003FBE82 /* Readme in Resources */ = {isa = PBXBuildFile; fileRef = EA59A3C61C313C2B003FBE82 /* Readme */; };
 		EA59A3C91C313C32003FBE82 /* Readme in Resources */ = {isa = PBXBuildFile; fileRef = EA59A3C81C313C32003FBE82 /* Readme */; };
 		EA59A3CD1C313C43003FBE82 /* Readme in Resources */ = {isa = PBXBuildFile; fileRef = EA59A3CC1C313C43003FBE82 /* Readme */; };
@@ -45,6 +53,12 @@
 		7FAF58DF0009EB15F3995775 /* Pods.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = Pods.release.xcconfig; path = "Pods/Target Support Files/Pods/Pods.release.xcconfig"; sourceTree = "<group>"; };
 		DD0CEFBF6B55340AB8318E55 /* Pods.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = Pods.debug.xcconfig; path = "Pods/Target Support Files/Pods/Pods.debug.xcconfig"; sourceTree = "<group>"; };
 		E7AFF348788309629B3DA583 /* Pods.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods.framework; sourceTree = BUILT_PRODUCTS_DIR; };
+		EA010E601C4A25E400BBED0B /* ForgetPasswordViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ForgetPasswordViewController.swift; sourceTree = "<group>"; };
+		EA010E631C4A261E00BBED0B /* ForgetPasswordSetViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ForgetPasswordSetViewController.swift; sourceTree = "<group>"; };
+		EA010E651C4A28F400BBED0B /* Readme */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = Readme; sourceTree = "<group>"; };
+		EA010E671C4A291900BBED0B /* Readme */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = Readme; sourceTree = "<group>"; };
+		EA010E691C4A295000BBED0B /* Readme */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = Readme; sourceTree = "<group>"; };
+		EA010E6B1C4A295D00BBED0B /* Readme */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = Readme; sourceTree = "<group>"; };
 		EA143C7A1C44FAF800FC1F6C /* RegisterViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = RegisterViewController.swift; sourceTree = "<group>"; };
 		EA1E16991C3F5ECD00C97FCF /* Url.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Url.swift; sourceTree = "<group>"; };
 		EA210EEC1C3CA28F00BA9971 /* LoginViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = LoginViewController.swift; sourceTree = "<group>"; };
@@ -62,6 +76,8 @@
 		EA40E3E41C3138A800072EC8 /* Http.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Http.swift; sourceTree = "<group>"; };
 		EA40E3E51C3138A800072EC8 /* Httpresult.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = Httpresult.swift; path = ../../Tool/Jsonjoy/Httpresult.swift; sourceTree = "<group>"; };
 		EA40E3E61C3138A800072EC8 /* JSONJoy.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = JSONJoy.swift; sourceTree = "<group>"; };
+		EA4A70661C487DF100DAD9A1 /* RegisterGetCodeViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = RegisterGetCodeViewController.swift; sourceTree = "<group>"; };
+		EA4A70681C487E1D00DAD9A1 /* RegisterSetPasswordViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = RegisterSetPasswordViewController.swift; sourceTree = "<group>"; };
 		EA59A3C61C313C2B003FBE82 /* Readme */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = Readme; sourceTree = "<group>"; };
 		EA59A3C81C313C32003FBE82 /* Readme */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = Readme; sourceTree = "<group>"; };
 		EA59A3CC1C313C43003FBE82 /* Readme */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = Readme; sourceTree = "<group>"; };
@@ -110,10 +126,47 @@
 			name = Pods;
 			sourceTree = "<group>";
 		};
+		EA010E5C1C4A259000BBED0B /* ForgetPassword */ = {
+			isa = PBXGroup;
+			children = (
+				EA010E5F1C4A25B900BBED0B /* Model */,
+				EA010E5E1C4A25B100BBED0B /* View */,
+				EA010E5D1C4A25A400BBED0B /* Controller */,
+			);
+			name = ForgetPassword;
+			sourceTree = "<group>";
+		};
+		EA010E5D1C4A25A400BBED0B /* Controller */ = {
+			isa = PBXGroup;
+			children = (
+				EA010E601C4A25E400BBED0B /* ForgetPasswordViewController.swift */,
+				EA010E631C4A261E00BBED0B /* ForgetPasswordSetViewController.swift */,
+			);
+			name = Controller;
+			sourceTree = "<group>";
+		};
+		EA010E5E1C4A25B100BBED0B /* View */ = {
+			isa = PBXGroup;
+			children = (
+				EA010E671C4A291900BBED0B /* Readme */,
+			);
+			name = View;
+			sourceTree = "<group>";
+		};
+		EA010E5F1C4A25B900BBED0B /* Model */ = {
+			isa = PBXGroup;
+			children = (
+				EA010E651C4A28F400BBED0B /* Readme */,
+			);
+			name = Model;
+			sourceTree = "<group>";
+		};
 		EA143C791C44FACD00FC1F6C /* Register */ = {
 			isa = PBXGroup;
 			children = (
-				EA143C7A1C44FAF800FC1F6C /* RegisterViewController.swift */,
+				EA4A70651C487DB700DAD9A1 /* Model */,
+				EA4A70641C487DB100DAD9A1 /* View */,
+				EA4A70631C487DA200DAD9A1 /* Controller */,
 			);
 			name = Register;
 			sourceTree = "<group>";
@@ -182,6 +235,7 @@
 		EA40E3931C30D33200072EC8 /* WXT_Parents */ = {
 			isa = PBXGroup;
 			children = (
+				EA010E5C1C4A259000BBED0B /* ForgetPassword */,
 				EAE72E921C40995F0038D055 /* MainTabBarController */,
 				EA210EEB1C3CA25500BA9971 /* Login */,
 				EA143C791C44FACD00FC1F6C /* Register */,
@@ -392,6 +446,32 @@
 			path = "Third Package";
 			sourceTree = "<group>";
 		};
+		EA4A70631C487DA200DAD9A1 /* Controller */ = {
+			isa = PBXGroup;
+			children = (
+				EA143C7A1C44FAF800FC1F6C /* RegisterViewController.swift */,
+				EA4A70661C487DF100DAD9A1 /* RegisterGetCodeViewController.swift */,
+				EA4A70681C487E1D00DAD9A1 /* RegisterSetPasswordViewController.swift */,
+			);
+			name = Controller;
+			sourceTree = "<group>";
+		};
+		EA4A70641C487DB100DAD9A1 /* View */ = {
+			isa = PBXGroup;
+			children = (
+				EA010E6B1C4A295D00BBED0B /* Readme */,
+			);
+			name = View;
+			sourceTree = "<group>";
+		};
+		EA4A70651C487DB700DAD9A1 /* Model */ = {
+			isa = PBXGroup;
+			children = (
+				EA010E691C4A295000BBED0B /* Readme */,
+			);
+			name = Model;
+			sourceTree = "<group>";
+		};
 		EAE72E921C40995F0038D055 /* MainTabBarController */ = {
 			isa = PBXGroup;
 			children = (
@@ -462,9 +542,13 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				EA010E6C1C4A295D00BBED0B /* Readme in Resources */,
+				EA010E6A1C4A295000BBED0B /* Readme in Resources */,
 				EA902F101C326D6800CC5F6F /* readme in Resources */,
 				EA59A3E31C313C89003FBE82 /* Readme in Resources */,
 				EA59A3D51C313C64003FBE82 /* Readme in Resources */,
+				EA010E661C4A28F400BBED0B /* Readme in Resources */,
+				EA010E681C4A291900BBED0B /* Readme in Resources */,
 				EA59A3CF1C313C48003FBE82 /* Readme in Resources */,
 				EA59A3D11C313C4D003FBE82 /* Readme in Resources */,
 				EA59A3DB1C313C76003FBE82 /* Readme in Resources */,
@@ -543,13 +627,17 @@
 			buildActionMask = 2147483647;
 			files = (
 				EA143C7B1C44FAF800FC1F6C /* RegisterViewController.swift in Sources */,
+				EA4A70671C487DF100DAD9A1 /* RegisterGetCodeViewController.swift in Sources */,
 				EA210EED1C3CA28F00BA9971 /* LoginViewController.swift in Sources */,
 				EAE72E941C4099BB0038D055 /* MainTabbarViewController.swift in Sources */,
 				EA40E3971C30D33200072EC8 /* ViewController.swift in Sources */,
 				EA1E169A1C3F5ECD00C97FCF /* Url.swift in Sources */,
+				EA4A70691C487E1D00DAD9A1 /* RegisterSetPasswordViewController.swift in Sources */,
 				EA40E3951C30D33200072EC8 /* AppDelegate.swift in Sources */,
 				EA40E3E91C3138A800072EC8 /* JSONJoy.swift in Sources */,
 				EA40E3E81C3138A800072EC8 /* Httpresult.swift in Sources */,
+				EA010E641C4A261E00BBED0B /* ForgetPasswordSetViewController.swift in Sources */,
+				EA010E611C4A25E400BBED0B /* ForgetPasswordViewController.swift in Sources */,
 				EA40E3E71C3138A800072EC8 /* Http.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
