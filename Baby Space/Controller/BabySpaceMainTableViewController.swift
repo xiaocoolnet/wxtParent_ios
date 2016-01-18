@@ -7,6 +7,7 @@
 //
 
 import UIKit
+import XWSwiftRefresh
 
 class BabySpaceMainTableViewController: UITableViewController {
 
@@ -14,17 +15,31 @@ class BabySpaceMainTableViewController: UITableViewController {
         super.viewDidLoad()
         self.automaticallyAdjustsScrollViewInsets = false
 
+        DropDownUpdate()
         // Uncomment the following line to preserve selection between presentations
         // self.clearsSelectionOnViewWillAppear = false
 
         // Uncomment the following line to display an Edit button in the navigation bar for this view controller.
         // self.navigationItem.rightBarButtonItem = self.editButtonItem()
     }
+    
+    func GetDate(){
+        self.tableView.reloadData()
+        self.tableView.headerView?.endRefreshing()
+        print("test")
+    }
 
     override func didReceiveMemoryWarning() {
         super.didReceiveMemoryWarning()
         // Dispose of any resources that can be recreated.
     }
+    
+    func DropDownUpdate(){
+        self.tableView.headerView = XWRefreshNormalHeader(target: self, action: "GetDate")
+        self.tableView.headerView?.beginRefreshing()
+        
+    }
+    
 
 
     

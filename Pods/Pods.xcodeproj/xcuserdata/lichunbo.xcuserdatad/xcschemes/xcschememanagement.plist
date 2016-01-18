@@ -19,15 +19,25 @@
 			<key>isShown</key>
 			<false/>
 		</dict>
+		<key>XWSwiftRefresh.xcscheme</key>
+		<dict>
+			<key>isShown</key>
+			<false/>
+		</dict>
 	</dict>
 	<key>SuppressBuildableAutocreation</key>
 	<dict>
+		<key>14675E10650985DEFB66901DEE14D3A5</key>
+		<dict>
+			<key>primary</key>
+			<true/>
+		</dict>
 		<key>432ECC54282C84882B482CCB4CF227FC</key>
 		<dict>
 			<key>primary</key>
 			<true/>
 		</dict>
-		<key>627951AD64AE07CCC7EACCC72FB60FE7</key>
+		<key>BB6FED0EB62F1833329F7C7AE0475335</key>
 		<dict>
 			<key>primary</key>
 			<true/>
