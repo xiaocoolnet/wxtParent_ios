@@ -45,6 +45,7 @@
 		EA59A3E11C313C85003FBE82 /* Readme in Resources */ = {isa = PBXBuildFile; fileRef = EA59A3E01C313C85003FBE82 /* Readme */; };
 		EA59A3E31C313C89003FBE82 /* Readme in Resources */ = {isa = PBXBuildFile; fileRef = EA59A3E21C313C89003FBE82 /* Readme */; };
 		EA59A3E51C313C90003FBE82 /* Readme in Resources */ = {isa = PBXBuildFile; fileRef = EA59A3E41C313C90003FBE82 /* Readme */; };
+		EA7608161C4CD8BA00169C50 /* BabySpaceMainTableViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = EA7608151C4CD8BA00169C50 /* BabySpaceMainTableViewController.swift */; };
 		EA902F101C326D6800CC5F6F /* readme in Resources */ = {isa = PBXBuildFile; fileRef = EA902F0F1C326D6800CC5F6F /* readme */; };
 		EAE72E941C4099BB0038D055 /* MainTabbarViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = EAE72E931C4099BB0038D055 /* MainTabbarViewController.swift */; };
 /* End PBXBuildFile section */
@@ -93,6 +94,7 @@
 		EA59A3E01C313C85003FBE82 /* Readme */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = Readme; sourceTree = "<group>"; };
 		EA59A3E21C313C89003FBE82 /* Readme */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = Readme; sourceTree = "<group>"; };
 		EA59A3E41C313C90003FBE82 /* Readme */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = Readme; sourceTree = "<group>"; };
+		EA7608151C4CD8BA00169C50 /* BabySpaceMainTableViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = BabySpaceMainTableViewController.swift; sourceTree = "<group>"; };
 		EA902F0F1C326D6800CC5F6F /* readme */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = readme; sourceTree = "<group>"; };
 		EAE72E931C4099BB0038D055 /* MainTabbarViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MainTabbarViewController.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
@@ -418,6 +420,7 @@
 			isa = PBXGroup;
 			children = (
 				EA902F0F1C326D6800CC5F6F /* readme */,
+				EA7608151C4CD8BA00169C50 /* BabySpaceMainTableViewController.swift */,
 			);
 			path = Controller;
 			sourceTree = "<group>";
@@ -631,6 +634,7 @@
 				EA210EED1C3CA28F00BA9971 /* LoginViewController.swift in Sources */,
 				EAE72E941C4099BB0038D055 /* MainTabbarViewController.swift in Sources */,
 				EA40E3971C30D33200072EC8 /* ViewController.swift in Sources */,
+				EA7608161C4CD8BA00169C50 /* BabySpaceMainTableViewController.swift in Sources */,
 				EA1E169A1C3F5ECD00C97FCF /* Url.swift in Sources */,
 				EA4A70691C487E1D00DAD9A1 /* RegisterSetPasswordViewController.swift in Sources */,
 				EA40E3951C30D33200072EC8 /* AppDelegate.swift in Sources */,

@@ -84,11 +84,10 @@ class LoginViewController: UIViewController ,UITextFieldDelegate{
                         let userid = NSUserDefaults.standardUserDefaults()
                         userid.setValue(status.data?.id, forKey: "userid")
                         let uid = userid.valueForKey("userid")
-                        
-                        
-//                        let mainStoryboard = UIStoryboard(name: "Main", bundle: NSBundle.mainBundle())
-//                        let vc : UIViewController = mainStoryboard.instantiateViewControllerWithIdentifier("TabView") as! UIViewController
-//                        self.presentViewController(vc, animated: true, completion: nil)
+
+                        let mainStoryboard = UIStoryboard(name: "Main", bundle: NSBundle.mainBundle())
+                        let vc : UIViewController = mainStoryboard.instantiateViewControllerWithIdentifier("MainView") as! UIViewController
+                        self.presentViewController(vc, animated: true, completion: nil)
                         
                         
                     }
