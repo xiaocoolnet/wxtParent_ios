@@ -40,6 +40,10 @@ class BabySpaceMainTableViewController: UITableViewController {
         
     }
     
+    override func viewWillAppear(animated: Bool) {
+        DropDownUpdate()
+    }
+    
 
 
     

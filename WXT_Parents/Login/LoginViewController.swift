@@ -15,6 +15,7 @@ class LoginViewController: UIViewController ,UITextFieldDelegate{
     @IBOutlet weak var PasswordText: UITextField!
     
     @IBOutlet weak var LoginButton: UIButton!
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         self.navigationController?.navigationBar.hidden = true
@@ -22,9 +23,12 @@ class LoginViewController: UIViewController ,UITextFieldDelegate{
         PasswordText.delegate = self
         LoginButton.addTarget(self, action: "Login", forControlEvents: UIControlEvents.TouchUpInside)
     }
+    
     override func viewWillAppear(animated: Bool) {
         self.navigationController?.navigationBar.hidden = true
+        
     }
+    
     func Login(){
         
         if(AccountText.text!.isEmpty){
@@ -114,6 +118,7 @@ class LoginViewController: UIViewController ,UITextFieldDelegate{
         PasswordText.resignFirstResponder()
         return true
     }
+    
     //点击空白处回收键盘
     override func touchesBegan(touches: Set<UITouch>, withEvent event: UIEvent?) {
         self.view.endEditing(true)
