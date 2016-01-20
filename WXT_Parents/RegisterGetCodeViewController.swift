@@ -102,12 +102,16 @@ class RegisterGetCodeViewController: UIViewController {
                     let hud = MBProgressHUD.showHUDAddedTo(self.view, animated: true)
                     hud.mode = MBProgressHUDMode.Text;
                     hud.labelText = status.errorData
-                    hud.margin = 30.0
+                    hud.margin = 10.0
                     hud.removeFromSuperViewOnHide = true
-                    hud.hide(true, afterDelay: 1)
+                    hud.hide(true, afterDelay: 3)
                 }
                 
                 if(status.status == "success"){
+                    let userid = NSUserDefaults.standardUserDefaults()
+                    userid.setValue(status.data?.id, forKey: "userid")
+                    let uid = userid.valueForKey("userid")
+                    
                     let mainStoryboard = UIStoryboard(name: "Main", bundle: NSBundle.mainBundle())
                     let vc : UIViewController = mainStoryboard.instantiateViewControllerWithIdentifier("SetPasswordView") as! UIViewController
                     self.navigationController?.pushViewController(vc, animated: true)
