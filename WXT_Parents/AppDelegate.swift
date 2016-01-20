@@ -17,19 +17,19 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
     func application(application: UIApplication, didFinishLaunchingWithOptions launchOptions: [NSObject: AnyObject]?) -> Bool {
         // Override point for customization after application launch.
         UITabBar.appearance().tintColor = UIColor(red: 54.0 / 255.0, green: 190.0 / 255.0, blue: 100.0 / 255.0, alpha: 1.0)
-//        let userid = NSUserDefaults.standardUserDefaults()
-//        let uid = userid.valueForKey("userid")
-//        var segueId = "MainView"
-//        //
-//        if((userid.valueForKey("userid") == nil) || (userid.valueForKey("userid")?.length == 0 ))
-//        {
-//            segueId = "LoginView"
-//            self.window?.rootViewController = self.window?.rootViewController?.storyboard?.instantiateViewControllerWithIdentifier(segueId)
-//            
-//        }
-//        else{
-//            self.window?.rootViewController = self.window?.rootViewController?.storyboard?.instantiateViewControllerWithIdentifier(segueId)
-//        }
+        let userid = NSUserDefaults.standardUserDefaults()
+        let uid = userid.valueForKey("userid")
+        var segueId = "MainView"
+        //
+        if((userid.valueForKey("userid") == nil) || (userid.valueForKey("userid")?.length == 0 ))
+        {
+            segueId = "LoginView"
+            self.window?.rootViewController = self.window?.rootViewController?.storyboard?.instantiateViewControllerWithIdentifier(segueId)
+            
+        }
+        else{
+            self.window?.rootViewController = self.window?.rootViewController?.storyboard?.instantiateViewControllerWithIdentifier(segueId)
+        }
         
         return true
     }

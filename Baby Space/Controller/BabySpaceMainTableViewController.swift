@@ -11,18 +11,9 @@ import XWSwiftRefresh
 
 class BabySpaceMainTableViewController: UITableViewController {
 
-   
-    
-    
-    
-    
     override func viewDidLoad() {
         super.viewDidLoad()
-       
-        
-       
         self.automaticallyAdjustsScrollViewInsets = false
-
         DropDownUpdate()
         
     }
