@@ -38,6 +38,7 @@ class RegisterGetCodeViewController: UIViewController {
         getCodeButton.addTarget(self, action: Selector("GetCode"), forControlEvents: UIControlEvents.TouchUpInside)
         nextButton.addTarget(self, action: Selector("Next"), forControlEvents: UIControlEvents.TouchUpInside)
         timeLabel.hidden = true
+        self.navigationController?.navigationBar.hidden = false
         
     }
     
@@ -72,10 +73,47 @@ class RegisterGetCodeViewController: UIViewController {
     
     func Next(){
         if PandKong()==true{
-            let mainStoryboard = UIStoryboard(name: "Main", bundle: NSBundle.mainBundle())
-            let vc : UIViewController = mainStoryboard.instantiateViewControllerWithIdentifier("PhoneNumberView") as! UIViewController
-            //self.presentViewController(vc, animated: true, completion: nil)
-            self.navigationController?.pushViewController(vc, animated: true)
+            RegisterYanZheng()
+        }
+
+    }
+    
+    
+    
+    func RegisterYanZheng(){
+        let url = apiUrl+"UserVerify"
+        let param = [
+            "phone":self.phoneNumberText.text!,
+            "code":self.codeText.text!
+        ]
+        print(url)
+        Alamofire.request(.GET, url, parameters: param).response { request, response, json, error in
+            if(error != nil){
+            }
+            else{
+                print("request是")
+                print(request!)
+                print("====================")
+                let status = Httpresult(JSONDecoder(json!))
+                print(JSONDecoder(json!))
+                print("状态是")
+                print(status.status)
+                if(status.status == "error"){
+                    let hud = MBProgressHUD.showHUDAddedTo(self.view, animated: true)
+                    hud.mode = MBProgressHUDMode.Text;
+                    hud.labelText = status.errorData
+                    hud.margin = 30.0
+                    hud.removeFromSuperViewOnHide = true
+                    hud.hide(true, afterDelay: 1)
+                }
+                
+                if(status.status == "success"){
+                    let mainStoryboard = UIStoryboard(name: "Main", bundle: NSBundle.mainBundle())
+                    let vc : UIViewController = mainStoryboard.instantiateViewControllerWithIdentifier("SetPasswordView") as! UIViewController
+                    self.navigationController?.pushViewController(vc, animated: true)
+                }
+                
+            }
             
         }
 
@@ -184,5 +222,6 @@ class RegisterGetCodeViewController: UIViewController {
 
     }
     
+
 
 }

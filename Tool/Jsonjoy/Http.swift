@@ -18,7 +18,7 @@ class Http: JSONJoy{
     required init(_ decoder:JSONDecoder){
         status = decoder["status"].string
         data = decoder["data"]
-        uid = decoder["uid"].string
+        uid = decoder["id"].string
         //        println("ddd")
         //        var d = Partner(data!)
         //        println(d.username)

@@ -14,6 +14,16 @@
 			<key>isShown</key>
 			<false/>
 		</dict>
+		<key>OAStackView-OAStackView.xcscheme</key>
+		<dict>
+			<key>isShown</key>
+			<false/>
+		</dict>
+		<key>OAStackView.xcscheme</key>
+		<dict>
+			<key>isShown</key>
+			<false/>
+		</dict>
 		<key>Pods.xcscheme</key>
 		<dict>
 			<key>isShown</key>
@@ -27,7 +37,7 @@
 	</dict>
 	<key>SuppressBuildableAutocreation</key>
 	<dict>
-		<key>14675E10650985DEFB66901DEE14D3A5</key>
+		<key>3E49192D0E917BB89954FD017AAA1723</key>
 		<dict>
 			<key>primary</key>
 			<true/>
@@ -37,12 +47,22 @@
 			<key>primary</key>
 			<true/>
 		</dict>
-		<key>BB6FED0EB62F1833329F7C7AE0475335</key>
+		<key>9588EC5A919D67696844A8F1954CCAC9</key>
+		<dict>
+			<key>primary</key>
+			<true/>
+		</dict>
+		<key>AE16805EDAE8A5A0E7F7212B5DE46145</key>
 		<dict>
 			<key>primary</key>
 			<true/>
 		</dict>
 		<key>E61CE3B6DFA1FE6B3E296965C76C0E10</key>
+		<dict>
+			<key>primary</key>
+			<true/>
+		</dict>
+		<key>F464E7B0C1D479F1C95F81C8C59CBBAB</key>
 		<dict>
 			<key>primary</key>
 			<true/>

@@ -74,7 +74,7 @@
 		EA40E39E1C30D33200072EC8 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
 		EA40E3A01C30D33200072EC8 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		EA40E3BD1C31197400072EC8 /* Podfile */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = Podfile; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.ruby; };
-		EA40E3E41C3138A800072EC8 /* Http.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Http.swift; sourceTree = "<group>"; };
+		EA40E3E41C3138A800072EC8 /* Http.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = Http.swift; path = ../Tool/Jsonjoy/Http.swift; sourceTree = "<group>"; };
 		EA40E3E51C3138A800072EC8 /* Httpresult.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = Httpresult.swift; path = ../../Tool/Jsonjoy/Httpresult.swift; sourceTree = "<group>"; };
 		EA40E3E61C3138A800072EC8 /* JSONJoy.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = JSONJoy.swift; sourceTree = "<group>"; };
 		EA4A70661C487DF100DAD9A1 /* RegisterGetCodeViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = RegisterGetCodeViewController.swift; sourceTree = "<group>"; };
@@ -264,7 +264,6 @@
 		EA40E3E31C3138A800072EC8 /* Jsonjoy */ = {
 			isa = PBXGroup;
 			children = (
-				EA40E3E41C3138A800072EC8 /* Http.swift */,
 				EA40E3E61C3138A800072EC8 /* JSONJoy.swift */,
 			);
 			path = Jsonjoy;
@@ -470,6 +469,7 @@
 		EA4A70651C487DB700DAD9A1 /* Model */ = {
 			isa = PBXGroup;
 			children = (
+				EA40E3E41C3138A800072EC8 /* Http.swift */,
 				EA010E691C4A295000BBED0B /* Readme */,
 			);
 			name = Model;
