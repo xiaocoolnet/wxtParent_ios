@@ -65,19 +65,19 @@ class LoginViewController: UIViewController ,UITextFieldDelegate{
                     print("data是")
                     print(json!)
                     print("====================")
-                    let status = Httpresult(JSONDecoder(json!))
+                    let result = Httpresult(JSONDecoder(json!))
                     print("状态是")
-                    print(status.status)
-                    if(status.status == "error"){
+                    print(result.status)
+                    if(result.status == "error"){
                         let hud = MBProgressHUD.showHUDAddedTo(self.view, animated: true)
                         hud.mode = MBProgressHUDMode.Text;
-                        hud.labelText = status.errorData
+                        hud.labelText = result.errorData
                         hud.margin = 10.0
                         hud.removeFromSuperViewOnHide = true
                         hud.hide(true, afterDelay: 1)
                     }
                     
-                    if(status.status == "success"){
+                    if(result.status == "success"){
                         print("Success")
                         let hud = MBProgressHUD.showHUDAddedTo(self.view, animated: true)
                         hud.mode = MBProgressHUDMode.Text;
@@ -85,8 +85,9 @@ class LoginViewController: UIViewController ,UITextFieldDelegate{
                         hud.margin = 10.0
                         hud.removeFromSuperViewOnHide = true
                         hud.hide(true, afterDelay: 1)
+                        
                         let userid = NSUserDefaults.standardUserDefaults()
-                        userid.setValue(status.data?.id, forKey: "userid")
+                        userid.setValue(result.data?.id, forKey: "userid")
                         let uid = userid.valueForKey("userid")
 
                         let mainStoryboard = UIStoryboard(name: "Main", bundle: NSBundle.mainBundle())

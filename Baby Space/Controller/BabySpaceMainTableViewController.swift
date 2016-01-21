@@ -11,9 +11,25 @@ import XWSwiftRefresh
 
 class BabySpaceMainTableViewController: UITableViewController {
 
+    
+    @IBOutlet weak var childrenAvator: UIImageView!
+    
+    @IBOutlet weak var childrenClass: UILabel!
+    
+    @IBOutlet weak var childrenName: UILabel!
+    
+    @IBOutlet weak var childrenSex: UIImageView!
+    
+    @IBOutlet weak var childrenAge: UILabel!
+    
+    @IBOutlet weak var childrenSchoole: UILabel!
+    
+    
     override func viewDidLoad() {
         super.viewDidLoad()
-        self.automaticallyAdjustsScrollViewInsets = false
+        //self.automaticallyAdjustsScrollViewInsets = false
+        childrenClass.layer.cornerRadius = 8
+        childrenClass.layer.masksToBounds = true
         DropDownUpdate()
         //self.navigationController?.navigationBar.setBackgroundImage(UIImage(named: "背景nav2"), forBarMetrics: UIBarMetrics.Default)
     }

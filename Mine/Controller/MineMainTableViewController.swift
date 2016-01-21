@@ -44,6 +44,7 @@ class MineMainTableViewController: UITableViewController {
             self.GetDefalutChildrenInfo()
             
             }
+        
         self.GetChildrenUser()
         
         
