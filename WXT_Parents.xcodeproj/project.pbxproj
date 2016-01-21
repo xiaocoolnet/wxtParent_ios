@@ -49,6 +49,8 @@
 		EA902F101C326D6800CC5F6F /* readme in Resources */ = {isa = PBXBuildFile; fileRef = EA902F0F1C326D6800CC5F6F /* readme */; };
 		EACA2A481C4FA0EC00A3ECD3 /* MineMainTableViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = EACA2A471C4FA0EC00A3ECD3 /* MineMainTableViewController.swift */; };
 		EACA2A4A1C4FB9CE00A3ECD3 /* MineModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = EACA2A491C4FB9CE00A3ECD3 /* MineModel.swift */; };
+		EAE0A5CC1C50810700ECF86E /* ChildrenInfo.swift in Sources */ = {isa = PBXBuildFile; fileRef = EAE0A5CB1C50810700ECF86E /* ChildrenInfo.swift */; };
+		EAE0A5CE1C5094F500ECF86E /* ServiceModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = EAE0A5CD1C5094F500ECF86E /* ServiceModel.swift */; };
 		EAE72E941C4099BB0038D055 /* MainTabbarViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = EAE72E931C4099BB0038D055 /* MainTabbarViewController.swift */; };
 /* End PBXBuildFile section */
 
@@ -100,6 +102,8 @@
 		EA902F0F1C326D6800CC5F6F /* readme */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = readme; sourceTree = "<group>"; };
 		EACA2A471C4FA0EC00A3ECD3 /* MineMainTableViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MineMainTableViewController.swift; sourceTree = "<group>"; };
 		EACA2A491C4FB9CE00A3ECD3 /* MineModel.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MineModel.swift; sourceTree = "<group>"; };
+		EAE0A5CB1C50810700ECF86E /* ChildrenInfo.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ChildrenInfo.swift; sourceTree = "<group>"; };
+		EAE0A5CD1C5094F500ECF86E /* ServiceModel.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ServiceModel.swift; sourceTree = "<group>"; };
 		EAE72E931C4099BB0038D055 /* MainTabbarViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MainTabbarViewController.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
@@ -297,6 +301,8 @@
 			children = (
 				EA59A3E01C313C85003FBE82 /* Readme */,
 				EACA2A491C4FB9CE00A3ECD3 /* MineModel.swift */,
+				EAE0A5CB1C50810700ECF86E /* ChildrenInfo.swift */,
+				EAE0A5CD1C5094F500ECF86E /* ServiceModel.swift */,
 			);
 			path = Model;
 			sourceTree = "<group>";
@@ -637,7 +643,9 @@
 			buildActionMask = 2147483647;
 			files = (
 				EA143C7B1C44FAF800FC1F6C /* RegisterViewController.swift in Sources */,
+				EAE0A5CE1C5094F500ECF86E /* ServiceModel.swift in Sources */,
 				EA4A70671C487DF100DAD9A1 /* RegisterGetCodeViewController.swift in Sources */,
+				EAE0A5CC1C50810700ECF86E /* ChildrenInfo.swift in Sources */,
 				EA210EED1C3CA28F00BA9971 /* LoginViewController.swift in Sources */,
 				EAE72E941C4099BB0038D055 /* MainTabbarViewController.swift in Sources */,
 				EACA2A4A1C4FB9CE00A3ECD3 /* MineModel.swift in Sources */,

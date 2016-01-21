@@ -15,7 +15,7 @@ class BabySpaceMainTableViewController: UITableViewController {
         super.viewDidLoad()
         self.automaticallyAdjustsScrollViewInsets = false
         DropDownUpdate()
-        
+        //self.navigationController?.navigationBar.setBackgroundImage(UIImage(named: "背景nav2"), forBarMetrics: UIBarMetrics.Default)
     }
     
     func GetDate(){

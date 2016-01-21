@@ -1,24 +1,18 @@
 //
-//  MineModel.swift
+//  ServiceModel.swift
 //  WXT_Parents
 //
-//  Created by 李春波 on 16/1/20.
+//  Created by 李春波 on 16/1/21.
 //  Copyright © 2016年 北京校酷网络科技有限公司. All rights reserved.
 //
 
 import Foundation
-//
-//  Httpresult.swift
-//  yunzhuyangche_shop
-//
-//  Created by LCB on 15/8/21.
-//  Copyright (c) 2015年 lcb. All rights reserved.
-//
 
 import Foundation
-class MineModel: JSONJoy{
+
+class ServiceModel: JSONJoy{
     var status:String?
-    var data:UserInfomation?
+    var data:ServiceInfo?
     var errorData:String?
     var datastring:String?
     init(){
@@ -26,23 +20,21 @@ class MineModel: JSONJoy{
     required init(_ decoder:JSONDecoder){
         status = decoder["status"].string
         if status == "success"{
-            data = UserInfomation(decoder["data"])
+            data = ServiceInfo(decoder["data"])
         }else{
             errorData = decoder["data"].string
         }
         
     }
 }
-class UserInfomation: JSONJoy {
-    var id:String?
-    var name:String?
-    var avatar:String?
+class ServiceInfo: JSONJoy {
+    var status:String?
+    var endtime:String?
     init(){
     }
     required init(_ decoder:JSONDecoder){
-        id = decoder["id"].string
-        name = decoder["name"].string
-        avatar = decoder["photo"].string
+        status = decoder["status"].string
+        endtime = decoder["endtime"].string
         
     }
 }
