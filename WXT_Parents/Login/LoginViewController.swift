@@ -15,6 +15,7 @@ class LoginViewController: UIViewController ,UITextFieldDelegate{
     @IBOutlet weak var PasswordText: UITextField!
     
     @IBOutlet weak var LoginButton: UIButton!
+    var dataSource = ChildrenList()
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -90,6 +91,7 @@ class LoginViewController: UIViewController ,UITextFieldDelegate{
                         userid.setValue(result.data?.id, forKey: "userid")
                         let uid = userid.valueForKey("userid")
 
+                        self.GetChildrenUser()
                         let mainStoryboard = UIStoryboard(name: "Main", bundle: NSBundle.mainBundle())
                         let vc : UIViewController = mainStoryboard.instantiateViewControllerWithIdentifier("MainView") as! UIViewController
                         self.presentViewController(vc, animated: true, completion: nil)
@@ -103,6 +105,49 @@ class LoginViewController: UIViewController ,UITextFieldDelegate{
 
         
 
+    }
+    
+    func GetChildrenUser(){
+        let userid = NSUserDefaults.standardUserDefaults()
+        let uid = userid.stringForKey("userid")
+        let url = apiUrl+"GetUserRelation"
+        let param = [
+            "userid":uid!
+        ]
+        Alamofire.request(.GET, url, parameters: param).response { request, response, json, error in
+            if(error != nil){
+            }
+            else{
+                print("request是")
+                print(request!)
+                print("====================")
+                let status = Http(JSONDecoder(json!))
+                print("状态是")
+                print(status.status)
+                if(status.status == "error"){
+                }
+                
+                if(status.status == "success"){
+                    var defalut:String?
+                    self.dataSource = ChildrenList(status.data!)
+                    print(self.dataSource.count)
+                    for i in 0..<self.dataSource.count{
+                        var chirdinfo = self.dataSource.objectlist[i]
+                        defalut = chirdinfo.preferred!
+                        if(defalut == "1"){
+                            
+                            let chid = NSUserDefaults.standardUserDefaults()
+                            chid.setValue(chirdinfo.childrenid!, forKey: "chid")
+                            let defalutid = userid.valueForKey("chid")
+                        }
+                        //self.GetDefalutChildrenInfo()
+                    }
+                }
+            }
+            
+        }
+        
+        
     }
 
     override func didReceiveMemoryWarning() {

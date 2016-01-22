@@ -22,7 +22,7 @@ class MineMainTableViewController: UITableViewController {
     @IBOutlet weak var Logout: UIButton!
     
     var imageCache = Dictionary<String,UIImage>()
-    var dataSource = ChildrenList()
+    
     let popTime = dispatch_time(DISPATCH_TIME_NOW, Int64(3.0 * Double(NSEC_PER_SEC)))
     
     
@@ -31,7 +31,7 @@ class MineMainTableViewController: UITableViewController {
         super.viewDidLoad()
         
         let hud = MBProgressHUD.showHUDAddedTo(self.view, animated: true)
-        hud.mode = MBProgressHUDMode.Text;
+        hud.mode = MBProgressHUDMode.Text
         hud.labelText = "正在加载"
         hud.margin = 10.0
         hud.removeFromSuperViewOnHide = true
@@ -40,13 +40,10 @@ class MineMainTableViewController: UITableViewController {
         userAvatar.layer.cornerRadius = 40
         userAvatar.layer.masksToBounds = true
         Logout.addTarget(self, action: Selector("Exitlogin"), forControlEvents: UIControlEvents.TouchUpInside)
-        dispatch_after(self.popTime, dispatch_get_main_queue()) { () -> Void in
-            self.GetDefalutChildrenInfo()
-            
-            }
+        self.GetDefalutChildrenInfo()
         
-        self.GetChildrenUser()
-        
+ 
+
         
 
     }
@@ -106,47 +103,7 @@ class MineMainTableViewController: UITableViewController {
         }
     }
     
-    func GetChildrenUser(){
-        let userid = NSUserDefaults.standardUserDefaults()
-        let uid = userid.stringForKey("userid")
-        let url = apiUrl+"GetUserRelation"
-        let param = [
-            "userid":uid!
-        ]
-        Alamofire.request(.GET, url, parameters: param).response { request, response, json, error in
-            if(error != nil){
-            }
-            else{
-                print("request是")
-                print(request!)
-                print("====================")
-                let status = Http(JSONDecoder(json!))
-                print("状态是")
-                print(status.status)
-                if(status.status == "error"){
-                }
-                
-                if(status.status == "success"){
-                    var defalut:String?
-                    self.dataSource = ChildrenList(status.data!)
-                    print(self.dataSource.count)
-                    for i in 0..<self.dataSource.count{
-                        var chirdinfo = self.dataSource.objectlist[i]
-                        defalut = chirdinfo.preferred!
-                        if(defalut == "1"){
-                            
-                            let chid = NSUserDefaults.standardUserDefaults()
-                            chid.setValue(chirdinfo.childrenid!, forKey: "chid")
-                            let defalutid = userid.valueForKey("chid")
-                        }
-                    }
-                }
-            }
-            
-        }
-        
-
-    }
+    
     
     func GetDefalutChildrenInfo(){
         let defalutid = NSUserDefaults.standardUserDefaults()
@@ -198,6 +155,9 @@ class MineMainTableViewController: UITableViewController {
         let doneAction = UIAlertAction(title: "确定", style: UIAlertActionStyle.Default) { (UIAlertAction) -> Void in
             var userid = NSUserDefaults.standardUserDefaults()
             userid.setValue("", forKey: "userid")
+            let defalutid = NSUserDefaults.standardUserDefaults()
+            //cid = defalutid.stringForKey("chid")
+            defalutid.setValue("", forKey: "cid")
             let mainStoryboard = UIStoryboard(name: "Main", bundle: NSBundle.mainBundle())
             let vc : UIViewController = mainStoryboard.instantiateViewControllerWithIdentifier("LoginView") as! UINavigationController
             self.presentViewController(vc, animated: true, completion: nil)

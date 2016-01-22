@@ -20,7 +20,6 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         let userid = NSUserDefaults.standardUserDefaults()
         let uid = userid.valueForKey("userid")
         var segueId = "MainView"
-        //
         if((userid.valueForKey("userid") == nil) || (userid.valueForKey("userid")?.length == 0 ))
         {
             segueId = "LoginView"
@@ -30,6 +29,8 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         else{
             self.window?.rootViewController = self.window?.rootViewController?.storyboard?.instantiateViewControllerWithIdentifier(segueId)
         }
+        
+        
         
         return true
     }
