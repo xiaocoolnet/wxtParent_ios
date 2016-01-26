@@ -18,10 +18,12 @@ class BlogMainTableTableViewController: UITableViewController {
 
     var blogSource = BlogList()
     var pciSource = PictureList()
+    var DianzanSource = DianZanList()
     var imageCache = Dictionary<String,UIImage>()
     
     override func viewDidLoad() {
         super.viewDidLoad()
+        
         scrollImageView.slideshowInterval = 5.0
         scrollImageView.setImageInputs([AFURLSource(urlString: "http://pic2.ooopic.com/01/03/51/25b1OOOPIC19.jpg")!, AFURLSource(urlString: "http://ppt360.com/background/UploadFiles_6733/201012/2010122016291897.jpg")!, AFURLSource(urlString: "http://img.taopic.com/uploads/allimg/130501/240451-13050106450911.jpg")!])
         
@@ -29,6 +31,7 @@ class BlogMainTableTableViewController: UITableViewController {
         UpPullAdd()
         
     }
+    
 
     override func didReceiveMemoryWarning() {
         super.didReceiveMemoryWarning()
@@ -36,6 +39,8 @@ class BlogMainTableTableViewController: UITableViewController {
     }
     func DropDownUpdate(){
         self.tableView.headerView = XWRefreshNormalHeader(target: self, action: "GetDate")
+        //self.sourceList.reloadData()
+        self.tableView.reloadData()
         self.tableView.headerView?.beginRefreshing()
         
     }
@@ -116,9 +121,10 @@ class BlogMainTableTableViewController: UITableViewController {
         
         var Indetifiername = "blogHeader"
         let bloginfo = self.blogSource.objectlist[indexPath.section]
-
         self.pciSource = PictureList(bloginfo.piclist!)
-
+        self.DianzanSource = DianZanList(bloginfo.dianzanlist!)
+        print("begin::")
+        print(indexPath.section)
         if(indexPath.row == 0){
             Indetifiername = "blogHeader"
             let cell1 = tableView.dequeueReusableCellWithIdentifier(Indetifiername, forIndexPath: indexPath) as! BlogCellTableViewCell
@@ -129,24 +135,41 @@ class BlogMainTableTableViewController: UITableViewController {
             return cell1
             
         }else if(indexPath.row == 1){
-            Indetifiername = "blogCell"
-            let cell2 = tableView.dequeueReusableCellWithIdentifier(Indetifiername, forIndexPath: indexPath) as! BlogCellTableViewCell
+            Indetifiername = "Imagecell"
+            var cell2:BlogCellTableViewCell? = tableView.dequeueReusableCellWithIdentifier(Indetifiername) as? BlogCellTableViewCell
+            //var cell2:BlogCellTableViewCell? = tableView.cellForRowAtIndexPath(indexPath) as?BlogCellTableViewCell
             var blogimage:UIImageView?
 
             
-            
-            cell2.blogDicText.text = bloginfo.content!
-            
+            if cell2 == nil{
+                cell2 = BlogCellTableViewCell(style: UITableViewCellStyle.Default, reuseIdentifier: Indetifiername)
+            }
+            else{
+                while(cell2?.contentView.subviews.last != nil){
+                    cell2?.contentView.subviews.last?.removeFromSuperview()
+                    
+                }
+            }
+
+
+            let blogDicText = UILabel()
             //计算文本高度
             let options : NSStringDrawingOptions = NSStringDrawingOptions.UsesLineFragmentOrigin
-            cell2.blogDicText.font = UIFont.systemFontOfSize(17)
-            let string:NSString = cell2.blogDicText.text!
+            blogDicText.font = UIFont.systemFontOfSize(17)
+            let string:NSString = bloginfo.content!
             let screenBounds:CGRect = UIScreen.mainScreen().bounds
-            let boundingRect = string.boundingRectWithSize(CGSizeMake(screenBounds.width, 0), options: options, attributes: [NSFontAttributeName:cell2.blogDicText.font], context: nil)
+            let boundingRect = string.boundingRectWithSize(CGSizeMake(screenBounds.width-5, 0), options: options, attributes: [NSFontAttributeName:blogDicText.font], context: nil)
             
+            blogDicText.text = bloginfo.content!
+            
+            print(boundingRect)
+            blogDicText.frame = CGRectMake(5, 5, boundingRect.size.width, boundingRect.size.height)
+            
+            print(blogDicText.frame)
+            cell2?.contentView.addSubview(blogDicText)
             //如果高度大于140就显示7行
             if(boundingRect.size.height>140){
-               cell2.blogDicText.numberOfLines = 7
+               blogDicText.numberOfLines = 7
                 
                 if(pciSource.count>0&&pciSource.count<=3){
                 for i in 1...pciSource.count{
@@ -154,7 +177,7 @@ class BlogMainTableTableViewController: UITableViewController {
                     let pciInfo = pciSource.picturelist[i-1]
                     let imgUrl = microblogImageUrl+(pciInfo.pictureurl)!
                     
-                    let image = self.imageCache[imgUrl] as UIImage?
+                    //let image = self.imageCache[imgUrl] as UIImage?
                     let avatarUrl = NSURL(string: imgUrl)
                     let request: NSURLRequest = NSURLRequest(URL: avatarUrl!)
                     
@@ -167,7 +190,7 @@ class BlogMainTableTableViewController: UITableViewController {
                             //self.imageCache[imgUrl] = imgTmp
                             blogimage!.image = imgTmp
                             
-                            cell2.addSubview(blogimage!)
+                            cell2!.contentView.addSubview(blogimage!)
                         }
                     })
                     
@@ -179,7 +202,7 @@ class BlogMainTableTableViewController: UITableViewController {
                         let pciInfo = pciSource.picturelist[i-1]
                         let imgUrl = microblogImageUrl+(pciInfo.pictureurl)!
                         
-                        let image = self.imageCache[imgUrl] as UIImage?
+                        //let image = self.imageCache[imgUrl] as UIImage?
                         let avatarUrl = NSURL(string: imgUrl)
                         let request: NSURLRequest = NSURLRequest(URL: avatarUrl!)
                         
@@ -191,7 +214,7 @@ class BlogMainTableTableViewController: UITableViewController {
                                 //self.imageCache[imgUrl] = imgTmp
                                 blogimage!.image = imgTmp
                                 
-                                cell2.addSubview(blogimage!)
+                                cell2!.contentView.addSubview(blogimage!)
                             }
                         })
                         //x = x+85
@@ -201,7 +224,7 @@ class BlogMainTableTableViewController: UITableViewController {
                         let pciInfo = pciSource.picturelist[i-1]
                         let imgUrl = microblogImageUrl+(pciInfo.pictureurl)!
                         
-                        let image = self.imageCache[imgUrl] as UIImage?
+                        //let image = self.imageCache[imgUrl] as UIImage?
                         let avatarUrl = NSURL(string: imgUrl)
                         let request: NSURLRequest = NSURLRequest(URL: avatarUrl!)
                         
@@ -213,7 +236,7 @@ class BlogMainTableTableViewController: UITableViewController {
                                 //self.imageCache[imgUrl] = imgTmp
                                 blogimage!.image = imgTmp
                                 
-                                cell2.addSubview(blogimage!)
+                                cell2!.contentView.addSubview(blogimage!)
                             }
                         })
                        
@@ -225,7 +248,7 @@ class BlogMainTableTableViewController: UITableViewController {
                         let pciInfo = pciSource.picturelist[i-1]
                         let imgUrl = microblogImageUrl+(pciInfo.pictureurl)!
                         
-                        let image = self.imageCache[imgUrl] as UIImage?
+                        //let image = self.imageCache[imgUrl] as UIImage?
                         let avatarUrl = NSURL(string: imgUrl)
                         let request: NSURLRequest = NSURLRequest(URL: avatarUrl!)
                         
@@ -236,7 +259,7 @@ class BlogMainTableTableViewController: UITableViewController {
                                 let imgTmp = UIImage(data: data!)
                                 //self.imageCache[imgUrl] = imgTmp
                                 blogimage!.image = imgTmp
-                                cell2.addSubview(blogimage!)
+                                cell2!.contentView.addSubview(blogimage!)
                             }
                         })
                         
@@ -246,7 +269,7 @@ class BlogMainTableTableViewController: UITableViewController {
                         let pciInfo = pciSource.picturelist[i-1]
                         let imgUrl = microblogImageUrl+(pciInfo.pictureurl)!
                         
-                        let image = self.imageCache[imgUrl] as UIImage?
+                        //let image = self.imageCache[imgUrl] as UIImage?
                         let avatarUrl = NSURL(string: imgUrl)
                         let request: NSURLRequest = NSURLRequest(URL: avatarUrl!)
                         
@@ -258,7 +281,7 @@ class BlogMainTableTableViewController: UITableViewController {
                                 //self.imageCache[imgUrl] = imgTmp
                                 blogimage!.image = imgTmp
                                 
-                                cell2.addSubview(blogimage!)
+                                cell2!.contentView.addSubview(blogimage!)
                             }
                         })
 
@@ -268,7 +291,7 @@ class BlogMainTableTableViewController: UITableViewController {
                         let pciInfo = pciSource.picturelist[i-1]
                         let imgUrl = microblogImageUrl+(pciInfo.pictureurl)!
                         
-                        let image = self.imageCache[imgUrl] as UIImage?
+                        //let image = self.imageCache[imgUrl] as UIImage?
                         let avatarUrl = NSURL(string: imgUrl)
                         let request: NSURLRequest = NSURLRequest(URL: avatarUrl!)
                         
@@ -280,7 +303,7 @@ class BlogMainTableTableViewController: UITableViewController {
                                 //self.imageCache[imgUrl] = imgTmp
                                 blogimage!.image = imgTmp
                                 
-                                cell2.addSubview(blogimage!)
+                                cell2!.contentView.addSubview(blogimage!)
                             }
                         })
 
@@ -290,17 +313,14 @@ class BlogMainTableTableViewController: UITableViewController {
             }
             //如果高度小于140全部显示
             else {
-                cell2.blogDicText.numberOfLines = 0
-                cell2.removeFromSuperview()
-                print("====")
-                print(pciSource.count)
+                blogDicText.numberOfLines = 0
                 if(pciSource.count>0&&pciSource.count<=3){
                     for i in 1...pciSource.count{
                         var x = 8
                         let pciInfo = pciSource.picturelist[i-1]
                         let imgUrl = microblogImageUrl+(pciInfo.pictureurl)!
                         
-                        let image = self.imageCache[imgUrl] as UIImage?
+                        //let image = self.imageCache[imgUrl] as UIImage?
                         let avatarUrl = NSURL(string: imgUrl)
                         let request: NSURLRequest = NSURLRequest(URL: avatarUrl!)
                         
@@ -311,7 +331,7 @@ class BlogMainTableTableViewController: UITableViewController {
                                 let imgTmp = UIImage(data: data!)
                                 //self.imageCache[imgUrl] = imgTmp
                                 blogimage!.image = imgTmp
-                                cell2.addSubview(blogimage!)
+                                cell2!.contentView.addSubview(blogimage!)
                             }
                         })
                        
@@ -323,7 +343,7 @@ class BlogMainTableTableViewController: UITableViewController {
                         let pciInfo = pciSource.picturelist[i-1]
                         let imgUrl = microblogImageUrl+(pciInfo.pictureurl)!
                         
-                        let image = self.imageCache[imgUrl] as UIImage?
+                        //let image = self.imageCache[imgUrl] as UIImage?
                         let avatarUrl = NSURL(string: imgUrl)
                         let request: NSURLRequest = NSURLRequest(URL: avatarUrl!)
                         
@@ -335,7 +355,7 @@ class BlogMainTableTableViewController: UITableViewController {
                                 //self.imageCache[imgUrl] = imgTmp
                                 blogimage!.image = imgTmp
                                 
-                                cell2.addSubview(blogimage!)
+                                cell2!.contentView.addSubview(blogimage!)
                             }
                         })
                         
@@ -345,7 +365,7 @@ class BlogMainTableTableViewController: UITableViewController {
                         let pciInfo = pciSource.picturelist[i-1]
                         let imgUrl = microblogImageUrl+(pciInfo.pictureurl)!
                         
-                        let image = self.imageCache[imgUrl] as UIImage?
+                        //let image = self.imageCache[imgUrl] as UIImage?
                         let avatarUrl = NSURL(string: imgUrl)
                         let request: NSURLRequest = NSURLRequest(URL: avatarUrl!)
                         
@@ -357,7 +377,7 @@ class BlogMainTableTableViewController: UITableViewController {
                                 //self.imageCache[imgUrl] = imgTmp
                                 blogimage!.image = imgTmp
                                 
-                                cell2.addSubview(blogimage!)
+                                cell2!.contentView.addSubview(blogimage!)
                             }
                         })
                     }
@@ -368,7 +388,7 @@ class BlogMainTableTableViewController: UITableViewController {
                         let pciInfo = pciSource.picturelist[i-1]
                         let imgUrl = microblogImageUrl+(pciInfo.pictureurl)!
                         
-                        let image = self.imageCache[imgUrl] as UIImage?
+                        //let image = self.imageCache[imgUrl] as UIImage?
                         let avatarUrl = NSURL(string: imgUrl)
                         let request: NSURLRequest = NSURLRequest(URL: avatarUrl!)
                         
@@ -380,7 +400,7 @@ class BlogMainTableTableViewController: UITableViewController {
                                 //self.imageCache[imgUrl] = imgTmp
                                 blogimage!.image = imgTmp
                                 
-                                cell2.addSubview(blogimage!)
+                                cell2!.contentView.addSubview(blogimage!)
                             }
                         })
                     
@@ -390,7 +410,7 @@ class BlogMainTableTableViewController: UITableViewController {
                         let pciInfo = pciSource.picturelist[i-1]
                         let imgUrl = microblogImageUrl+(pciInfo.pictureurl)!
                         
-                        let image = self.imageCache[imgUrl] as UIImage?
+                        //let image = self.imageCache[imgUrl] as UIImage?
                         let avatarUrl = NSURL(string: imgUrl)
                         let request: NSURLRequest = NSURLRequest(URL: avatarUrl!)
                         
@@ -402,7 +422,7 @@ class BlogMainTableTableViewController: UITableViewController {
                                 //self.imageCache[imgUrl] = imgTmp
                                 blogimage!.image = imgTmp
                                 
-                                cell2.addSubview(blogimage!)
+                                cell2!.contentView.addSubview(blogimage!)
                             }
                         })
                         
@@ -412,7 +432,7 @@ class BlogMainTableTableViewController: UITableViewController {
                         let pciInfo = pciSource.picturelist[i-1]
                         let imgUrl = microblogImageUrl+(pciInfo.pictureurl)!
                         
-                        let image = self.imageCache[imgUrl] as UIImage?
+                        //let image = self.imageCache[imgUrl] as UIImage?
                         let avatarUrl = NSURL(string: imgUrl)
                         let request: NSURLRequest = NSURLRequest(URL: avatarUrl!)
                         
@@ -424,23 +444,46 @@ class BlogMainTableTableViewController: UITableViewController {
                                 //self.imageCache[imgUrl] = imgTmp
                                 blogimage!.image = imgTmp
                                 
-                                cell2.addSubview(blogimage!)
+                                cell2!.contentView.addSubview(blogimage!)
                             }
                         })
                         
                     }
                     
                 }
-
                 
             }
         
-            return cell2
+            return cell2!
  
         }else{
             Indetifiername = "blogFooter"
-            let cell3 = tableView.dequeueReusableCellWithIdentifier(Indetifiername, forIndexPath: indexPath) as! BlogCellTableViewCell
             
+            let cell3 = tableView.dequeueReusableCellWithIdentifier(Indetifiername, forIndexPath: indexPath) as! BlogCellTableViewCell
+            cell3.dianZanBtn.selected = false
+            if(self.DianzanSource.count>3){
+                let array3 = NSMutableArray()
+                for i in 1...3{
+                    let dianzanInfo = DianzanSource.dianzanlist[i-1]
+                    array3.addObject(dianzanInfo.dianZanName!)
+                    
+                }
+                let peopleArray = array3.componentsJoinedByString(",")
+            cell3.dianZanPeople.text = "\(peopleArray)等\(self.DianzanSource.count)人觉得很赞"
+            }
+            if(self.DianzanSource.count == 0 ){
+                cell3.dianZanPeople.text = ""
+            }
+            if(self.DianzanSource.count<3&&self.DianzanSource.count>0){
+                let array3 = NSMutableArray()
+                for i in 1...DianzanSource.count{
+                    let dianzanInfo = DianzanSource.dianzanlist[i-1]
+                    array3.addObject(dianzanInfo.dianZanName!)
+                    
+                }
+                let peopleArray = array3.componentsJoinedByString(",")
+                cell3.dianZanPeople.text = "\(peopleArray)觉得很赞"
+            }
             return cell3
         }
             
@@ -497,10 +540,12 @@ class BlogMainTableTableViewController: UITableViewController {
             
         }
         if(indexPath.row == 3){
-            return 100
+            return 60
         }
     return 100
     }
+    
+    
 
     override func tableView(tableView: UITableView, heightForHeaderInSection section: Int) -> CGFloat{
         

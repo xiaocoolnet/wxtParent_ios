@@ -16,7 +16,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
 
     func application(application: UIApplication, didFinishLaunchingWithOptions launchOptions: [NSObject: AnyObject]?) -> Bool {
         // Override point for customization after application launch.
-        NSThread.sleepForTimeInterval(3.0)
+        NSThread.sleepForTimeInterval(2.0)
         UITabBar.appearance().tintColor = UIColor(red: 54.0 / 255.0, green: 190.0 / 255.0, blue: 100.0 / 255.0, alpha: 1.0)
         let userid = NSUserDefaults.standardUserDefaults()
         let uid = userid.valueForKey("userid")

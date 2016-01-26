@@ -35,12 +35,14 @@ class BlogInfo: JSONJoy{
     var write_time:String?
     var photo:String?
     var piclist:JSONDecoder?
+    var dianzanlist:JSONDecoder?
     init() {
         
     }
     required init(_ decoder: JSONDecoder){
         content = decoder["content"].string
         piclist = decoder["pic"]
+        dianzanlist = decoder["like"]
         name = decoder["name"].string
         write_time = decoder["write_time"].string
         photo = decoder["photo"].string

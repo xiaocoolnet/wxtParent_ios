@@ -14,17 +14,36 @@ class BlogCellTableViewCell: UITableViewCell {
 
     
     @IBOutlet weak var blogAvator: UIImageView!
-    @IBOutlet weak var blogDicText: UILabel!
     
     @IBOutlet weak var blogName: UILabel!
     
     @IBOutlet weak var blogTime: UILabel!
     
+    @IBOutlet weak var dianZanPeople: UILabel!
+    
+    @IBOutlet weak var dianZanBtn: UIButton!
+    
     override func awakeFromNib() {
         super.awakeFromNib()
+        
+
         // Initialization code
     }
+    
+    @IBAction func DianZan(sender: AnyObject) {
+        dianZanBtn.selected = !dianZanBtn.selected
+        if(!dianZanBtn.selected){
+            
+            dianZanBtn.setImage(UIImage(named: "点赞"), forState: .Normal)
+            
+        }
+        else{
+            
+            dianZanBtn.setImage(UIImage(named: "已点赞"), forState: .Normal)
+        }
 
+    }
+   
     override func setSelected(selected: Bool, animated: Bool) {
         super.setSelected(selected, animated: animated)
 
