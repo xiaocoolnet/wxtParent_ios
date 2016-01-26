@@ -8,7 +8,6 @@
 
 import Foundation
 
-import Foundation
 
 class ServiceModel: JSONJoy{
     var status:String?

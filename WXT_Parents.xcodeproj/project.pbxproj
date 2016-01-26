@@ -15,6 +15,8 @@
 		EA010E6A1C4A295000BBED0B /* Readme in Resources */ = {isa = PBXBuildFile; fileRef = EA010E691C4A295000BBED0B /* Readme */; };
 		EA010E6C1C4A295D00BBED0B /* Readme in Resources */ = {isa = PBXBuildFile; fileRef = EA010E6B1C4A295D00BBED0B /* Readme */; };
 		EA143C7B1C44FAF800FC1F6C /* RegisterViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = EA143C7A1C44FAF800FC1F6C /* RegisterViewController.swift */; };
+		EA1C00461C5713FB0045989A /* BlogTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = EA1C00441C5713FB0045989A /* BlogTableViewCell.swift */; };
+		EA1C00471C5713FB0045989A /* BlogTableViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = EA1C00451C5713FB0045989A /* BlogTableViewCell.xib */; };
 		EA1E169A1C3F5ECD00C97FCF /* Url.swift in Sources */ = {isa = PBXBuildFile; fileRef = EA1E16991C3F5ECD00C97FCF /* Url.swift */; };
 		EA210EED1C3CA28F00BA9971 /* LoginViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = EA210EEC1C3CA28F00BA9971 /* LoginViewController.swift */; };
 		EA35CFC91C3E5C6E00FB60F9 /* Readme in Resources */ = {isa = PBXBuildFile; fileRef = EA35CFC81C3E5C6E00FB60F9 /* Readme */; };
@@ -47,11 +49,16 @@
 		EA59A3E51C313C90003FBE82 /* Readme in Resources */ = {isa = PBXBuildFile; fileRef = EA59A3E41C313C90003FBE82 /* Readme */; };
 		EA7608161C4CD8BA00169C50 /* BabySpaceMainTableViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = EA7608151C4CD8BA00169C50 /* BabySpaceMainTableViewController.swift */; };
 		EA902F101C326D6800CC5F6F /* readme in Resources */ = {isa = PBXBuildFile; fileRef = EA902F0F1C326D6800CC5F6F /* readme */; };
+		EA9233B91C5469C100B12FF6 /* PictureList.swift in Sources */ = {isa = PBXBuildFile; fileRef = EA9233B81C5469C100B12FF6 /* PictureList.swift */; };
 		EACA2A481C4FA0EC00A3ECD3 /* MineMainTableViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = EACA2A471C4FA0EC00A3ECD3 /* MineMainTableViewController.swift */; };
 		EACA2A4A1C4FB9CE00A3ECD3 /* MineModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = EACA2A491C4FB9CE00A3ECD3 /* MineModel.swift */; };
 		EAE0A5CC1C50810700ECF86E /* ChildrenInfo.swift in Sources */ = {isa = PBXBuildFile; fileRef = EAE0A5CB1C50810700ECF86E /* ChildrenInfo.swift */; };
 		EAE0A5CE1C5094F500ECF86E /* ServiceModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = EAE0A5CD1C5094F500ECF86E /* ServiceModel.swift */; };
 		EAE72E941C4099BB0038D055 /* MainTabbarViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = EAE72E931C4099BB0038D055 /* MainTabbarViewController.swift */; };
+		EAEB9E781C51FEC200EACE1B /* CornerRadiusViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = EAEB9E771C51FEC200EACE1B /* CornerRadiusViewController.swift */; };
+		EAEB9E821C5208F200EACE1B /* BlogMainTableTableViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = EAEB9E811C5208F200EACE1B /* BlogMainTableTableViewController.swift */; };
+		EAEB9E841C5223F700EACE1B /* BlogCellTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = EAEB9E831C5223F700EACE1B /* BlogCellTableViewCell.swift */; };
+		EAF181A91C53772A007706CE /* BlogList.swift in Sources */ = {isa = PBXBuildFile; fileRef = EAF181A81C53772A007706CE /* BlogList.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -65,6 +72,8 @@
 		EA010E691C4A295000BBED0B /* Readme */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = Readme; sourceTree = "<group>"; };
 		EA010E6B1C4A295D00BBED0B /* Readme */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = Readme; sourceTree = "<group>"; };
 		EA143C7A1C44FAF800FC1F6C /* RegisterViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = RegisterViewController.swift; sourceTree = "<group>"; };
+		EA1C00441C5713FB0045989A /* BlogTableViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = BlogTableViewCell.swift; sourceTree = "<group>"; };
+		EA1C00451C5713FB0045989A /* BlogTableViewCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = BlogTableViewCell.xib; sourceTree = "<group>"; };
 		EA1E16991C3F5ECD00C97FCF /* Url.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Url.swift; sourceTree = "<group>"; };
 		EA210EEC1C3CA28F00BA9971 /* LoginViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = LoginViewController.swift; sourceTree = "<group>"; };
 		EA210EEE1C3CEE8300BA9971 /* WXT_Parents-Bridging-Header.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "WXT_Parents-Bridging-Header.h"; sourceTree = "<group>"; };
@@ -100,11 +109,16 @@
 		EA59A3E41C313C90003FBE82 /* Readme */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = Readme; sourceTree = "<group>"; };
 		EA7608151C4CD8BA00169C50 /* BabySpaceMainTableViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = BabySpaceMainTableViewController.swift; sourceTree = "<group>"; };
 		EA902F0F1C326D6800CC5F6F /* readme */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = readme; sourceTree = "<group>"; };
+		EA9233B81C5469C100B12FF6 /* PictureList.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PictureList.swift; sourceTree = "<group>"; };
 		EACA2A471C4FA0EC00A3ECD3 /* MineMainTableViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MineMainTableViewController.swift; sourceTree = "<group>"; };
 		EACA2A491C4FB9CE00A3ECD3 /* MineModel.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MineModel.swift; sourceTree = "<group>"; };
-		EAE0A5CB1C50810700ECF86E /* ChildrenInfo.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ChildrenInfo.swift; sourceTree = "<group>"; };
+		EAE0A5CB1C50810700ECF86E /* ChildrenInfo.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = ChildrenInfo.swift; path = ../../Mine/Model/ChildrenInfo.swift; sourceTree = "<group>"; };
 		EAE0A5CD1C5094F500ECF86E /* ServiceModel.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ServiceModel.swift; sourceTree = "<group>"; };
 		EAE72E931C4099BB0038D055 /* MainTabbarViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MainTabbarViewController.swift; sourceTree = "<group>"; };
+		EAEB9E771C51FEC200EACE1B /* CornerRadiusViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CornerRadiusViewController.swift; sourceTree = "<group>"; };
+		EAEB9E811C5208F200EACE1B /* BlogMainTableTableViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = BlogMainTableTableViewController.swift; sourceTree = "<group>"; };
+		EAEB9E831C5223F700EACE1B /* BlogCellTableViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = BlogCellTableViewCell.swift; sourceTree = "<group>"; };
+		EAF181A81C53772A007706CE /* BlogList.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = BlogList.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -194,6 +208,7 @@
 		EA35CFC31C3E44F000FB60F9 /* Model */ = {
 			isa = PBXGroup;
 			children = (
+				EAE0A5CB1C50810700ECF86E /* ChildrenInfo.swift */,
 				EA40E3E51C3138A800072EC8 /* Httpresult.swift */,
 				EA35CFCA1C3E5C8E00FB60F9 /* Readme */,
 			);
@@ -265,6 +280,7 @@
 			children = (
 				EA40E3E31C3138A800072EC8 /* Jsonjoy */,
 				EA1E16991C3F5ECD00C97FCF /* Url.swift */,
+				EAEB9E771C51FEC200EACE1B /* CornerRadiusViewController.swift */,
 			);
 			path = Tool;
 			sourceTree = "<group>";
@@ -301,7 +317,6 @@
 			children = (
 				EA59A3E01C313C85003FBE82 /* Readme */,
 				EACA2A491C4FB9CE00A3ECD3 /* MineModel.swift */,
-				EAE0A5CB1C50810700ECF86E /* ChildrenInfo.swift */,
 				EAE0A5CD1C5094F500ECF86E /* ServiceModel.swift */,
 			);
 			path = Model;
@@ -363,6 +378,7 @@
 			isa = PBXGroup;
 			children = (
 				EA59A3D21C313C5F003FBE82 /* Readme */,
+				EAEB9E811C5208F200EACE1B /* BlogMainTableTableViewController.swift */,
 			);
 			path = Controller;
 			sourceTree = "<group>";
@@ -371,6 +387,8 @@
 			isa = PBXGroup;
 			children = (
 				EA59A3D41C313C64003FBE82 /* Readme */,
+				EAF181A81C53772A007706CE /* BlogList.swift */,
+				EA9233B81C5469C100B12FF6 /* PictureList.swift */,
 			);
 			path = Model;
 			sourceTree = "<group>";
@@ -379,6 +397,9 @@
 			isa = PBXGroup;
 			children = (
 				EA59A3D61C313C69003FBE82 /* Readme */,
+				EAEB9E831C5223F700EACE1B /* BlogCellTableViewCell.swift */,
+				EA1C00441C5713FB0045989A /* BlogTableViewCell.swift */,
+				EA1C00451C5713FB0045989A /* BlogTableViewCell.xib */,
 			);
 			path = View;
 			sourceTree = "<group>";
@@ -560,6 +581,7 @@
 			files = (
 				EA010E6C1C4A295D00BBED0B /* Readme in Resources */,
 				EA010E6A1C4A295000BBED0B /* Readme in Resources */,
+				EA1C00471C5713FB0045989A /* BlogTableViewCell.xib in Resources */,
 				EA902F101C326D6800CC5F6F /* readme in Resources */,
 				EA59A3E31C313C89003FBE82 /* Readme in Resources */,
 				EA59A3D51C313C64003FBE82 /* Readme in Resources */,
@@ -642,6 +664,9 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				EAEB9E781C51FEC200EACE1B /* CornerRadiusViewController.swift in Sources */,
+				EA1C00461C5713FB0045989A /* BlogTableViewCell.swift in Sources */,
+				EAEB9E821C5208F200EACE1B /* BlogMainTableTableViewController.swift in Sources */,
 				EA143C7B1C44FAF800FC1F6C /* RegisterViewController.swift in Sources */,
 				EAE0A5CE1C5094F500ECF86E /* ServiceModel.swift in Sources */,
 				EA4A70671C487DF100DAD9A1 /* RegisterGetCodeViewController.swift in Sources */,
@@ -649,6 +674,8 @@
 				EA210EED1C3CA28F00BA9971 /* LoginViewController.swift in Sources */,
 				EAE72E941C4099BB0038D055 /* MainTabbarViewController.swift in Sources */,
 				EACA2A4A1C4FB9CE00A3ECD3 /* MineModel.swift in Sources */,
+				EAF181A91C53772A007706CE /* BlogList.swift in Sources */,
+				EA9233B91C5469C100B12FF6 /* PictureList.swift in Sources */,
 				EA40E3971C30D33200072EC8 /* ViewController.swift in Sources */,
 				EA7608161C4CD8BA00169C50 /* BabySpaceMainTableViewController.swift in Sources */,
 				EA1E169A1C3F5ECD00C97FCF /* Url.swift in Sources */,
@@ -660,6 +687,7 @@
 				EACA2A481C4FA0EC00A3ECD3 /* MineMainTableViewController.swift in Sources */,
 				EA010E611C4A25E400BBED0B /* ForgetPasswordViewController.swift in Sources */,
 				EA40E3E71C3138A800072EC8 /* Http.swift in Sources */,
+				EAEB9E841C5223F700EACE1B /* BlogCellTableViewCell.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

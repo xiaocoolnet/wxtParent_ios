@@ -89,7 +89,13 @@ class LoginViewController: UIViewController ,UITextFieldDelegate{
                         
                         let userid = NSUserDefaults.standardUserDefaults()
                         userid.setValue(result.data?.id, forKey: "userid")
-                        let uid = userid.valueForKey("userid")
+                        //let uid = userid.valueForKey("userid")
+                        
+                        let schoolid = NSUserDefaults.standardUserDefaults()
+                        schoolid.setValue(result.data?.schoolid, forKey: "schoolid")
+                        
+                        let classid = NSUserDefaults.standardUserDefaults()
+                        classid.setValue(result.data?.classid, forKey: "classid")
 
                         self.GetChildrenUser()
                         let mainStoryboard = UIStoryboard(name: "Main", bundle: NSBundle.mainBundle())

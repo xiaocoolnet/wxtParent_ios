@@ -4,7 +4,22 @@
 <dict>
 	<key>SchemeUserState</key>
 	<dict>
+		<key>AFNetworking.xcscheme</key>
+		<dict>
+			<key>isShown</key>
+			<false/>
+		</dict>
 		<key>Alamofire.xcscheme</key>
+		<dict>
+			<key>isShown</key>
+			<false/>
+		</dict>
+		<key>ImageSlideshow-ImageSlideshow.xcscheme</key>
+		<dict>
+			<key>isShown</key>
+			<false/>
+		</dict>
+		<key>ImageSlideshow.xcscheme</key>
 		<dict>
 			<key>isShown</key>
 			<false/>
@@ -29,6 +44,11 @@
 			<key>isShown</key>
 			<false/>
 		</dict>
+		<key>UITableView+FDTemplateLayoutCell.xcscheme</key>
+		<dict>
+			<key>isShown</key>
+			<false/>
+		</dict>
 		<key>XWSwiftRefresh.xcscheme</key>
 		<dict>
 			<key>isShown</key>
@@ -37,6 +57,11 @@
 	</dict>
 	<key>SuppressBuildableAutocreation</key>
 	<dict>
+		<key>1A0BCF8AD93C9F03F8BF4FA065AC0BF5</key>
+		<dict>
+			<key>primary</key>
+			<true/>
+		</dict>
 		<key>3E49192D0E917BB89954FD017AAA1723</key>
 		<dict>
 			<key>primary</key>
@@ -47,12 +72,12 @@
 			<key>primary</key>
 			<true/>
 		</dict>
-		<key>9588EC5A919D67696844A8F1954CCAC9</key>
+		<key>4878C70B21CA37D7CB8A476BF986741B</key>
 		<dict>
 			<key>primary</key>
 			<true/>
 		</dict>
-		<key>AE16805EDAE8A5A0E7F7212B5DE46145</key>
+		<key>99A011DB236AD3D4B60833C8001472C0</key>
 		<dict>
 			<key>primary</key>
 			<true/>
@@ -62,7 +87,22 @@
 			<key>primary</key>
 			<true/>
 		</dict>
+		<key>E75431AF18C35892B80AEA6DAC750B12</key>
+		<dict>
+			<key>primary</key>
+			<true/>
+		</dict>
+		<key>F31A509891C2930CDCFAB51BA2BE857D</key>
+		<dict>
+			<key>primary</key>
+			<true/>
+		</dict>
 		<key>F464E7B0C1D479F1C95F81C8C59CBBAB</key>
+		<dict>
+			<key>primary</key>
+			<true/>
+		</dict>
+		<key>F8E00803588A4BC3D3855ABA6C7D1F73</key>
 		<dict>
 			<key>primary</key>
 			<true/>

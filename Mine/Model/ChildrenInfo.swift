@@ -7,7 +7,6 @@
 //
 
 import Foundation
-import Foundation
 class ChildrenList: JSONJoy {
 //    var status:String?
 //    var errorData:String?

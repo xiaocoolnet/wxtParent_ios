@@ -9,3 +9,4 @@
 import Foundation
 var apiUrl = "http://www.xiaocool.cn:8016/index.php?g=apps&m=index&a="
 var imageUrl = "http://www.xiaocool.cn:8016/uploads/avatar/"
+var microblogImageUrl = "http://www.xiaocool.cn:8016/uploads/microblog/"

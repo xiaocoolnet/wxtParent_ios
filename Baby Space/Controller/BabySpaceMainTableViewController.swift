@@ -31,6 +31,7 @@ class BabySpaceMainTableViewController: UITableViewController {
         childrenClass.layer.cornerRadius = 8
         childrenClass.layer.masksToBounds = true
         DropDownUpdate()
+       
         //self.navigationController?.navigationBar.setBackgroundImage(UIImage(named: "背景nav2"), forBarMetrics: UIBarMetrics.Default)
     }
     
@@ -48,6 +49,7 @@ class BabySpaceMainTableViewController: UITableViewController {
     func DropDownUpdate(){
         self.tableView.headerView = XWRefreshNormalHeader(target: self, action: "GetDate")
         self.tableView.headerView?.beginRefreshing()
+        
         
     }
     
