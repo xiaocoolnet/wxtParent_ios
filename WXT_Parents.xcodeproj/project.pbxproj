@@ -47,6 +47,7 @@
 		EA59A3E51C313C90003FBE82 /* Readme in Resources */ = {isa = PBXBuildFile; fileRef = EA59A3E41C313C90003FBE82 /* Readme */; };
 		EA7608161C4CD8BA00169C50 /* BabySpaceMainTableViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = EA7608151C4CD8BA00169C50 /* BabySpaceMainTableViewController.swift */; };
 		EA78A1E51C59FC5500159F22 /* BlogCommentTableViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = EA78A1E41C59FC5500159F22 /* BlogCommentTableViewController.swift */; };
+		EA78A1E71C5A329D00159F22 /* SchoolMainTableViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = EA78A1E61C5A329D00159F22 /* SchoolMainTableViewController.swift */; };
 		EA902F101C326D6800CC5F6F /* readme in Resources */ = {isa = PBXBuildFile; fileRef = EA902F0F1C326D6800CC5F6F /* readme */; };
 		EA9233B91C5469C100B12FF6 /* PictureList.swift in Sources */ = {isa = PBXBuildFile; fileRef = EA9233B81C5469C100B12FF6 /* PictureList.swift */; };
 		EAC8177F1C57801B006B6B8F /* DianZanList.swift in Sources */ = {isa = PBXBuildFile; fileRef = EAC8177E1C57801B006B6B8F /* DianZanList.swift */; };
@@ -107,6 +108,7 @@
 		EA59A3E41C313C90003FBE82 /* Readme */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = Readme; sourceTree = "<group>"; };
 		EA7608151C4CD8BA00169C50 /* BabySpaceMainTableViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = BabySpaceMainTableViewController.swift; sourceTree = "<group>"; };
 		EA78A1E41C59FC5500159F22 /* BlogCommentTableViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = BlogCommentTableViewController.swift; sourceTree = "<group>"; };
+		EA78A1E61C5A329D00159F22 /* SchoolMainTableViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = SchoolMainTableViewController.swift; path = ../SchoolMainTableViewController.swift; sourceTree = "<group>"; };
 		EA902F0F1C326D6800CC5F6F /* readme */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = readme; sourceTree = "<group>"; };
 		EA9233B81C5469C100B12FF6 /* PictureList.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PictureList.swift; sourceTree = "<group>"; };
 		EAC8177E1C57801B006B6B8F /* DianZanList.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DianZanList.swift; sourceTree = "<group>"; };
@@ -343,6 +345,7 @@
 		EA40E3EF1C3139FE00072EC8 /* Controller */ = {
 			isa = PBXGroup;
 			children = (
+				EA78A1E61C5A329D00159F22 /* SchoolMainTableViewController.swift */,
 				EA59A3D81C313C70003FBE82 /* Readme */,
 			);
 			path = Controller;
@@ -683,6 +686,7 @@
 				EA40E3E91C3138A800072EC8 /* JSONJoy.swift in Sources */,
 				EA40E3E81C3138A800072EC8 /* Httpresult.swift in Sources */,
 				EA010E641C4A261E00BBED0B /* ForgetPasswordSetViewController.swift in Sources */,
+				EA78A1E71C5A329D00159F22 /* SchoolMainTableViewController.swift in Sources */,
 				EA78A1E51C59FC5500159F22 /* BlogCommentTableViewController.swift in Sources */,
 				EACA2A481C4FA0EC00A3ECD3 /* MineMainTableViewController.swift in Sources */,
 				EA010E611C4A25E400BBED0B /* ForgetPasswordViewController.swift in Sources */,

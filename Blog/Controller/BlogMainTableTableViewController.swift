@@ -164,9 +164,6 @@ class BlogMainTableTableViewController: UITableViewController {
             Indetifiername = "blogCell"
             var cell2:BlogCellTableViewCell? = tableView.dequeueReusableCellWithIdentifier(Indetifiername) as? BlogCellTableViewCell
             var blogimage:UIImageView?
-
-            cell2?.selectionStyle = UITableViewCellSelectionStyle.None
-            
             if cell2 == nil{
                 cell2 = BlogCellTableViewCell(style: UITableViewCellStyle.Default, reuseIdentifier: Indetifiername)
             }
@@ -184,13 +181,9 @@ class BlogMainTableTableViewController: UITableViewController {
             let string:NSString = bloginfo.content!
             let screenBounds:CGRect = UIScreen.mainScreen().bounds
             let boundingRect = string.boundingRectWithSize(CGSizeMake(screenBounds.width-5, 0), options: options, attributes: [NSFontAttributeName:blogDicText.font], context: nil)
-            
             blogDicText.text = bloginfo.content!
-            
-            print(boundingRect)
             blogDicText.frame = CGRectMake(5, 5, boundingRect.size.width, boundingRect.size.height)
             
-            print(blogDicText.frame)
             cell2?.contentView.addSubview(blogDicText)
             //如果高度大于140就显示7行
             if(boundingRect.size.height>140){
