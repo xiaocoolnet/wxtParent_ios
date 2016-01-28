@@ -36,6 +36,7 @@ class BlogInfo: JSONJoy{
     var photo:String?
     var piclist:JSONDecoder?
     var dianzanlist:JSONDecoder?
+    var mid:String?
     init() {
         
     }
@@ -46,7 +47,7 @@ class BlogInfo: JSONJoy{
         name = decoder["name"].string
         write_time = decoder["write_time"].string
         photo = decoder["photo"].string
-        
+        mid = decoder["mid"].string
     }
     
 }

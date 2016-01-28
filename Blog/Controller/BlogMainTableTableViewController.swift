@@ -19,17 +19,26 @@ class BlogMainTableTableViewController: UITableViewController {
     var blogSource = BlogList()
     var pciSource = PictureList()
     var DianzanSource = DianZanList()
+    
     var imageCache = Dictionary<String,UIImage>()
+    var mid:String?
     
     override func viewDidLoad() {
         super.viewDidLoad()
         
-        scrollImageView.slideshowInterval = 5.0
-        scrollImageView.setImageInputs([AFURLSource(urlString: "http://pic2.ooopic.com/01/03/51/25b1OOOPIC19.jpg")!, AFURLSource(urlString: "http://ppt360.com/background/UploadFiles_6733/201012/2010122016291897.jpg")!, AFURLSource(urlString: "http://img.taopic.com/uploads/allimg/130501/240451-13050106450911.jpg")!])
-        
+        ScrollViewImage()
         DropDownUpdate()
         UpPullAdd()
         
+    }
+    
+    func ScrollViewImage(){
+        scrollImageView.slideshowInterval = 5.0
+        scrollImageView.setImageInputs([AFURLSource(urlString: "http://pic2.ooopic.com/01/03/51/25b1OOOPIC19.jpg")!, AFURLSource(urlString: "http://ppt360.com/background/UploadFiles_6733/201012/2010122016291897.jpg")!, AFURLSource(urlString: "http://img.taopic.com/uploads/allimg/130501/240451-13050106450911.jpg")!])
+    }
+    
+    override func viewWillAppear(animated: Bool) {
+        self.tabBarController?.tabBar.hidden = false
     }
     
 
@@ -123,23 +132,40 @@ class BlogMainTableTableViewController: UITableViewController {
         let bloginfo = self.blogSource.objectlist[indexPath.section]
         self.pciSource = PictureList(bloginfo.piclist!)
         self.DianzanSource = DianZanList(bloginfo.dianzanlist!)
-        print("begin::")
-        print(indexPath.section)
         if(indexPath.row == 0){
             Indetifiername = "blogHeader"
             let cell1 = tableView.dequeueReusableCellWithIdentifier(Indetifiername, forIndexPath: indexPath) as! BlogCellTableViewCell
 //            let dateformate = NSDateFormatter()
 //            dateformate.dateFormat = "yyy-MM-dd"
 //            cell1.blogTime.text = dateformate.stringFromDate(bloginfo.write_time!)
+            if(bloginfo.photo != nil){
+                let imgUrl = imageUrl+(bloginfo.photo!)
+                
+                let image = self.imageCache[imgUrl] as UIImage?
+                let avatarUrl = NSURL(string: imgUrl)
+                let request: NSURLRequest = NSURLRequest(URL: avatarUrl!)
+                //异步获取
+                NSURLConnection.sendAsynchronousRequest(request, queue: NSOperationQueue.mainQueue(), completionHandler: {(response: NSURLResponse?,data: NSData?,error: NSError?)-> Void in
+                    if(data != nil){
+                        let imgTmp = UIImage(data: data!)
+                        self.imageCache[imgUrl] = imgTmp
+                        cell1.blogAvator.image = imgTmp
+                        cell1.blogAvator.alpha = 1.0
+                        
+                    }
+                })
+                
+            }
             cell1.blogName.text = bloginfo.name!
             return cell1
             
-        }else if(indexPath.row == 1){
-            Indetifiername = "Imagecell"
+        }
+        else if(indexPath.row == 1){
+            Indetifiername = "blogCell"
             var cell2:BlogCellTableViewCell? = tableView.dequeueReusableCellWithIdentifier(Indetifiername) as? BlogCellTableViewCell
-            //var cell2:BlogCellTableViewCell? = tableView.cellForRowAtIndexPath(indexPath) as?BlogCellTableViewCell
             var blogimage:UIImageView?
 
+            cell2?.selectionStyle = UITableViewCellSelectionStyle.None
             
             if cell2 == nil{
                 cell2 = BlogCellTableViewCell(style: UITableViewCellStyle.Default, reuseIdentifier: Indetifiername)
@@ -147,7 +173,6 @@ class BlogMainTableTableViewController: UITableViewController {
             else{
                 while(cell2?.contentView.subviews.last != nil){
                     cell2?.contentView.subviews.last?.removeFromSuperview()
-                    
                 }
             }
 
@@ -183,13 +208,11 @@ class BlogMainTableTableViewController: UITableViewController {
                     
                     NSURLConnection.sendAsynchronousRequest(request, queue: NSOperationQueue.mainQueue(), completionHandler: {(response: NSURLResponse?,data: NSData?,error: NSError?)-> Void in
                         if(data != nil){
-                            
-                            x = x+((i-1)*85)
+                           x = x+((i-1)*85)
                            blogimage = UIImageView(frame: CGRectMake(CGFloat(x), 20*7+20, 80, 80))
                             let imgTmp = UIImage(data: data!)
                             //self.imageCache[imgUrl] = imgTmp
                             blogimage!.image = imgTmp
-                            
                             cell2!.contentView.addSubview(blogimage!)
                         }
                     })
@@ -456,39 +479,115 @@ class BlogMainTableTableViewController: UITableViewController {
         
             return cell2!
  
-        }else{
-            Indetifiername = "blogFooter"
+        }
+        else{
             
-            let cell3 = tableView.dequeueReusableCellWithIdentifier(Indetifiername, forIndexPath: indexPath) as! BlogCellTableViewCell
-            cell3.dianZanBtn.selected = false
-            if(self.DianzanSource.count>3){
-                let array3 = NSMutableArray()
-                for i in 1...3{
-                    let dianzanInfo = DianzanSource.dianzanlist[i-1]
-                    array3.addObject(dianzanInfo.dianZanName!)
-                    
+            Indetifiername = "blogFooter"
+            let arrayPeople = NSMutableArray()
+            var cell3:BlogCellTableViewCell? = tableView.dequeueReusableCellWithIdentifier(Indetifiername) as? BlogCellTableViewCell
+            if cell3 == nil{
+                cell3 = BlogCellTableViewCell(style: UITableViewCellStyle.Default, reuseIdentifier: Indetifiername)
+            }
+            else{
+                while(cell3?.contentView.subviews.last != nil){
+                    cell3?.contentView.subviews.last?.removeFromSuperview()
                 }
-                let peopleArray = array3.componentsJoinedByString(",")
-            cell3.dianZanPeople.text = "\(peopleArray)等\(self.DianzanSource.count)人觉得很赞"
             }
-            if(self.DianzanSource.count == 0 ){
-                cell3.dianZanPeople.text = ""
+            
+            cell3!.dianZanBtn.frame = CGRectMake(10,10,30,30)
+            cell3!.pingLunBtn.frame = CGRectMake(10,45,30,30)
+            cell3!.pingLunBtn.setImage(UIImage(named: "评论"), forState: UIControlState.Normal)
+            cell3!.pingLunBtn.addTarget(self, action: Selector("ToPingLun"), forControlEvents: UIControlEvents.TouchUpInside)
+            cell3!.dianZanPeople.frame = CGRectMake(45,10,UIScreen.mainScreen().bounds.width-45,30)
+            cell3!.dianZanPeople.font = UIFont.systemFontOfSize(15)
+            cell3!.dianZanPeople.textColor = UIColor.grayColor()
+            cell3?.contentView.addSubview(cell3!.pingLunBtn)
+            cell3?.contentView.addSubview(cell3!.dianZanBtn)
+            cell3?.contentView.addSubview(cell3!.dianZanPeople)
+            
+            //
+            
+            //获取缓存
+            let userid = NSUserDefaults.standardUserDefaults()
+            let uid = userid.stringForKey("userid")
+            /**
+            *  
+            如果点赞数量等于0，不现实
+            如果在1-5跟之间点赞，显示全部
+            如果大于5个人点赞，显示5个人等X个人点赞
+            */
+            
+            if(DianzanSource.count == 0){
+                    cell3!.dianZanPeople.text = ""
+                    cell3!.dianZanBtn.selected = false
+                    cell3!.dianZanBtn.setImage(UIImage(named: "点赞"), forState: .Normal)
             }
-            if(self.DianzanSource.count<3&&self.DianzanSource.count>0){
-                let array3 = NSMutableArray()
+            
+            if(DianzanSource.count > 0 && DianzanSource.count <= 5){
+                //循环遍历点赞数量，对比是否自己点过赞
                 for i in 1...DianzanSource.count{
                     let dianzanInfo = DianzanSource.dianzanlist[i-1]
-                    array3.addObject(dianzanInfo.dianZanName!)
-                    
+                    //如果点过赞，则显示点赞图标
+                    if(dianzanInfo.dianZanId == uid){
+                        cell3!.dianZanBtn.selected = true
+                        cell3!.dianZanBtn.setImage(UIImage(named: "已点赞"), forState:.Normal)
+                        arrayPeople.addObject(dianzanInfo.dianZanName!)
+                        let peopleArray = arrayPeople.componentsJoinedByString(",")
+                        cell3!.dianZanPeople.text = "\(peopleArray)觉得很赞"
+
+                    }
+                    //如果没点过赞，显示灰色图标
+                    else{
+                        cell3!.dianZanBtn.selected = false
+                        cell3!.dianZanBtn.setImage(UIImage(named: "点赞"), forState: .Normal)
+                        arrayPeople.addObject(dianzanInfo.dianZanName!)
+                        let peopleArray = arrayPeople.componentsJoinedByString(",")
+                        cell3!.dianZanPeople.text = "\(peopleArray)觉得很赞"
+                    }
                 }
-                let peopleArray = array3.componentsJoinedByString(",")
-                cell3.dianZanPeople.text = "\(peopleArray)觉得很赞"
             }
-            return cell3
+            if(DianzanSource.count > 5){
+                for i in 1...DianzanSource.count{
+                    let dianzanInfo = DianzanSource.dianzanlist[i-1]
+                    //如果点过赞，则显示点赞图标
+                    if(dianzanInfo.dianZanId == uid){
+                        cell3!.dianZanBtn.selected = true
+                        cell3!.dianZanBtn.setImage(UIImage(named: "已点赞"), forState: .Normal)
+                        for i in 1...5{
+                            let dianzanInfo = DianzanSource.dianzanlist[i-1]
+                            arrayPeople.addObject(dianzanInfo.dianZanName!)
+                            let peopleArray = arrayPeople.componentsJoinedByString(",")
+                            cell3!.dianZanPeople.text = "\(peopleArray)等\(DianzanSource.count)人觉得很赞"
+                        }
+                    }
+                        //如果没点过赞，显示灰色图标
+                    else{
+                        cell3!.dianZanBtn.selected = false
+                        cell3!.dianZanBtn.setImage(UIImage(named: "点赞"), forState: .Normal)
+                        for i in 1...5{
+                            let dianzanInfo = DianzanSource.dianzanlist[i-1]
+                            arrayPeople.addObject(dianzanInfo.dianZanName!)
+                            let peopleArray = arrayPeople.componentsJoinedByString(",")
+                            cell3!.dianZanPeople.text = "\(peopleArray)等\(DianzanSource.count)人觉得很赞"
+                        }
+
+                    }
+                }
+
+            }
+            
+            cell3!.mid = bloginfo.mid!
+            if cell3!.myDianZan.containsObject(bloginfo.mid!){
+                cell3!.dianZanBtn.setImage(UIImage(named: "已点赞"), forState: .Normal)
+            }
+            
+            
+            return cell3!
         }
             
         
     }
+    
     
     override func tableView(tableView: UITableView, heightForRowAtIndexPath indexPath: NSIndexPath) -> CGFloat{
         if(indexPath.row == 0){
@@ -503,7 +602,7 @@ class BlogMainTableTableViewController: UITableViewController {
                 let string:NSString = bloginfo.content!
                 let screenBounds:CGRect = UIScreen.mainScreen().bounds
                 let boundingRect = string.boundingRectWithSize(CGSizeMake(screenBounds.width, 0), options: options, attributes: [NSFontAttributeName:UIFont.systemFontOfSize(17)], context: nil)
-                return boundingRect.size.height
+                return boundingRect.size.height+20
             }
             if(pciSource.count<=3&&pciSource.count>0){
                 let string:NSString = bloginfo.content!
@@ -542,7 +641,13 @@ class BlogMainTableTableViewController: UITableViewController {
         if(indexPath.row == 3){
             return 60
         }
-    return 100
+    return 80
+    }
+    
+    func ToPingLun(){
+        let mainStoryboard = UIStoryboard(name: "Main", bundle: NSBundle.mainBundle())
+        let vc : UIViewController = mainStoryboard.instantiateViewControllerWithIdentifier("PingLunView") 
+        self.navigationController?.pushViewController(vc, animated: true)
     }
     
     

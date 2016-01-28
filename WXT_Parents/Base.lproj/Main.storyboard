@@ -205,10 +205,10 @@
                         <button key="tableFooterView" opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" id="EHt-X0-2OW">
                             <rect key="frame" x="0.0" y="724" width="375" height="44"/>
                             <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
-                            <color key="backgroundColor" red="1" green="0.065999032071843988" blue="0.10268962043829211" alpha="1" colorSpace="calibratedRGB"/>
+                            <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                             <fontDescription key="fontDescription" type="boldSystem" pointSize="18"/>
                             <state key="normal" title="退出登录">
-                                <color key="titleColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                                <color key="titleColor" red="1" green="0.065999032070000005" blue="0.1026896204" alpha="1" colorSpace="calibratedRGB"/>
                             </state>
                         </button>
                         <sections>
@@ -221,12 +221,17 @@
                                             <rect key="frame" x="0.0" y="0.0" width="375" height="126"/>
                                             <autoresizingMask key="autoresizingMask"/>
                                             <subviews>
-                                                <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="宝宝好友" translatesAutoresizingMaskIntoConstraints="NO" id="7Pb-gu-nkz">
+                                                <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="Logo" translatesAutoresizingMaskIntoConstraints="NO" id="7Pb-gu-nkz">
                                                     <rect key="frame" x="147" y="16" width="80" height="80"/>
                                                     <constraints>
                                                         <constraint firstAttribute="height" constant="80" id="AW9-ty-XH7"/>
                                                         <constraint firstAttribute="width" constant="80" id="wFY-d9-3Hl"/>
                                                     </constraints>
+                                                    <userDefinedRuntimeAttributes>
+                                                        <userDefinedRuntimeAttribute type="number" keyPath="cornerRadius">
+                                                            <real key="value" value="40"/>
+                                                        </userDefinedRuntimeAttribute>
+                                                    </userDefinedRuntimeAttributes>
                                                 </imageView>
                                                 <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="姓名" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="PT9-YQ-Dyk">
                                                     <rect key="frame" x="147" y="99" width="80" height="22"/>
@@ -626,7 +631,7 @@
                             <autoresizingMask key="autoresizingMask" widthSizable="YES" flexibleMinY="YES"/>
                         </containerView>
                         <prototypes>
-                            <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" selectionStyle="blue" hidesAccessoryWhenEditing="NO" indentationLevel="1" indentationWidth="0.0" reuseIdentifier="blogHeader" rowHeight="70" id="jbv-fm-5Oe" customClass="BlogCellTableViewCell" customModule="WXT_Parents" customModuleProvider="target">
+                            <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" selectionStyle="none" hidesAccessoryWhenEditing="NO" indentationLevel="1" indentationWidth="0.0" reuseIdentifier="blogHeader" rowHeight="70" id="jbv-fm-5Oe" customClass="BlogCellTableViewCell" customModule="WXT_Parents" customModuleProvider="target">
                                 <rect key="frame" x="0.0" y="227" width="375" height="70"/>
                                 <autoresizingMask key="autoresizingMask"/>
                                 <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="jbv-fm-5Oe" id="dMY-xN-JaW">
@@ -681,7 +686,7 @@
                                     <outlet property="blogTime" destination="RWI-Fh-Bby" id="CTr-O6-aIi"/>
                                 </connections>
                             </tableViewCell>
-                            <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" selectionStyle="blue" hidesAccessoryWhenEditing="NO" indentationLevel="1" indentationWidth="0.0" reuseIdentifier="blogCell" rowHeight="126" id="Fyh-dN-Inj" customClass="BlogCellTableViewCell" customModule="WXT_Parents" customModuleProvider="target">
+                            <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" selectionStyle="none" hidesAccessoryWhenEditing="NO" indentationLevel="1" indentationWidth="0.0" reuseIdentifier="blogCell" rowHeight="126" id="Fyh-dN-Inj" customClass="BlogCellTableViewCell" customModule="WXT_Parents" customModuleProvider="target">
                                 <rect key="frame" x="0.0" y="297" width="375" height="126"/>
                                 <autoresizingMask key="autoresizingMask"/>
                                 <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="Fyh-dN-Inj" id="sj4-qd-1jB">
@@ -689,49 +694,13 @@
                                     <autoresizingMask key="autoresizingMask"/>
                                 </tableViewCellContentView>
                             </tableViewCell>
-                            <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" restorationIdentifier="blogCell" selectionStyle="blue" hidesAccessoryWhenEditing="NO" indentationLevel="1" indentationWidth="0.0" reuseIdentifier="blogFooter" rowHeight="202" id="BM9-aS-esD" customClass="BlogCellTableViewCell" customModule="WXT_Parents" customModuleProvider="target">
+                            <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" restorationIdentifier="blogCell" selectionStyle="none" hidesAccessoryWhenEditing="NO" indentationLevel="1" indentationWidth="0.0" reuseIdentifier="blogFooter" rowHeight="202" id="BM9-aS-esD" customClass="BlogCellTableViewCell" customModule="WXT_Parents" customModuleProvider="target">
                                 <rect key="frame" x="0.0" y="423" width="375" height="202"/>
                                 <autoresizingMask key="autoresizingMask"/>
                                 <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="BM9-aS-esD" id="eIV-eu-oe1">
                                     <rect key="frame" x="0.0" y="0.0" width="375" height="201"/>
                                     <autoresizingMask key="autoresizingMask"/>
-                                    <subviews>
-                                        <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="8Yg-2V-ERy">
-                                            <rect key="frame" x="8" y="39" width="25" height="25"/>
-                                        </imageView>
-                                        <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Label" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="PcY-yy-EWW">
-                                            <rect key="frame" x="41" y="11" width="320" height="21"/>
-                                            <constraints>
-                                                <constraint firstAttribute="height" constant="21" id="jYG-BE-U5U"/>
-                                            </constraints>
-                                            <fontDescription key="fontDescription" type="system" pointSize="15"/>
-                                            <color key="textColor" white="0.66666666666666663" alpha="1" colorSpace="calibratedWhite"/>
-                                            <nil key="highlightedColor"/>
-                                        </label>
-                                        <button opaque="NO" tag="1001" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="E70-Hz-HSb">
-                                            <rect key="frame" x="8" y="6" width="30" height="30"/>
-                                            <constraints>
-                                                <constraint firstAttribute="width" constant="30" id="7mz-Ev-bRo"/>
-                                                <constraint firstAttribute="height" constant="30" id="Ehq-Tx-ufe"/>
-                                            </constraints>
-                                            <state key="normal" title="Button" image="点赞"/>
-                                            <connections>
-                                                <action selector="DianZan:" destination="BM9-aS-esD" eventType="touchUpInside" id="sE2-4Q-QAX"/>
-                                            </connections>
-                                        </button>
-                                    </subviews>
-                                    <constraints>
-                                        <constraint firstItem="PcY-yy-EWW" firstAttribute="top" secondItem="eIV-eu-oe1" secondAttribute="topMargin" constant="3" id="395-cF-SPY"/>
-                                        <constraint firstItem="E70-Hz-HSb" firstAttribute="leading" secondItem="eIV-eu-oe1" secondAttribute="leadingMargin" id="GMm-4H-Fsv"/>
-                                        <constraint firstItem="PcY-yy-EWW" firstAttribute="leading" secondItem="E70-Hz-HSb" secondAttribute="trailing" constant="3" id="VcM-FX-w6F"/>
-                                        <constraint firstItem="E70-Hz-HSb" firstAttribute="top" secondItem="eIV-eu-oe1" secondAttribute="topMargin" constant="-2" id="aBg-6s-A2s"/>
-                                        <constraint firstAttribute="trailingMargin" secondItem="PcY-yy-EWW" secondAttribute="trailing" constant="6" id="fgS-Yl-LOx"/>
-                                    </constraints>
                                 </tableViewCellContentView>
-                                <connections>
-                                    <outlet property="dianZanBtn" destination="E70-Hz-HSb" id="oAV-6A-CIP"/>
-                                    <outlet property="dianZanPeople" destination="PcY-yy-EWW" id="axg-81-RL5"/>
-                                </connections>
                             </tableViewCell>
                         </prototypes>
                         <sections/>
@@ -755,6 +724,35 @@
                 <placeholder placeholderIdentifier="IBFirstResponder" id="bTm-Yg-IHQ" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
             <point key="canvasLocation" x="807.5" y="3123"/>
+        </scene>
+        <!--Blog Comment Table View Controller-->
+        <scene sceneID="QUc-Td-4N6">
+            <objects>
+                <tableViewController storyboardIdentifier="PingLunView" id="cO9-55-twt" customClass="BlogCommentTableViewController" customModule="WXT_Parents" customModuleProvider="target" sceneMemberID="viewController">
+                    <tableView key="view" clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="default" rowHeight="44" sectionHeaderHeight="28" sectionFooterHeight="28" id="xfR-0L-4dG">
+                        <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
+                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                        <prototypes>
+                            <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" selectionStyle="default" indentationWidth="10" id="3UD-9Q-QSH">
+                                <rect key="frame" x="0.0" y="28" width="375" height="44"/>
+                                <autoresizingMask key="autoresizingMask"/>
+                                <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="3UD-9Q-QSH" id="hRs-iy-dLx">
+                                    <rect key="frame" x="0.0" y="0.0" width="375" height="43"/>
+                                    <autoresizingMask key="autoresizingMask"/>
+                                </tableViewCellContentView>
+                            </tableViewCell>
+                        </prototypes>
+                        <connections>
+                            <outlet property="dataSource" destination="cO9-55-twt" id="v47-SK-QaP"/>
+                            <outlet property="delegate" destination="cO9-55-twt" id="EdW-Sf-cSg"/>
+                        </connections>
+                    </tableView>
+                    <simulatedScreenMetrics key="simulatedDestinationMetrics" type="retina47"/>
+                </tableViewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="exp-4t-xzH" userLabel="First Responder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="807.5" y="3942.5"/>
         </scene>
         <!--宝宝空间-->
         <scene sceneID="bfU-Za-sGl">
@@ -2544,6 +2542,7 @@
                     <navigationBar key="navigationBar" contentMode="scaleToFill" translucent="NO" id="umB-fX-D7e">
                         <rect key="frame" x="0.0" y="0.0" width="320" height="44"/>
                         <autoresizingMask key="autoresizingMask"/>
+                        <color key="tintColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                         <color key="barTintColor" red="0.60784313729999995" green="0.8980392157" blue="0.70588235290000001" alpha="1" colorSpace="calibratedRGB"/>
                         <textAttributes key="titleTextAttributes">
                             <color key="textColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
@@ -2642,7 +2641,6 @@
         <image name="无网络的背景" width="709" height="370"/>
         <image name="时间" width="24" height="24"/>
         <image name="消息" width="89" height="88"/>
-        <image name="点赞" width="26" height="23"/>
         <image name="班级活动" width="88" height="88"/>
         <image name="班级课程" width="88" height="88"/>
         <image name="用户名输入栏" width="291" height="48"/>
