@@ -11,17 +11,21 @@ import Foundation
 class Http: JSONJoy{
     var status:String?
     var data:JSONDecoder?
-    var datastring:String?
+    var errorData:String?
     var uid:String?
     init(){
     }
     required init(_ decoder:JSONDecoder){
+//        status = decoder["status"].string
+//        data = decoder["data"]
+//        uid = decoder["id"].string
         status = decoder["status"].string
-        data = decoder["data"]
-        uid = decoder["id"].string
-        //        println("ddd")
-        //        var d = Partner(data!)
-        //        println(d.username)
-        //        println("end")
+        if status == "success"{
+            data = decoder["data"]
+        }else{
+            errorData = decoder["data"].string
+        }
+
+        
     }
 }

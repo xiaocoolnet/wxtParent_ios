@@ -14,6 +14,7 @@
 		EA010E681C4A291900BBED0B /* Readme in Resources */ = {isa = PBXBuildFile; fileRef = EA010E671C4A291900BBED0B /* Readme */; };
 		EA010E6A1C4A295000BBED0B /* Readme in Resources */ = {isa = PBXBuildFile; fileRef = EA010E691C4A295000BBED0B /* Readme */; };
 		EA010E6C1C4A295D00BBED0B /* Readme in Resources */ = {isa = PBXBuildFile; fileRef = EA010E6B1C4A295D00BBED0B /* Readme */; };
+		EA065B291C5B09BF0062E84D /* GrowingDiaryMainViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = EA065B281C5B09BF0062E84D /* GrowingDiaryMainViewController.swift */; };
 		EA143C7B1C44FAF800FC1F6C /* RegisterViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = EA143C7A1C44FAF800FC1F6C /* RegisterViewController.swift */; };
 		EA1E169A1C3F5ECD00C97FCF /* Url.swift in Sources */ = {isa = PBXBuildFile; fileRef = EA1E16991C3F5ECD00C97FCF /* Url.swift */; };
 		EA210EED1C3CA28F00BA9971 /* LoginViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = EA210EEC1C3CA28F00BA9971 /* LoginViewController.swift */; };
@@ -30,6 +31,10 @@
 		EA40E3E91C3138A800072EC8 /* JSONJoy.swift in Sources */ = {isa = PBXBuildFile; fileRef = EA40E3E61C3138A800072EC8 /* JSONJoy.swift */; };
 		EA4A70671C487DF100DAD9A1 /* RegisterGetCodeViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = EA4A70661C487DF100DAD9A1 /* RegisterGetCodeViewController.swift */; };
 		EA4A70691C487E1D00DAD9A1 /* RegisterSetPasswordViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = EA4A70681C487E1D00DAD9A1 /* RegisterSetPasswordViewController.swift */; };
+		EA4B63D91C5B1DE10042711F /* MyTableViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = EA4B63D81C5B1DE10042711F /* MyTableViewController.swift */; };
+		EA4B63DB1C5B1DEF0042711F /* FriendsTableViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = EA4B63DA1C5B1DEF0042711F /* FriendsTableViewController.swift */; };
+		EA4B63DD1C5B22FE0042711F /* DiaryTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = EA4B63DC1C5B22FE0042711F /* DiaryTableViewCell.swift */; };
+		EA4B63E11C5B60980042711F /* DiaryList.swift in Sources */ = {isa = PBXBuildFile; fileRef = EA4B63E01C5B60980042711F /* DiaryList.swift */; };
 		EA59A3C71C313C2B003FBE82 /* Readme in Resources */ = {isa = PBXBuildFile; fileRef = EA59A3C61C313C2B003FBE82 /* Readme */; };
 		EA59A3C91C313C32003FBE82 /* Readme in Resources */ = {isa = PBXBuildFile; fileRef = EA59A3C81C313C32003FBE82 /* Readme */; };
 		EA59A3CD1C313C43003FBE82 /* Readme in Resources */ = {isa = PBXBuildFile; fileRef = EA59A3CC1C313C43003FBE82 /* Readme */; };
@@ -72,6 +77,7 @@
 		EA010E671C4A291900BBED0B /* Readme */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = Readme; sourceTree = "<group>"; };
 		EA010E691C4A295000BBED0B /* Readme */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = Readme; sourceTree = "<group>"; };
 		EA010E6B1C4A295D00BBED0B /* Readme */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = Readme; sourceTree = "<group>"; };
+		EA065B281C5B09BF0062E84D /* GrowingDiaryMainViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = GrowingDiaryMainViewController.swift; sourceTree = "<group>"; };
 		EA143C7A1C44FAF800FC1F6C /* RegisterViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = RegisterViewController.swift; sourceTree = "<group>"; };
 		EA1E16991C3F5ECD00C97FCF /* Url.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Url.swift; sourceTree = "<group>"; };
 		EA210EEC1C3CA28F00BA9971 /* LoginViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = LoginViewController.swift; sourceTree = "<group>"; };
@@ -91,6 +97,10 @@
 		EA40E3E61C3138A800072EC8 /* JSONJoy.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = JSONJoy.swift; sourceTree = "<group>"; };
 		EA4A70661C487DF100DAD9A1 /* RegisterGetCodeViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = RegisterGetCodeViewController.swift; sourceTree = "<group>"; };
 		EA4A70681C487E1D00DAD9A1 /* RegisterSetPasswordViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = RegisterSetPasswordViewController.swift; sourceTree = "<group>"; };
+		EA4B63D81C5B1DE10042711F /* MyTableViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MyTableViewController.swift; sourceTree = "<group>"; };
+		EA4B63DA1C5B1DEF0042711F /* FriendsTableViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = FriendsTableViewController.swift; sourceTree = "<group>"; };
+		EA4B63DC1C5B22FE0042711F /* DiaryTableViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = DiaryTableViewCell.swift; path = ../../School/View/DiaryTableViewCell.swift; sourceTree = "<group>"; };
+		EA4B63E01C5B60980042711F /* DiaryList.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DiaryList.swift; sourceTree = "<group>"; };
 		EA59A3C61C313C2B003FBE82 /* Readme */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = Readme; sourceTree = "<group>"; };
 		EA59A3C81C313C32003FBE82 /* Readme */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = Readme; sourceTree = "<group>"; };
 		EA59A3CC1C313C43003FBE82 /* Readme */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = Readme; sourceTree = "<group>"; };
@@ -421,6 +431,9 @@
 			isa = PBXGroup;
 			children = (
 				EA59A3CC1C313C43003FBE82 /* Readme */,
+				EA065B281C5B09BF0062E84D /* GrowingDiaryMainViewController.swift */,
+				EA4B63D81C5B1DE10042711F /* MyTableViewController.swift */,
+				EA4B63DA1C5B1DEF0042711F /* FriendsTableViewController.swift */,
 			);
 			path = Controller;
 			sourceTree = "<group>";
@@ -429,6 +442,7 @@
 			isa = PBXGroup;
 			children = (
 				EA59A3CE1C313C48003FBE82 /* Readme */,
+				EA4B63E01C5B60980042711F /* DiaryList.swift */,
 			);
 			path = Model;
 			sourceTree = "<group>";
@@ -436,6 +450,7 @@
 		EA40E3F91C313A1700072EC8 /* View */ = {
 			isa = PBXGroup;
 			children = (
+				EA4B63DC1C5B22FE0042711F /* DiaryTableViewCell.swift */,
 				EA59A3D01C313C4D003FBE82 /* Readme */,
 			);
 			path = View;
@@ -668,13 +683,17 @@
 			files = (
 				EAEB9E781C51FEC200EACE1B /* CornerRadiusViewController.swift in Sources */,
 				EAEB9E821C5208F200EACE1B /* BlogMainTableTableViewController.swift in Sources */,
+				EA4B63DB1C5B1DEF0042711F /* FriendsTableViewController.swift in Sources */,
 				EA143C7B1C44FAF800FC1F6C /* RegisterViewController.swift in Sources */,
 				EAE0A5CE1C5094F500ECF86E /* ServiceModel.swift in Sources */,
 				EA4A70671C487DF100DAD9A1 /* RegisterGetCodeViewController.swift in Sources */,
+				EA4B63E11C5B60980042711F /* DiaryList.swift in Sources */,
+				EA4B63D91C5B1DE10042711F /* MyTableViewController.swift in Sources */,
 				EAE0A5CC1C50810700ECF86E /* ChildrenInfo.swift in Sources */,
 				EA210EED1C3CA28F00BA9971 /* LoginViewController.swift in Sources */,
 				EAE72E941C4099BB0038D055 /* MainTabbarViewController.swift in Sources */,
 				EACA2A4A1C4FB9CE00A3ECD3 /* MineModel.swift in Sources */,
+				EA4B63DD1C5B22FE0042711F /* DiaryTableViewCell.swift in Sources */,
 				EAF181A91C53772A007706CE /* BlogList.swift in Sources */,
 				EA9233B91C5469C100B12FF6 /* PictureList.swift in Sources */,
 				EA40E3971C30D33200072EC8 /* ViewController.swift in Sources */,
@@ -686,6 +705,7 @@
 				EA40E3E91C3138A800072EC8 /* JSONJoy.swift in Sources */,
 				EA40E3E81C3138A800072EC8 /* Httpresult.swift in Sources */,
 				EA010E641C4A261E00BBED0B /* ForgetPasswordSetViewController.swift in Sources */,
+				EA065B291C5B09BF0062E84D /* GrowingDiaryMainViewController.swift in Sources */,
 				EA78A1E71C5A329D00159F22 /* SchoolMainTableViewController.swift in Sources */,
 				EA78A1E51C59FC5500159F22 /* BlogCommentTableViewController.swift in Sources */,
 				EACA2A481C4FA0EC00A3ECD3 /* MineMainTableViewController.swift in Sources */,

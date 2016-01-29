@@ -35,7 +35,7 @@ class MineMainTableViewController: UITableViewController {
         hud.labelText = "正在加载"
         hud.margin = 10.0
         hud.removeFromSuperViewOnHide = true
-        hud.hide(true, afterDelay: 2)
+        hud.hide(true, afterDelay: 1)
         GetUserInfo()
         userAvatar.layer.cornerRadius = 40
         userAvatar.layer.masksToBounds = true
