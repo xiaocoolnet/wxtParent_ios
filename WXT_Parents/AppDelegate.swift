@@ -18,6 +18,27 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         // Override point for customization after application launch.
         NSThread.sleepForTimeInterval(2.0)
         UITabBar.appearance().tintColor = UIColor(red: 54.0 / 255.0, green: 190.0 / 255.0, blue: 100.0 / 255.0, alpha: 1.0)
+        
+        let infoDictionary = NSBundle.mainBundle().infoDictionary
+        let currentAppVersion = infoDictionary!["CFBundleShortVersionString"] as! String
+        
+        // 取出之前保存的版本号
+        let userDefaults = NSUserDefaults.standardUserDefaults()
+        let appVersion = userDefaults.stringForKey("appVersion")
+        
+        let storyboard = UIStoryboard(name: "Main", bundle: nil)
+        
+        // 如果 appVersion 为 nil 说明是第一次启动；如果 appVersion 不等于 currentAppVersion 说明是更新了
+        if appVersion == nil || appVersion != currentAppVersion {
+            // 保存最新的版本号
+            userDefaults.setValue(currentAppVersion, forKey: "appVersion")
+            
+            let guideViewController = storyboard.instantiateViewControllerWithIdentifier("ScollViewController") as! ScollViewController
+            self.window?.rootViewController = guideViewController
+        }
+
+        
+        else{
         let userid = NSUserDefaults.standardUserDefaults()
         let uid = userid.valueForKey("userid")
         var segueId = "MainView"
@@ -30,7 +51,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         else{
             self.window?.rootViewController = self.window?.rootViewController?.storyboard?.instantiateViewControllerWithIdentifier(segueId)
         }
-        
+        }
         
         
         return true

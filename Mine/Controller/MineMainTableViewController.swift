@@ -41,11 +41,11 @@ class MineMainTableViewController: UITableViewController {
         userAvatar.layer.masksToBounds = true
         Logout.addTarget(self, action: Selector("Exitlogin"), forControlEvents: UIControlEvents.TouchUpInside)
         self.GetDefalutChildrenInfo()
-        
- 
 
-        
-
+    }
+    
+    override func viewWillAppear(animated: Bool) {
+        self.tabBarController?.tabBar.hidden = false
     }
 
     func GetUserInfo(){

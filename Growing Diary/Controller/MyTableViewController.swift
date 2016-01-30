@@ -104,7 +104,7 @@ class MyTableViewController: UITableViewController {
     override func tableView(tableView: UITableView, cellForRowAtIndexPath indexPath: NSIndexPath) -> UITableViewCell {
         let cell = tableView.dequeueReusableCellWithIdentifier("DiaryCell", forIndexPath: indexPath) as! DiaryTableViewCell
 
-        var diaryInfo = self.diarySource.objectlist[indexPath.row]
+        let diaryInfo = self.diarySource.objectlist[indexPath.row]
         let dateformate = NSDateFormatter()
         dateformate.dateFormat = "MM-dd"
         var datedouble: Double?

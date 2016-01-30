@@ -55,6 +55,8 @@
 		EA78A1E71C5A329D00159F22 /* SchoolMainTableViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = EA78A1E61C5A329D00159F22 /* SchoolMainTableViewController.swift */; };
 		EA902F101C326D6800CC5F6F /* readme in Resources */ = {isa = PBXBuildFile; fileRef = EA902F0F1C326D6800CC5F6F /* readme */; };
 		EA9233B91C5469C100B12FF6 /* PictureList.swift in Sources */ = {isa = PBXBuildFile; fileRef = EA9233B81C5469C100B12FF6 /* PictureList.swift */; };
+		EA93A7C91C5C5BCC009D4A1F /* QrCodeViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = EA93A7C81C5C5BCC009D4A1F /* QrCodeViewController.swift */; };
+		EA93A7CC1C5C641C009D4A1F /* ScollViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = EA93A7CB1C5C641C009D4A1F /* ScollViewController.swift */; };
 		EAC8177F1C57801B006B6B8F /* DianZanList.swift in Sources */ = {isa = PBXBuildFile; fileRef = EAC8177E1C57801B006B6B8F /* DianZanList.swift */; };
 		EACA2A481C4FA0EC00A3ECD3 /* MineMainTableViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = EACA2A471C4FA0EC00A3ECD3 /* MineMainTableViewController.swift */; };
 		EACA2A4A1C4FB9CE00A3ECD3 /* MineModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = EACA2A491C4FB9CE00A3ECD3 /* MineModel.swift */; };
@@ -121,6 +123,8 @@
 		EA78A1E61C5A329D00159F22 /* SchoolMainTableViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = SchoolMainTableViewController.swift; path = ../SchoolMainTableViewController.swift; sourceTree = "<group>"; };
 		EA902F0F1C326D6800CC5F6F /* readme */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = readme; sourceTree = "<group>"; };
 		EA9233B81C5469C100B12FF6 /* PictureList.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PictureList.swift; sourceTree = "<group>"; };
+		EA93A7C81C5C5BCC009D4A1F /* QrCodeViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = QrCodeViewController.swift; sourceTree = "<group>"; };
+		EA93A7CB1C5C641C009D4A1F /* ScollViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ScollViewController.swift; sourceTree = "<group>"; };
 		EAC8177E1C57801B006B6B8F /* DianZanList.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DianZanList.swift; sourceTree = "<group>"; };
 		EACA2A471C4FA0EC00A3ECD3 /* MineMainTableViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MineMainTableViewController.swift; sourceTree = "<group>"; };
 		EACA2A491C4FB9CE00A3ECD3 /* MineModel.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MineModel.swift; sourceTree = "<group>"; };
@@ -272,6 +276,7 @@
 		EA40E3931C30D33200072EC8 /* WXT_Parents */ = {
 			isa = PBXGroup;
 			children = (
+				EA93A7CA1C5C638A009D4A1F /* ScollView */,
 				EA010E5C1C4A259000BBED0B /* ForgetPassword */,
 				EAE72E921C40995F0038D055 /* MainTabBarController */,
 				EA210EEB1C3CA25500BA9971 /* Login */,
@@ -320,6 +325,7 @@
 			children = (
 				EA59A3DE1C313C81003FBE82 /* Readme */,
 				EACA2A471C4FA0EC00A3ECD3 /* MineMainTableViewController.swift */,
+				EA93A7C81C5C5BCC009D4A1F /* QrCodeViewController.swift */,
 			);
 			path = Controller;
 			sourceTree = "<group>";
@@ -526,6 +532,14 @@
 			name = Model;
 			sourceTree = "<group>";
 		};
+		EA93A7CA1C5C638A009D4A1F /* ScollView */ = {
+			isa = PBXGroup;
+			children = (
+				EA93A7CB1C5C641C009D4A1F /* ScollViewController.swift */,
+			);
+			name = ScollView;
+			sourceTree = "<group>";
+		};
 		EAE72E921C40995F0038D055 /* MainTabBarController */ = {
 			isa = PBXGroup;
 			children = (
@@ -698,7 +712,9 @@
 				EA9233B91C5469C100B12FF6 /* PictureList.swift in Sources */,
 				EA40E3971C30D33200072EC8 /* ViewController.swift in Sources */,
 				EA7608161C4CD8BA00169C50 /* BabySpaceMainTableViewController.swift in Sources */,
+				EA93A7CC1C5C641C009D4A1F /* ScollViewController.swift in Sources */,
 				EAC8177F1C57801B006B6B8F /* DianZanList.swift in Sources */,
+				EA93A7C91C5C5BCC009D4A1F /* QrCodeViewController.swift in Sources */,
 				EA1E169A1C3F5ECD00C97FCF /* Url.swift in Sources */,
 				EA4A70691C487E1D00DAD9A1 /* RegisterSetPasswordViewController.swift in Sources */,
 				EA40E3951C30D33200072EC8 /* AppDelegate.swift in Sources */,
