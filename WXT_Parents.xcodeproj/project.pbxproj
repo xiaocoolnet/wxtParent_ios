@@ -20,6 +20,18 @@
 		EA210EED1C3CA28F00BA9971 /* LoginViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = EA210EEC1C3CA28F00BA9971 /* LoginViewController.swift */; };
 		EA35CFC91C3E5C6E00FB60F9 /* Readme in Resources */ = {isa = PBXBuildFile; fileRef = EA35CFC81C3E5C6E00FB60F9 /* Readme */; };
 		EA35CFCB1C3E5C8E00FB60F9 /* Readme in Resources */ = {isa = PBXBuildFile; fileRef = EA35CFCA1C3E5C8E00FB60F9 /* Readme */; };
+		EA3ADD681C5D980F002FCA2D /* SaoYiSaoViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = EA3ADD671C5D980F002FCA2D /* SaoYiSaoViewController.swift */; };
+		EA3ADD6C1C5DA2B3002FCA2D /* MyBabyTableViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = EA3ADD6B1C5DA2B3002FCA2D /* MyBabyTableViewController.swift */; };
+		EA3ADD6E1C5DA4A3002FCA2D /* BabyTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = EA3ADD6D1C5DA4A3002FCA2D /* BabyTableViewCell.swift */; };
+		EA3ADD701C5DAA52002FCA2D /* TeacherTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = EA3ADD6F1C5DAA52002FCA2D /* TeacherTableViewCell.swift */; };
+		EA3ADD721C5DAA68002FCA2D /* TeacherTableViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = EA3ADD711C5DAA68002FCA2D /* TeacherTableViewController.swift */; };
+		EA3ADD741C5DABEC002FCA2D /* SchoolInfoViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = EA3ADD731C5DABEC002FCA2D /* SchoolInfoViewController.swift */; };
+		EA3ADD781C5DAD69002FCA2D /* WeekFoodTableViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = EA3ADD771C5DAD69002FCA2D /* WeekFoodTableViewController.swift */; };
+		EA3ADD7A1C5DAE76002FCA2D /* FoodTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = EA3ADD791C5DAE76002FCA2D /* FoodTableViewCell.swift */; };
+		EA3ADD7C1C5DB2BB002FCA2D /* ZhaoPinTableViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = EA3ADD7B1C5DB2BB002FCA2D /* ZhaoPinTableViewController.swift */; };
+		EA3ADD7E1C5DB2D4002FCA2D /* ZhaoPinTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = EA3ADD7D1C5DB2D4002FCA2D /* ZhaoPinTableViewCell.swift */; };
+		EA3ADD801C5DB3E1002FCA2D /* XingQuBanTableViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = EA3ADD7F1C5DB3E1002FCA2D /* XingQuBanTableViewController.swift */; };
+		EA3ADD821C5DB3FD002FCA2D /* XingquCellTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = EA3ADD811C5DB3FD002FCA2D /* XingquCellTableViewCell.swift */; };
 		EA40E3951C30D33200072EC8 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = EA40E3941C30D33200072EC8 /* AppDelegate.swift */; };
 		EA40E3971C30D33200072EC8 /* ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = EA40E3961C30D33200072EC8 /* ViewController.swift */; };
 		EA40E39A1C30D33200072EC8 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = EA40E3981C30D33200072EC8 /* Main.storyboard */; };
@@ -86,6 +98,18 @@
 		EA210EEE1C3CEE8300BA9971 /* WXT_Parents-Bridging-Header.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "WXT_Parents-Bridging-Header.h"; sourceTree = "<group>"; };
 		EA35CFC81C3E5C6E00FB60F9 /* Readme */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = Readme; sourceTree = "<group>"; };
 		EA35CFCA1C3E5C8E00FB60F9 /* Readme */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = Readme; sourceTree = "<group>"; };
+		EA3ADD671C5D980F002FCA2D /* SaoYiSaoViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SaoYiSaoViewController.swift; sourceTree = "<group>"; };
+		EA3ADD6B1C5DA2B3002FCA2D /* MyBabyTableViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MyBabyTableViewController.swift; sourceTree = "<group>"; };
+		EA3ADD6D1C5DA4A3002FCA2D /* BabyTableViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = BabyTableViewCell.swift; sourceTree = "<group>"; };
+		EA3ADD6F1C5DAA52002FCA2D /* TeacherTableViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TeacherTableViewCell.swift; sourceTree = "<group>"; };
+		EA3ADD711C5DAA68002FCA2D /* TeacherTableViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TeacherTableViewController.swift; sourceTree = "<group>"; };
+		EA3ADD731C5DABEC002FCA2D /* SchoolInfoViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SchoolInfoViewController.swift; sourceTree = "<group>"; };
+		EA3ADD771C5DAD69002FCA2D /* WeekFoodTableViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = WeekFoodTableViewController.swift; sourceTree = "<group>"; };
+		EA3ADD791C5DAE76002FCA2D /* FoodTableViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = FoodTableViewCell.swift; sourceTree = "<group>"; };
+		EA3ADD7B1C5DB2BB002FCA2D /* ZhaoPinTableViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ZhaoPinTableViewController.swift; sourceTree = "<group>"; };
+		EA3ADD7D1C5DB2D4002FCA2D /* ZhaoPinTableViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ZhaoPinTableViewCell.swift; sourceTree = "<group>"; };
+		EA3ADD7F1C5DB3E1002FCA2D /* XingQuBanTableViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = XingQuBanTableViewController.swift; sourceTree = "<group>"; };
+		EA3ADD811C5DB3FD002FCA2D /* XingquCellTableViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = XingquCellTableViewCell.swift; sourceTree = "<group>"; };
 		EA40E3911C30D33200072EC8 /* WXT_Parents.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = WXT_Parents.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		EA40E3941C30D33200072EC8 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		EA40E3961C30D33200072EC8 /* ViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ViewController.swift; sourceTree = "<group>"; };
@@ -326,6 +350,8 @@
 				EA59A3DE1C313C81003FBE82 /* Readme */,
 				EACA2A471C4FA0EC00A3ECD3 /* MineMainTableViewController.swift */,
 				EA93A7C81C5C5BCC009D4A1F /* QrCodeViewController.swift */,
+				EA3ADD671C5D980F002FCA2D /* SaoYiSaoViewController.swift */,
+				EA3ADD6B1C5DA2B3002FCA2D /* MyBabyTableViewController.swift */,
 			);
 			path = Controller;
 			sourceTree = "<group>";
@@ -344,6 +370,7 @@
 			isa = PBXGroup;
 			children = (
 				EA59A3E21C313C89003FBE82 /* Readme */,
+				EA3ADD6D1C5DA4A3002FCA2D /* BabyTableViewCell.swift */,
 			);
 			path = View;
 			sourceTree = "<group>";
@@ -363,6 +390,11 @@
 			children = (
 				EA78A1E61C5A329D00159F22 /* SchoolMainTableViewController.swift */,
 				EA59A3D81C313C70003FBE82 /* Readme */,
+				EA3ADD711C5DAA68002FCA2D /* TeacherTableViewController.swift */,
+				EA3ADD731C5DABEC002FCA2D /* SchoolInfoViewController.swift */,
+				EA3ADD771C5DAD69002FCA2D /* WeekFoodTableViewController.swift */,
+				EA3ADD7B1C5DB2BB002FCA2D /* ZhaoPinTableViewController.swift */,
+				EA3ADD7F1C5DB3E1002FCA2D /* XingQuBanTableViewController.swift */,
 			);
 			path = Controller;
 			sourceTree = "<group>";
@@ -379,6 +411,10 @@
 			isa = PBXGroup;
 			children = (
 				EA59A3DC1C313C7B003FBE82 /* Readme */,
+				EA3ADD6F1C5DAA52002FCA2D /* TeacherTableViewCell.swift */,
+				EA3ADD791C5DAE76002FCA2D /* FoodTableViewCell.swift */,
+				EA3ADD7D1C5DB2D4002FCA2D /* ZhaoPinTableViewCell.swift */,
+				EA3ADD811C5DB3FD002FCA2D /* XingquCellTableViewCell.swift */,
 			);
 			path = View;
 			sourceTree = "<group>";
@@ -700,16 +736,23 @@
 				EA4B63DB1C5B1DEF0042711F /* FriendsTableViewController.swift in Sources */,
 				EA143C7B1C44FAF800FC1F6C /* RegisterViewController.swift in Sources */,
 				EAE0A5CE1C5094F500ECF86E /* ServiceModel.swift in Sources */,
+				EA3ADD821C5DB3FD002FCA2D /* XingquCellTableViewCell.swift in Sources */,
 				EA4A70671C487DF100DAD9A1 /* RegisterGetCodeViewController.swift in Sources */,
 				EA4B63E11C5B60980042711F /* DiaryList.swift in Sources */,
+				EA3ADD6E1C5DA4A3002FCA2D /* BabyTableViewCell.swift in Sources */,
 				EA4B63D91C5B1DE10042711F /* MyTableViewController.swift in Sources */,
+				EA3ADD6C1C5DA2B3002FCA2D /* MyBabyTableViewController.swift in Sources */,
 				EAE0A5CC1C50810700ECF86E /* ChildrenInfo.swift in Sources */,
 				EA210EED1C3CA28F00BA9971 /* LoginViewController.swift in Sources */,
 				EAE72E941C4099BB0038D055 /* MainTabbarViewController.swift in Sources */,
+				EA3ADD801C5DB3E1002FCA2D /* XingQuBanTableViewController.swift in Sources */,
 				EACA2A4A1C4FB9CE00A3ECD3 /* MineModel.swift in Sources */,
+				EA3ADD7C1C5DB2BB002FCA2D /* ZhaoPinTableViewController.swift in Sources */,
+				EA3ADD681C5D980F002FCA2D /* SaoYiSaoViewController.swift in Sources */,
 				EA4B63DD1C5B22FE0042711F /* DiaryTableViewCell.swift in Sources */,
 				EAF181A91C53772A007706CE /* BlogList.swift in Sources */,
 				EA9233B91C5469C100B12FF6 /* PictureList.swift in Sources */,
+				EA3ADD701C5DAA52002FCA2D /* TeacherTableViewCell.swift in Sources */,
 				EA40E3971C30D33200072EC8 /* ViewController.swift in Sources */,
 				EA7608161C4CD8BA00169C50 /* BabySpaceMainTableViewController.swift in Sources */,
 				EA93A7CC1C5C641C009D4A1F /* ScollViewController.swift in Sources */,
@@ -717,7 +760,10 @@
 				EA93A7C91C5C5BCC009D4A1F /* QrCodeViewController.swift in Sources */,
 				EA1E169A1C3F5ECD00C97FCF /* Url.swift in Sources */,
 				EA4A70691C487E1D00DAD9A1 /* RegisterSetPasswordViewController.swift in Sources */,
+				EA3ADD741C5DABEC002FCA2D /* SchoolInfoViewController.swift in Sources */,
+				EA3ADD7A1C5DAE76002FCA2D /* FoodTableViewCell.swift in Sources */,
 				EA40E3951C30D33200072EC8 /* AppDelegate.swift in Sources */,
+				EA3ADD7E1C5DB2D4002FCA2D /* ZhaoPinTableViewCell.swift in Sources */,
 				EA40E3E91C3138A800072EC8 /* JSONJoy.swift in Sources */,
 				EA40E3E81C3138A800072EC8 /* Httpresult.swift in Sources */,
 				EA010E641C4A261E00BBED0B /* ForgetPasswordSetViewController.swift in Sources */,
@@ -727,6 +773,8 @@
 				EACA2A481C4FA0EC00A3ECD3 /* MineMainTableViewController.swift in Sources */,
 				EA010E611C4A25E400BBED0B /* ForgetPasswordViewController.swift in Sources */,
 				EA40E3E71C3138A800072EC8 /* Http.swift in Sources */,
+				EA3ADD781C5DAD69002FCA2D /* WeekFoodTableViewController.swift in Sources */,
+				EA3ADD721C5DAA68002FCA2D /* TeacherTableViewController.swift in Sources */,
 				EAEB9E841C5223F700EACE1B /* BlogCellTableViewCell.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;

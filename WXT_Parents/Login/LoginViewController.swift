@@ -81,9 +81,9 @@ class LoginViewController: UIViewController ,UITextFieldDelegate{
                     if(result.status == "success"){
                         print("Success")
                         let hud = MBProgressHUD.showHUDAddedTo(self.view, animated: true)
-                        hud.mode = MBProgressHUDMode.Text;
+                        //hud.mode = MBProgressHUDMode.Text;
                         hud.labelText = "登录成功"
-                        hud.margin = 10.0
+                        //hud.margin = 10.0
                         hud.removeFromSuperViewOnHide = true
                         hud.hide(true, afterDelay: 1)
                         

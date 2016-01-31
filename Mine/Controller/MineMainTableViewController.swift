@@ -31,9 +31,9 @@ class MineMainTableViewController: UITableViewController {
         super.viewDidLoad()
         
         let hud = MBProgressHUD.showHUDAddedTo(self.view, animated: true)
-        hud.mode = MBProgressHUDMode.Text
+        //hud.mode = MBProgressHUDMode.Text
         hud.labelText = "正在加载"
-        hud.margin = 10.0
+        //hud.margin = 10.0
         hud.removeFromSuperViewOnHide = true
         hud.hide(true, afterDelay: 1)
         GetUserInfo()
