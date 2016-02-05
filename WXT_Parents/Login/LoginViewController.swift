@@ -17,8 +17,11 @@ class LoginViewController: UIViewController ,UITextFieldDelegate{
     @IBOutlet weak var LoginButton: UIButton!
     var dataSource = ChildrenList()
     
+    @IBOutlet weak var topConstraint: NSLayoutConstraint!
     override func viewDidLoad() {
         super.viewDidLoad()
+        XKeyBoard.registerKeyBoardHide(self)
+        XKeyBoard.registerKeyBoardShow(self)
         //self.navigationController?.navigationBar.hidden = true
         AccountText.delegate = self
         PasswordText.delegate = self
@@ -29,6 +32,21 @@ class LoginViewController: UIViewController ,UITextFieldDelegate{
         self.navigationController?.navigationBar.hidden = true
         
     }
+    
+    func keyboardWillHideNotification(notification:NSNotification){
+        UIView.animateWithDuration(0.3) { () -> Void in
+            self.topConstraint.constant = 233
+            self.view.layoutIfNeeded()
+        }
+        
+    }
+    func keyboardWillShowNotification(notification:NSNotification){
+        UIView.animateWithDuration(0.3) { () -> Void in
+            self.topConstraint.constant = 150
+            self.view.layoutIfNeeded()
+        }
+    }
+
     
     func Login(){
         

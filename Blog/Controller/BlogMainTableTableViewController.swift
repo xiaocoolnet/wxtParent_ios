@@ -19,9 +19,10 @@ class BlogMainTableTableViewController: UITableViewController {
     var blogSource = BlogList()
     var pciSource = PictureList()
     var DianzanSource = DianZanList()
-    
+    var selectImgUrl:String?
     var imageCache = Dictionary<String,UIImage>()
     var mid:String?
+    var pictureFangda:UIImage?
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -141,7 +142,7 @@ class BlogMainTableTableViewController: UITableViewController {
             if(bloginfo.photo != nil){
                 let imgUrl = imageUrl+(bloginfo.photo!)
                 
-                let image = self.imageCache[imgUrl] as UIImage?
+                //let image = self.imageCache[imgUrl] as UIImage?
                 let avatarUrl = NSURL(string: imgUrl)
                 let request: NSURLRequest = NSURLRequest(URL: avatarUrl!)
                 //异步获取
@@ -164,6 +165,7 @@ class BlogMainTableTableViewController: UITableViewController {
             Indetifiername = "blogCell"
             var cell2:BlogCellTableViewCell? = tableView.dequeueReusableCellWithIdentifier(Indetifiername) as? BlogCellTableViewCell
             var blogimage:UIImageView?
+            
             if cell2 == nil{
                 cell2 = BlogCellTableViewCell(style: UITableViewCellStyle.Default, reuseIdentifier: Indetifiername)
             }
@@ -229,7 +231,15 @@ class BlogMainTableTableViewController: UITableViewController {
                                 let imgTmp = UIImage(data: data!)
                                 //self.imageCache[imgUrl] = imgTmp
                                 blogimage!.image = imgTmp
-                                
+                                self.pictureFangda = blogimage!.image
+                                blogimage!.userInteractionEnabled = true
+                                let singleTap:UITapGestureRecognizer = UITapGestureRecognizer(target: self, action: "imageViewTouch")
+                                blogimage!.addGestureRecognizer(singleTap)
+                                let pciInfo = self.pciSource.picturelist[i-1]
+                                let imgUrl = microblogImageUrl+(pciInfo.pictureurl)!
+                                self.selectImgUrl = imgUrl
+                                print("被选中的图片\(i)")
+                                print(self.selectImgUrl)
                                 cell2!.contentView.addSubview(blogimage!)
                             }
                         })
@@ -581,6 +591,17 @@ class BlogMainTableTableViewController: UITableViewController {
         
     }
     
+    func imageViewTouch(){
+        let mainStoryboard = UIStoryboard(name: "Main", bundle: NSBundle.mainBundle())
+        //let imgvc = ImageViewController()
+        //var imgvc:ImageViewController = ImageViewController()
+        let vcI : ImageViewController = mainStoryboard.instantiateViewControllerWithIdentifier("ImageView") as! ImageViewController
+        vcI.imUrl = selectImgUrl!
+        vcI.tupian = pictureFangda!
+        print("图片地址是")
+        //print(imgvc.imUrl)
+        self.navigationController?.pushViewController(vcI, animated: true)
+    }
     
     override func tableView(tableView: UITableView, heightForRowAtIndexPath indexPath: NSIndexPath) -> CGFloat{
         if(indexPath.row == 0){

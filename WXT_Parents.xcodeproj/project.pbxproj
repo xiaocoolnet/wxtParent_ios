@@ -15,6 +15,8 @@
 		EA010E6A1C4A295000BBED0B /* Readme in Resources */ = {isa = PBXBuildFile; fileRef = EA010E691C4A295000BBED0B /* Readme */; };
 		EA010E6C1C4A295D00BBED0B /* Readme in Resources */ = {isa = PBXBuildFile; fileRef = EA010E6B1C4A295D00BBED0B /* Readme */; };
 		EA065B291C5B09BF0062E84D /* GrowingDiaryMainViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = EA065B281C5B09BF0062E84D /* GrowingDiaryMainViewController.swift */; };
+		EA0FFCB61C62EF5400945627 /* XKeyBoard.m in Sources */ = {isa = PBXBuildFile; fileRef = EA0FFCB51C62EF5400945627 /* XKeyBoard.m */; };
+		EA0FFCB81C62FDE100945627 /* ImageViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = EA0FFCB71C62FDE100945627 /* ImageViewController.swift */; };
 		EA143C7B1C44FAF800FC1F6C /* RegisterViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = EA143C7A1C44FAF800FC1F6C /* RegisterViewController.swift */; };
 		EA1E169A1C3F5ECD00C97FCF /* Url.swift in Sources */ = {isa = PBXBuildFile; fileRef = EA1E16991C3F5ECD00C97FCF /* Url.swift */; };
 		EA210EED1C3CA28F00BA9971 /* LoginViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = EA210EEC1C3CA28F00BA9971 /* LoginViewController.swift */; };
@@ -92,6 +94,9 @@
 		EA010E691C4A295000BBED0B /* Readme */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = Readme; sourceTree = "<group>"; };
 		EA010E6B1C4A295D00BBED0B /* Readme */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = Readme; sourceTree = "<group>"; };
 		EA065B281C5B09BF0062E84D /* GrowingDiaryMainViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = GrowingDiaryMainViewController.swift; sourceTree = "<group>"; };
+		EA0FFCB41C62EF5400945627 /* XKeyBoard.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = XKeyBoard.h; sourceTree = "<group>"; };
+		EA0FFCB51C62EF5400945627 /* XKeyBoard.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = XKeyBoard.m; sourceTree = "<group>"; };
+		EA0FFCB71C62FDE100945627 /* ImageViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ImageViewController.swift; sourceTree = "<group>"; };
 		EA143C7A1C44FAF800FC1F6C /* RegisterViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = RegisterViewController.swift; sourceTree = "<group>"; };
 		EA1E16991C3F5ECD00C97FCF /* Url.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Url.swift; sourceTree = "<group>"; };
 		EA210EEC1C3CA28F00BA9971 /* LoginViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = LoginViewController.swift; sourceTree = "<group>"; };
@@ -435,6 +440,7 @@
 				EA59A3D21C313C5F003FBE82 /* Readme */,
 				EAEB9E811C5208F200EACE1B /* BlogMainTableTableViewController.swift */,
 				EA78A1E41C59FC5500159F22 /* BlogCommentTableViewController.swift */,
+				EA0FFCB71C62FDE100945627 /* ImageViewController.swift */,
 			);
 			path = Controller;
 			sourceTree = "<group>";
@@ -536,6 +542,8 @@
 		EA40E3FE1C313A2800072EC8 /* Third Package */ = {
 			isa = PBXGroup;
 			children = (
+				EA0FFCB41C62EF5400945627 /* XKeyBoard.h */,
+				EA0FFCB51C62EF5400945627 /* XKeyBoard.m */,
 				EA59A3E41C313C90003FBE82 /* Readme */,
 			);
 			path = "Third Package";
@@ -742,6 +750,8 @@
 				EA3ADD6E1C5DA4A3002FCA2D /* BabyTableViewCell.swift in Sources */,
 				EA4B63D91C5B1DE10042711F /* MyTableViewController.swift in Sources */,
 				EA3ADD6C1C5DA2B3002FCA2D /* MyBabyTableViewController.swift in Sources */,
+				EA0FFCB61C62EF5400945627 /* XKeyBoard.m in Sources */,
+				EA0FFCB81C62FDE100945627 /* ImageViewController.swift in Sources */,
 				EAE0A5CC1C50810700ECF86E /* ChildrenInfo.swift in Sources */,
 				EA210EED1C3CA28F00BA9971 /* LoginViewController.swift in Sources */,
 				EAE72E941C4099BB0038D055 /* MainTabbarViewController.swift in Sources */,
