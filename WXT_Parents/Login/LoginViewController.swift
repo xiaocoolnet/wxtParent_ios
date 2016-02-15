@@ -117,7 +117,7 @@ class LoginViewController: UIViewController ,UITextFieldDelegate{
 
                         self.GetChildrenUser()
                         let mainStoryboard = UIStoryboard(name: "Main", bundle: NSBundle.mainBundle())
-                        let vc : UIViewController = mainStoryboard.instantiateViewControllerWithIdentifier("MainView") as! UIViewController
+                        let vc : UIViewController = mainStoryboard.instantiateViewControllerWithIdentifier("MainView") 
                         self.presentViewController(vc, animated: true, completion: nil)
                         
                         
@@ -156,13 +156,13 @@ class LoginViewController: UIViewController ,UITextFieldDelegate{
                     self.dataSource = ChildrenList(status.data!)
                     print(self.dataSource.count)
                     for i in 0..<self.dataSource.count{
-                        var chirdinfo = self.dataSource.objectlist[i]
+                        let chirdinfo = self.dataSource.objectlist[i]
                         defalut = chirdinfo.preferred!
                         if(defalut == "1"){
                             
                             let chid = NSUserDefaults.standardUserDefaults()
                             chid.setValue(chirdinfo.childrenid!, forKey: "chid")
-                            let defalutid = userid.valueForKey("chid")
+                            //let defalutid = userid.valueForKey("chid")
                         }
                         //self.GetDefalutChildrenInfo()
                     }

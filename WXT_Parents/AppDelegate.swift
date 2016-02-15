@@ -40,7 +40,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         
         else{
         let userid = NSUserDefaults.standardUserDefaults()
-        let uid = userid.valueForKey("userid")
+        //let uid = userid.valueForKey("userid")
         var segueId = "MainView"
         if((userid.valueForKey("userid") == nil) || (userid.valueForKey("userid")?.length == 0 ))
         {

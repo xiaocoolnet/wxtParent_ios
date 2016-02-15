@@ -18,6 +18,8 @@
 		EA0FFCB61C62EF5400945627 /* XKeyBoard.m in Sources */ = {isa = PBXBuildFile; fileRef = EA0FFCB51C62EF5400945627 /* XKeyBoard.m */; };
 		EA0FFCB81C62FDE100945627 /* ImageViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = EA0FFCB71C62FDE100945627 /* ImageViewController.swift */; };
 		EA143C7B1C44FAF800FC1F6C /* RegisterViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = EA143C7A1C44FAF800FC1F6C /* RegisterViewController.swift */; };
+		EA14D9071C71736B00899963 /* BabyTodayInfoModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = EA14D9061C71736B00899963 /* BabyTodayInfoModel.swift */; };
+		EA14D9091C717BFF00899963 /* GetChange_sta_weiModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = EA14D9081C717BFF00899963 /* GetChange_sta_weiModel.swift */; };
 		EA1E169A1C3F5ECD00C97FCF /* Url.swift in Sources */ = {isa = PBXBuildFile; fileRef = EA1E16991C3F5ECD00C97FCF /* Url.swift */; };
 		EA210EED1C3CA28F00BA9971 /* LoginViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = EA210EEC1C3CA28F00BA9971 /* LoginViewController.swift */; };
 		EA35CFC91C3E5C6E00FB60F9 /* Readme in Resources */ = {isa = PBXBuildFile; fileRef = EA35CFC81C3E5C6E00FB60F9 /* Readme */; };
@@ -71,6 +73,7 @@
 		EA9233B91C5469C100B12FF6 /* PictureList.swift in Sources */ = {isa = PBXBuildFile; fileRef = EA9233B81C5469C100B12FF6 /* PictureList.swift */; };
 		EA93A7C91C5C5BCC009D4A1F /* QrCodeViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = EA93A7C81C5C5BCC009D4A1F /* QrCodeViewController.swift */; };
 		EA93A7CC1C5C641C009D4A1F /* ScollViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = EA93A7CB1C5C641C009D4A1F /* ScollViewController.swift */; };
+		EAAEB4C71C71DB170009710B /* WeightViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = EAAEB4C61C71DB170009710B /* WeightViewController.swift */; };
 		EAC8177F1C57801B006B6B8F /* DianZanList.swift in Sources */ = {isa = PBXBuildFile; fileRef = EAC8177E1C57801B006B6B8F /* DianZanList.swift */; };
 		EACA2A481C4FA0EC00A3ECD3 /* MineMainTableViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = EACA2A471C4FA0EC00A3ECD3 /* MineMainTableViewController.swift */; };
 		EACA2A4A1C4FB9CE00A3ECD3 /* MineModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = EACA2A491C4FB9CE00A3ECD3 /* MineModel.swift */; };
@@ -98,6 +101,8 @@
 		EA0FFCB51C62EF5400945627 /* XKeyBoard.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = XKeyBoard.m; sourceTree = "<group>"; };
 		EA0FFCB71C62FDE100945627 /* ImageViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ImageViewController.swift; sourceTree = "<group>"; };
 		EA143C7A1C44FAF800FC1F6C /* RegisterViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = RegisterViewController.swift; sourceTree = "<group>"; };
+		EA14D9061C71736B00899963 /* BabyTodayInfoModel.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = BabyTodayInfoModel.swift; sourceTree = "<group>"; };
+		EA14D9081C717BFF00899963 /* GetChange_sta_weiModel.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = GetChange_sta_weiModel.swift; sourceTree = "<group>"; };
 		EA1E16991C3F5ECD00C97FCF /* Url.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Url.swift; sourceTree = "<group>"; };
 		EA210EEC1C3CA28F00BA9971 /* LoginViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = LoginViewController.swift; sourceTree = "<group>"; };
 		EA210EEE1C3CEE8300BA9971 /* WXT_Parents-Bridging-Header.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "WXT_Parents-Bridging-Header.h"; sourceTree = "<group>"; };
@@ -154,6 +159,7 @@
 		EA9233B81C5469C100B12FF6 /* PictureList.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PictureList.swift; sourceTree = "<group>"; };
 		EA93A7C81C5C5BCC009D4A1F /* QrCodeViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = QrCodeViewController.swift; sourceTree = "<group>"; };
 		EA93A7CB1C5C641C009D4A1F /* ScollViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ScollViewController.swift; sourceTree = "<group>"; };
+		EAAEB4C61C71DB170009710B /* WeightViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = WeightViewController.swift; sourceTree = "<group>"; };
 		EAC8177E1C57801B006B6B8F /* DianZanList.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DianZanList.swift; sourceTree = "<group>"; };
 		EACA2A471C4FA0EC00A3ECD3 /* MineMainTableViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MineMainTableViewController.swift; sourceTree = "<group>"; };
 		EACA2A491C4FB9CE00A3ECD3 /* MineModel.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MineModel.swift; sourceTree = "<group>"; };
@@ -519,6 +525,7 @@
 			children = (
 				EA902F0F1C326D6800CC5F6F /* readme */,
 				EA7608151C4CD8BA00169C50 /* BabySpaceMainTableViewController.swift */,
+				EAAEB4C61C71DB170009710B /* WeightViewController.swift */,
 			);
 			path = Controller;
 			sourceTree = "<group>";
@@ -527,6 +534,8 @@
 			isa = PBXGroup;
 			children = (
 				EA59A3C61C313C2B003FBE82 /* Readme */,
+				EA14D9061C71736B00899963 /* BabyTodayInfoModel.swift */,
+				EA14D9081C717BFF00899963 /* GetChange_sta_weiModel.swift */,
 			);
 			path = Model;
 			sourceTree = "<group>";
@@ -747,11 +756,13 @@
 				EA3ADD821C5DB3FD002FCA2D /* XingquCellTableViewCell.swift in Sources */,
 				EA4A70671C487DF100DAD9A1 /* RegisterGetCodeViewController.swift in Sources */,
 				EA4B63E11C5B60980042711F /* DiaryList.swift in Sources */,
+				EA14D9091C717BFF00899963 /* GetChange_sta_weiModel.swift in Sources */,
 				EA3ADD6E1C5DA4A3002FCA2D /* BabyTableViewCell.swift in Sources */,
 				EA4B63D91C5B1DE10042711F /* MyTableViewController.swift in Sources */,
 				EA3ADD6C1C5DA2B3002FCA2D /* MyBabyTableViewController.swift in Sources */,
 				EA0FFCB61C62EF5400945627 /* XKeyBoard.m in Sources */,
 				EA0FFCB81C62FDE100945627 /* ImageViewController.swift in Sources */,
+				EAAEB4C71C71DB170009710B /* WeightViewController.swift in Sources */,
 				EAE0A5CC1C50810700ECF86E /* ChildrenInfo.swift in Sources */,
 				EA210EED1C3CA28F00BA9971 /* LoginViewController.swift in Sources */,
 				EAE72E941C4099BB0038D055 /* MainTabbarViewController.swift in Sources */,
@@ -764,6 +775,7 @@
 				EA9233B91C5469C100B12FF6 /* PictureList.swift in Sources */,
 				EA3ADD701C5DAA52002FCA2D /* TeacherTableViewCell.swift in Sources */,
 				EA40E3971C30D33200072EC8 /* ViewController.swift in Sources */,
+				EA14D9071C71736B00899963 /* BabyTodayInfoModel.swift in Sources */,
 				EA7608161C4CD8BA00169C50 /* BabySpaceMainTableViewController.swift in Sources */,
 				EA93A7CC1C5C641C009D4A1F /* ScollViewController.swift in Sources */,
 				EAC8177F1C57801B006B6B8F /* DianZanList.swift in Sources */,

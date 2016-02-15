@@ -44,6 +44,11 @@
 			<key>isShown</key>
 			<false/>
 		</dict>
+		<key>SwiftCharts.xcscheme</key>
+		<dict>
+			<key>isShown</key>
+			<false/>
+		</dict>
 		<key>UITableView+FDTemplateLayoutCell.xcscheme</key>
 		<dict>
 			<key>isShown</key>
@@ -57,6 +62,11 @@
 	</dict>
 	<key>SuppressBuildableAutocreation</key>
 	<dict>
+		<key>031E2B58A4FCAE1BE02CEE7D6711310B</key>
+		<dict>
+			<key>primary</key>
+			<true/>
+		</dict>
 		<key>1A0BCF8AD93C9F03F8BF4FA065AC0BF5</key>
 		<dict>
 			<key>primary</key>
@@ -82,27 +92,27 @@
 			<key>primary</key>
 			<true/>
 		</dict>
+		<key>AF14263EB52214F0672184DF075D26C5</key>
+		<dict>
+			<key>primary</key>
+			<true/>
+		</dict>
+		<key>B2B7E601FDF5E61FB9255CB8958D0BEC</key>
+		<dict>
+			<key>primary</key>
+			<true/>
+		</dict>
 		<key>E61CE3B6DFA1FE6B3E296965C76C0E10</key>
 		<dict>
 			<key>primary</key>
 			<true/>
 		</dict>
-		<key>E75431AF18C35892B80AEA6DAC750B12</key>
-		<dict>
-			<key>primary</key>
-			<true/>
-		</dict>
-		<key>F31A509891C2930CDCFAB51BA2BE857D</key>
+		<key>EDD3850717DBC4CC5B64F24D84F67642</key>
 		<dict>
 			<key>primary</key>
 			<true/>
 		</dict>
 		<key>F464E7B0C1D479F1C95F81C8C59CBBAB</key>
-		<dict>
-			<key>primary</key>
-			<true/>
-		</dict>
-		<key>F8E00803588A4BC3D3855ABA6C7D1F73</key>
 		<dict>
 			<key>primary</key>
 			<true/>
