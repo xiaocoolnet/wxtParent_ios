@@ -37,12 +37,14 @@ class UserInfomation: JSONJoy {
     var id:String?
     var name:String?
     var avatar:String?
+    var phoneNumber:String?
     init(){
     }
     required init(_ decoder:JSONDecoder){
         id = decoder["id"].string
         name = decoder["name"].string
         avatar = decoder["photo"].string
+        phoneNumber = decoder["phone"].string
         
     }
 }

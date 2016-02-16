@@ -23,7 +23,7 @@ class ScollViewController: UIViewController{
         super.viewDidLoad()
         
         let frame = self.view.bounds
-        startButton.layer.borderWidth = 1.0
+        startButton.layer.borderWidth = 2.0
         startButton.layer.borderColor = UIColor(red: 54.0 / 255.0, green: 190.0 / 255.0, blue: 100.0 / 255.0, alpha: 1.0).CGColor
         scrollView = UIScrollView(frame: frame)
         scrollView.pagingEnabled = true

@@ -22,7 +22,8 @@ class MineMainTableViewController: UITableViewController {
     @IBOutlet weak var Logout: UIButton!
     
     var imageCache = Dictionary<String,UIImage>()
-    
+    var imgUrl:String?
+    var phone:String?
     let popTime = dispatch_time(DISPATCH_TIME_NOW, Int64(3.0 * Double(NSEC_PER_SEC)))
     
     
@@ -77,18 +78,19 @@ class MineMainTableViewController: UITableViewController {
                 
                 if(status.status == "success"){
                     print("Success")
+                    self.phone = status.data?.phoneNumber!
                     self.userName.text = status.data?.name
                     if(status.data?.avatar != nil){
-                        let imgUrl = imageUrl+(status.data?.avatar)!
+                        self.imgUrl = imageUrl+(status.data?.avatar)!
                         
-                        let image = self.imageCache[imgUrl] as UIImage?
-                        let avatarUrl = NSURL(string: imgUrl)
+                        //let image = self.imageCache[imgUrl] as UIImage?
+                        let avatarUrl = NSURL(string: self.imgUrl!)
                         let request: NSURLRequest = NSURLRequest(URL: avatarUrl!)
                         //异步获取
                         NSURLConnection.sendAsynchronousRequest(request, queue: NSOperationQueue.mainQueue(), completionHandler: {(response: NSURLResponse?,data: NSData?,error: NSError?)-> Void in
                             if(data != nil){
                                 let imgTmp = UIImage(data: data!)
-                                self.imageCache[imgUrl] = imgTmp
+                                self.imageCache[self.imgUrl!] = imgTmp
                                 self.userAvatar.image = imgTmp
                                 self.userAvatar.alpha = 1.0
                                 
@@ -153,7 +155,7 @@ class MineMainTableViewController: UITableViewController {
         
         let cancelAction = UIAlertAction(title: "取消", style: UIAlertActionStyle.Cancel, handler: nil)
         let doneAction = UIAlertAction(title: "确定", style: UIAlertActionStyle.Default) { (UIAlertAction) -> Void in
-            var userid = NSUserDefaults.standardUserDefaults()
+            let userid = NSUserDefaults.standardUserDefaults()
             userid.setValue("", forKey: "userid")
             let defalutid = NSUserDefaults.standardUserDefaults()
             //cid = defalutid.stringForKey("chid")
@@ -166,8 +168,17 @@ class MineMainTableViewController: UITableViewController {
         alertController.addAction(cancelAction)
         self.presentViewController(alertController, animated: true, completion: nil)
         
-        
     }
+    
+    override func prepareForSegue(segue: UIStoryboardSegue, sender: AnyObject?) {
+        if(segue.identifier == "MineInfo"){
+            let info = segue.destinationViewController as! MineInfoTableViewController
+            info.imageUrl = self.imgUrl!
+            info.phone = self.phone!
+        }
+    }
+
+    
     override func didReceiveMemoryWarning() {
         super.didReceiveMemoryWarning()
         // Dispose of any resources that can be recreated.
@@ -230,14 +241,10 @@ class MineMainTableViewController: UITableViewController {
     }
     */
 
-    /*
+    
     // MARK: - Navigation
 
     // In a storyboard-based application, you will often want to do a little preparation before navigation
-    override func prepareForSegue(segue: UIStoryboardSegue, sender: AnyObject?) {
-        // Get the new view controller using segue.destinationViewController.
-        // Pass the selected object to the new view controller.
-    }
-    */
+    
 
 }

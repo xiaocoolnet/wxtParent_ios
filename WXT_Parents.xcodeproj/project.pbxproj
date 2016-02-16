@@ -66,6 +66,9 @@
 		EA59A3E11C313C85003FBE82 /* Readme in Resources */ = {isa = PBXBuildFile; fileRef = EA59A3E01C313C85003FBE82 /* Readme */; };
 		EA59A3E31C313C89003FBE82 /* Readme in Resources */ = {isa = PBXBuildFile; fileRef = EA59A3E21C313C89003FBE82 /* Readme */; };
 		EA59A3E51C313C90003FBE82 /* Readme in Resources */ = {isa = PBXBuildFile; fileRef = EA59A3E41C313C90003FBE82 /* Readme */; };
+		EA5A8D7E1C72B376004D8308 /* ServerTableViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = EA5A8D7D1C72B376004D8308 /* ServerTableViewController.swift */; };
+		EA5A8D801C72B7B9004D8308 /* HelpTableViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = EA5A8D7F1C72B7B9004D8308 /* HelpTableViewController.swift */; };
+		EA5A8D821C72BEE3004D8308 /* MineInfoTableViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = EA5A8D811C72BEE3004D8308 /* MineInfoTableViewController.swift */; };
 		EA7608161C4CD8BA00169C50 /* BabySpaceMainTableViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = EA7608151C4CD8BA00169C50 /* BabySpaceMainTableViewController.swift */; };
 		EA78A1E51C59FC5500159F22 /* BlogCommentTableViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = EA78A1E41C59FC5500159F22 /* BlogCommentTableViewController.swift */; };
 		EA78A1E71C5A329D00159F22 /* SchoolMainTableViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = EA78A1E61C5A329D00159F22 /* SchoolMainTableViewController.swift */; };
@@ -152,6 +155,9 @@
 		EA59A3E01C313C85003FBE82 /* Readme */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = Readme; sourceTree = "<group>"; };
 		EA59A3E21C313C89003FBE82 /* Readme */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = Readme; sourceTree = "<group>"; };
 		EA59A3E41C313C90003FBE82 /* Readme */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = Readme; sourceTree = "<group>"; };
+		EA5A8D7D1C72B376004D8308 /* ServerTableViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ServerTableViewController.swift; sourceTree = "<group>"; };
+		EA5A8D7F1C72B7B9004D8308 /* HelpTableViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = HelpTableViewController.swift; sourceTree = "<group>"; };
+		EA5A8D811C72BEE3004D8308 /* MineInfoTableViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MineInfoTableViewController.swift; sourceTree = "<group>"; };
 		EA7608151C4CD8BA00169C50 /* BabySpaceMainTableViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = BabySpaceMainTableViewController.swift; sourceTree = "<group>"; };
 		EA78A1E41C59FC5500159F22 /* BlogCommentTableViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = BlogCommentTableViewController.swift; sourceTree = "<group>"; };
 		EA78A1E61C5A329D00159F22 /* SchoolMainTableViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = SchoolMainTableViewController.swift; path = ../SchoolMainTableViewController.swift; sourceTree = "<group>"; };
@@ -359,10 +365,13 @@
 			isa = PBXGroup;
 			children = (
 				EA59A3DE1C313C81003FBE82 /* Readme */,
+				EA5A8D7D1C72B376004D8308 /* ServerTableViewController.swift */,
 				EACA2A471C4FA0EC00A3ECD3 /* MineMainTableViewController.swift */,
 				EA93A7C81C5C5BCC009D4A1F /* QrCodeViewController.swift */,
 				EA3ADD671C5D980F002FCA2D /* SaoYiSaoViewController.swift */,
 				EA3ADD6B1C5DA2B3002FCA2D /* MyBabyTableViewController.swift */,
+				EA5A8D7F1C72B7B9004D8308 /* HelpTableViewController.swift */,
+				EA5A8D811C72BEE3004D8308 /* MineInfoTableViewController.swift */,
 			);
 			path = Controller;
 			sourceTree = "<group>";
@@ -748,9 +757,11 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				EA5A8D801C72B7B9004D8308 /* HelpTableViewController.swift in Sources */,
 				EAEB9E781C51FEC200EACE1B /* CornerRadiusViewController.swift in Sources */,
 				EAEB9E821C5208F200EACE1B /* BlogMainTableTableViewController.swift in Sources */,
 				EA4B63DB1C5B1DEF0042711F /* FriendsTableViewController.swift in Sources */,
+				EA5A8D7E1C72B376004D8308 /* ServerTableViewController.swift in Sources */,
 				EA143C7B1C44FAF800FC1F6C /* RegisterViewController.swift in Sources */,
 				EAE0A5CE1C5094F500ECF86E /* ServiceModel.swift in Sources */,
 				EA3ADD821C5DB3FD002FCA2D /* XingquCellTableViewCell.swift in Sources */,
@@ -759,6 +770,7 @@
 				EA14D9091C717BFF00899963 /* GetChange_sta_weiModel.swift in Sources */,
 				EA3ADD6E1C5DA4A3002FCA2D /* BabyTableViewCell.swift in Sources */,
 				EA4B63D91C5B1DE10042711F /* MyTableViewController.swift in Sources */,
+				EA5A8D821C72BEE3004D8308 /* MineInfoTableViewController.swift in Sources */,
 				EA3ADD6C1C5DA2B3002FCA2D /* MyBabyTableViewController.swift in Sources */,
 				EA0FFCB61C62EF5400945627 /* XKeyBoard.m in Sources */,
 				EA0FFCB81C62FDE100945627 /* ImageViewController.swift in Sources */,
