@@ -69,6 +69,8 @@
 		EA5A8D7E1C72B376004D8308 /* ServerTableViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = EA5A8D7D1C72B376004D8308 /* ServerTableViewController.swift */; };
 		EA5A8D801C72B7B9004D8308 /* HelpTableViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = EA5A8D7F1C72B7B9004D8308 /* HelpTableViewController.swift */; };
 		EA5A8D821C72BEE3004D8308 /* MineInfoTableViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = EA5A8D811C72BEE3004D8308 /* MineInfoTableViewController.swift */; };
+		EA5A8D841C7321EE004D8308 /* ExamplesDefaults.swift in Sources */ = {isa = PBXBuildFile; fileRef = EA5A8D831C7321EE004D8308 /* ExamplesDefaults.swift */; };
+		EA5A8D861C732235004D8308 /* Env.swift in Sources */ = {isa = PBXBuildFile; fileRef = EA5A8D851C732235004D8308 /* Env.swift */; };
 		EA7608161C4CD8BA00169C50 /* BabySpaceMainTableViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = EA7608151C4CD8BA00169C50 /* BabySpaceMainTableViewController.swift */; };
 		EA78A1E51C59FC5500159F22 /* BlogCommentTableViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = EA78A1E41C59FC5500159F22 /* BlogCommentTableViewController.swift */; };
 		EA78A1E71C5A329D00159F22 /* SchoolMainTableViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = EA78A1E61C5A329D00159F22 /* SchoolMainTableViewController.swift */; };
@@ -158,6 +160,8 @@
 		EA5A8D7D1C72B376004D8308 /* ServerTableViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ServerTableViewController.swift; sourceTree = "<group>"; };
 		EA5A8D7F1C72B7B9004D8308 /* HelpTableViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = HelpTableViewController.swift; sourceTree = "<group>"; };
 		EA5A8D811C72BEE3004D8308 /* MineInfoTableViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MineInfoTableViewController.swift; sourceTree = "<group>"; };
+		EA5A8D831C7321EE004D8308 /* ExamplesDefaults.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ExamplesDefaults.swift; sourceTree = "<group>"; };
+		EA5A8D851C732235004D8308 /* Env.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Env.swift; sourceTree = "<group>"; };
 		EA7608151C4CD8BA00169C50 /* BabySpaceMainTableViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = BabySpaceMainTableViewController.swift; sourceTree = "<group>"; };
 		EA78A1E41C59FC5500159F22 /* BlogCommentTableViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = BlogCommentTableViewController.swift; sourceTree = "<group>"; };
 		EA78A1E61C5A329D00159F22 /* SchoolMainTableViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = SchoolMainTableViewController.swift; path = ../SchoolMainTableViewController.swift; sourceTree = "<group>"; };
@@ -560,6 +564,8 @@
 		EA40E3FE1C313A2800072EC8 /* Third Package */ = {
 			isa = PBXGroup;
 			children = (
+				EA5A8D851C732235004D8308 /* Env.swift */,
+				EA5A8D831C7321EE004D8308 /* ExamplesDefaults.swift */,
 				EA0FFCB41C62EF5400945627 /* XKeyBoard.h */,
 				EA0FFCB51C62EF5400945627 /* XKeyBoard.m */,
 				EA59A3E41C313C90003FBE82 /* Readme */,
@@ -767,6 +773,7 @@
 				EA3ADD821C5DB3FD002FCA2D /* XingquCellTableViewCell.swift in Sources */,
 				EA4A70671C487DF100DAD9A1 /* RegisterGetCodeViewController.swift in Sources */,
 				EA4B63E11C5B60980042711F /* DiaryList.swift in Sources */,
+				EA5A8D861C732235004D8308 /* Env.swift in Sources */,
 				EA14D9091C717BFF00899963 /* GetChange_sta_weiModel.swift in Sources */,
 				EA3ADD6E1C5DA4A3002FCA2D /* BabyTableViewCell.swift in Sources */,
 				EA4B63D91C5B1DE10042711F /* MyTableViewController.swift in Sources */,
@@ -787,6 +794,7 @@
 				EA9233B91C5469C100B12FF6 /* PictureList.swift in Sources */,
 				EA3ADD701C5DAA52002FCA2D /* TeacherTableViewCell.swift in Sources */,
 				EA40E3971C30D33200072EC8 /* ViewController.swift in Sources */,
+				EA5A8D841C7321EE004D8308 /* ExamplesDefaults.swift in Sources */,
 				EA14D9071C71736B00899963 /* BabyTodayInfoModel.swift in Sources */,
 				EA7608161C4CD8BA00169C50 /* BabySpaceMainTableViewController.swift in Sources */,
 				EA93A7CC1C5C641C009D4A1F /* ScollViewController.swift in Sources */,

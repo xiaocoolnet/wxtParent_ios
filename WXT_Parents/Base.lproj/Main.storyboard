@@ -649,6 +649,29 @@
             </objects>
             <point key="canvasLocation" x="1882.5" y="3240"/>
         </scene>
+        <!--发动态-->
+        <scene sceneID="eRY-q0-1d3">
+            <objects>
+                <viewController id="1IW-Zg-XE9" sceneMemberID="viewController">
+                    <layoutGuides>
+                        <viewControllerLayoutGuide type="top" id="4jX-tD-qGg"/>
+                        <viewControllerLayoutGuide type="bottom" id="YN6-gY-TNp"/>
+                    </layoutGuides>
+                    <view key="view" contentMode="scaleToFill" id="HTn-zA-9YW">
+                        <rect key="frame" x="0.0" y="64" width="375" height="603"/>
+                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                    </view>
+                    <navigationItem key="navigationItem" title="发动态" id="eKn-J3-UXN">
+                        <barButtonItem key="rightBarButtonItem" title="发表" id="2GP-ml-YJx"/>
+                    </navigationItem>
+                    <freeformSimulatedSizeMetrics key="simulatedDestinationMetrics"/>
+                    <size key="freeformSize" width="375" height="667"/>
+                </viewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="Q2e-Fy-8Zy" userLabel="First Responder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="159.5" y="4618.5"/>
+        </scene>
         <!--Image View Controller-->
         <scene sceneID="Zvv-3o-WK7">
             <objects>
@@ -684,7 +707,7 @@
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="jfQ-5F-Hed" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="273" y="4291"/>
+            <point key="canvasLocation" x="657" y="4021"/>
         </scene>
         <!--我的宝宝-->
         <scene sceneID="CTa-06-HJA">
@@ -1256,6 +1279,9 @@
                     <navigationItem key="navigationItem" title=" 动态" id="GET-nV-MfN">
                         <barButtonItem key="rightBarButtonItem" systemItem="add" id="qEZ-le-HdK">
                             <color key="tintColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                            <connections>
+                                <segue destination="1IW-Zg-XE9" kind="push" id="GXG-Ey-u9x"/>
+                            </connections>
                         </barButtonItem>
                     </navigationItem>
                     <freeformSimulatedSizeMetrics key="simulatedDestinationMetrics"/>
@@ -1267,7 +1293,7 @@
                 </tableViewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="bTm-Yg-IHQ" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="237.5" y="3511"/>
+            <point key="canvasLocation" x="159.5" y="3650"/>
         </scene>
         <!--兴趣班-->
         <scene sceneID="Jfr-gW-fFW">
@@ -1346,7 +1372,7 @@
                 </tableViewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="exp-4t-xzH" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="679.5" y="3662.5"/>
+            <point key="canvasLocation" x="693.5" y="3334.5"/>
         </scene>
         <!--宝宝空间-->
         <scene sceneID="bfU-Za-sGl">
@@ -3260,10 +3286,10 @@
             </objects>
             <point key="canvasLocation" x="237.5" y="2303.4999999999995"/>
         </scene>
-        <!--View Controller-->
+        <!--Weight View Controller-->
         <scene sceneID="aKP-NE-egu">
             <objects>
-                <viewController id="s13-ku-PJk" sceneMemberID="viewController">
+                <viewController id="s13-ku-PJk" customClass="WeightViewController" customModule="WXT_Parents" customModuleProvider="target" sceneMemberID="viewController">
                     <layoutGuides>
                         <viewControllerLayoutGuide type="top" id="joj-JW-f6V"/>
                         <viewControllerLayoutGuide type="bottom" id="Btg-HY-QP4"/>
@@ -3274,7 +3300,7 @@
                         <subviews>
                             <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="wsI-fN-HJN">
                                 <rect key="frame" x="20" y="46" width="335" height="211"/>
-                                <color key="backgroundColor" red="0.60784313729999995" green="0.8980392157" blue="0.70588235290000001" alpha="1" colorSpace="calibratedRGB"/>
+                                <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                                 <constraints>
                                     <constraint firstAttribute="height" constant="211" id="R4x-Oe-Pbs"/>
                                 </constraints>
@@ -3336,6 +3362,9 @@
                     <navigationItem key="navigationItem" id="IRj-xF-4rh"/>
                     <freeformSimulatedSizeMetrics key="simulatedDestinationMetrics"/>
                     <size key="freeformSize" width="375" height="667"/>
+                    <connections>
+                        <outlet property="weightView" destination="wsI-fN-HJN" id="x0a-yY-WvM"/>
+                    </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="3ev-4X-2jJ" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
@@ -4157,7 +4186,7 @@
             <objects>
                 <tableViewController hidesBottomBarWhenPushed="YES" id="kyA-SV-rg2" customClass="HelpTableViewController" customModule="WXT_Parents" customModuleProvider="target" sceneMemberID="viewController">
                     <tableView key="view" clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="static" style="plain" separatorStyle="none" allowsSelection="NO" rowHeight="56" sectionHeaderHeight="28" sectionFooterHeight="28" id="mDh-zc-8s0">
-                        <rect key="frame" x="0.0" y="64" width="375" height="836"/>
+                        <rect key="frame" x="0.0" y="64" width="375" height="603"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                         <sections>
@@ -4268,6 +4297,8 @@
                         </connections>
                     </tableView>
                     <navigationItem key="navigationItem" title="使用帮助" id="sOo-VF-uD5"/>
+                    <freeformSimulatedSizeMetrics key="simulatedDestinationMetrics"/>
+                    <size key="freeformSize" width="375" height="667"/>
                 </tableViewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="88p-sn-FLE" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
