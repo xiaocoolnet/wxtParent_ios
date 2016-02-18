@@ -652,7 +652,7 @@
         <!--发动态-->
         <scene sceneID="eRY-q0-1d3">
             <objects>
-                <viewController id="1IW-Zg-XE9" sceneMemberID="viewController">
+                <viewController id="1IW-Zg-XE9" customClass="AddBlogViewController" customModule="WXT_Parents" customModuleProvider="target" sceneMemberID="viewController">
                     <layoutGuides>
                         <viewControllerLayoutGuide type="top" id="4jX-tD-qGg"/>
                         <viewControllerLayoutGuide type="bottom" id="YN6-gY-TNp"/>
@@ -660,13 +660,66 @@
                     <view key="view" contentMode="scaleToFill" id="HTn-zA-9YW">
                         <rect key="frame" x="0.0" y="64" width="375" height="603"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <subviews>
+                            <textView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" misplaced="YES" text="请输入动态" translatesAutoresizingMaskIntoConstraints="NO" id="eUd-TQ-Mwa">
+                                <rect key="frame" x="8" y="8" width="358" height="127"/>
+                                <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                                <constraints>
+                                    <constraint firstAttribute="height" constant="127" id="lKK-zZ-upH"/>
+                                </constraints>
+                                <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                                <textInputTraits key="textInputTraits" autocapitalizationType="sentences"/>
+                            </textView>
+                            <collectionView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" misplaced="YES" dataMode="prototypes" translatesAutoresizingMaskIntoConstraints="NO" id="yJh-iO-SyG">
+                                <rect key="frame" x="8" y="150" width="347" height="359"/>
+                                <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                                <constraints>
+                                    <constraint firstAttribute="height" constant="359" id="cxW-hB-yJa"/>
+                                </constraints>
+                                <collectionViewFlowLayout key="collectionViewLayout" minimumLineSpacing="10" minimumInteritemSpacing="10" id="w3c-uq-jZG">
+                                    <size key="itemSize" width="80" height="80"/>
+                                    <size key="headerReferenceSize" width="0.0" height="0.0"/>
+                                    <size key="footerReferenceSize" width="0.0" height="0.0"/>
+                                    <inset key="sectionInset" minX="0.0" minY="0.0" maxX="0.0" maxY="0.0"/>
+                                </collectionViewFlowLayout>
+                                <cells>
+                                    <collectionViewCell opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" reuseIdentifier="defaultCell" id="S4J-mD-U3h" customClass="ImageCollectionViewCell" customModule="WXT_Parents" customModuleProvider="target">
+                                        <rect key="frame" x="0.0" y="0.0" width="80" height="80"/>
+                                        <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                        <view key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center">
+                                            <rect key="frame" x="0.0" y="0.0" width="80" height="80"/>
+                                            <autoresizingMask key="autoresizingMask"/>
+                                            <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
+                                        </view>
+                                        <size key="customSize" width="80" height="80"/>
+                                    </collectionViewCell>
+                                </cells>
+                            </collectionView>
+                        </subviews>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                        <constraints>
+                            <constraint firstItem="eUd-TQ-Mwa" firstAttribute="top" secondItem="4jX-tD-qGg" secondAttribute="bottom" constant="8" id="5i9-yr-aqu"/>
+                            <constraint firstAttribute="trailingMargin" secondItem="eUd-TQ-Mwa" secondAttribute="trailing" constant="-11" id="T5Z-zg-nOX"/>
+                            <constraint firstItem="eUd-TQ-Mwa" firstAttribute="leading" secondItem="HTn-zA-9YW" secondAttribute="leadingMargin" constant="-12" id="ZDF-gY-Jvg"/>
+                            <constraint firstItem="yJh-iO-SyG" firstAttribute="top" secondItem="eUd-TQ-Mwa" secondAttribute="bottom" constant="10" id="bU7-0T-kTC"/>
+                            <constraint firstItem="yJh-iO-SyG" firstAttribute="leading" secondItem="HTn-zA-9YW" secondAttribute="leadingMargin" constant="-12" id="dVN-hp-imQ"/>
+                            <constraint firstItem="yJh-iO-SyG" firstAttribute="trailing" secondItem="HTn-zA-9YW" secondAttribute="trailingMargin" id="sGc-mK-BIq"/>
+                        </constraints>
                     </view>
                     <navigationItem key="navigationItem" title="发动态" id="eKn-J3-UXN">
-                        <barButtonItem key="rightBarButtonItem" title="发表" id="2GP-ml-YJx"/>
+                        <barButtonItem key="rightBarButtonItem" title="发表" id="2GP-ml-YJx">
+                            <connections>
+                                <action selector="putBlog:" destination="1IW-Zg-XE9" id="p2m-t3-poD"/>
+                            </connections>
+                        </barButtonItem>
                     </navigationItem>
                     <freeformSimulatedSizeMetrics key="simulatedDestinationMetrics"/>
                     <size key="freeformSize" width="375" height="667"/>
+                    <connections>
+                        <outlet property="contentTextView" destination="eUd-TQ-Mwa" id="0Rr-Wo-Kkh"/>
+                        <outlet property="selfView" destination="HTn-zA-9YW" id="mnT-L9-725"/>
+                        <outlet property="vc" destination="yJh-iO-SyG" id="GRv-9K-Fz8"/>
+                    </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="Q2e-Fy-8Zy" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
@@ -707,7 +760,7 @@
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="jfQ-5F-Hed" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="657" y="4021"/>
+            <point key="canvasLocation" x="671" y="4079"/>
         </scene>
         <!--我的宝宝-->
         <scene sceneID="CTa-06-HJA">
@@ -1858,6 +1911,9 @@
                                                                 <constraint firstAttribute="height" constant="45" id="PSb-uT-sRS"/>
                                                             </constraints>
                                                             <state key="normal" title="Button" image="宝宝相册"/>
+                                                            <connections>
+                                                                <segue destination="1cJ-Gy-4za" kind="push" id="jOc-YC-V08"/>
+                                                            </connections>
                                                         </button>
                                                         <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="宝宝相册" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="pqz-WR-OfN">
                                                             <rect key="frame" x="120" y="58" width="48" height="21"/>
@@ -3286,6 +3342,51 @@
             </objects>
             <point key="canvasLocation" x="237.5" y="2303.4999999999995"/>
         </scene>
+        <!--相册-->
+        <scene sceneID="xK0-R3-czi">
+            <objects>
+                <viewController id="1cJ-Gy-4za" customClass="PhotoMainViewController" customModule="WXT_Parents" customModuleProvider="target" sceneMemberID="viewController">
+                    <layoutGuides>
+                        <viewControllerLayoutGuide type="top" id="pIl-pe-j2o"/>
+                        <viewControllerLayoutGuide type="bottom" id="0qg-x0-Nwp"/>
+                    </layoutGuides>
+                    <view key="view" contentMode="scaleToFill" id="cRa-Ic-RZ4">
+                        <rect key="frame" x="0.0" y="64" width="375" height="603"/>
+                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                    </view>
+                    <navigationItem key="navigationItem" title="相册" id="Z2a-aV-BRa"/>
+                    <freeformSimulatedSizeMetrics key="simulatedDestinationMetrics"/>
+                    <size key="freeformSize" width="375" height="667"/>
+                </viewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="xk1-9s-KVK" userLabel="First Responder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="-2388.5" y="5352.5"/>
+        </scene>
+        <!--My Photo View Controller-->
+        <scene sceneID="Gja-eI-2G1">
+            <objects>
+                <viewController storyboardIdentifier="MyPhotoView" id="mD3-4O-PfC" customClass="MyPhotoViewController" customModule="WXT_Parents" customModuleProvider="target" sceneMemberID="viewController">
+                    <layoutGuides>
+                        <viewControllerLayoutGuide type="top" id="yRM-5N-cfl"/>
+                        <viewControllerLayoutGuide type="bottom" id="svu-3r-JDh"/>
+                    </layoutGuides>
+                    <view key="view" contentMode="scaleToFill" id="uy9-eC-WaH">
+                        <rect key="frame" x="0.0" y="0.0" width="320" height="568"/>
+                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <subviews>
+                            <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="d0D-ef-Aco">
+                                <rect key="frame" x="128" y="269" width="46" height="30"/>
+                                <state key="normal" title="Button"/>
+                            </button>
+                        </subviews>
+                        <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                    </view>
+                </viewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="819-V3-Xi1" userLabel="First Responder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="-2725" y="5890"/>
+        </scene>
         <!--Weight View Controller-->
         <scene sceneID="aKP-NE-egu">
             <objects>
@@ -3337,7 +3438,7 @@
                             </label>
                             <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="hzB-Xm-REg">
                                 <rect key="frame" x="20" y="281" width="335" height="221"/>
-                                <color key="backgroundColor" red="0.60784313729999995" green="0.8980392157" blue="0.70588235290000001" alpha="1" colorSpace="calibratedRGB"/>
+                                <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                                 <constraints>
                                     <constraint firstAttribute="height" constant="221" id="1et-2M-N6J"/>
                                 </constraints>
@@ -3363,6 +3464,7 @@
                     <freeformSimulatedSizeMetrics key="simulatedDestinationMetrics"/>
                     <size key="freeformSize" width="375" height="667"/>
                     <connections>
+                        <outlet property="avrWeightView" destination="hzB-Xm-REg" id="nj7-ER-crY"/>
                         <outlet property="weightView" destination="wsI-fN-HJN" id="x0a-yY-WvM"/>
                     </connections>
                 </viewController>

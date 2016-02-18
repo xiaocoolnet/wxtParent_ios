@@ -86,20 +86,28 @@ strip_invalid_archs() {
 if [[ "$CONFIGURATION" == "Debug" ]]; then
   install_framework "Pods/AFNetworking.framework"
   install_framework "Pods/Alamofire.framework"
+  install_framework "Pods/BSGridCollectionViewLayout.framework"
+  install_framework "Pods/BSImagePicker.framework"
   install_framework "Pods/ImageSlideshow.framework"
   install_framework "Pods/MBProgressHUD.framework"
   install_framework "Pods/OAStackView.framework"
+  install_framework "Pods/PagingMenuController.framework"
   install_framework "Pods/SwiftCharts.framework"
+  install_framework "Pods/UIImageViewModeScaleAspect.framework"
   install_framework "Pods/UITableView_FDTemplateLayoutCell.framework"
   install_framework "Pods/XWSwiftRefresh.framework"
 fi
 if [[ "$CONFIGURATION" == "Release" ]]; then
   install_framework "Pods/AFNetworking.framework"
   install_framework "Pods/Alamofire.framework"
+  install_framework "Pods/BSGridCollectionViewLayout.framework"
+  install_framework "Pods/BSImagePicker.framework"
   install_framework "Pods/ImageSlideshow.framework"
   install_framework "Pods/MBProgressHUD.framework"
   install_framework "Pods/OAStackView.framework"
+  install_framework "Pods/PagingMenuController.framework"
   install_framework "Pods/SwiftCharts.framework"
+  install_framework "Pods/UIImageViewModeScaleAspect.framework"
   install_framework "Pods/UITableView_FDTemplateLayoutCell.framework"
   install_framework "Pods/XWSwiftRefresh.framework"
 fi

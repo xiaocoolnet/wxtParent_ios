@@ -72,6 +72,9 @@
 		EA5A8D841C7321EE004D8308 /* ExamplesDefaults.swift in Sources */ = {isa = PBXBuildFile; fileRef = EA5A8D831C7321EE004D8308 /* ExamplesDefaults.swift */; };
 		EA5A8D861C732235004D8308 /* Env.swift in Sources */ = {isa = PBXBuildFile; fileRef = EA5A8D851C732235004D8308 /* Env.swift */; };
 		EA7608161C4CD8BA00169C50 /* BabySpaceMainTableViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = EA7608151C4CD8BA00169C50 /* BabySpaceMainTableViewController.swift */; };
+		EA780BD51C75C3040071BF47 /* PhotoMainViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = EA780BD41C75C3040071BF47 /* PhotoMainViewController.swift */; };
+		EA780BD71C75C85E0071BF47 /* MyPhotoViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = EA780BD61C75C85E0071BF47 /* MyPhotoViewController.swift */; };
+		EA780BD91C75C88A0071BF47 /* ClassViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = EA780BD81C75C88A0071BF47 /* ClassViewController.swift */; };
 		EA78A1E51C59FC5500159F22 /* BlogCommentTableViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = EA78A1E41C59FC5500159F22 /* BlogCommentTableViewController.swift */; };
 		EA78A1E71C5A329D00159F22 /* SchoolMainTableViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = EA78A1E61C5A329D00159F22 /* SchoolMainTableViewController.swift */; };
 		EA902F101C326D6800CC5F6F /* readme in Resources */ = {isa = PBXBuildFile; fileRef = EA902F0F1C326D6800CC5F6F /* readme */; };
@@ -88,6 +91,8 @@
 		EAEB9E781C51FEC200EACE1B /* CornerRadiusViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = EAEB9E771C51FEC200EACE1B /* CornerRadiusViewController.swift */; };
 		EAEB9E821C5208F200EACE1B /* BlogMainTableTableViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = EAEB9E811C5208F200EACE1B /* BlogMainTableTableViewController.swift */; };
 		EAEB9E841C5223F700EACE1B /* BlogCellTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = EAEB9E831C5223F700EACE1B /* BlogCellTableViewCell.swift */; };
+		EAED61611C741F09000CDCA1 /* AddBlogViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = EAED61601C741F09000CDCA1 /* AddBlogViewController.swift */; };
+		EAED61631C746F27000CDCA1 /* ImageCollectionViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = EAED61621C746F27000CDCA1 /* ImageCollectionViewCell.swift */; };
 		EAF181A91C53772A007706CE /* BlogList.swift in Sources */ = {isa = PBXBuildFile; fileRef = EAF181A81C53772A007706CE /* BlogList.swift */; };
 /* End PBXBuildFile section */
 
@@ -163,6 +168,9 @@
 		EA5A8D831C7321EE004D8308 /* ExamplesDefaults.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ExamplesDefaults.swift; sourceTree = "<group>"; };
 		EA5A8D851C732235004D8308 /* Env.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Env.swift; sourceTree = "<group>"; };
 		EA7608151C4CD8BA00169C50 /* BabySpaceMainTableViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = BabySpaceMainTableViewController.swift; sourceTree = "<group>"; };
+		EA780BD41C75C3040071BF47 /* PhotoMainViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PhotoMainViewController.swift; sourceTree = "<group>"; };
+		EA780BD61C75C85E0071BF47 /* MyPhotoViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MyPhotoViewController.swift; sourceTree = "<group>"; };
+		EA780BD81C75C88A0071BF47 /* ClassViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ClassViewController.swift; sourceTree = "<group>"; };
 		EA78A1E41C59FC5500159F22 /* BlogCommentTableViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = BlogCommentTableViewController.swift; sourceTree = "<group>"; };
 		EA78A1E61C5A329D00159F22 /* SchoolMainTableViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = SchoolMainTableViewController.swift; path = ../SchoolMainTableViewController.swift; sourceTree = "<group>"; };
 		EA902F0F1C326D6800CC5F6F /* readme */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = readme; sourceTree = "<group>"; };
@@ -179,6 +187,8 @@
 		EAEB9E771C51FEC200EACE1B /* CornerRadiusViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CornerRadiusViewController.swift; sourceTree = "<group>"; };
 		EAEB9E811C5208F200EACE1B /* BlogMainTableTableViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = BlogMainTableTableViewController.swift; sourceTree = "<group>"; };
 		EAEB9E831C5223F700EACE1B /* BlogCellTableViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = BlogCellTableViewCell.swift; sourceTree = "<group>"; };
+		EAED61601C741F09000CDCA1 /* AddBlogViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AddBlogViewController.swift; sourceTree = "<group>"; };
+		EAED61621C746F27000CDCA1 /* ImageCollectionViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ImageCollectionViewCell.swift; sourceTree = "<group>"; };
 		EAF181A81C53772A007706CE /* BlogList.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = BlogList.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
@@ -460,6 +470,7 @@
 				EAEB9E811C5208F200EACE1B /* BlogMainTableTableViewController.swift */,
 				EA78A1E41C59FC5500159F22 /* BlogCommentTableViewController.swift */,
 				EA0FFCB71C62FDE100945627 /* ImageViewController.swift */,
+				EAED61601C741F09000CDCA1 /* AddBlogViewController.swift */,
 			);
 			path = Controller;
 			sourceTree = "<group>";
@@ -480,6 +491,7 @@
 			children = (
 				EA59A3D61C313C69003FBE82 /* Readme */,
 				EAEB9E831C5223F700EACE1B /* BlogCellTableViewCell.swift */,
+				EAED61621C746F27000CDCA1 /* ImageCollectionViewCell.swift */,
 			);
 			path = View;
 			sourceTree = "<group>";
@@ -539,6 +551,9 @@
 				EA902F0F1C326D6800CC5F6F /* readme */,
 				EA7608151C4CD8BA00169C50 /* BabySpaceMainTableViewController.swift */,
 				EAAEB4C61C71DB170009710B /* WeightViewController.swift */,
+				EA780BD41C75C3040071BF47 /* PhotoMainViewController.swift */,
+				EA780BD61C75C85E0071BF47 /* MyPhotoViewController.swift */,
+				EA780BD81C75C88A0071BF47 /* ClassViewController.swift */,
 			);
 			path = Controller;
 			sourceTree = "<group>";
@@ -773,13 +788,18 @@
 				EA3ADD821C5DB3FD002FCA2D /* XingquCellTableViewCell.swift in Sources */,
 				EA4A70671C487DF100DAD9A1 /* RegisterGetCodeViewController.swift in Sources */,
 				EA4B63E11C5B60980042711F /* DiaryList.swift in Sources */,
+				EAED61611C741F09000CDCA1 /* AddBlogViewController.swift in Sources */,
 				EA5A8D861C732235004D8308 /* Env.swift in Sources */,
 				EA14D9091C717BFF00899963 /* GetChange_sta_weiModel.swift in Sources */,
 				EA3ADD6E1C5DA4A3002FCA2D /* BabyTableViewCell.swift in Sources */,
 				EA4B63D91C5B1DE10042711F /* MyTableViewController.swift in Sources */,
+				EA780BD71C75C85E0071BF47 /* MyPhotoViewController.swift in Sources */,
 				EA5A8D821C72BEE3004D8308 /* MineInfoTableViewController.swift in Sources */,
+				EA780BD51C75C3040071BF47 /* PhotoMainViewController.swift in Sources */,
 				EA3ADD6C1C5DA2B3002FCA2D /* MyBabyTableViewController.swift in Sources */,
 				EA0FFCB61C62EF5400945627 /* XKeyBoard.m in Sources */,
+				EAED61631C746F27000CDCA1 /* ImageCollectionViewCell.swift in Sources */,
+				EA780BD91C75C88A0071BF47 /* ClassViewController.swift in Sources */,
 				EA0FFCB81C62FDE100945627 /* ImageViewController.swift in Sources */,
 				EAAEB4C71C71DB170009710B /* WeightViewController.swift in Sources */,
 				EAE0A5CC1C50810700ECF86E /* ChildrenInfo.swift in Sources */,
