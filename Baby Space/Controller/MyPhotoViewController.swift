@@ -10,7 +10,7 @@ import UIKit
 
 class MyPhotoViewController: UIViewController {
 
-    var btn = UIButton()
+    var b1tn = UIButton()
     override func viewDidLoad() {
         super.viewDidLoad()
 
