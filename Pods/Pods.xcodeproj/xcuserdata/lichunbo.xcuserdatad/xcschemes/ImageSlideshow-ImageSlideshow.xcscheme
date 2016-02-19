@@ -14,7 +14,7 @@
             buildForArchiving = "YES">
             <BuildableReference
                BuildableIdentifier = 'primary'
-               BlueprintIdentifier = 'EB6717F351BB5FD610B6B99F'
+               BlueprintIdentifier = 'C0F2A1E4EC038CDCE5585E88'
                BlueprintName = 'ImageSlideshow-ImageSlideshow'
                ReferencedContainer = 'container:Pods.xcodeproj'
                BuildableName = 'ImageSlideshow.bundle'>

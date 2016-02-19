@@ -1427,6 +1427,42 @@
             </objects>
             <point key="canvasLocation" x="693.5" y="3334.5"/>
         </scene>
+        <!--成长档案-->
+        <scene sceneID="kFy-tD-4T3">
+            <objects>
+                <viewController id="2Kz-Yw-fBL" customClass="ChengZhangViewController" customModule="WXT_Parents" customModuleProvider="target" sceneMemberID="viewController">
+                    <layoutGuides>
+                        <viewControllerLayoutGuide type="top" id="RB2-Zb-O2w"/>
+                        <viewControllerLayoutGuide type="bottom" id="X0s-nn-n1E"/>
+                    </layoutGuides>
+                    <view key="view" contentMode="scaleToFill" id="DbG-jX-DPg">
+                        <rect key="frame" x="0.0" y="64" width="375" height="603"/>
+                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <subviews>
+                            <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="ALk-Kk-Shh" customClass="DJKFlipperView" customModule="DJKFlipper">
+                                <rect key="frame" x="0.0" y="0.0" width="375" height="554"/>
+                                <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                            </view>
+                        </subviews>
+                        <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                        <constraints>
+                            <constraint firstItem="ALk-Kk-Shh" firstAttribute="top" secondItem="RB2-Zb-O2w" secondAttribute="bottom" id="MnU-70-VN8"/>
+                            <constraint firstItem="ALk-Kk-Shh" firstAttribute="bottom" secondItem="X0s-nn-n1E" secondAttribute="top" id="Olm-SO-Nqr"/>
+                            <constraint firstAttribute="trailing" secondItem="ALk-Kk-Shh" secondAttribute="trailing" id="jnM-SC-cYr"/>
+                            <constraint firstItem="ALk-Kk-Shh" firstAttribute="width" secondItem="DbG-jX-DPg" secondAttribute="width" id="zIx-3E-JWc"/>
+                        </constraints>
+                    </view>
+                    <navigationItem key="navigationItem" title="成长档案" id="VVW-xA-iiG"/>
+                    <freeformSimulatedSizeMetrics key="simulatedDestinationMetrics"/>
+                    <size key="freeformSize" width="375" height="667"/>
+                    <connections>
+                        <outlet property="fip" destination="ALk-Kk-Shh" id="mku-bL-obl"/>
+                    </connections>
+                </viewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="BsT-RT-DXG" userLabel="First Responder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="-2836.5" y="5996.5"/>
+        </scene>
         <!--宝宝空间-->
         <scene sceneID="bfU-Za-sGl">
             <objects>
@@ -1963,6 +1999,9 @@
                                                                 <constraint firstAttribute="width" constant="45" id="yKi-kQ-tng"/>
                                                             </constraints>
                                                             <state key="normal" title="Button" image="成长档案"/>
+                                                            <connections>
+                                                                <segue destination="2Kz-Yw-fBL" kind="push" id="mGO-Ta-MUQ"/>
+                                                            </connections>
                                                         </button>
                                                         <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="成长档案" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="2fi-Bi-8ok">
                                                             <rect key="frame" x="19" y="58" width="48" height="21"/>
@@ -3342,6 +3381,24 @@
             </objects>
             <point key="canvasLocation" x="237.5" y="2303.4999999999995"/>
         </scene>
+        <!--My Photo View Controller-->
+        <scene sceneID="6GF-xw-kzr">
+            <objects>
+                <viewController storyboardIdentifier="MyPhotoView" id="Egw-R3-Pvw" customClass="MyPhotoViewController" customModule="WXT_Parents" customModuleProvider="target" sceneMemberID="viewController">
+                    <layoutGuides>
+                        <viewControllerLayoutGuide type="top" id="2ar-U6-nAm"/>
+                        <viewControllerLayoutGuide type="bottom" id="f45-AV-3lQ"/>
+                    </layoutGuides>
+                    <view key="view" contentMode="scaleToFill" id="8Uf-5r-bqK">
+                        <rect key="frame" x="0.0" y="0.0" width="320" height="568"/>
+                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                    </view>
+                </viewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="cTH-4n-7Zt" userLabel="First Responder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="-2843" y="5274"/>
+        </scene>
         <!--相册-->
         <scene sceneID="xK0-R3-czi">
             <objects>
@@ -3362,30 +3419,6 @@
                 <placeholder placeholderIdentifier="IBFirstResponder" id="xk1-9s-KVK" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
             <point key="canvasLocation" x="-2388.5" y="5352.5"/>
-        </scene>
-        <!--My Photo View Controller-->
-        <scene sceneID="Gja-eI-2G1">
-            <objects>
-                <viewController storyboardIdentifier="MyPhotoView" id="mD3-4O-PfC" customClass="MyPhotoViewController" customModule="WXT_Parents" customModuleProvider="target" sceneMemberID="viewController">
-                    <layoutGuides>
-                        <viewControllerLayoutGuide type="top" id="yRM-5N-cfl"/>
-                        <viewControllerLayoutGuide type="bottom" id="svu-3r-JDh"/>
-                    </layoutGuides>
-                    <view key="view" contentMode="scaleToFill" id="uy9-eC-WaH">
-                        <rect key="frame" x="0.0" y="0.0" width="320" height="568"/>
-                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
-                        <subviews>
-                            <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="d0D-ef-Aco">
-                                <rect key="frame" x="128" y="269" width="46" height="30"/>
-                                <state key="normal" title="Button"/>
-                            </button>
-                        </subviews>
-                        <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
-                    </view>
-                </viewController>
-                <placeholder placeholderIdentifier="IBFirstResponder" id="819-V3-Xi1" userLabel="First Responder" sceneMemberID="firstResponder"/>
-            </objects>
-            <point key="canvasLocation" x="-2725" y="5890"/>
         </scene>
         <!--Weight View Controller-->
         <scene sceneID="aKP-NE-egu">

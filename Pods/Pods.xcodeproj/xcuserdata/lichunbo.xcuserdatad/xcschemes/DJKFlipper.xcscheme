@@ -14,10 +14,10 @@
             buildForArchiving = "YES">
             <BuildableReference
                BuildableIdentifier = 'primary'
-               BlueprintIdentifier = '792FBC0268211AA6C0F8CE06'
-               BlueprintName = 'Pods'
+               BlueprintIdentifier = '1D9BE4336351F9751ABCEA82'
+               BlueprintName = 'DJKFlipper'
                ReferencedContainer = 'container:Pods.xcodeproj'
-               BuildableName = 'Pods.framework'>
+               BuildableName = 'DJKFlipper.framework'>
             </BuildableReference>
          </BuildActionEntry>
       </BuildActionEntries>

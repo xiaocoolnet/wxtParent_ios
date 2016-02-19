@@ -29,6 +29,11 @@
 			<key>isShown</key>
 			<false/>
 		</dict>
+		<key>DJKFlipper.xcscheme</key>
+		<dict>
+			<key>isShown</key>
+			<false/>
+		</dict>
 		<key>ImageSlideshow-ImageSlideshow.xcscheme</key>
 		<dict>
 			<key>isShown</key>
@@ -97,6 +102,11 @@
 			<key>primary</key>
 			<true/>
 		</dict>
+		<key>1291BD2AC902A7C990E0FC97FADE9A8D</key>
+		<dict>
+			<key>primary</key>
+			<true/>
+		</dict>
 		<key>1A0BCF8AD93C9F03F8BF4FA065AC0BF5</key>
 		<dict>
 			<key>primary</key>
@@ -107,12 +117,17 @@
 			<key>primary</key>
 			<true/>
 		</dict>
-		<key>3735AD784D0BB6BCE512E1D8C1B82F32</key>
+		<key>2E7187EFB3BF17AAB44C45C801947FA7</key>
 		<dict>
 			<key>primary</key>
 			<true/>
 		</dict>
 		<key>3E49192D0E917BB89954FD017AAA1723</key>
+		<dict>
+			<key>primary</key>
+			<true/>
+		</dict>
+		<key>3E9AE48E09EA59B180C7CA0E16748898</key>
 		<dict>
 			<key>primary</key>
 			<true/>
@@ -132,7 +147,7 @@
 			<key>primary</key>
 			<true/>
 		</dict>
-		<key>837DD93FB1A18CEF5E6B5316C990E61F</key>
+		<key>6B20830D6F86640880E864224E50A536</key>
 		<dict>
 			<key>primary</key>
 			<true/>
@@ -152,17 +167,12 @@
 			<key>primary</key>
 			<true/>
 		</dict>
-		<key>D4C8EB3974458EFDE7CFF68B5B0E9E51</key>
-		<dict>
-			<key>primary</key>
-			<true/>
-		</dict>
 		<key>E61CE3B6DFA1FE6B3E296965C76C0E10</key>
 		<dict>
 			<key>primary</key>
 			<true/>
 		</dict>
-		<key>EFCC54BCF5B429AEFC01778807FC441C</key>
+		<key>ED00D2D8030B2C54143AB6509644D6F8</key>
 		<dict>
 			<key>primary</key>
 			<true/>

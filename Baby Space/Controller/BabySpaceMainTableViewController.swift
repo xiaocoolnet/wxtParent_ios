@@ -70,6 +70,7 @@ class BabySpaceMainTableViewController: UITableViewController {
     
     override func viewWillAppear(animated: Bool) {
         DropDownUpdate()
+        self.tabBarController?.tabBar.hidden = false
     }
     
     //获取宝宝今日记录

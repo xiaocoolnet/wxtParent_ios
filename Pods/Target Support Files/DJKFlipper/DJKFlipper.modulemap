@@ -1,0 +1,6 @@
+framework module DJKFlipper {
+  umbrella header "DJKFlipper-umbrella.h"
+
+  export *
+  module * { export * }
+}

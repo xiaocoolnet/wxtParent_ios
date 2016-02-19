@@ -14,7 +14,7 @@
             buildForArchiving = "YES">
             <BuildableReference
                BuildableIdentifier = 'primary'
-               BlueprintIdentifier = 'F6BD6442E61E0372ED416236'
+               BlueprintIdentifier = '8EA14C18AF64551B1D555AC9'
                BlueprintName = 'XWSwiftRefresh'
                ReferencedContainer = 'container:Pods.xcodeproj'
                BuildableName = 'XWSwiftRefresh.framework'>

@@ -14,7 +14,7 @@ class PhotoMainViewController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         view.backgroundColor = UIColor.whiteColor()
-        
+        self.tabBarController?.tabBar.hidden = true
         //let viewController = MyPhotoViewController()
         let viewController = self.storyboard?.instantiateViewControllerWithIdentifier("MyPhotoView") as! MyPhotoViewController
         viewController.title = "宝宝相册"
@@ -30,7 +30,7 @@ class PhotoMainViewController: UIViewController {
         options.menuDisplayMode = .SegmentedControl
         let pagingMenuController = PagingMenuController(viewControllers: viewControllers, options: options)
         pagingMenuController.view.frame.origin.y += 0
-        pagingMenuController.view.frame.size.height -= 64
+        pagingMenuController.view.frame.size.height -= 0
         
         addChildViewController(pagingMenuController)
         view.addSubview(pagingMenuController.view)

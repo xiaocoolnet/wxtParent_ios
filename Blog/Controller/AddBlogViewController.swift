@@ -28,7 +28,6 @@ class AddBlogViewController: UIViewController,UICollectionViewDataSource,UIColle
         self.tabBarController?.tabBar.hidden = true
         vc.dataSource = self
         vc.delegate = self
-
         addPictureBtn.frame = CGRectMake(3, 145, 80, 80)
         addPictureBtn.setBackgroundImage(UIImage(named: "add2"), forState: UIControlState.Normal)
         addPictureBtn.layer.borderWidth = 1.0
