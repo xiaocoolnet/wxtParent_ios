@@ -15,37 +15,25 @@ class BabySpaceMainTableViewController: UITableViewController {
     
     
     @IBOutlet weak var childrenAvator: UIImageView!
-    
     @IBOutlet weak var childrenClass: UILabel!
-    
     @IBOutlet weak var childrenName: UILabel!
-    
     @IBOutlet weak var childrenSex: UIImageView!
-    
     @IBOutlet weak var childrenAge: UILabel!
-    
     @IBOutlet weak var childrenSchoole: UILabel!
-    
     @IBOutlet weak var arriveTimeLabel: UILabel!
-    
     @IBOutlet weak var leaveTimeLabel: UILabel!
-    
     @IBOutlet weak var arriveTemperatureLabel: UILabel!
-    
     @IBOutlet weak var leavearriveTemperatureLabel: UILabel!
-    
     @IBOutlet weak var weightLabel: UILabel!
-    
     @IBOutlet weak var heightLabel: UILabel!
-    
+    var blog=BlogMainTableTableViewController()
     override func viewDidLoad() {
         super.viewDidLoad()
-        //self.automaticallyAdjustsScrollViewInsets = false
+        
+        self.navigationController?.tabBarItem.badgeValue = "3"
         childrenClass.layer.cornerRadius = 8
         childrenClass.layer.masksToBounds = true
         DropDownUpdate()
-       
-        //self.navigationController?.navigationBar.setBackgroundImage(UIImage(named: "背景nav2"), forBarMetrics: UIBarMetrics.Default)
     }
     
     func GetDate(){

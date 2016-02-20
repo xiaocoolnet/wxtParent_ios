@@ -1,21 +1,19 @@
 //
-//  MainTabbarViewController.swift
+//  BlogNavigationContrller.swift
 //  WXT_Parents
 //
-//  Created by 李春波 on 16/1/9.
+//  Created by 李春波 on 16/2/20.
 //  Copyright © 2016年 北京校酷网络科技有限公司. All rights reserved.
 //
 
 import UIKit
 
-class MainTabbarViewController: UITabBarController {
+class BlogNavigationContrller: UINavigationController {
 
     override func viewDidLoad() {
         super.viewDidLoad()
 
-        let mainStoryboard = UIStoryboard(name: "Main", bundle: NSBundle.mainBundle())
-        let vc : BlogMainTableTableViewController = mainStoryboard.instantiateViewControllerWithIdentifier("BlogView") as! BlogMainTableTableViewController
-        vc.navigationController?.tabBarItem.badgeValue = "3"
+        // Do any additional setup after loading the view.
     }
 
     override func didReceiveMemoryWarning() {

@@ -14,6 +14,7 @@
 		EA010E681C4A291900BBED0B /* Readme in Resources */ = {isa = PBXBuildFile; fileRef = EA010E671C4A291900BBED0B /* Readme */; };
 		EA010E6A1C4A295000BBED0B /* Readme in Resources */ = {isa = PBXBuildFile; fileRef = EA010E691C4A295000BBED0B /* Readme */; };
 		EA010E6C1C4A295D00BBED0B /* Readme in Resources */ = {isa = PBXBuildFile; fileRef = EA010E6B1C4A295D00BBED0B /* Readme */; };
+		EA02F9631C786112001626D3 /* BlogNavigationContrller.swift in Sources */ = {isa = PBXBuildFile; fileRef = EA02F9621C786112001626D3 /* BlogNavigationContrller.swift */; };
 		EA065B291C5B09BF0062E84D /* GrowingDiaryMainViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = EA065B281C5B09BF0062E84D /* GrowingDiaryMainViewController.swift */; };
 		EA0FFCB61C62EF5400945627 /* XKeyBoard.m in Sources */ = {isa = PBXBuildFile; fileRef = EA0FFCB51C62EF5400945627 /* XKeyBoard.m */; };
 		EA0FFCB81C62FDE100945627 /* ImageViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = EA0FFCB71C62FDE100945627 /* ImageViewController.swift */; };
@@ -110,6 +111,7 @@
 		EA010E671C4A291900BBED0B /* Readme */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = Readme; sourceTree = "<group>"; };
 		EA010E691C4A295000BBED0B /* Readme */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = Readme; sourceTree = "<group>"; };
 		EA010E6B1C4A295D00BBED0B /* Readme */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = Readme; sourceTree = "<group>"; };
+		EA02F9621C786112001626D3 /* BlogNavigationContrller.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = BlogNavigationContrller.swift; sourceTree = "<group>"; };
 		EA065B281C5B09BF0062E84D /* GrowingDiaryMainViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = GrowingDiaryMainViewController.swift; sourceTree = "<group>"; };
 		EA0FFCB41C62EF5400945627 /* XKeyBoard.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = XKeyBoard.h; sourceTree = "<group>"; };
 		EA0FFCB51C62EF5400945627 /* XKeyBoard.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = XKeyBoard.m; sourceTree = "<group>"; };
@@ -479,6 +481,7 @@
 				EA78A1E41C59FC5500159F22 /* BlogCommentTableViewController.swift */,
 				EA0FFCB71C62FDE100945627 /* ImageViewController.swift */,
 				EAED61601C741F09000CDCA1 /* AddBlogViewController.swift */,
+				EA02F9621C786112001626D3 /* BlogNavigationContrller.swift */,
 			);
 			path = Controller;
 			sourceTree = "<group>";
@@ -792,6 +795,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				EA74AA2A1C770E2E00E93092 /* ChengZhang1ViewController.swift in Sources */,
+				EA02F9631C786112001626D3 /* BlogNavigationContrller.swift in Sources */,
 				EA5A8D801C72B7B9004D8308 /* HelpTableViewController.swift in Sources */,
 				EAEB9E781C51FEC200EACE1B /* CornerRadiusViewController.swift in Sources */,
 				EAEB9E821C5208F200EACE1B /* BlogMainTableTableViewController.swift in Sources */,

@@ -9,13 +9,14 @@
 import UIKit
 
 @UIApplicationMain
-class AppDelegate: UIResponder, UIApplicationDelegate {
+class AppDelegate: UIResponder, UIApplicationDelegate,UITabBarControllerDelegate {
 
     var window: UIWindow?
 
 
     func application(application: UIApplication, didFinishLaunchingWithOptions launchOptions: [NSObject: AnyObject]?) -> Bool {
         // Override point for customization after application launch.
+        
         NSThread.sleepForTimeInterval(2.0)
         UITabBar.appearance().tintColor = UIColor(red: 54.0 / 255.0, green: 190.0 / 255.0, blue: 100.0 / 255.0, alpha: 1.0)
         
@@ -49,10 +50,14 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
             
         }
         else{
-            self.window?.rootViewController = self.window?.rootViewController?.storyboard?.instantiateViewControllerWithIdentifier(segueId)
+            let storyboard = UIStoryboard(name: "Main", bundle: nil)
+            let tableBarController = storyboard.instantiateViewControllerWithIdentifier(segueId) as! UITabBarController
+            let tableBarItem = tableBarController.tabBar.items![2]
+            tableBarItem.badgeValue = "3"
+             self.window?.rootViewController = tableBarController
+
+            }
         }
-        }
-        
         
         return true
     }

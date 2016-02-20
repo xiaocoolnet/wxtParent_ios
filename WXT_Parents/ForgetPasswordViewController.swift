@@ -110,10 +110,10 @@ class ForgetPasswordViewController: UIViewController {
                     hud.hide(true, afterDelay: 1)
                     let userid = NSUserDefaults.standardUserDefaults()
                     userid.setValue(status.data?.id, forKey: "userid")
-                    let uid = userid.valueForKey("userid")
+                    //let uid = userid.valueForKey("userid")
                     
                     let mainStoryboard = UIStoryboard(name: "Main", bundle: NSBundle.mainBundle())
-                    let vc : UIViewController = mainStoryboard.instantiateViewControllerWithIdentifier("ForgetPasswordView") as! UIViewController
+                    let vc : UIViewController = mainStoryboard.instantiateViewControllerWithIdentifier("ForgetPasswordView") 
                     self.navigationController?.pushViewController(vc, animated: true)
                     
                     

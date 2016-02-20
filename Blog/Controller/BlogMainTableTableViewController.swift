@@ -26,7 +26,7 @@ class BlogMainTableTableViewController: UITableViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        
+        self.navigationController?.tabBarItem.badgeValue = nil
         ScrollViewImage()
         DropDownUpdate()
         UpPullAdd()
