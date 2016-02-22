@@ -1463,6 +1463,60 @@
             </objects>
             <point key="canvasLocation" x="-2836.5" y="5996.5"/>
         </scene>
+        <!--班级课件-->
+        <scene sceneID="h14-Gj-0lS">
+            <objects>
+                <tableViewController title="班级课件" id="qv5-II-6iw" customClass="ClassCoursewareTableViewController" customModule="WXT_Parents" customModuleProvider="target" sceneMemberID="viewController">
+                    <tableView key="view" clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="default" rowHeight="97" sectionHeaderHeight="28" sectionFooterHeight="28" id="dr7-f4-Fbp">
+                        <rect key="frame" x="0.0" y="64" width="375" height="603"/>
+                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                        <containerView key="tableHeaderView" opaque="NO" contentMode="scaleToFill" id="BkV-aW-Wjl" customClass="ImageSlideshow" customModule="ImageSlideshow">
+                            <rect key="frame" x="0.0" y="-1433" width="375" height="163"/>
+                            <autoresizingMask key="autoresizingMask" widthSizable="YES" flexibleMinY="YES"/>
+                        </containerView>
+                        <prototypes>
+                            <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" selectionStyle="default" indentationWidth="10" reuseIdentifier="ClassCell" rowHeight="97" id="QDn-cM-fVO" customClass="ClassCellTableViewCell" customModule="WXT_Parents" customModuleProvider="target">
+                                <rect key="frame" x="0.0" y="191" width="375" height="97"/>
+                                <autoresizingMask key="autoresizingMask"/>
+                                <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="QDn-cM-fVO" id="hKF-EG-7sq">
+                                    <rect key="frame" x="0.0" y="0.0" width="375" height="96"/>
+                                    <autoresizingMask key="autoresizingMask"/>
+                                    <subviews>
+                                        <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" image="背景nav2" translatesAutoresizingMaskIntoConstraints="NO" id="KVW-mr-eTG">
+                                            <rect key="frame" x="13" y="-13" width="179" height="103"/>
+                                        </imageView>
+                                        <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="微笑" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="mv1-w8-PSy">
+                                            <rect key="frame" x="219" y="0.0" width="137" height="78"/>
+                                            <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                                            <color key="textColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
+                                            <nil key="highlightedColor"/>
+                                        </label>
+                                    </subviews>
+                                </tableViewCellContentView>
+                                <connections>
+                                    <outlet property="TitleLabel" destination="mv1-w8-PSy" id="jh3-Dj-GcT"/>
+                                    <outlet property="diaryImage" destination="KVW-mr-eTG" id="3Pz-hj-pAY"/>
+                                </connections>
+                            </tableViewCell>
+                        </prototypes>
+                        <connections>
+                            <outlet property="dataSource" destination="qv5-II-6iw" id="FC8-32-JA2"/>
+                            <outlet property="delegate" destination="BkV-aW-Wjl" id="1aW-TP-dQv"/>
+                        </connections>
+                    </tableView>
+                    <navigationItem key="navigationItem" title="班级课件" id="RfJ-fi-afD"/>
+                    <freeformSimulatedSizeMetrics key="simulatedDestinationMetrics"/>
+                    <size key="freeformSize" width="375" height="667"/>
+                    <connections>
+                        <outlet property="ImageSlide" destination="BkV-aW-Wjl" id="8zE-r4-Pn7"/>
+                        <outlet property="tableSource" destination="dr7-f4-Fbp" id="ge9-dp-29X"/>
+                    </connections>
+                </tableViewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="2VK-Dq-Fju" userLabel="First Responder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="-2250.5" y="3980"/>
+        </scene>
         <!--宝宝空间-->
         <scene sceneID="bfU-Za-sGl">
             <objects>
@@ -2325,6 +2379,9 @@
                                                                 <constraint firstAttribute="width" constant="45" id="Rdi-N3-8xX"/>
                                                             </constraints>
                                                             <state key="normal" title="Button" image="宝宝课件"/>
+                                                            <connections>
+                                                                <segue destination="qv5-II-6iw" kind="push" id="oCL-NV-RUe"/>
+                                                            </connections>
                                                         </button>
                                                         <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="P5g-ej-yWR">
                                                             <rect key="frame" x="121" y="82" width="45" height="45"/>

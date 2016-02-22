@@ -7,6 +7,9 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		040F8B341C7A9B8A00FD377B /* ClassCoursewareTableViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 040F8B331C7A9B8A00FD377B /* ClassCoursewareTableViewController.swift */; };
+		040F8B361C7A9B9600FD377B /* ClassList.swift in Sources */ = {isa = PBXBuildFile; fileRef = 040F8B351C7A9B9600FD377B /* ClassList.swift */; };
+		040F8B381C7A9B9F00FD377B /* ClassCellTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 040F8B371C7A9B9F00FD377B /* ClassCellTableViewCell.swift */; };
 		2FE62032EFC47F4FAA20D439 /* Pods.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = E7AFF348788309629B3DA583 /* Pods.framework */; };
 		EA010E611C4A25E400BBED0B /* ForgetPasswordViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = EA010E601C4A25E400BBED0B /* ForgetPasswordViewController.swift */; };
 		EA010E641C4A261E00BBED0B /* ForgetPasswordSetViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = EA010E631C4A261E00BBED0B /* ForgetPasswordSetViewController.swift */; };
@@ -102,6 +105,9 @@
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
+		040F8B331C7A9B8A00FD377B /* ClassCoursewareTableViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ClassCoursewareTableViewController.swift; sourceTree = "<group>"; };
+		040F8B351C7A9B9600FD377B /* ClassList.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ClassList.swift; sourceTree = "<group>"; };
+		040F8B371C7A9B9F00FD377B /* ClassCellTableViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ClassCellTableViewCell.swift; sourceTree = "<group>"; };
 		7FAF58DF0009EB15F3995775 /* Pods.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = Pods.release.xcconfig; path = "Pods/Target Support Files/Pods/Pods.release.xcconfig"; sourceTree = "<group>"; };
 		DD0CEFBF6B55340AB8318E55 /* Pods.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = Pods.debug.xcconfig; path = "Pods/Target Support Files/Pods/Pods.debug.xcconfig"; sourceTree = "<group>"; };
 		E7AFF348788309629B3DA583 /* Pods.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods.framework; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -568,6 +574,7 @@
 				EA74AA241C77062900E93092 /* ChengZhangViewController.swift */,
 				EA74AA281C770E2E00E93092 /* ChengZhang1ViewController.swift */,
 				EA74AA2C1C77111000E93092 /* PageTestViewController.xib */,
+				040F8B331C7A9B8A00FD377B /* ClassCoursewareTableViewController.swift */,
 			);
 			path = Controller;
 			sourceTree = "<group>";
@@ -576,6 +583,7 @@
 			isa = PBXGroup;
 			children = (
 				EA59A3C61C313C2B003FBE82 /* Readme */,
+				040F8B351C7A9B9600FD377B /* ClassList.swift */,
 				EA14D9061C71736B00899963 /* BabyTodayInfoModel.swift */,
 				EA14D9081C717BFF00899963 /* GetChange_sta_weiModel.swift */,
 			);
@@ -586,6 +594,7 @@
 			isa = PBXGroup;
 			children = (
 				EA59A3C81C313C32003FBE82 /* Readme */,
+				040F8B371C7A9B9F00FD377B /* ClassCellTableViewCell.swift */,
 				EA74A9FC1C76B7D400E93092 /* PhotoCollectionViewCell.swift */,
 			);
 			path = View;
@@ -811,6 +820,7 @@
 				EA14D9091C717BFF00899963 /* GetChange_sta_weiModel.swift in Sources */,
 				EA3ADD6E1C5DA4A3002FCA2D /* BabyTableViewCell.swift in Sources */,
 				EA4B63D91C5B1DE10042711F /* MyTableViewController.swift in Sources */,
+				040F8B381C7A9B9F00FD377B /* ClassCellTableViewCell.swift in Sources */,
 				EA780BD71C75C85E0071BF47 /* MyPhotoViewController.swift in Sources */,
 				EA5A8D821C72BEE3004D8308 /* MineInfoTableViewController.swift in Sources */,
 				EA780BD51C75C3040071BF47 /* PhotoMainViewController.swift in Sources */,
@@ -826,7 +836,9 @@
 				EA3ADD801C5DB3E1002FCA2D /* XingQuBanTableViewController.swift in Sources */,
 				EACA2A4A1C4FB9CE00A3ECD3 /* MineModel.swift in Sources */,
 				EA3ADD7C1C5DB2BB002FCA2D /* ZhaoPinTableViewController.swift in Sources */,
+				040F8B361C7A9B9600FD377B /* ClassList.swift in Sources */,
 				EA3ADD681C5D980F002FCA2D /* SaoYiSaoViewController.swift in Sources */,
+				040F8B341C7A9B8A00FD377B /* ClassCoursewareTableViewController.swift in Sources */,
 				EA4B63DD1C5B22FE0042711F /* DiaryTableViewCell.swift in Sources */,
 				EAF181A91C53772A007706CE /* BlogList.swift in Sources */,
 				EA74AA251C77062900E93092 /* ChengZhangViewController.swift in Sources */,
