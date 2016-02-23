@@ -60,7 +60,7 @@ class FoodMenuTableViewController: UITableViewController {
         let cell = tableView.dequeueReusableCellWithIdentifier("FoodMenu", forIndexPath: indexPath) as!FoodMenuTableViewCell
         cell.images.image = UIImage(named: "奥数")
        cell.lab.text = "标题"
-        cell.Introduce.text = "如果你无法简介的表达你的想法，只能说明你还不够了解他"
+        cell.Introduce.text = "如果你无法简介的表达你的想法，只能说明你还不够了解它！"
        
         // Configure the cell..
 

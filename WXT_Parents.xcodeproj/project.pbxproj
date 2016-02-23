@@ -106,7 +106,6 @@
 		EAED61611C741F09000CDCA1 /* AddBlogViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = EAED61601C741F09000CDCA1 /* AddBlogViewController.swift */; };
 		EAED61631C746F27000CDCA1 /* ImageCollectionViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = EAED61621C746F27000CDCA1 /* ImageCollectionViewCell.swift */; };
 		EAF181A91C53772A007706CE /* BlogList.swift in Sources */ = {isa = PBXBuildFile; fileRef = EAF181A81C53772A007706CE /* BlogList.swift */; };
-		F6A2D0A91C7C6E8D0033E51C /* ButtonTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = F6A2D0A81C7C6E8D0033E51C /* ButtonTableViewCell.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -215,7 +214,6 @@
 		EAED61601C741F09000CDCA1 /* AddBlogViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AddBlogViewController.swift; sourceTree = "<group>"; };
 		EAED61621C746F27000CDCA1 /* ImageCollectionViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ImageCollectionViewCell.swift; sourceTree = "<group>"; };
 		EAF181A81C53772A007706CE /* BlogList.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = BlogList.swift; sourceTree = "<group>"; };
-		F6A2D0A81C7C6E8D0033E51C /* ButtonTableViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ButtonTableViewCell.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -610,7 +608,6 @@
 				EA74A9FC1C76B7D400E93092 /* PhotoCollectionViewCell.swift */,
 				04347DF01C7BF5A9009163DA /* NewsTableViewCell.swift */,
 				04347DF41C7C08EE009163DA /* FoodMenuTableViewCell.swift */,
-				F6A2D0A81C7C6E8D0033E51C /* ButtonTableViewCell.swift */,
 			);
 			path = View;
 			sourceTree = "<group>";
@@ -845,7 +842,6 @@
 				EA0FFCB61C62EF5400945627 /* XKeyBoard.m in Sources */,
 				EAED61631C746F27000CDCA1 /* ImageCollectionViewCell.swift in Sources */,
 				EA780BD91C75C88A0071BF47 /* ClassViewController.swift in Sources */,
-				F6A2D0A91C7C6E8D0033E51C /* ButtonTableViewCell.swift in Sources */,
 				EA0FFCB81C62FDE100945627 /* ImageViewController.swift in Sources */,
 				EAAEB4C71C71DB170009710B /* WeightViewController.swift in Sources */,
 				EAE0A5CC1C50810700ECF86E /* ChildrenInfo.swift in Sources */,
