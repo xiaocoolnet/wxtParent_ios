@@ -7,9 +7,13 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		040BCF191C7AF5000060F093 /* NewsCenterTableViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 040BCF181C7AF5000060F093 /* NewsCenterTableViewController.swift */; };
 		040F8B341C7A9B8A00FD377B /* ClassCoursewareTableViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 040F8B331C7A9B8A00FD377B /* ClassCoursewareTableViewController.swift */; };
 		040F8B361C7A9B9600FD377B /* ClassList.swift in Sources */ = {isa = PBXBuildFile; fileRef = 040F8B351C7A9B9600FD377B /* ClassList.swift */; };
 		040F8B381C7A9B9F00FD377B /* ClassCellTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 040F8B371C7A9B9F00FD377B /* ClassCellTableViewCell.swift */; };
+		04347DF11C7BF5A9009163DA /* NewsTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 04347DF01C7BF5A9009163DA /* NewsTableViewCell.swift */; };
+		04347DF31C7C08CE009163DA /* FoodMenuTableViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 04347DF21C7C08CE009163DA /* FoodMenuTableViewController.swift */; };
+		04347DF51C7C08EE009163DA /* FoodMenuTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 04347DF41C7C08EE009163DA /* FoodMenuTableViewCell.swift */; };
 		2FE62032EFC47F4FAA20D439 /* Pods.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = E7AFF348788309629B3DA583 /* Pods.framework */; };
 		EA010E611C4A25E400BBED0B /* ForgetPasswordViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = EA010E601C4A25E400BBED0B /* ForgetPasswordViewController.swift */; };
 		EA010E641C4A261E00BBED0B /* ForgetPasswordSetViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = EA010E631C4A261E00BBED0B /* ForgetPasswordSetViewController.swift */; };
@@ -102,12 +106,17 @@
 		EAED61611C741F09000CDCA1 /* AddBlogViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = EAED61601C741F09000CDCA1 /* AddBlogViewController.swift */; };
 		EAED61631C746F27000CDCA1 /* ImageCollectionViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = EAED61621C746F27000CDCA1 /* ImageCollectionViewCell.swift */; };
 		EAF181A91C53772A007706CE /* BlogList.swift in Sources */ = {isa = PBXBuildFile; fileRef = EAF181A81C53772A007706CE /* BlogList.swift */; };
+		F6A2D0A91C7C6E8D0033E51C /* ButtonTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = F6A2D0A81C7C6E8D0033E51C /* ButtonTableViewCell.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
+		040BCF181C7AF5000060F093 /* NewsCenterTableViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = NewsCenterTableViewController.swift; sourceTree = "<group>"; };
 		040F8B331C7A9B8A00FD377B /* ClassCoursewareTableViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ClassCoursewareTableViewController.swift; sourceTree = "<group>"; };
 		040F8B351C7A9B9600FD377B /* ClassList.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ClassList.swift; sourceTree = "<group>"; };
 		040F8B371C7A9B9F00FD377B /* ClassCellTableViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ClassCellTableViewCell.swift; sourceTree = "<group>"; };
+		04347DF01C7BF5A9009163DA /* NewsTableViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = NewsTableViewCell.swift; sourceTree = "<group>"; };
+		04347DF21C7C08CE009163DA /* FoodMenuTableViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = FoodMenuTableViewController.swift; sourceTree = "<group>"; };
+		04347DF41C7C08EE009163DA /* FoodMenuTableViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = FoodMenuTableViewCell.swift; sourceTree = "<group>"; };
 		7FAF58DF0009EB15F3995775 /* Pods.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = Pods.release.xcconfig; path = "Pods/Target Support Files/Pods/Pods.release.xcconfig"; sourceTree = "<group>"; };
 		DD0CEFBF6B55340AB8318E55 /* Pods.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = Pods.debug.xcconfig; path = "Pods/Target Support Files/Pods/Pods.debug.xcconfig"; sourceTree = "<group>"; };
 		E7AFF348788309629B3DA583 /* Pods.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods.framework; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -206,6 +215,7 @@
 		EAED61601C741F09000CDCA1 /* AddBlogViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AddBlogViewController.swift; sourceTree = "<group>"; };
 		EAED61621C746F27000CDCA1 /* ImageCollectionViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ImageCollectionViewCell.swift; sourceTree = "<group>"; };
 		EAF181A81C53772A007706CE /* BlogList.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = BlogList.swift; sourceTree = "<group>"; };
+		F6A2D0A81C7C6E8D0033E51C /* ButtonTableViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ButtonTableViewCell.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -575,6 +585,8 @@
 				EA74AA281C770E2E00E93092 /* ChengZhang1ViewController.swift */,
 				EA74AA2C1C77111000E93092 /* PageTestViewController.xib */,
 				040F8B331C7A9B8A00FD377B /* ClassCoursewareTableViewController.swift */,
+				040BCF181C7AF5000060F093 /* NewsCenterTableViewController.swift */,
+				04347DF21C7C08CE009163DA /* FoodMenuTableViewController.swift */,
 			);
 			path = Controller;
 			sourceTree = "<group>";
@@ -596,6 +608,9 @@
 				EA59A3C81C313C32003FBE82 /* Readme */,
 				040F8B371C7A9B9F00FD377B /* ClassCellTableViewCell.swift */,
 				EA74A9FC1C76B7D400E93092 /* PhotoCollectionViewCell.swift */,
+				04347DF01C7BF5A9009163DA /* NewsTableViewCell.swift */,
+				04347DF41C7C08EE009163DA /* FoodMenuTableViewCell.swift */,
+				F6A2D0A81C7C6E8D0033E51C /* ButtonTableViewCell.swift */,
 			);
 			path = View;
 			sourceTree = "<group>";
@@ -811,6 +826,7 @@
 				EA4B63DB1C5B1DEF0042711F /* FriendsTableViewController.swift in Sources */,
 				EA5A8D7E1C72B376004D8308 /* ServerTableViewController.swift in Sources */,
 				EA143C7B1C44FAF800FC1F6C /* RegisterViewController.swift in Sources */,
+				04347DF11C7BF5A9009163DA /* NewsTableViewCell.swift in Sources */,
 				EAE0A5CE1C5094F500ECF86E /* ServiceModel.swift in Sources */,
 				EA3ADD821C5DB3FD002FCA2D /* XingquCellTableViewCell.swift in Sources */,
 				EA4A70671C487DF100DAD9A1 /* RegisterGetCodeViewController.swift in Sources */,
@@ -818,6 +834,7 @@
 				EAED61611C741F09000CDCA1 /* AddBlogViewController.swift in Sources */,
 				EA5A8D861C732235004D8308 /* Env.swift in Sources */,
 				EA14D9091C717BFF00899963 /* GetChange_sta_weiModel.swift in Sources */,
+				040BCF191C7AF5000060F093 /* NewsCenterTableViewController.swift in Sources */,
 				EA3ADD6E1C5DA4A3002FCA2D /* BabyTableViewCell.swift in Sources */,
 				EA4B63D91C5B1DE10042711F /* MyTableViewController.swift in Sources */,
 				040F8B381C7A9B9F00FD377B /* ClassCellTableViewCell.swift in Sources */,
@@ -828,6 +845,7 @@
 				EA0FFCB61C62EF5400945627 /* XKeyBoard.m in Sources */,
 				EAED61631C746F27000CDCA1 /* ImageCollectionViewCell.swift in Sources */,
 				EA780BD91C75C88A0071BF47 /* ClassViewController.swift in Sources */,
+				F6A2D0A91C7C6E8D0033E51C /* ButtonTableViewCell.swift in Sources */,
 				EA0FFCB81C62FDE100945627 /* ImageViewController.swift in Sources */,
 				EAAEB4C71C71DB170009710B /* WeightViewController.swift in Sources */,
 				EAE0A5CC1C50810700ECF86E /* ChildrenInfo.swift in Sources */,
@@ -839,6 +857,7 @@
 				040F8B361C7A9B9600FD377B /* ClassList.swift in Sources */,
 				EA3ADD681C5D980F002FCA2D /* SaoYiSaoViewController.swift in Sources */,
 				040F8B341C7A9B8A00FD377B /* ClassCoursewareTableViewController.swift in Sources */,
+				04347DF31C7C08CE009163DA /* FoodMenuTableViewController.swift in Sources */,
 				EA4B63DD1C5B22FE0042711F /* DiaryTableViewCell.swift in Sources */,
 				EAF181A91C53772A007706CE /* BlogList.swift in Sources */,
 				EA74AA251C77062900E93092 /* ChengZhangViewController.swift in Sources */,
@@ -867,6 +886,7 @@
 				EACA2A481C4FA0EC00A3ECD3 /* MineMainTableViewController.swift in Sources */,
 				EA010E611C4A25E400BBED0B /* ForgetPasswordViewController.swift in Sources */,
 				EA40E3E71C3138A800072EC8 /* Http.swift in Sources */,
+				04347DF51C7C08EE009163DA /* FoodMenuTableViewCell.swift in Sources */,
 				EA3ADD781C5DAD69002FCA2D /* WeekFoodTableViewController.swift in Sources */,
 				EA3ADD721C5DAA68002FCA2D /* TeacherTableViewController.swift in Sources */,
 				EAEB9E841C5223F700EACE1B /* BlogCellTableViewCell.swift in Sources */,
