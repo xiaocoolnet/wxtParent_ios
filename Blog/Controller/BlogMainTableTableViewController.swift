@@ -136,9 +136,6 @@ class BlogMainTableTableViewController: UITableViewController {
         if(indexPath.row == 0){
             Indetifiername = "blogHeader"
             let cell1 = tableView.dequeueReusableCellWithIdentifier(Indetifiername, forIndexPath: indexPath) as! BlogCellTableViewCell
-//            let dateformate = NSDateFormatter()
-//            dateformate.dateFormat = "yyy-MM-dd"
-//            cell1.blogTime.text = dateformate.stringFromDate(bloginfo.write_time!)
             if(bloginfo.photo != nil){
                 let imgUrl = imageUrl+(bloginfo.photo!)
                 

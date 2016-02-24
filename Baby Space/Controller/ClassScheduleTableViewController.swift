@@ -1,14 +1,14 @@
 //
-//  NewsCenterTableViewController.swift
+//  ClassScheduleTableViewController.swift
 //  WXT_Parents
 //
-//  Created by 牛尧 on 16/2/22.
+//  Created by 牛尧 on 16/2/24.
 //  Copyright © 2016年 北京校酷网络科技有限公司. All rights reserved.
 //
 
 import UIKit
 
-class NewsCenterTableViewController: UITableViewController {
+class ClassScheduleTableViewController: UITableViewController {
 
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -29,38 +29,58 @@ class NewsCenterTableViewController: UITableViewController {
 
     override func numberOfSectionsInTableView(tableView: UITableView) -> Int {
         // #warning Incomplete implementation, return the number of sections
-        return 1
+        return 3
     }
 
     override func tableView(tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         // #warning Incomplete implementation, return the number of rows
-        return 4
+        if(section == 0){
+            return 2
+        }
+        if(section == 1){
+           return 2
+        }
+        if(section == 2){
+           return 2
+        }
+          return 0
+    }
+    
+    override func tableView(tableView: UITableView, titleForHeaderInSection section: Int) -> String{
+        
+        if(section == 0)
+        {
+            return "周一"
+        }
+       if(section == 1)
+        {
+            return  "周二"
+        }
+        if(section == 2)
+        {
+            return  "周三"
+        }
+
+        return "WQE"
     }
 
     
+    override func tableView(tableView: UITableView, cellForRowAtIndexPath indexPath: NSIndexPath) -> UITableViewCell {
+        let cell = tableView.dequeueReusableCellWithIdentifier("ScheduleCell", forIndexPath: indexPath) as! ClassScheduleTableViewCell
+            cell.ScheduleLabel.text = "标题1"
+        // Configure the cell...
+
+        return cell
+    }
+    
     override func tableView(tableView: UITableView, heightForHeaderInSection section: Int) -> CGFloat{
         
-        return 10
+        return 30.0
     }
     
     override func tableView(tableView: UITableView, heightForFooterInSection section: Int) -> CGFloat {
         return 5.0
     }
-
-    
-    override func tableView(tableView: UITableView, cellForRowAtIndexPath indexPath: NSIndexPath) -> UITableViewCell {
-        let cell = tableView.dequeueReusableCellWithIdentifier("NewCell", forIndexPath: indexPath)
-        as! NewsTableViewCell
-        
-        cell.comment.text = "你的孩子表现非常不错！"
-        cell.lab.text = "李老师"
-
-
-        // Configure the cell...
-
-        return cell
-    }
-
 
     /*
     // Override to support conditional editing of the table view.

@@ -1,14 +1,14 @@
 //
-//  NewsCenterTableViewController.swift
+//  TakeTableViewController.swift
 //  WXT_Parents
 //
-//  Created by 牛尧 on 16/2/22.
+//  Created by 牛尧 on 16/2/24.
 //  Copyright © 2016年 北京校酷网络科技有限公司. All rights reserved.
 //
 
 import UIKit
 
-class NewsCenterTableViewController: UITableViewController {
+class TakeTableViewController: UITableViewController {
 
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -34,33 +34,27 @@ class NewsCenterTableViewController: UITableViewController {
 
     override func tableView(tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         // #warning Incomplete implementation, return the number of rows
-        return 4
+        return 2
     }
 
-    
     override func tableView(tableView: UITableView, heightForHeaderInSection section: Int) -> CGFloat{
         
-        return 10
+        return 1.0
     }
     
     override func tableView(tableView: UITableView, heightForFooterInSection section: Int) -> CGFloat {
         return 5.0
     }
 
-    
+    /*
     override func tableView(tableView: UITableView, cellForRowAtIndexPath indexPath: NSIndexPath) -> UITableViewCell {
-        let cell = tableView.dequeueReusableCellWithIdentifier("NewCell", forIndexPath: indexPath)
-        as! NewsTableViewCell
-        
-        cell.comment.text = "你的孩子表现非常不错！"
-        cell.lab.text = "李老师"
-
+        let cell = tableView.dequeueReusableCellWithIdentifier("reuseIdentifier", forIndexPath: indexPath)
 
         // Configure the cell...
 
         return cell
     }
-
+    */
 
     /*
     // Override to support conditional editing of the table view.

@@ -1,17 +1,15 @@
 //
-//  NewsTableViewCell.swift
+//  NoticeTableViewCell.swift
 //  WXT_Parents
-//
-//  Created by 牛尧 on 16/2/23.
-//  Copyright © 2016年 北京校酷网络科技有限公司. All rights reserved.
+//  Created by 牛尧 on 16/2/24.
+//  Copyright © 2016年 北京校酷网络科技有限公司. All righ
 //
 
 import UIKit
 
-class NewsTableViewCell: UITableViewCell {
-    
-    @IBOutlet weak var lab: UILabel!
-    @IBOutlet weak var comment: UITextField!
+class NoticeTableViewCell: UITableViewCell {
+
+    @IBOutlet var NoticeLabel: UILabel!
     override func awakeFromNib() {
         super.awakeFromNib()
         // Initialization code

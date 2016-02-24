@@ -1,17 +1,18 @@
 //
-//  NewsTableViewCell.swift
+//  ClassActivitiesTableViewCell.swift
 //  WXT_Parents
 //
-//  Created by 牛尧 on 16/2/23.
+//  Created by 牛尧 on 16/2/24.
 //  Copyright © 2016年 北京校酷网络科技有限公司. All rights reserved.
 //
 
 import UIKit
 
-class NewsTableViewCell: UITableViewCell {
-    
-    @IBOutlet weak var lab: UILabel!
-    @IBOutlet weak var comment: UITextField!
+class ClassActivitiesTableViewCell: UITableViewCell {
+
+    @IBOutlet var ClassActivitiesImages: UIImageView!
+    @IBOutlet var ClassActivitiesLabel: UILabel!
+    @IBOutlet var ClassActivitiesText: UITextField!
     override func awakeFromNib() {
         super.awakeFromNib()
         // Initialization code

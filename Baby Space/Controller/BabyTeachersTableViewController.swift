@@ -1,14 +1,14 @@
 //
-//  NewsCenterTableViewController.swift
+//  BabyTeachersTableViewController.swift
 //  WXT_Parents
 //
-//  Created by 牛尧 on 16/2/22.
+//  Created by 牛尧 on 16/2/24.
 //  Copyright © 2016年 北京校酷网络科技有限公司. All rights reserved.
 //
 
 import UIKit
 
-class NewsCenterTableViewController: UITableViewController {
+class BabyTeachersTableViewController: UITableViewController {
 
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -38,29 +38,16 @@ class NewsCenterTableViewController: UITableViewController {
     }
 
     
-    override func tableView(tableView: UITableView, heightForHeaderInSection section: Int) -> CGFloat{
-        
-        return 10
-    }
-    
-    override func tableView(tableView: UITableView, heightForFooterInSection section: Int) -> CGFloat {
-        return 5.0
-    }
-
-    
     override func tableView(tableView: UITableView, cellForRowAtIndexPath indexPath: NSIndexPath) -> UITableViewCell {
-        let cell = tableView.dequeueReusableCellWithIdentifier("NewCell", forIndexPath: indexPath)
-        as! NewsTableViewCell
-        
-        cell.comment.text = "你的孩子表现非常不错！"
-        cell.lab.text = "李老师"
-
+        let cell = tableView.dequeueReusableCellWithIdentifier("BabyTeachersCell", forIndexPath: indexPath) as!BabyTeachersTableViewCell
+        cell.BabyTeacherLabel.text = "李老师"
+        cell.BabyTeacherImages.image = UIImage(named: "")
 
         // Configure the cell...
 
         return cell
     }
-
+    
 
     /*
     // Override to support conditional editing of the table view.

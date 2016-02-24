@@ -1,14 +1,14 @@
 //
-//  NewsCenterTableViewController.swift
+//  NoticeTableViewController.swift
 //  WXT_Parents
 //
-//  Created by 牛尧 on 16/2/22.
+//  Created by 牛尧 on 16/2/24.
 //  Copyright © 2016年 北京校酷网络科技有限公司. All rights reserved.
 //
 
 import UIKit
 
-class NewsCenterTableViewController: UITableViewController {
+class NoticeTableViewController: UITableViewController {
 
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -34,33 +34,28 @@ class NewsCenterTableViewController: UITableViewController {
 
     override func tableView(tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         // #warning Incomplete implementation, return the number of rows
-        return 4
-    }
-
-    
-    override func tableView(tableView: UITableView, heightForHeaderInSection section: Int) -> CGFloat{
-        
-        return 10
-    }
-    
-    override func tableView(tableView: UITableView, heightForFooterInSection section: Int) -> CGFloat {
-        return 5.0
+        return 2
     }
 
     
     override func tableView(tableView: UITableView, cellForRowAtIndexPath indexPath: NSIndexPath) -> UITableViewCell {
-        let cell = tableView.dequeueReusableCellWithIdentifier("NewCell", forIndexPath: indexPath)
-        as! NewsTableViewCell
+        let cell = tableView.dequeueReusableCellWithIdentifier("NoticeCell", forIndexPath: indexPath) as!NoticeTableViewCell
+        cell.NoticeLabel.text = "标题1"
         
-        cell.comment.text = "你的孩子表现非常不错！"
-        cell.lab.text = "李老师"
-
 
         // Configure the cell...
 
         return cell
     }
 
+    override func tableView(tableView: UITableView, heightForHeaderInSection section: Int) -> CGFloat{
+        
+        return 0.01
+    }
+    
+    override func tableView(tableView: UITableView, heightForFooterInSection section: Int) -> CGFloat {
+        return 5.0
+    }
 
     /*
     // Override to support conditional editing of the table view.

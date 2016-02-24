@@ -14,6 +14,21 @@
 		04347DF11C7BF5A9009163DA /* NewsTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 04347DF01C7BF5A9009163DA /* NewsTableViewCell.swift */; };
 		04347DF31C7C08CE009163DA /* FoodMenuTableViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 04347DF21C7C08CE009163DA /* FoodMenuTableViewController.swift */; };
 		04347DF51C7C08EE009163DA /* FoodMenuTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 04347DF41C7C08EE009163DA /* FoodMenuTableViewCell.swift */; };
+		046939D31C7D3C4400729BF9 /* TakeTableViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 046939D21C7D3C4400729BF9 /* TakeTableViewController.swift */; };
+		046939D51C7D475700729BF9 /* LeaveTableViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 046939D41C7D475700729BF9 /* LeaveTableViewController.swift */; };
+		046939D71C7D51DD00729BF9 /* LeaveTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 046939D61C7D51DD00729BF9 /* LeaveTableViewCell.swift */; };
+		046939DB1C7D90E400729BF9 /* AddressBookTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 046939DA1C7D90E400729BF9 /* AddressBookTableViewCell.swift */; };
+		046939DD1C7D914D00729BF9 /* AddressBookTableViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 046939DC1C7D914D00729BF9 /* AddressBookTableViewController.swift */; };
+		046939DF1C7D997000729BF9 /* BabyTeachersTableViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 046939DE1C7D997000729BF9 /* BabyTeachersTableViewController.swift */; };
+		046939E11C7D998600729BF9 /* BabyTeachersTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 046939E01C7D998600729BF9 /* BabyTeachersTableViewCell.swift */; };
+		046939E31C7DA09E00729BF9 /* NoticeTableViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 046939E21C7DA09E00729BF9 /* NoticeTableViewController.swift */; };
+		046939E51C7DA0AE00729BF9 /* NoticeTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 046939E41C7DA0AE00729BF9 /* NoticeTableViewCell.swift */; };
+		046939E91C7DA54200729BF9 /* ClassScheduleTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 046939E81C7DA54200729BF9 /* ClassScheduleTableViewCell.swift */; };
+		046939EB1C7DA64500729BF9 /* ClassScheduleTableViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 046939EA1C7DA64500729BF9 /* ClassScheduleTableViewController.swift */; };
+		046939ED1C7DB04400729BF9 /* ClassActivitiesTableViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 046939EC1C7DB04400729BF9 /* ClassActivitiesTableViewController.swift */; };
+		046939EF1C7DB0C000729BF9 /* ClassActivitiesTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 046939EE1C7DB0C000729BF9 /* ClassActivitiesTableViewCell.swift */; };
+		046939F11C7DB71F00729BF9 /* TeacherCommentsTableViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 046939F01C7DB71F00729BF9 /* TeacherCommentsTableViewController.swift */; };
+		046939F31C7DB72C00729BF9 /* TeacherCommentsTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 046939F21C7DB72C00729BF9 /* TeacherCommentsTableViewCell.swift */; };
 		2FE62032EFC47F4FAA20D439 /* Pods.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = E7AFF348788309629B3DA583 /* Pods.framework */; };
 		EA010E611C4A25E400BBED0B /* ForgetPasswordViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = EA010E601C4A25E400BBED0B /* ForgetPasswordViewController.swift */; };
 		EA010E641C4A261E00BBED0B /* ForgetPasswordSetViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = EA010E631C4A261E00BBED0B /* ForgetPasswordSetViewController.swift */; };
@@ -116,6 +131,21 @@
 		04347DF01C7BF5A9009163DA /* NewsTableViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = NewsTableViewCell.swift; sourceTree = "<group>"; };
 		04347DF21C7C08CE009163DA /* FoodMenuTableViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = FoodMenuTableViewController.swift; sourceTree = "<group>"; };
 		04347DF41C7C08EE009163DA /* FoodMenuTableViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = FoodMenuTableViewCell.swift; sourceTree = "<group>"; };
+		046939D21C7D3C4400729BF9 /* TakeTableViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TakeTableViewController.swift; sourceTree = "<group>"; };
+		046939D41C7D475700729BF9 /* LeaveTableViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = LeaveTableViewController.swift; sourceTree = "<group>"; };
+		046939D61C7D51DD00729BF9 /* LeaveTableViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = LeaveTableViewCell.swift; sourceTree = "<group>"; };
+		046939DA1C7D90E400729BF9 /* AddressBookTableViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = AddressBookTableViewCell.swift; path = ../Controller/AddressBookTableViewCell.swift; sourceTree = "<group>"; };
+		046939DC1C7D914D00729BF9 /* AddressBookTableViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AddressBookTableViewController.swift; sourceTree = "<group>"; };
+		046939DE1C7D997000729BF9 /* BabyTeachersTableViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = BabyTeachersTableViewController.swift; sourceTree = "<group>"; };
+		046939E01C7D998600729BF9 /* BabyTeachersTableViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = BabyTeachersTableViewCell.swift; sourceTree = "<group>"; };
+		046939E21C7DA09E00729BF9 /* NoticeTableViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = NoticeTableViewController.swift; sourceTree = "<group>"; };
+		046939E41C7DA0AE00729BF9 /* NoticeTableViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = NoticeTableViewCell.swift; sourceTree = "<group>"; };
+		046939E81C7DA54200729BF9 /* ClassScheduleTableViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ClassScheduleTableViewCell.swift; sourceTree = "<group>"; };
+		046939EA1C7DA64500729BF9 /* ClassScheduleTableViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ClassScheduleTableViewController.swift; sourceTree = "<group>"; };
+		046939EC1C7DB04400729BF9 /* ClassActivitiesTableViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ClassActivitiesTableViewController.swift; sourceTree = "<group>"; };
+		046939EE1C7DB0C000729BF9 /* ClassActivitiesTableViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ClassActivitiesTableViewCell.swift; sourceTree = "<group>"; };
+		046939F01C7DB71F00729BF9 /* TeacherCommentsTableViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TeacherCommentsTableViewController.swift; sourceTree = "<group>"; };
+		046939F21C7DB72C00729BF9 /* TeacherCommentsTableViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TeacherCommentsTableViewCell.swift; sourceTree = "<group>"; };
 		7FAF58DF0009EB15F3995775 /* Pods.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = Pods.release.xcconfig; path = "Pods/Target Support Files/Pods/Pods.release.xcconfig"; sourceTree = "<group>"; };
 		DD0CEFBF6B55340AB8318E55 /* Pods.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = Pods.debug.xcconfig; path = "Pods/Target Support Files/Pods/Pods.debug.xcconfig"; sourceTree = "<group>"; };
 		E7AFF348788309629B3DA583 /* Pods.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods.framework; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -585,6 +615,14 @@
 				040F8B331C7A9B8A00FD377B /* ClassCoursewareTableViewController.swift */,
 				040BCF181C7AF5000060F093 /* NewsCenterTableViewController.swift */,
 				04347DF21C7C08CE009163DA /* FoodMenuTableViewController.swift */,
+				046939D21C7D3C4400729BF9 /* TakeTableViewController.swift */,
+				046939D41C7D475700729BF9 /* LeaveTableViewController.swift */,
+				046939DC1C7D914D00729BF9 /* AddressBookTableViewController.swift */,
+				046939DE1C7D997000729BF9 /* BabyTeachersTableViewController.swift */,
+				046939E21C7DA09E00729BF9 /* NoticeTableViewController.swift */,
+				046939EA1C7DA64500729BF9 /* ClassScheduleTableViewController.swift */,
+				046939EC1C7DB04400729BF9 /* ClassActivitiesTableViewController.swift */,
+				046939F01C7DB71F00729BF9 /* TeacherCommentsTableViewController.swift */,
 			);
 			path = Controller;
 			sourceTree = "<group>";
@@ -604,10 +642,17 @@
 			isa = PBXGroup;
 			children = (
 				EA59A3C81C313C32003FBE82 /* Readme */,
+				046939DA1C7D90E400729BF9 /* AddressBookTableViewCell.swift */,
 				040F8B371C7A9B9F00FD377B /* ClassCellTableViewCell.swift */,
 				EA74A9FC1C76B7D400E93092 /* PhotoCollectionViewCell.swift */,
 				04347DF01C7BF5A9009163DA /* NewsTableViewCell.swift */,
 				04347DF41C7C08EE009163DA /* FoodMenuTableViewCell.swift */,
+				046939D61C7D51DD00729BF9 /* LeaveTableViewCell.swift */,
+				046939E01C7D998600729BF9 /* BabyTeachersTableViewCell.swift */,
+				046939E41C7DA0AE00729BF9 /* NoticeTableViewCell.swift */,
+				046939E81C7DA54200729BF9 /* ClassScheduleTableViewCell.swift */,
+				046939EE1C7DB0C000729BF9 /* ClassActivitiesTableViewCell.swift */,
+				046939F21C7DB72C00729BF9 /* TeacherCommentsTableViewCell.swift */,
 			);
 			path = View;
 			sourceTree = "<group>";
@@ -821,16 +866,21 @@
 				EAEB9E781C51FEC200EACE1B /* CornerRadiusViewController.swift in Sources */,
 				EAEB9E821C5208F200EACE1B /* BlogMainTableTableViewController.swift in Sources */,
 				EA4B63DB1C5B1DEF0042711F /* FriendsTableViewController.swift in Sources */,
+				046939E31C7DA09E00729BF9 /* NoticeTableViewController.swift in Sources */,
 				EA5A8D7E1C72B376004D8308 /* ServerTableViewController.swift in Sources */,
 				EA143C7B1C44FAF800FC1F6C /* RegisterViewController.swift in Sources */,
 				04347DF11C7BF5A9009163DA /* NewsTableViewCell.swift in Sources */,
 				EAE0A5CE1C5094F500ECF86E /* ServiceModel.swift in Sources */,
 				EA3ADD821C5DB3FD002FCA2D /* XingquCellTableViewCell.swift in Sources */,
+				046939D71C7D51DD00729BF9 /* LeaveTableViewCell.swift in Sources */,
 				EA4A70671C487DF100DAD9A1 /* RegisterGetCodeViewController.swift in Sources */,
+				046939F31C7DB72C00729BF9 /* TeacherCommentsTableViewCell.swift in Sources */,
 				EA4B63E11C5B60980042711F /* DiaryList.swift in Sources */,
+				046939D51C7D475700729BF9 /* LeaveTableViewController.swift in Sources */,
 				EAED61611C741F09000CDCA1 /* AddBlogViewController.swift in Sources */,
 				EA5A8D861C732235004D8308 /* Env.swift in Sources */,
 				EA14D9091C717BFF00899963 /* GetChange_sta_weiModel.swift in Sources */,
+				046939ED1C7DB04400729BF9 /* ClassActivitiesTableViewController.swift in Sources */,
 				040BCF191C7AF5000060F093 /* NewsCenterTableViewController.swift in Sources */,
 				EA3ADD6E1C5DA4A3002FCA2D /* BabyTableViewCell.swift in Sources */,
 				EA4B63D91C5B1DE10042711F /* MyTableViewController.swift in Sources */,
@@ -843,7 +893,10 @@
 				EAED61631C746F27000CDCA1 /* ImageCollectionViewCell.swift in Sources */,
 				EA780BD91C75C88A0071BF47 /* ClassViewController.swift in Sources */,
 				EA0FFCB81C62FDE100945627 /* ImageViewController.swift in Sources */,
+				046939F11C7DB71F00729BF9 /* TeacherCommentsTableViewController.swift in Sources */,
+				046939E11C7D998600729BF9 /* BabyTeachersTableViewCell.swift in Sources */,
 				EAAEB4C71C71DB170009710B /* WeightViewController.swift in Sources */,
+				046939E91C7DA54200729BF9 /* ClassScheduleTableViewCell.swift in Sources */,
 				EAE0A5CC1C50810700ECF86E /* ChildrenInfo.swift in Sources */,
 				EA210EED1C3CA28F00BA9971 /* LoginViewController.swift in Sources */,
 				EAE72E941C4099BB0038D055 /* MainTabbarViewController.swift in Sources */,
@@ -857,16 +910,20 @@
 				EA4B63DD1C5B22FE0042711F /* DiaryTableViewCell.swift in Sources */,
 				EAF181A91C53772A007706CE /* BlogList.swift in Sources */,
 				EA74AA251C77062900E93092 /* ChengZhangViewController.swift in Sources */,
+				046939DB1C7D90E400729BF9 /* AddressBookTableViewCell.swift in Sources */,
 				EA9233B91C5469C100B12FF6 /* PictureList.swift in Sources */,
 				EA3ADD701C5DAA52002FCA2D /* TeacherTableViewCell.swift in Sources */,
 				EA40E3971C30D33200072EC8 /* ViewController.swift in Sources */,
 				EA5A8D841C7321EE004D8308 /* ExamplesDefaults.swift in Sources */,
+				046939DF1C7D997000729BF9 /* BabyTeachersTableViewController.swift in Sources */,
 				EA14D9071C71736B00899963 /* BabyTodayInfoModel.swift in Sources */,
 				EA7608161C4CD8BA00169C50 /* BabySpaceMainTableViewController.swift in Sources */,
 				EA74A9FD1C76B7D400E93092 /* PhotoCollectionViewCell.swift in Sources */,
 				EA93A7CC1C5C641C009D4A1F /* ScollViewController.swift in Sources */,
 				EAC8177F1C57801B006B6B8F /* DianZanList.swift in Sources */,
 				EA93A7C91C5C5BCC009D4A1F /* QrCodeViewController.swift in Sources */,
+				046939DD1C7D914D00729BF9 /* AddressBookTableViewController.swift in Sources */,
+				046939D31C7D3C4400729BF9 /* TakeTableViewController.swift in Sources */,
 				EA1E169A1C3F5ECD00C97FCF /* Url.swift in Sources */,
 				EA4A70691C487E1D00DAD9A1 /* RegisterSetPasswordViewController.swift in Sources */,
 				EA3ADD741C5DABEC002FCA2D /* SchoolInfoViewController.swift in Sources */,
@@ -880,8 +937,11 @@
 				EA78A1E71C5A329D00159F22 /* SchoolMainTableViewController.swift in Sources */,
 				EA78A1E51C59FC5500159F22 /* BlogCommentTableViewController.swift in Sources */,
 				EACA2A481C4FA0EC00A3ECD3 /* MineMainTableViewController.swift in Sources */,
+				046939E51C7DA0AE00729BF9 /* NoticeTableViewCell.swift in Sources */,
+				046939EB1C7DA64500729BF9 /* ClassScheduleTableViewController.swift in Sources */,
 				EA010E611C4A25E400BBED0B /* ForgetPasswordViewController.swift in Sources */,
 				EA40E3E71C3138A800072EC8 /* Http.swift in Sources */,
+				046939EF1C7DB0C000729BF9 /* ClassActivitiesTableViewCell.swift in Sources */,
 				04347DF51C7C08EE009163DA /* FoodMenuTableViewCell.swift in Sources */,
 				EA3ADD781C5DAD69002FCA2D /* WeekFoodTableViewController.swift in Sources */,
 				EA3ADD721C5DAA68002FCA2D /* TeacherTableViewController.swift in Sources */,

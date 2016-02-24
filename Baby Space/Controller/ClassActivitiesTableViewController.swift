@@ -1,14 +1,14 @@
 //
-//  NewsCenterTableViewController.swift
+//  ClassActivitiesTableViewController.swift
 //  WXT_Parents
 //
-//  Created by 牛尧 on 16/2/22.
+//  Created by 牛尧 on 16/2/24.
 //  Copyright © 2016年 北京校酷网络科技有限公司. All rights reserved.
 //
 
 import UIKit
 
-class NewsCenterTableViewController: UITableViewController {
+class ClassActivitiesTableViewController: UITableViewController {
 
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -34,31 +34,27 @@ class NewsCenterTableViewController: UITableViewController {
 
     override func tableView(tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         // #warning Incomplete implementation, return the number of rows
-        return 4
-    }
-
-    
-    override func tableView(tableView: UITableView, heightForHeaderInSection section: Int) -> CGFloat{
-        
-        return 10
-    }
-    
-    override func tableView(tableView: UITableView, heightForFooterInSection section: Int) -> CGFloat {
-        return 5.0
+        return 3
     }
 
     
     override func tableView(tableView: UITableView, cellForRowAtIndexPath indexPath: NSIndexPath) -> UITableViewCell {
-        let cell = tableView.dequeueReusableCellWithIdentifier("NewCell", forIndexPath: indexPath)
-        as! NewsTableViewCell
-        
-        cell.comment.text = "你的孩子表现非常不错！"
-        cell.lab.text = "李老师"
-
+        let cell = tableView.dequeueReusableCellWithIdentifier("ActivitiesCell", forIndexPath: indexPath) as! ClassActivitiesTableViewCell
 
         // Configure the cell...
-
+        cell.ClassActivitiesImages.image = UIImage(named: "奥数")
+        cell.ClassActivitiesLabel.text = "标题"
+        cell.ClassActivitiesText.text = "如果你无法简介的表达你的想法，只能说明你还不够了解它！"
         return cell
+    }
+
+    override func tableView(tableView: UITableView, heightForHeaderInSection section: Int) -> CGFloat{
+        
+        return 1.0
+    }
+    
+    override func tableView(tableView: UITableView, heightForFooterInSection section: Int) -> CGFloat {
+        return 5.0
     }
 
 

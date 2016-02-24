@@ -1,14 +1,14 @@
 //
-//  NewsCenterTableViewController.swift
+//  TeacherCommentsTableViewController.swift
 //  WXT_Parents
 //
-//  Created by 牛尧 on 16/2/22.
+//  Created by 牛尧 on 16/2/24.
 //  Copyright © 2016年 北京校酷网络科技有限公司. All rights reserved.
 //
 
 import UIKit
 
-class NewsCenterTableViewController: UITableViewController {
+class TeacherCommentsTableViewController: UITableViewController {
 
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -34,31 +34,26 @@ class NewsCenterTableViewController: UITableViewController {
 
     override func tableView(tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         // #warning Incomplete implementation, return the number of rows
-        return 4
-    }
-
-    
-    override func tableView(tableView: UITableView, heightForHeaderInSection section: Int) -> CGFloat{
-        
-        return 10
-    }
-    
-    override func tableView(tableView: UITableView, heightForFooterInSection section: Int) -> CGFloat {
-        return 5.0
+        return 2
     }
 
     
     override func tableView(tableView: UITableView, cellForRowAtIndexPath indexPath: NSIndexPath) -> UITableViewCell {
-        let cell = tableView.dequeueReusableCellWithIdentifier("NewCell", forIndexPath: indexPath)
-        as! NewsTableViewCell
-        
-        cell.comment.text = "你的孩子表现非常不错！"
-        cell.lab.text = "李老师"
-
-
+        let cell = tableView.dequeueReusableCellWithIdentifier("CommentsCell", forIndexPath: indexPath) as! TeacherCommentsTableViewCell
+             cell.CommentsLabel.text = "如果你不能简明的介绍它，说明你还不够了解它；如果你能简明的介绍它，说明你非常了解它"
+            cell.TimeLabel.text = "2016年2月"
         // Configure the cell...
 
         return cell
+    }
+    
+    override func tableView(tableView: UITableView, heightForHeaderInSection section: Int) -> CGFloat{
+        
+        return 1.0
+    }
+    
+    override func tableView(tableView: UITableView, heightForFooterInSection section: Int) -> CGFloat {
+        return 5.0
     }
 
 
