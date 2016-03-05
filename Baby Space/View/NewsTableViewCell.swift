@@ -10,8 +10,9 @@ import UIKit
 
 class NewsTableViewCell: UITableViewCell {
     
+    @IBOutlet weak var Comment: UILabel!
     @IBOutlet weak var lab: UILabel!
-    @IBOutlet weak var comment: UITextField!
+    
     override func awakeFromNib() {
         super.awakeFromNib()
         // Initialization code

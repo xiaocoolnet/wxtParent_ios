@@ -1,5 +1,5 @@
 //
-//  LeaveTableViewCell.swift
+//  AddressBookTableViewCell.swift
 //  WXT_Parents
 //
 //  Created by 牛尧 on 16/2/24.
@@ -8,18 +8,19 @@
 
 import UIKit
 
-class LeaveTableViewCell: UITableViewCell {
-    @IBOutlet var LeaveLabel: UILabel!
-
+class AddressBookTableViewCell: UITableViewCell {
+    
+    @IBOutlet var AddressImages: UIImageView!
+    @IBOutlet var AddressLabel: UILabel!
     override func awakeFromNib() {
         super.awakeFromNib()
         // Initialization code
     }
-
+    
     override func setSelected(selected: Bool, animated: Bool) {
         super.setSelected(selected, animated: animated)
-
+        
         // Configure the view for the selected state
     }
-
+    
 }

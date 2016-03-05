@@ -17,7 +17,6 @@
 		046939D31C7D3C4400729BF9 /* TakeTableViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 046939D21C7D3C4400729BF9 /* TakeTableViewController.swift */; };
 		046939D51C7D475700729BF9 /* LeaveTableViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 046939D41C7D475700729BF9 /* LeaveTableViewController.swift */; };
 		046939D71C7D51DD00729BF9 /* LeaveTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 046939D61C7D51DD00729BF9 /* LeaveTableViewCell.swift */; };
-		046939DB1C7D90E400729BF9 /* AddressBookTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 046939DA1C7D90E400729BF9 /* AddressBookTableViewCell.swift */; };
 		046939DD1C7D914D00729BF9 /* AddressBookTableViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 046939DC1C7D914D00729BF9 /* AddressBookTableViewController.swift */; };
 		046939DF1C7D997000729BF9 /* BabyTeachersTableViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 046939DE1C7D997000729BF9 /* BabyTeachersTableViewController.swift */; };
 		046939E11C7D998600729BF9 /* BabyTeachersTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 046939E01C7D998600729BF9 /* BabyTeachersTableViewCell.swift */; };
@@ -121,6 +120,10 @@
 		EAED61611C741F09000CDCA1 /* AddBlogViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = EAED61601C741F09000CDCA1 /* AddBlogViewController.swift */; };
 		EAED61631C746F27000CDCA1 /* ImageCollectionViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = EAED61621C746F27000CDCA1 /* ImageCollectionViewCell.swift */; };
 		EAF181A91C53772A007706CE /* BlogList.swift in Sources */ = {isa = PBXBuildFile; fileRef = EAF181A81C53772A007706CE /* BlogList.swift */; };
+		F661664D1C8AB78200511FEF /* FriendsTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = F661664C1C8AB78200511FEF /* FriendsTableViewCell.swift */; };
+		F661664F1C8AB7FC00511FEF /* FriendsList.swift in Sources */ = {isa = PBXBuildFile; fileRef = F661664E1C8AB7FC00511FEF /* FriendsList.swift */; };
+		F66166511C8ABA4400511FEF /* NewsList.swift in Sources */ = {isa = PBXBuildFile; fileRef = F66166501C8ABA4400511FEF /* NewsList.swift */; };
+		F66166531C8ABABE00511FEF /* AddressBookTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = F66166521C8ABABE00511FEF /* AddressBookTableViewCell.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -134,7 +137,6 @@
 		046939D21C7D3C4400729BF9 /* TakeTableViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TakeTableViewController.swift; sourceTree = "<group>"; };
 		046939D41C7D475700729BF9 /* LeaveTableViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = LeaveTableViewController.swift; sourceTree = "<group>"; };
 		046939D61C7D51DD00729BF9 /* LeaveTableViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = LeaveTableViewCell.swift; sourceTree = "<group>"; };
-		046939DA1C7D90E400729BF9 /* AddressBookTableViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = AddressBookTableViewCell.swift; path = ../Controller/AddressBookTableViewCell.swift; sourceTree = "<group>"; };
 		046939DC1C7D914D00729BF9 /* AddressBookTableViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AddressBookTableViewController.swift; sourceTree = "<group>"; };
 		046939DE1C7D997000729BF9 /* BabyTeachersTableViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = BabyTeachersTableViewController.swift; sourceTree = "<group>"; };
 		046939E01C7D998600729BF9 /* BabyTeachersTableViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = BabyTeachersTableViewCell.swift; sourceTree = "<group>"; };
@@ -244,6 +246,10 @@
 		EAED61601C741F09000CDCA1 /* AddBlogViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AddBlogViewController.swift; sourceTree = "<group>"; };
 		EAED61621C746F27000CDCA1 /* ImageCollectionViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ImageCollectionViewCell.swift; sourceTree = "<group>"; };
 		EAF181A81C53772A007706CE /* BlogList.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = BlogList.swift; sourceTree = "<group>"; };
+		F661664C1C8AB78200511FEF /* FriendsTableViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = FriendsTableViewCell.swift; sourceTree = "<group>"; };
+		F661664E1C8AB7FC00511FEF /* FriendsList.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = FriendsList.swift; sourceTree = "<group>"; };
+		F66166501C8ABA4400511FEF /* NewsList.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = NewsList.swift; sourceTree = "<group>"; };
+		F66166521C8ABABE00511FEF /* AddressBookTableViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AddressBookTableViewCell.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -577,6 +583,7 @@
 			children = (
 				EA59A3CE1C313C48003FBE82 /* Readme */,
 				EA4B63E01C5B60980042711F /* DiaryList.swift */,
+				F661664E1C8AB7FC00511FEF /* FriendsList.swift */,
 			);
 			path = Model;
 			sourceTree = "<group>";
@@ -586,6 +593,7 @@
 			children = (
 				EA4B63DC1C5B22FE0042711F /* DiaryTableViewCell.swift */,
 				EA59A3D01C313C4D003FBE82 /* Readme */,
+				F661664C1C8AB78200511FEF /* FriendsTableViewCell.swift */,
 			);
 			path = View;
 			sourceTree = "<group>";
@@ -634,6 +642,7 @@
 				040F8B351C7A9B9600FD377B /* ClassList.swift */,
 				EA14D9061C71736B00899963 /* BabyTodayInfoModel.swift */,
 				EA14D9081C717BFF00899963 /* GetChange_sta_weiModel.swift */,
+				F66166501C8ABA4400511FEF /* NewsList.swift */,
 			);
 			path = Model;
 			sourceTree = "<group>";
@@ -642,7 +651,6 @@
 			isa = PBXGroup;
 			children = (
 				EA59A3C81C313C32003FBE82 /* Readme */,
-				046939DA1C7D90E400729BF9 /* AddressBookTableViewCell.swift */,
 				040F8B371C7A9B9F00FD377B /* ClassCellTableViewCell.swift */,
 				EA74A9FC1C76B7D400E93092 /* PhotoCollectionViewCell.swift */,
 				04347DF01C7BF5A9009163DA /* NewsTableViewCell.swift */,
@@ -653,6 +661,7 @@
 				046939E81C7DA54200729BF9 /* ClassScheduleTableViewCell.swift */,
 				046939EE1C7DB0C000729BF9 /* ClassActivitiesTableViewCell.swift */,
 				046939F21C7DB72C00729BF9 /* TeacherCommentsTableViewCell.swift */,
+				F66166521C8ABABE00511FEF /* AddressBookTableViewCell.swift */,
 			);
 			path = View;
 			sourceTree = "<group>";
@@ -874,6 +883,7 @@
 				EA3ADD821C5DB3FD002FCA2D /* XingquCellTableViewCell.swift in Sources */,
 				046939D71C7D51DD00729BF9 /* LeaveTableViewCell.swift in Sources */,
 				EA4A70671C487DF100DAD9A1 /* RegisterGetCodeViewController.swift in Sources */,
+				F66166531C8ABABE00511FEF /* AddressBookTableViewCell.swift in Sources */,
 				046939F31C7DB72C00729BF9 /* TeacherCommentsTableViewCell.swift in Sources */,
 				EA4B63E11C5B60980042711F /* DiaryList.swift in Sources */,
 				046939D51C7D475700729BF9 /* LeaveTableViewController.swift in Sources */,
@@ -901,6 +911,7 @@
 				EA210EED1C3CA28F00BA9971 /* LoginViewController.swift in Sources */,
 				EAE72E941C4099BB0038D055 /* MainTabbarViewController.swift in Sources */,
 				EA3ADD801C5DB3E1002FCA2D /* XingQuBanTableViewController.swift in Sources */,
+				F661664D1C8AB78200511FEF /* FriendsTableViewCell.swift in Sources */,
 				EACA2A4A1C4FB9CE00A3ECD3 /* MineModel.swift in Sources */,
 				EA3ADD7C1C5DB2BB002FCA2D /* ZhaoPinTableViewController.swift in Sources */,
 				040F8B361C7A9B9600FD377B /* ClassList.swift in Sources */,
@@ -910,11 +921,11 @@
 				EA4B63DD1C5B22FE0042711F /* DiaryTableViewCell.swift in Sources */,
 				EAF181A91C53772A007706CE /* BlogList.swift in Sources */,
 				EA74AA251C77062900E93092 /* ChengZhangViewController.swift in Sources */,
-				046939DB1C7D90E400729BF9 /* AddressBookTableViewCell.swift in Sources */,
 				EA9233B91C5469C100B12FF6 /* PictureList.swift in Sources */,
 				EA3ADD701C5DAA52002FCA2D /* TeacherTableViewCell.swift in Sources */,
 				EA40E3971C30D33200072EC8 /* ViewController.swift in Sources */,
 				EA5A8D841C7321EE004D8308 /* ExamplesDefaults.swift in Sources */,
+				F66166511C8ABA4400511FEF /* NewsList.swift in Sources */,
 				046939DF1C7D997000729BF9 /* BabyTeachersTableViewController.swift in Sources */,
 				EA14D9071C71736B00899963 /* BabyTodayInfoModel.swift in Sources */,
 				EA7608161C4CD8BA00169C50 /* BabySpaceMainTableViewController.swift in Sources */,
@@ -934,6 +945,7 @@
 				EA40E3E81C3138A800072EC8 /* Httpresult.swift in Sources */,
 				EA010E641C4A261E00BBED0B /* ForgetPasswordSetViewController.swift in Sources */,
 				EA065B291C5B09BF0062E84D /* GrowingDiaryMainViewController.swift in Sources */,
+				F661664F1C8AB7FC00511FEF /* FriendsList.swift in Sources */,
 				EA78A1E71C5A329D00159F22 /* SchoolMainTableViewController.swift in Sources */,
 				EA78A1E51C59FC5500159F22 /* BlogCommentTableViewController.swift in Sources */,
 				EACA2A481C4FA0EC00A3ECD3 /* MineMainTableViewController.swift in Sources */,
