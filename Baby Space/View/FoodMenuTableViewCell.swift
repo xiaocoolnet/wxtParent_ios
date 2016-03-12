@@ -11,7 +11,7 @@ import UIKit
 class FoodMenuTableViewCell: UITableViewCell {
 
     @IBOutlet weak var images: UIImageView!
-    @IBOutlet var Introduce: UITextField!
+    @IBOutlet var Introduce: UILabel!
     @IBOutlet weak var lab: UILabel!
     override func awakeFromNib() {
         super.awakeFromNib()

@@ -7,17 +7,65 @@
 //
 
 import UIKit
-
+import Alamofire
+import XWSwiftRefresh
 class FoodMenuTableViewController: UITableViewController {
-
+    
+    @IBOutlet var tableSource: UITableView!
+    var FoodsSource = FoodList()
+    var imageCache = Dictionary<String,UIImage>()
+    
     override func viewDidLoad() {
         super.viewDidLoad()
+        DropDownUpdate()
+        
 
         // Uncomment the following line to preserve selection between presentations
         // self.clearsSelectionOnViewWillAppear = false
 
         // Uncomment the following line to display an Edit button in the navigation bar for this view controller.
         // self.navigationItem.rightBarButtonItem = self.editButtonItem()
+    }
+    
+    func DropDownUpdate(){
+        self.tableView.headerView = XWRefreshNormalHeader(target: self, action: "GetDate")
+        self.tableView.headerView?.beginRefreshing()
+        
+    }
+    
+    func GetDate(){
+        //下面两句代码是从缓存中取出userid（入参）值
+        let defalutid = NSUserDefaults.standardUserDefaults()
+        let shid = defalutid.stringForKey("schoolid")
+        let url = apiUrl + "WeekRecipe"
+        let param = [
+            "schoolid":shid!
+        ]
+        Alamofire.request(.GET, url, parameters: param).response { request, response, json, error in
+            if(error != nil){
+            }
+            else{
+                print("request是")
+                print(request!)
+                print("====================")
+                let status = Http(JSONDecoder(json!))
+                print("状态是")
+                print(status.status)
+                if(status.status == "error"){
+                    let hud = MBProgressHUD.showHUDAddedTo(self.view, animated: true)
+                    hud.mode = MBProgressHUDMode.Text
+                    hud.labelText = status.errorData
+                    hud.margin = 10.0
+                    hud.removeFromSuperViewOnHide = true
+                    hud.hide(true, afterDelay: 1)
+                }
+                if(status.status == "success"){
+                    self.tableView.headerView?.endRefreshing()
+                    self.FoodsSource = FoodList(status.data!)
+                    self.tableSource.reloadData()
+                }
+            }
+        }
     }
 
     override func didReceiveMemoryWarning() {
@@ -29,20 +77,22 @@ class FoodMenuTableViewController: UITableViewController {
 
     override func numberOfSectionsInTableView(tableView: UITableView) -> Int {
         // #warning Incomplete implementation, return the number of sections
-        return 2
+        return 1
     }
 
     override func tableView(tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         // #warning Incomplete implementation, return the number of rows
+        /*
         if(section == 0){
             return 3
         }
         if(section == 1){
             return 4
         }
-        return 0
+*/
+        return FoodsSource.count
     }
-    
+    /*
    override func tableView(tableView: UITableView, titleForHeaderInSection section: Int) -> String{
     
            if (section == 0)
@@ -55,17 +105,35 @@ class FoodMenuTableViewController: UITableViewController {
        }
         return "WQE"
     }
-
+*/
     override func tableView(tableView: UITableView, cellForRowAtIndexPath indexPath: NSIndexPath) -> UITableViewCell {
         let cell = tableView.dequeueReusableCellWithIdentifier("FoodMenu", forIndexPath: indexPath) as!FoodMenuTableViewCell
+       /*
         cell.images.image = UIImage(named: "奥数")
        cell.lab.text = "标题"
         cell.Introduce.text = "如果你无法简介的表达你的想法，只能说明你还不够了解它！"
-       
-        // Configure the cell..
-
+       */
+        let foodInfo = self.FoodsSource.objectlist[indexPath.row]
+        let dateformate = NSDateFormatter()
+        dateformate.dateFormat = "MM-dd"
+        cell.Introduce.text = foodInfo.recipe_info!
+        cell.lab.text = foodInfo.recipe_title!
+        let imgUrl = foodMenuImageUrl+(foodInfo.recipe_pic!)
+        
+        let image = self.imageCache[imgUrl] as UIImage?
+        let avatarUrl = NSURL(string: imgUrl)
+        let request: NSURLRequest = NSURLRequest(URL: avatarUrl!)
+        //异步获取
+        NSURLConnection.sendAsynchronousRequest(request, queue: NSOperationQueue.mainQueue(), completionHandler: {(response: NSURLResponse?,data: NSData?,error: NSError?)-> Void in
+            if(data != nil){
+                let imgTmp = UIImage(data: data!)
+                self.imageCache[imgUrl] = imgTmp
+                cell.images.image = imgTmp
+                cell.images.alpha = 1.0
+                
+            }
+        })
         return cell
-    
     }
    
     override func tableView(tableView: UITableView, heightForHeaderInSection section: Int) -> CGFloat{

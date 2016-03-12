@@ -105,8 +105,6 @@ class MineMainTableViewController: UITableViewController {
         }
     }
     
-    
-    
     func GetDefalutChildrenInfo(){
         let defalutid = NSUserDefaults.standardUserDefaults()
         let cid = defalutid.stringForKey("chid")

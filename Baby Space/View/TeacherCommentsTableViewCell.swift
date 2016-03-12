@@ -9,6 +9,7 @@
 import UIKit
 
 class TeacherCommentsTableViewCell: UITableViewCell {
+    @IBOutlet var TeacherName: UILabel!
     @IBOutlet var CommentsLabel: UILabel!
     @IBOutlet var TimeLabel: UILabel!
 

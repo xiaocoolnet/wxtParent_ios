@@ -114,7 +114,7 @@ class LoginViewController: UIViewController ,UITextFieldDelegate{
                         
                         let classid = NSUserDefaults.standardUserDefaults()
                         classid.setValue(result.data?.classid, forKey: "classid")
-
+            
                         self.GetChildrenUser()
                         let mainStoryboard = UIStoryboard(name: "Main", bundle: NSBundle.mainBundle())
                         let vc : UIViewController = mainStoryboard.instantiateViewControllerWithIdentifier("MainView") 

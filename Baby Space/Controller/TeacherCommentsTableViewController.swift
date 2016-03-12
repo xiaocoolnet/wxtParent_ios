@@ -7,43 +7,72 @@
 //
 
 import UIKit
-
+import Alamofire
 class TeacherCommentsTableViewController: UITableViewController {
-
+    @IBOutlet var tableSource: UITableView!
+    var CommentSource = CommentList()
+    
     override func viewDidLoad() {
         super.viewDidLoad()
-
-        // Uncomment the following line to preserve selection between presentations
-        // self.clearsSelectionOnViewWillAppear = false
-
-        // Uncomment the following line to display an Edit button in the navigation bar for this view controller.
-        // self.navigationItem.rightBarButtonItem = self.editButtonItem()
+        GetDate()
+    }
+    
+    func GetDate(){
+        //下面两句代码是从缓存中取出userid（入参）值
+        let defalutid = NSUserDefaults.standardUserDefaults()
+        let sid = defalutid.stringForKey("chid")
+        let url = apiUrl + "TeacherComment"
+        let param = [
+            "stuid":sid!
+        ]
+        Alamofire.request(.GET, url, parameters: param).response { request, response, json, error in
+            if(error != nil){
+            }
+            else{
+                print("request是")
+                print(request!)
+                print("====================")
+                let status = Http(JSONDecoder(json!))
+                print("状态是")
+                print(status.status)
+                if(status.status == "error"){
+                    let hud = MBProgressHUD.showHUDAddedTo(self.view, animated: true)
+                    hud.mode = MBProgressHUDMode.Text
+                    hud.labelText = status.errorData
+                    hud.margin = 10.0
+                    hud.removeFromSuperViewOnHide = true
+                    hud.hide(true, afterDelay: 1)
+                }
+                if(status.status == "success"){
+                    self.CommentSource = CommentList(status.data!)
+                    self.tableSource.reloadData()
+                }
+            }
+        }
     }
 
     override func didReceiveMemoryWarning() {
         super.didReceiveMemoryWarning()
-        // Dispose of any resources that can be recreated.
     }
 
-    // MARK: - Table view data source
-
     override func numberOfSectionsInTableView(tableView: UITableView) -> Int {
-        // #warning Incomplete implementation, return the number of sections
         return 1
     }
 
     override func tableView(tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        // #warning Incomplete implementation, return the number of rows
-        return 2
+        return CommentSource.count
     }
 
     
     override func tableView(tableView: UITableView, cellForRowAtIndexPath indexPath: NSIndexPath) -> UITableViewCell {
         let cell = tableView.dequeueReusableCellWithIdentifier("CommentsCell", forIndexPath: indexPath) as! TeacherCommentsTableViewCell
-             cell.CommentsLabel.text = "如果你不能简明的介绍它，说明你还不够了解它；如果你能简明的介绍它，说明你非常了解它"
-            cell.TimeLabel.text = "2016年2月"
-        // Configure the cell...
-
+        
+        let commentInfo = self.CommentSource.objectlist[indexPath.row]
+        let dateformate = NSDateFormatter()
+        dateformate.dateFormat = "MM-dd"
+        cell.TeacherName.text = commentInfo.name!
+        cell.CommentsLabel.text = commentInfo.comment_content!
+        cell.TimeLabel.text = commentInfo.comment_time!
         return cell
     }
     
