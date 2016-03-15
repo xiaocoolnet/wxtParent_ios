@@ -9,6 +9,9 @@ import UIKit
 
 class NoticeTableViewCell: UITableViewCell {
 
+    @IBOutlet var NoticeName: UILabel!
+    @IBOutlet var NoticeTime: UILabel!
+    @IBOutlet var NoticeContent: UILabel!
     @IBOutlet var NoticeLabel: UILabel!
     override func awakeFromNib() {
         super.awakeFromNib()

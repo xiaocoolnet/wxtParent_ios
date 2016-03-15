@@ -80,6 +80,7 @@ class NewsCenterTableViewController: UITableViewController {
         dateformate.dateFormat = "MM-dd"
         cell.lab.text = newsInfo.receive_user_name!
         cell.Comment.text = newsInfo.message_content!
+        cell.NewsTime.text = newsInfo.message_time!
         return cell
     }
     

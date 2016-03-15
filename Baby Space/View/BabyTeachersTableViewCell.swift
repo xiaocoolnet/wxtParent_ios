@@ -10,7 +10,8 @@ import UIKit
 
 class BabyTeachersTableViewCell: UITableViewCell {
     @IBOutlet var BabyTeacherLabel: UILabel!
-    @IBOutlet var BabyTeacherImages: UIImageView!
+    @IBOutlet var TeacherPhone: UILabel!
+
 
     override func awakeFromNib() {
         super.awakeFromNib()

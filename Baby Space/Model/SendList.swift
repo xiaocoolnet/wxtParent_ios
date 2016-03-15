@@ -1,45 +1,46 @@
 //
-//  NewsList.swift
+//  SendList.swift
 //  WXT_Parents
-//  Created by 牛尧 on 16/3/5.
+//
+//  Created by 牛尧 on 16/3/14.
 //  Copyright © 2016年 北京校酷网络科技有限公司. All rights reserved.
 //
 
 import Foundation
-class NewsList: JSONJoy {
-    var objectlist: [NewsInfo]
+class SendList: JSONJoy {
+    var objectlist: [SendInfo]
     var count: Int{
         return self.objectlist.count
     }
     
     init(){
-        objectlist = Array<NewsInfo>()
+        objectlist = Array<SendInfo>()
     }
     required init(_ decoder: JSONDecoder) {
         
-        objectlist = Array<NewsInfo>()
+        objectlist = Array<SendInfo>()
         for useids: JSONDecoder in decoder.array!{
-            objectlist.append(NewsInfo(useids))
+            objectlist.append(SendInfo(useids))
         }
     }
     
-    func append(list: [NewsInfo]){
+    func append(list: [SendInfo]){
         self.objectlist = list + self.objectlist
     }
 }
 
-class NewsInfo: JSONJoy{
-    var receive_user_name:String?
+class SendInfo: JSONJoy{
+    var send_user_name:String?
     var message_content:String?
     var message_time:String?
     init() {
         
     }
     required init(_ decoder: JSONDecoder){
-        receive_user_name = decoder["receive_user_name"].string
+        send_user_name = decoder["send_user_name"].string
         message_content = decoder["message_content"].string
         message_time = decoder["message_time"].string
-
+  
     }
     
 }

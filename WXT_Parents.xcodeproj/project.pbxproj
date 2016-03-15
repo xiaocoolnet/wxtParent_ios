@@ -29,7 +29,12 @@
 		046939EF1C7DB0C000729BF9 /* ClassActivitiesTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 046939EE1C7DB0C000729BF9 /* ClassActivitiesTableViewCell.swift */; };
 		046939F11C7DB71F00729BF9 /* TeacherCommentsTableViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 046939F01C7DB71F00729BF9 /* TeacherCommentsTableViewController.swift */; };
 		046939F31C7DB72C00729BF9 /* TeacherCommentsTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 046939F21C7DB72C00729BF9 /* TeacherCommentsTableViewCell.swift */; };
+		048D795B1C95854F00F6761C /* NoticeList.swift in Sources */ = {isa = PBXBuildFile; fileRef = 048D795A1C95854F00F6761C /* NoticeList.swift */; };
+		048D795D1C9594C100F6761C /* BabyTeacherList.swift in Sources */ = {isa = PBXBuildFile; fileRef = 048D795C1C9594C100F6761C /* BabyTeacherList.swift */; };
 		04AA021B1C93AB13006A12D2 /* CommentList.swift in Sources */ = {isa = PBXBuildFile; fileRef = 04AA021A1C93AB13006A12D2 /* CommentList.swift */; };
+		04F21E931C96E220005F3465 /* SendNewsTableViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 04F21E921C96E220005F3465 /* SendNewsTableViewController.swift */; };
+		04F21E951C96E279005F3465 /* SendNewsTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 04F21E941C96E279005F3465 /* SendNewsTableViewCell.swift */; };
+		04F21E971C96E28B005F3465 /* SendList.swift in Sources */ = {isa = PBXBuildFile; fileRef = 04F21E961C96E28B005F3465 /* SendList.swift */; };
 		2FE62032EFC47F4FAA20D439 /* Pods.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = E7AFF348788309629B3DA583 /* Pods.framework */; };
 		EA010E611C4A25E400BBED0B /* ForgetPasswordViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = EA010E601C4A25E400BBED0B /* ForgetPasswordViewController.swift */; };
 		EA010E641C4A261E00BBED0B /* ForgetPasswordSetViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = EA010E631C4A261E00BBED0B /* ForgetPasswordSetViewController.swift */; };
@@ -151,7 +156,12 @@
 		046939EE1C7DB0C000729BF9 /* ClassActivitiesTableViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ClassActivitiesTableViewCell.swift; sourceTree = "<group>"; };
 		046939F01C7DB71F00729BF9 /* TeacherCommentsTableViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TeacherCommentsTableViewController.swift; sourceTree = "<group>"; };
 		046939F21C7DB72C00729BF9 /* TeacherCommentsTableViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TeacherCommentsTableViewCell.swift; sourceTree = "<group>"; };
+		048D795A1C95854F00F6761C /* NoticeList.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = NoticeList.swift; sourceTree = "<group>"; };
+		048D795C1C9594C100F6761C /* BabyTeacherList.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = BabyTeacherList.swift; sourceTree = "<group>"; };
 		04AA021A1C93AB13006A12D2 /* CommentList.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CommentList.swift; sourceTree = "<group>"; };
+		04F21E921C96E220005F3465 /* SendNewsTableViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SendNewsTableViewController.swift; sourceTree = "<group>"; };
+		04F21E941C96E279005F3465 /* SendNewsTableViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SendNewsTableViewCell.swift; sourceTree = "<group>"; };
+		04F21E961C96E28B005F3465 /* SendList.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SendList.swift; sourceTree = "<group>"; };
 		7FAF58DF0009EB15F3995775 /* Pods.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = Pods.release.xcconfig; path = "Pods/Target Support Files/Pods/Pods.release.xcconfig"; sourceTree = "<group>"; };
 		DD0CEFBF6B55340AB8318E55 /* Pods.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = Pods.debug.xcconfig; path = "Pods/Target Support Files/Pods/Pods.debug.xcconfig"; sourceTree = "<group>"; };
 		E7AFF348788309629B3DA583 /* Pods.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods.framework; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -635,6 +645,7 @@
 				046939EA1C7DA64500729BF9 /* ClassScheduleTableViewController.swift */,
 				046939EC1C7DB04400729BF9 /* ClassActivitiesTableViewController.swift */,
 				046939F01C7DB71F00729BF9 /* TeacherCommentsTableViewController.swift */,
+				04F21E921C96E220005F3465 /* SendNewsTableViewController.swift */,
 			);
 			path = Controller;
 			sourceTree = "<group>";
@@ -649,6 +660,9 @@
 				F66166501C8ABA4400511FEF /* NewsList.swift */,
 				045686C31C92EAFA00FDDCCB /* FoodList.swift */,
 				04AA021A1C93AB13006A12D2 /* CommentList.swift */,
+				048D795A1C95854F00F6761C /* NoticeList.swift */,
+				048D795C1C9594C100F6761C /* BabyTeacherList.swift */,
+				04F21E961C96E28B005F3465 /* SendList.swift */,
 			);
 			path = Model;
 			sourceTree = "<group>";
@@ -668,6 +682,7 @@
 				046939EE1C7DB0C000729BF9 /* ClassActivitiesTableViewCell.swift */,
 				046939F21C7DB72C00729BF9 /* TeacherCommentsTableViewCell.swift */,
 				F66166521C8ABABE00511FEF /* AddressBookTableViewCell.swift */,
+				04F21E941C96E279005F3465 /* SendNewsTableViewCell.swift */,
 			);
 			path = View;
 			sourceTree = "<group>";
@@ -879,6 +894,7 @@
 				EA02F9631C786112001626D3 /* BlogNavigationContrller.swift in Sources */,
 				EA5A8D801C72B7B9004D8308 /* HelpTableViewController.swift in Sources */,
 				EAEB9E781C51FEC200EACE1B /* CornerRadiusViewController.swift in Sources */,
+				04F21E951C96E279005F3465 /* SendNewsTableViewCell.swift in Sources */,
 				EAEB9E821C5208F200EACE1B /* BlogMainTableTableViewController.swift in Sources */,
 				EA4B63DB1C5B1DEF0042711F /* FriendsTableViewController.swift in Sources */,
 				046939E31C7DA09E00729BF9 /* NoticeTableViewController.swift in Sources */,
@@ -887,6 +903,7 @@
 				04347DF11C7BF5A9009163DA /* NewsTableViewCell.swift in Sources */,
 				EAE0A5CE1C5094F500ECF86E /* ServiceModel.swift in Sources */,
 				EA3ADD821C5DB3FD002FCA2D /* XingquCellTableViewCell.swift in Sources */,
+				04F21E931C96E220005F3465 /* SendNewsTableViewController.swift in Sources */,
 				046939D71C7D51DD00729BF9 /* LeaveTableViewCell.swift in Sources */,
 				EA4A70671C487DF100DAD9A1 /* RegisterGetCodeViewController.swift in Sources */,
 				F66166531C8ABABE00511FEF /* AddressBookTableViewCell.swift in Sources */,
@@ -920,10 +937,12 @@
 				EAE72E941C4099BB0038D055 /* MainTabbarViewController.swift in Sources */,
 				EA3ADD801C5DB3E1002FCA2D /* XingQuBanTableViewController.swift in Sources */,
 				F661664D1C8AB78200511FEF /* FriendsTableViewCell.swift in Sources */,
+				04F21E971C96E28B005F3465 /* SendList.swift in Sources */,
 				EACA2A4A1C4FB9CE00A3ECD3 /* MineModel.swift in Sources */,
 				EA3ADD7C1C5DB2BB002FCA2D /* ZhaoPinTableViewController.swift in Sources */,
 				040F8B361C7A9B9600FD377B /* ClassList.swift in Sources */,
 				EA3ADD681C5D980F002FCA2D /* SaoYiSaoViewController.swift in Sources */,
+				048D795B1C95854F00F6761C /* NoticeList.swift in Sources */,
 				040F8B341C7A9B8A00FD377B /* ClassCoursewareTableViewController.swift in Sources */,
 				04347DF31C7C08CE009163DA /* FoodMenuTableViewController.swift in Sources */,
 				EA4B63DD1C5B22FE0042711F /* DiaryTableViewCell.swift in Sources */,
@@ -956,6 +975,7 @@
 				F661664F1C8AB7FC00511FEF /* FriendsList.swift in Sources */,
 				EA78A1E71C5A329D00159F22 /* SchoolMainTableViewController.swift in Sources */,
 				EA78A1E51C59FC5500159F22 /* BlogCommentTableViewController.swift in Sources */,
+				048D795D1C9594C100F6761C /* BabyTeacherList.swift in Sources */,
 				EACA2A481C4FA0EC00A3ECD3 /* MineMainTableViewController.swift in Sources */,
 				046939E51C7DA0AE00729BF9 /* NoticeTableViewCell.swift in Sources */,
 				046939EB1C7DA64500729BF9 /* ClassScheduleTableViewController.swift in Sources */,
