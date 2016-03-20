@@ -1,33 +1,34 @@
 //
-//  NoticeTableViewController.swift
+//  HappyTableViewController.swift
 //  WXT_Parents
 //
-//  Created by 牛尧 on 16/2/24.
+//  Created by Mac on 16/3/19.
 //  Copyright © 2016年 北京校酷网络科技有限公司. All rights reserved.
 //
-import Alamofire
-import UIKit
 
-class NoticeTableViewController: UITableViewController {
-    
+import UIKit
+import Alamofire
+
+class HappyTableViewController: UITableViewController {
+
     @IBOutlet var tableSource: UITableView!
-    var noticeSource = NoticeList()
+    var happySource = HappyList()
+    var imageCache = Dictionary<String,UIImage>()
+
     override func viewDidLoad() {
         super.viewDidLoad()
         GetDate()
-
         // Uncomment the following line to preserve selection between presentations
         // self.clearsSelectionOnViewWillAppear = false
 
         // Uncomment the following line to display an Edit button in the navigation bar for this view controller.
         // self.navigationItem.rightBarButtonItem = self.editButtonItem()
     }
-
+    
     func GetDate(){
-        //下面两句代码是从缓存中取出userid（入参）值
         let defalutid = NSUserDefaults.standardUserDefaults()
         let sid = defalutid.stringForKey("schoolid")
-        let url = apiUrl + "SchoolNotice"
+        let url = apiUrl+"HappySchool"
         let param = [
             "schoolid":sid!
         ]
@@ -49,15 +50,16 @@ class NoticeTableViewController: UITableViewController {
                     hud.removeFromSuperViewOnHide = true
                     hud.hide(true, afterDelay: 1)
                 }
+                
                 if(status.status == "success"){
-                    self.noticeSource = NoticeList(status.data!)
+                    self.happySource = HappyList(status.data!)
                     self.tableSource.reloadData()
                 }
             }
         }
+        
     }
 
-    
     override func didReceiveMemoryWarning() {
         super.didReceiveMemoryWarning()
         // Dispose of any resources that can be recreated.
@@ -66,40 +68,50 @@ class NoticeTableViewController: UITableViewController {
     // MARK: - Table view data source
 
     override func numberOfSectionsInTableView(tableView: UITableView) -> Int {
-        // #warning Incomplete implementation, return the number of sections
         return 1
     }
 
     override func tableView(tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        // #warning Incomplete implementation, return the number of rows
-        return noticeSource.count
+        return happySource.count
+
     }
 
-    
     override func tableView(tableView: UITableView, cellForRowAtIndexPath indexPath: NSIndexPath) -> UITableViewCell {
-        let cell = tableView.dequeueReusableCellWithIdentifier("NoticeCell", forIndexPath: indexPath) as!NoticeTableViewCell
-       // cell.NoticeLabel.text = "标题1"
-        let noticeInfo = self.noticeSource.objectlist[indexPath.row]
+        let cell = tableView.dequeueReusableCellWithIdentifier("HappyCell", forIndexPath: indexPath)as! HappyTableViewCell
+        let happyInfo = self.happySource.objectlist[indexPath.row]
         let dateformate = NSDateFormatter()
         dateformate.dateFormat = "MM-dd"
-        cell.NoticeLabel.text = noticeInfo.notice_title!
-        cell.NoticeContent.text = noticeInfo.notice_content!
-        cell.NoticeName.text = noticeInfo.releasename!
-        cell.NoticeTime.text = noticeInfo.notice_time!
-
-        // Configure the cell...
-
+        cell.Title.text = happyInfo.happy_title!
+        cell.Time.text = happyInfo.happy_time!
+        cell.Content.text = happyInfo.happy_content!
+        cell.Name.text = happyInfo.releasename!
+        let imgUrl = happyImageUrl+(happyInfo.happy_pic!)
+        
+        let image = self.imageCache[imgUrl] as UIImage?
+        let avatarUrl = NSURL(string: imgUrl)
+        let request: NSURLRequest = NSURLRequest(URL: avatarUrl!)
+        //异步获取
+        NSURLConnection.sendAsynchronousRequest(request, queue: NSOperationQueue.mainQueue(), completionHandler: {(response: NSURLResponse?,data: NSData?,error: NSError?)-> Void in
+            if(data != nil){
+                let imgTmp = UIImage(data: data!)
+                self.imageCache[imgUrl] = imgTmp
+                cell.images.image = imgTmp
+                cell.images.alpha = 1.0
+                
+            }
+        })
         return cell
     }
-
+    
     override func tableView(tableView: UITableView, heightForHeaderInSection section: Int) -> CGFloat{
         
-        return 0.01
+        return 1.0
     }
     
     override func tableView(tableView: UITableView, heightForFooterInSection section: Int) -> CGFloat {
         return 5.0
     }
+
 
     /*
     // Override to support conditional editing of the table view.

@@ -7,6 +7,12 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		040A55911C9D402D00F95EB7 /* HappyList.swift in Sources */ = {isa = PBXBuildFile; fileRef = 040A55901C9D402D00F95EB7 /* HappyList.swift */; };
+		040A55931C9D405300F95EB7 /* HappyTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 040A55921C9D405300F95EB7 /* HappyTableViewCell.swift */; };
+		040A55951C9D407100F95EB7 /* HappyTableViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 040A55941C9D407100F95EB7 /* HappyTableViewController.swift */; };
+		040A55971C9D4BA600F95EB7 /* KnowledgeTableViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 040A55961C9D4BA600F95EB7 /* KnowledgeTableViewController.swift */; };
+		040A55991C9D4BBE00F95EB7 /* KnowList.swift in Sources */ = {isa = PBXBuildFile; fileRef = 040A55981C9D4BBE00F95EB7 /* KnowList.swift */; };
+		040A559B1C9D4BDC00F95EB7 /* KnowledgeTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 040A559A1C9D4BDC00F95EB7 /* KnowledgeTableViewCell.swift */; };
 		040BCF191C7AF5000060F093 /* NewsCenterTableViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 040BCF181C7AF5000060F093 /* NewsCenterTableViewController.swift */; };
 		040F8B341C7A9B8A00FD377B /* ClassCoursewareTableViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 040F8B331C7A9B8A00FD377B /* ClassCoursewareTableViewController.swift */; };
 		040F8B361C7A9B9600FD377B /* ClassList.swift in Sources */ = {isa = PBXBuildFile; fileRef = 040F8B351C7A9B9600FD377B /* ClassList.swift */; };
@@ -14,6 +20,8 @@
 		04347DF11C7BF5A9009163DA /* NewsTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 04347DF01C7BF5A9009163DA /* NewsTableViewCell.swift */; };
 		04347DF31C7C08CE009163DA /* FoodMenuTableViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 04347DF21C7C08CE009163DA /* FoodMenuTableViewController.swift */; };
 		04347DF51C7C08EE009163DA /* FoodMenuTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 04347DF41C7C08EE009163DA /* FoodMenuTableViewCell.swift */; };
+		044EC79B1C9CEB49004C11CC /* TeaList.swift in Sources */ = {isa = PBXBuildFile; fileRef = 044EC79A1C9CEB49004C11CC /* TeaList.swift */; };
+		044F36FC1C980D7600B3FE40 /* AddList.swift in Sources */ = {isa = PBXBuildFile; fileRef = 044F36FB1C980D7600B3FE40 /* AddList.swift */; };
 		045686C41C92EAFA00FDDCCB /* FoodList.swift in Sources */ = {isa = PBXBuildFile; fileRef = 045686C31C92EAFA00FDDCCB /* FoodList.swift */; };
 		046939D31C7D3C4400729BF9 /* TakeTableViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 046939D21C7D3C4400729BF9 /* TakeTableViewController.swift */; };
 		046939D51C7D475700729BF9 /* LeaveTableViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 046939D41C7D475700729BF9 /* LeaveTableViewController.swift */; };
@@ -32,6 +40,7 @@
 		048D795B1C95854F00F6761C /* NoticeList.swift in Sources */ = {isa = PBXBuildFile; fileRef = 048D795A1C95854F00F6761C /* NoticeList.swift */; };
 		048D795D1C9594C100F6761C /* BabyTeacherList.swift in Sources */ = {isa = PBXBuildFile; fileRef = 048D795C1C9594C100F6761C /* BabyTeacherList.swift */; };
 		04AA021B1C93AB13006A12D2 /* CommentList.swift in Sources */ = {isa = PBXBuildFile; fileRef = 04AA021A1C93AB13006A12D2 /* CommentList.swift */; };
+		04F15C821C9CF86C00F895BC /* ActivitiesList.swift in Sources */ = {isa = PBXBuildFile; fileRef = 04F15C811C9CF86C00F895BC /* ActivitiesList.swift */; };
 		04F21E931C96E220005F3465 /* SendNewsTableViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 04F21E921C96E220005F3465 /* SendNewsTableViewController.swift */; };
 		04F21E951C96E279005F3465 /* SendNewsTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 04F21E941C96E279005F3465 /* SendNewsTableViewCell.swift */; };
 		04F21E971C96E28B005F3465 /* SendList.swift in Sources */ = {isa = PBXBuildFile; fileRef = 04F21E961C96E28B005F3465 /* SendList.swift */; };
@@ -134,6 +143,12 @@
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
+		040A55901C9D402D00F95EB7 /* HappyList.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = HappyList.swift; sourceTree = "<group>"; };
+		040A55921C9D405300F95EB7 /* HappyTableViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = HappyTableViewCell.swift; sourceTree = "<group>"; };
+		040A55941C9D407100F95EB7 /* HappyTableViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = HappyTableViewController.swift; sourceTree = "<group>"; };
+		040A55961C9D4BA600F95EB7 /* KnowledgeTableViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = KnowledgeTableViewController.swift; sourceTree = "<group>"; };
+		040A55981C9D4BBE00F95EB7 /* KnowList.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = KnowList.swift; sourceTree = "<group>"; };
+		040A559A1C9D4BDC00F95EB7 /* KnowledgeTableViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = KnowledgeTableViewCell.swift; sourceTree = "<group>"; };
 		040BCF181C7AF5000060F093 /* NewsCenterTableViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = NewsCenterTableViewController.swift; sourceTree = "<group>"; };
 		040F8B331C7A9B8A00FD377B /* ClassCoursewareTableViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ClassCoursewareTableViewController.swift; sourceTree = "<group>"; };
 		040F8B351C7A9B9600FD377B /* ClassList.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ClassList.swift; sourceTree = "<group>"; };
@@ -141,6 +156,8 @@
 		04347DF01C7BF5A9009163DA /* NewsTableViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = NewsTableViewCell.swift; sourceTree = "<group>"; };
 		04347DF21C7C08CE009163DA /* FoodMenuTableViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = FoodMenuTableViewController.swift; sourceTree = "<group>"; };
 		04347DF41C7C08EE009163DA /* FoodMenuTableViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = FoodMenuTableViewCell.swift; sourceTree = "<group>"; };
+		044EC79A1C9CEB49004C11CC /* TeaList.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TeaList.swift; sourceTree = "<group>"; };
+		044F36FB1C980D7600B3FE40 /* AddList.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AddList.swift; sourceTree = "<group>"; };
 		045686C31C92EAFA00FDDCCB /* FoodList.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = FoodList.swift; sourceTree = "<group>"; };
 		046939D21C7D3C4400729BF9 /* TakeTableViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TakeTableViewController.swift; sourceTree = "<group>"; };
 		046939D41C7D475700729BF9 /* LeaveTableViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = LeaveTableViewController.swift; sourceTree = "<group>"; };
@@ -159,6 +176,7 @@
 		048D795A1C95854F00F6761C /* NoticeList.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = NoticeList.swift; sourceTree = "<group>"; };
 		048D795C1C9594C100F6761C /* BabyTeacherList.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = BabyTeacherList.swift; sourceTree = "<group>"; };
 		04AA021A1C93AB13006A12D2 /* CommentList.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CommentList.swift; sourceTree = "<group>"; };
+		04F15C811C9CF86C00F895BC /* ActivitiesList.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ActivitiesList.swift; sourceTree = "<group>"; };
 		04F21E921C96E220005F3465 /* SendNewsTableViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SendNewsTableViewController.swift; sourceTree = "<group>"; };
 		04F21E941C96E279005F3465 /* SendNewsTableViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SendNewsTableViewCell.swift; sourceTree = "<group>"; };
 		04F21E961C96E28B005F3465 /* SendList.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SendList.swift; sourceTree = "<group>"; };
@@ -646,6 +664,8 @@
 				046939EC1C7DB04400729BF9 /* ClassActivitiesTableViewController.swift */,
 				046939F01C7DB71F00729BF9 /* TeacherCommentsTableViewController.swift */,
 				04F21E921C96E220005F3465 /* SendNewsTableViewController.swift */,
+				040A55941C9D407100F95EB7 /* HappyTableViewController.swift */,
+				040A55961C9D4BA600F95EB7 /* KnowledgeTableViewController.swift */,
 			);
 			path = Controller;
 			sourceTree = "<group>";
@@ -663,6 +683,11 @@
 				048D795A1C95854F00F6761C /* NoticeList.swift */,
 				048D795C1C9594C100F6761C /* BabyTeacherList.swift */,
 				04F21E961C96E28B005F3465 /* SendList.swift */,
+				044F36FB1C980D7600B3FE40 /* AddList.swift */,
+				044EC79A1C9CEB49004C11CC /* TeaList.swift */,
+				04F15C811C9CF86C00F895BC /* ActivitiesList.swift */,
+				040A55901C9D402D00F95EB7 /* HappyList.swift */,
+				040A55981C9D4BBE00F95EB7 /* KnowList.swift */,
 			);
 			path = Model;
 			sourceTree = "<group>";
@@ -683,6 +708,8 @@
 				046939F21C7DB72C00729BF9 /* TeacherCommentsTableViewCell.swift */,
 				F66166521C8ABABE00511FEF /* AddressBookTableViewCell.swift */,
 				04F21E941C96E279005F3465 /* SendNewsTableViewCell.swift */,
+				040A55921C9D405300F95EB7 /* HappyTableViewCell.swift */,
+				040A559A1C9D4BDC00F95EB7 /* KnowledgeTableViewCell.swift */,
 			);
 			path = View;
 			sourceTree = "<group>";
@@ -906,8 +933,11 @@
 				04F21E931C96E220005F3465 /* SendNewsTableViewController.swift in Sources */,
 				046939D71C7D51DD00729BF9 /* LeaveTableViewCell.swift in Sources */,
 				EA4A70671C487DF100DAD9A1 /* RegisterGetCodeViewController.swift in Sources */,
+				040A55951C9D407100F95EB7 /* HappyTableViewController.swift in Sources */,
 				F66166531C8ABABE00511FEF /* AddressBookTableViewCell.swift in Sources */,
 				046939F31C7DB72C00729BF9 /* TeacherCommentsTableViewCell.swift in Sources */,
+				044EC79B1C9CEB49004C11CC /* TeaList.swift in Sources */,
+				040A55991C9D4BBE00F95EB7 /* KnowList.swift in Sources */,
 				EA4B63E11C5B60980042711F /* DiaryList.swift in Sources */,
 				046939D51C7D475700729BF9 /* LeaveTableViewController.swift in Sources */,
 				EAED61611C741F09000CDCA1 /* AddBlogViewController.swift in Sources */,
@@ -915,6 +945,7 @@
 				EA14D9091C717BFF00899963 /* GetChange_sta_weiModel.swift in Sources */,
 				046939ED1C7DB04400729BF9 /* ClassActivitiesTableViewController.swift in Sources */,
 				040BCF191C7AF5000060F093 /* NewsCenterTableViewController.swift in Sources */,
+				044F36FC1C980D7600B3FE40 /* AddList.swift in Sources */,
 				EA3ADD6E1C5DA4A3002FCA2D /* BabyTableViewCell.swift in Sources */,
 				EA4B63D91C5B1DE10042711F /* MyTableViewController.swift in Sources */,
 				040F8B381C7A9B9F00FD377B /* ClassCellTableViewCell.swift in Sources */,
@@ -928,6 +959,7 @@
 				EA0FFCB81C62FDE100945627 /* ImageViewController.swift in Sources */,
 				046939F11C7DB71F00729BF9 /* TeacherCommentsTableViewController.swift in Sources */,
 				046939E11C7D998600729BF9 /* BabyTeachersTableViewCell.swift in Sources */,
+				040A55911C9D402D00F95EB7 /* HappyList.swift in Sources */,
 				EAAEB4C71C71DB170009710B /* WeightViewController.swift in Sources */,
 				046939E91C7DA54200729BF9 /* ClassScheduleTableViewCell.swift in Sources */,
 				EAE0A5CC1C50810700ECF86E /* ChildrenInfo.swift in Sources */,
@@ -939,9 +971,11 @@
 				F661664D1C8AB78200511FEF /* FriendsTableViewCell.swift in Sources */,
 				04F21E971C96E28B005F3465 /* SendList.swift in Sources */,
 				EACA2A4A1C4FB9CE00A3ECD3 /* MineModel.swift in Sources */,
+				040A559B1C9D4BDC00F95EB7 /* KnowledgeTableViewCell.swift in Sources */,
 				EA3ADD7C1C5DB2BB002FCA2D /* ZhaoPinTableViewController.swift in Sources */,
 				040F8B361C7A9B9600FD377B /* ClassList.swift in Sources */,
 				EA3ADD681C5D980F002FCA2D /* SaoYiSaoViewController.swift in Sources */,
+				040A55931C9D405300F95EB7 /* HappyTableViewCell.swift in Sources */,
 				048D795B1C95854F00F6761C /* NoticeList.swift in Sources */,
 				040F8B341C7A9B8A00FD377B /* ClassCoursewareTableViewController.swift in Sources */,
 				04347DF31C7C08CE009163DA /* FoodMenuTableViewController.swift in Sources */,
@@ -963,6 +997,7 @@
 				046939DD1C7D914D00729BF9 /* AddressBookTableViewController.swift in Sources */,
 				046939D31C7D3C4400729BF9 /* TakeTableViewController.swift in Sources */,
 				EA1E169A1C3F5ECD00C97FCF /* Url.swift in Sources */,
+				040A55971C9D4BA600F95EB7 /* KnowledgeTableViewController.swift in Sources */,
 				EA4A70691C487E1D00DAD9A1 /* RegisterSetPasswordViewController.swift in Sources */,
 				EA3ADD741C5DABEC002FCA2D /* SchoolInfoViewController.swift in Sources */,
 				EA3ADD7A1C5DAE76002FCA2D /* FoodTableViewCell.swift in Sources */,
@@ -983,6 +1018,7 @@
 				EA40E3E71C3138A800072EC8 /* Http.swift in Sources */,
 				046939EF1C7DB0C000729BF9 /* ClassActivitiesTableViewCell.swift in Sources */,
 				04347DF51C7C08EE009163DA /* FoodMenuTableViewCell.swift in Sources */,
+				04F15C821C9CF86C00F895BC /* ActivitiesList.swift in Sources */,
 				EA3ADD781C5DAD69002FCA2D /* WeekFoodTableViewController.swift in Sources */,
 				EA3ADD721C5DAA68002FCA2D /* TeacherTableViewController.swift in Sources */,
 				EAEB9E841C5223F700EACE1B /* BlogCellTableViewCell.swift in Sources */,

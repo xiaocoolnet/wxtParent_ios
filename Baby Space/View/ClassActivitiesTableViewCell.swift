@@ -12,7 +12,9 @@ class ClassActivitiesTableViewCell: UITableViewCell {
 
     @IBOutlet var ClassActivitiesImages: UIImageView!
     @IBOutlet var ClassActivitiesLabel: UILabel!
-    @IBOutlet var ClassActivitiesText: UITextField!
+    
+    @IBOutlet var ClassActivitiesContent: UILabel!
+    @IBOutlet var ClassActivitesTime: UILabel!
     override func awakeFromNib() {
         super.awakeFromNib()
         // Initialization code
