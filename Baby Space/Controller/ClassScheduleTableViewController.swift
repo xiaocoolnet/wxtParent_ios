@@ -7,17 +7,13 @@
 //
 
 import UIKit
-
+import Alamofire
 class ClassScheduleTableViewController: UITableViewController {
-
+    @IBOutlet var tableSource: UITableView!
+    var ScheduleSource = ScheduleList()
     override func viewDidLoad() {
         super.viewDidLoad()
-
-        // Uncomment the following line to preserve selection between presentations
-        // self.clearsSelectionOnViewWillAppear = false
-
-        // Uncomment the following line to display an Edit button in the navigation bar for this view controller.
-        // self.navigationItem.rightBarButtonItem = self.editButtonItem()
+        GetDate()
     }
 
     override func didReceiveMemoryWarning() {
@@ -25,25 +21,70 @@ class ClassScheduleTableViewController: UITableViewController {
         // Dispose of any resources that can be recreated.
     }
 
-    // MARK: - Table view data source
+    
+    func GetDate(){
+        //下面两句代码是从缓存中取出userid（入参）值
+        let defalutid = NSUserDefaults.standardUserDefaults()
+        let sid = defalutid.stringForKey("classid")
+        let schid = defalutid.stringForKey("schoolid")
 
+        let url = apiUrl + "ClassSyllabus"
+        let param = [
+            "classid":sid!,
+            "schoolid":schid!
+        ]
+        Alamofire.request(.GET, url, parameters: param).response { request, response, json, error in
+            if(error != nil){
+            }
+            else{
+                print("request是")
+                print(request!)
+                print("====================")
+                let status = Http(JSONDecoder(json!))
+                print("状态是")
+                print(status.status)
+                if(status.status == "error"){
+                    let hud = MBProgressHUD.showHUDAddedTo(self.view, animated: true)
+                    hud.mode = MBProgressHUDMode.Text
+                    hud.labelText = status.errorData
+                    hud.margin = 10.0
+                    hud.removeFromSuperViewOnHide = true
+                    hud.hide(true, afterDelay: 1)
+                }
+                if(status.status == "success"){
+                    self.ScheduleSource = ScheduleList(status.data!)
+                    self.tableSource.reloadData()
+                }
+            }
+        }
+    }
+    
     override func numberOfSectionsInTableView(tableView: UITableView) -> Int {
         // #warning Incomplete implementation, return the number of sections
-        return 3
+        return 5
     }
 
     override func tableView(tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         // #warning Incomplete implementation, return the number of rows
         if(section == 0){
-            return 2
+            return ScheduleSource.count
+            //let teacherList = self.ScheduleSource.objectlist[0]
+           // print(teacherList.syllabus_name)
+           // return   teacherList.syllabus_name
         }
         if(section == 1){
-           return 2
+           return ScheduleSource.count
         }
         if(section == 2){
-           return 2
+           return ScheduleSource.count
         }
-          return 0
+        if(section == 3){
+            return ScheduleSource.count
+        }
+        if(section == 4){
+            return ScheduleSource.count
+        }
+            return 0
     }
     
     override func tableView(tableView: UITableView, titleForHeaderInSection section: Int) -> String{
@@ -60,16 +101,25 @@ class ClassScheduleTableViewController: UITableViewController {
         {
             return  "周三"
         }
-
+        if(section == 3)
+        {
+            return  "周四"
+        }
+        if(section == 4)
+        {
+            return  "周五"
+        }
         return "WQE"
     }
 
-    
     override func tableView(tableView: UITableView, cellForRowAtIndexPath indexPath: NSIndexPath) -> UITableViewCell {
         let cell = tableView.dequeueReusableCellWithIdentifier("ScheduleCell", forIndexPath: indexPath) as! ClassScheduleTableViewCell
-            cell.ScheduleLabel.text = "标题1"
-        // Configure the cell...
-
+           // cell.ScheduleLabel.text = "标题1"
+        
+        let schInfo = self.ScheduleSource.objectlist[indexPath.row]
+        let dateformate = NSDateFormatter()
+        dateformate.dateFormat = "MM-dd"
+        cell.ScheduleLabel.text = schInfo.syllabus_name!
         return cell
     }
     
@@ -81,50 +131,5 @@ class ClassScheduleTableViewController: UITableViewController {
     override func tableView(tableView: UITableView, heightForFooterInSection section: Int) -> CGFloat {
         return 5.0
     }
-
-    /*
-    // Override to support conditional editing of the table view.
-    override func tableView(tableView: UITableView, canEditRowAtIndexPath indexPath: NSIndexPath) -> Bool {
-        // Return false if you do not want the specified item to be editable.
-        return true
-    }
-    */
-
-    /*
-    // Override to support editing the table view.
-    override func tableView(tableView: UITableView, commitEditingStyle editingStyle: UITableViewCellEditingStyle, forRowAtIndexPath indexPath: NSIndexPath) {
-        if editingStyle == .Delete {
-            // Delete the row from the data source
-            tableView.deleteRowsAtIndexPaths([indexPath], withRowAnimation: .Fade)
-        } else if editingStyle == .Insert {
-            // Create a new instance of the appropriate class, insert it into the array, and add a new row to the table view
-        }    
-    }
-    */
-
-    /*
-    // Override to support rearranging the table view.
-    override func tableView(tableView: UITableView, moveRowAtIndexPath fromIndexPath: NSIndexPath, toIndexPath: NSIndexPath) {
-
-    }
-    */
-
-    /*
-    // Override to support conditional rearranging of the table view.
-    override func tableView(tableView: UITableView, canMoveRowAtIndexPath indexPath: NSIndexPath) -> Bool {
-        // Return false if you do not want the item to be re-orderable.
-        return true
-    }
-    */
-
-    /*
-    // MARK: - Navigation
-
-    // In a storyboard-based application, you will often want to do a little preparation before navigation
-    override func prepareForSegue(segue: UIStoryboardSegue, sender: AnyObject?) {
-        // Get the new view controller using segue.destinationViewController.
-        // Pass the selected object to the new view controller.
-    }
-    */
 
 }

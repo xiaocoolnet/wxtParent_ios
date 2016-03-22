@@ -9,10 +9,20 @@ import UIKit
 
 class NoticeTableViewCell: UITableViewCell {
 
-    @IBOutlet var NoticeName: UILabel!
-    @IBOutlet var NoticeTime: UILabel!
-    @IBOutlet var NoticeContent: UILabel!
-    @IBOutlet var NoticeLabel: UILabel!
+//  标题
+    @IBOutlet weak var titleLbl: UILabel!
+//    内容
+    @IBOutlet weak var contentLbl: UILabel!
+//    图片
+    @IBOutlet weak var bigImageView: UIImageView!
+//    发送者
+    @IBOutlet weak var senderLbl: UILabel!
+//    已读人数
+    @IBOutlet weak var readLbl: UILabel!
+//    未读人数
+    @IBOutlet weak var unreadLbl: UILabel!
+//    时间
+    @IBOutlet weak var timeLbl: UILabel!
     override func awakeFromNib() {
         super.awakeFromNib()
         // Initialization code

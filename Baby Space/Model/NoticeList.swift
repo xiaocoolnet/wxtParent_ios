@@ -31,19 +31,32 @@ class NoticeList: JSONJoy {
 }
 
 class NoticeInfo: JSONJoy{
-    var notice_title:String?
-    var notice_content:String?
-    var releasename:String?
-    var notice_time:String?
-    
+    var allreader:Int?
+    var content:String?
+    var create_time:String?
+    var id:String?
+    var photo:String?
+    var readcount:Int?
+    var title:String?
+    var type:String?
+    var readtag:Int?
+    var userid:String?
+    var username:String?
     init() {
         
     }
     required init(_ decoder: JSONDecoder){
-        notice_title = decoder["notice_title"].string
-        notice_content = decoder["notice_content"].string
-        releasename = decoder["releasename"].string
-        notice_time = decoder["notice_time"].string
+        allreader = decoder["allreader"].integer
+        content = decoder["content"].string
+        create_time = decoder["create_time"].string
+        id = decoder["id"].string
+        photo = decoder["photo"].string
+        readcount = decoder["readcount"].integer
+        title = decoder["title"].string
+        type = decoder["type"].string
+        readtag = decoder["readtag"].integer
+        userid = decoder["userid"].string
+        username = decoder["username"].string
     }
     
 }

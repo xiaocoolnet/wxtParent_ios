@@ -5,8 +5,11 @@
 //  Created by 牛尧 on 16/2/24.
 //  Copyright © 2016年 北京校酷网络科技有限公司. All rights reserved.
 //
-import Alamofire
+
 import UIKit
+import Alamofire
+import YYWebImage
+import XWSwiftRefresh
 
 class NoticeTableViewController: UITableViewController {
     
@@ -14,22 +17,28 @@ class NoticeTableViewController: UITableViewController {
     var noticeSource = NoticeList()
     override func viewDidLoad() {
         super.viewDidLoad()
-        GetDate()
+        self.DropDownUpdate()
 
-        // Uncomment the following line to preserve selection between presentations
-        // self.clearsSelectionOnViewWillAppear = false
-
-        // Uncomment the following line to display an Edit button in the navigation bar for this view controller.
-        // self.navigationItem.rightBarButtonItem = self.editButtonItem()
     }
-
-    func GetDate(){
+    //    开始刷新
+    func DropDownUpdate(){
+        self.tableSource.headerView = XWRefreshNormalHeader(target: self, action: #selector(ParentsExhortViewController.loadData))
+        self.tableSource.reloadData()
+        self.tableSource.headerView?.beginRefreshing()
+    }
+    func loadData(){
+//        http://wxt.xiaocool.net/index.php?g=apps&m=school&a=getnoticelist&userid=597&classid=1&schoolid=1
         //下面两句代码是从缓存中取出userid（入参）值
         let defalutid = NSUserDefaults.standardUserDefaults()
         let sid = defalutid.stringForKey("schoolid")
-        let url = apiUrl + "SchoolNotice"
+        let userid = defalutid.stringForKey("userid")
+        let classid = defalutid.stringForKey("classid")
+        let url = "http://wxt.xiaocool.net/index.php?g=apps&m=school&a=getnoticelist"
         let param = [
+            "userid":userid!,
+            "classid":classid!,
             "schoolid":sid!
+            
         ]
         Alamofire.request(.GET, url, parameters: param).response { request, response, json, error in
             if(error != nil){
@@ -52,19 +61,11 @@ class NoticeTableViewController: UITableViewController {
                 if(status.status == "success"){
                     self.noticeSource = NoticeList(status.data!)
                     self.tableSource.reloadData()
+                    self.tableSource.headerView?.endRefreshing()
                 }
             }
         }
     }
-
-    
-    override func didReceiveMemoryWarning() {
-        super.didReceiveMemoryWarning()
-        // Dispose of any resources that can be recreated.
-    }
-
-    // MARK: - Table view data source
-
     override func numberOfSectionsInTableView(tableView: UITableView) -> Int {
         // #warning Incomplete implementation, return the number of sections
         return 1
@@ -78,72 +79,36 @@ class NoticeTableViewController: UITableViewController {
     
     override func tableView(tableView: UITableView, cellForRowAtIndexPath indexPath: NSIndexPath) -> UITableViewCell {
         let cell = tableView.dequeueReusableCellWithIdentifier("NoticeCell", forIndexPath: indexPath) as!NoticeTableViewCell
-       // cell.NoticeLabel.text = "标题1"
+        cell.selectionStyle = .None
         let noticeInfo = self.noticeSource.objectlist[indexPath.row]
         let dateformate = NSDateFormatter()
-        dateformate.dateFormat = "MM-dd"
-        cell.NoticeLabel.text = noticeInfo.notice_title!
-        cell.NoticeContent.text = noticeInfo.notice_content!
-        cell.NoticeName.text = noticeInfo.releasename!
-        cell.NoticeTime.text = noticeInfo.notice_time!
-
-        // Configure the cell...
-
+        dateformate.dateFormat = "yyyy-MM-dd HH:mm"
+        
+        cell.titleLbl.text = noticeInfo.title
+        cell.contentLbl.text = noticeInfo.content
+        let imgUrl = imageUrl + noticeInfo.photo!
+        let photourl = NSURL(string: imgUrl)
+        cell.bigImageView.yy_setImageWithURL(photourl, placeholder: UIImage(named: "园所公告背景.png"))
+        cell.senderLbl.text = noticeInfo.username
+        cell.readLbl.text = "已读\(String(noticeInfo.readcount!))"
+        cell.unreadLbl.text = "未读\(String(noticeInfo.allreader!-noticeInfo.readcount!))"
+        let date = NSDate(timeIntervalSince1970: NSTimeInterval(noticeInfo.create_time!)!)
+        let str:String = dateformate.stringFromDate(date)
+        cell.timeLbl.text = str
+//        自适应行高
+        let options : NSStringDrawingOptions = NSStringDrawingOptions.UsesLineFragmentOrigin
+        let screenBounds:CGRect = UIScreen.mainScreen().bounds
+        let boundingRect = String(cell.contentLbl.text).boundingRectWithSize(CGSizeMake(screenBounds.width, 0), options: options, attributes: [NSFontAttributeName:UIFont.systemFontOfSize(17)], context: nil)
+        tableSource.rowHeight = boundingRect.size.height + 261
         return cell
     }
 
     override func tableView(tableView: UITableView, heightForHeaderInSection section: Int) -> CGFloat{
-        
         return 0.01
     }
     
     override func tableView(tableView: UITableView, heightForFooterInSection section: Int) -> CGFloat {
         return 5.0
     }
-
-    /*
-    // Override to support conditional editing of the table view.
-    override func tableView(tableView: UITableView, canEditRowAtIndexPath indexPath: NSIndexPath) -> Bool {
-        // Return false if you do not want the specified item to be editable.
-        return true
-    }
-    */
-
-    /*
-    // Override to support editing the table view.
-    override func tableView(tableView: UITableView, commitEditingStyle editingStyle: UITableViewCellEditingStyle, forRowAtIndexPath indexPath: NSIndexPath) {
-        if editingStyle == .Delete {
-            // Delete the row from the data source
-            tableView.deleteRowsAtIndexPaths([indexPath], withRowAnimation: .Fade)
-        } else if editingStyle == .Insert {
-            // Create a new instance of the appropriate class, insert it into the array, and add a new row to the table view
-        }    
-    }
-    */
-
-    /*
-    // Override to support rearranging the table view.
-    override func tableView(tableView: UITableView, moveRowAtIndexPath fromIndexPath: NSIndexPath, toIndexPath: NSIndexPath) {
-
-    }
-    */
-
-    /*
-    // Override to support conditional rearranging of the table view.
-    override func tableView(tableView: UITableView, canMoveRowAtIndexPath indexPath: NSIndexPath) -> Bool {
-        // Return false if you do not want the item to be re-orderable.
-        return true
-    }
-    */
-
-    /*
-    // MARK: - Navigation
-
-    // In a storyboard-based application, you will often want to do a little preparation before navigation
-    override func prepareForSegue(segue: UIStoryboardSegue, sender: AnyObject?) {
-        // Get the new view controller using segue.destinationViewController.
-        // Pass the selected object to the new view controller.
-    }
-    */
 
 }

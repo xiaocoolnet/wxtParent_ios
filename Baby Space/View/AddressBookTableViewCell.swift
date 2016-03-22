@@ -10,8 +10,14 @@ import UIKit
 
 class AddressBookTableViewCell: UITableViewCell {
     
-    @IBOutlet var phone: UILabel!
-    @IBOutlet var AddressLabel: UILabel!
+
+    @IBOutlet weak var headImageView: UIImageView!
+    
+    @IBOutlet weak var nameLbl: UILabel!
+   
+    @IBOutlet weak var numberBtn: UIButton!
+    
+
     override func awakeFromNib() {
         super.awakeFromNib()
         // Initialization code

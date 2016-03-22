@@ -20,7 +20,7 @@ class RegisterSetPasswordViewController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
 
-        finishButton.addTarget(self, action: Selector("FinishButton"), forControlEvents: UIControlEvents.TouchUpInside)
+        finishButton.addTarget(self, action: #selector(RegisterSetPasswordViewController.FinishButton), forControlEvents: UIControlEvents.TouchUpInside)
         // Do any additional setup after loading the view.
     }
 

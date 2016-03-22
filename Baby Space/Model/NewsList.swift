@@ -32,6 +32,7 @@ class NewsInfo: JSONJoy{
     var receive_user_name:String?
     var message_content:String?
     var message_time:String?
+    var send_user_id:String?
     init() {
         
     }
@@ -39,7 +40,7 @@ class NewsInfo: JSONJoy{
         receive_user_name = decoder["receive_user_name"].string
         message_content = decoder["message_content"].string
         message_time = decoder["message_time"].string
-
+        send_user_id = decoder["send_user_id"].string
     }
     
 }

@@ -21,7 +21,7 @@ class ForgetPasswordSetViewController: UIViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        finishButton.addTarget(self, action: Selector("Finish"), forControlEvents: UIControlEvents.TouchUpInside)
+        finishButton.addTarget(self, action: #selector(ForgetPasswordSetViewController.Finish), forControlEvents: UIControlEvents.TouchUpInside)
         
         // Do any additional setup after loading the view.
     }

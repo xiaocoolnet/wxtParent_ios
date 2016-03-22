@@ -28,18 +28,18 @@ class ForgetPasswordViewController: UIViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
-
+//      取消隐藏导航栏
         self.navigationController?.navigationBar.hidden = false
-        getCodeButton.addTarget(self, action: Selector("GetCode"), forControlEvents: UIControlEvents.TouchUpInside)
-        nextButton.addTarget(self, action: Selector("Next"), forControlEvents: UIControlEvents.TouchUpInside)
+        getCodeButton.addTarget(self, action: #selector(ForgetPasswordViewController.GetCode), forControlEvents: UIControlEvents.TouchUpInside)
+        nextButton.addTarget(self, action: #selector(ForgetPasswordViewController.Next), forControlEvents: UIControlEvents.TouchUpInside)
         codeLabel.hidden = true
-        // Do any additional setup after loading the view.
     }
-    
+//    发送验证码
     func GetCode(){
-        if (phoneNumberText.text!.isEmpty||phoneNumberText.text?.characters.count != 11)
+        let phoneNum:String =  (phoneNumberText.text)!
+        if (phoneNum.isEmpty)
         {
-            var alerView:UIAlertView = UIAlertView()
+            let alerView:UIAlertView = UIAlertView()
             alerView.title = "手机号输入错误"
             alerView.message = "请重新输入"
             alerView.addButtonWithTitle("确定")
@@ -47,11 +47,13 @@ class ForgetPasswordViewController: UIViewController {
             alerView.delegate = self
             alerView.tag = 1
             alerView.show()
-        }
-        else
-        {
-            
-            var alerView:UIAlertView = UIAlertView()
+        }else if (!isTelNumber(phoneNum)){//判断输入是否是电话号码
+            let alert = UIAlertController(title: "手机号输入错误", message: "请重新输入", preferredStyle: .Alert)
+            alert.addAction(UIAlertAction(title: "取消", style: .Cancel, handler: nil))
+            alert.addAction(UIAlertAction(title: "确定", style: .Default, handler: nil))
+            self.presentViewController(alert, animated: true, completion: nil)
+        }else{
+            let alerView:UIAlertView = UIAlertView()
             alerView.title = "发送验证码到"
             alerView.message = "\(phoneNumberText.text!)"
             alerView.addButtonWithTitle("取消")
@@ -60,7 +62,6 @@ class ForgetPasswordViewController: UIViewController {
             alerView.delegate = self
             alerView.tag = 0
             alerView.show()
-            
         }
         
     }
@@ -71,8 +72,9 @@ class ForgetPasswordViewController: UIViewController {
         }
         
     }
+//    验证
     func Yanzheng(){
-        var url = apiUrl+"forgetPass_Verify"
+        let url = apiUrl+"forgetPass_Verify"
         let params = [
             "phone":phoneNumberText.text!,
             "code":codeText.text!
@@ -124,8 +126,9 @@ class ForgetPasswordViewController: UIViewController {
         }
 
     }
-    
+//    判空
     func PandKong()->Bool{
+        let phoneNum:String =  (phoneNumberText.text)!
         if(phoneNumberText.text!.isEmpty){
             let hud = MBProgressHUD.showHUDAddedTo(self.view, animated: true)
             hud.mode = MBProgressHUDMode.Text
@@ -134,6 +137,11 @@ class ForgetPasswordViewController: UIViewController {
             hud.removeFromSuperViewOnHide = true
             hud.hide(true, afterDelay: 1)
             return false
+        }else if (!isTelNumber(phoneNum)){//判断输入是否是电话号码
+            let alert = UIAlertController(title: "手机号输入错误", message: "请重新输入", preferredStyle: .Alert)
+            alert.addAction(UIAlertAction(title: "取消", style: .Cancel, handler: nil))
+            alert.addAction(UIAlertAction(title: "确定", style: .Default, handler: nil))
+            self.presentViewController(alert, animated: true, completion: nil)
         }
         
         if(codeText.text!.isEmpty){
@@ -147,23 +155,23 @@ class ForgetPasswordViewController: UIViewController {
         }
         return true
     }
-    
+//   开始倒计时
     func timeDow()
     {
-        var time1 = NSTimer.scheduledTimerWithTimeInterval(1.0, target:self, selector: "updateTime", userInfo: nil, repeats: true)
+        let time1 = NSTimer.scheduledTimerWithTimeInterval(1.0, target:self, selector: #selector(ForgetPasswordViewController.updateTime), userInfo: nil, repeats: true)
         timeNow = time1
     }
-    
+//    倒计时
     func showRepeatButton()
     {
         codeLabel.hidden=true
         getCodeButton.hidden = false
         getCodeButton.enabled = true
     }
-    
+//    更新时间
     func updateTime()
     {
-        count--
+        count -= 1
         if (count <= 0)
         {
             count = 60
@@ -173,7 +181,7 @@ class ForgetPasswordViewController: UIViewController {
         codeLabel.text = "\(count)S"
         
     }
-    
+//    提示框点击事件
     func alertView(alertView: UIAlertView, clickedButtonAtIndex buttonIndex: Int) {
         
         if alertView.tag == 0
@@ -191,43 +199,44 @@ class ForgetPasswordViewController: UIViewController {
         if alertView.tag == 2
         {}
     }
-    
+//    发送验证码
     func senderMessage()
     {
         let url = apiUrl+"SendMobileCode"
         let param = [
             "phone":self.phoneNumberText.text!,
-            
         ]
         Alamofire.request(.GET, url, parameters: param).response { request, response, json, error in
             if(error != nil){
             }
-            else{
-            }
-            
         }
     }
-
-
-    override func didReceiveMemoryWarning() {
-        super.didReceiveMemoryWarning()
-        // Dispose of any resources that can be recreated.
-    }
-    
+//    收键盘
     override func touchesBegan(touches: Set<UITouch>, withEvent event: UIEvent?) {
         self.view.endEditing(true)
     }
-
-    
-
-    /*
-    // MARK: - Navigation
-
-    // In a storyboard-based application, you will often want to do a little preparation before navigation
-    override func prepareForSegue(segue: UIStoryboardSegue, sender: AnyObject?) {
-        // Get the new view controller using segue.destinationViewController.
-        // Pass the selected object to the new view controller.
+    //    判断是否为电话号码
+    func isTelNumber(num:NSString)->Bool
+    {
+        let mobile = "^1(3[0-9]|5[0-35-9]|8[025-9])\\d{8}$"
+        let  CM = "^1(34[0-8]|(3[5-9]|5[017-9]|8[278])\\d)\\d{7}$"
+        let  CU = "^1(3[0-2]|5[256]|8[56])\\d{8}$"
+        let  CT = "^1((33|53|8[09])[0-9]|349)\\d{7}$"
+        let regextestmobile = NSPredicate(format: "SELF MATCHES %@",mobile)
+        let regextestcm = NSPredicate(format: "SELF MATCHES %@",CM )
+        let regextestcu = NSPredicate(format: "SELF MATCHES %@" ,CU)
+        let regextestct = NSPredicate(format: "SELF MATCHES %@" ,CT)
+        if ((regextestmobile.evaluateWithObject(num) == true)
+            || (regextestcm.evaluateWithObject(num)  == true)
+            || (regextestct.evaluateWithObject(num) == true)
+            || (regextestcu.evaluateWithObject(num) == true))
+        {
+            return true
+        }
+        else
+        {
+            return false
+        }
     }
-    */
 
 }

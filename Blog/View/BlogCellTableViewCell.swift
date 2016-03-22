@@ -29,7 +29,7 @@ class BlogCellTableViewCell: UITableViewCell {
     var flag:Int = 0
     override func awakeFromNib() {
         super.awakeFromNib()
-        dianZanBtn.addTarget(self, action: Selector("ChangeDianZan"), forControlEvents: UIControlEvents.TouchUpInside)
+        dianZanBtn.addTarget(self, action: #selector(BlogCellTableViewCell.ChangeDianZan), forControlEvents: UIControlEvents.TouchUpInside)
         
 
         // Initialization code

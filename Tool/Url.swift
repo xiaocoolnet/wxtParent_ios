@@ -7,10 +7,11 @@
 //
 
 import Foundation
-var apiUrl = "http://www.xiaocool.cn:8016/index.php?g=apps&m=index&a="
-var imageUrl = "http://www.xiaocool.cn:8016/uploads/avatar/"
-var microblogImageUrl = "http://www.xiaocool.cn:8016/uploads/microblog/"
-var growCoverImageUrl = "http://www.xiaocool.cn:8016/uploads/growCover/"
-var foodMenuImageUrl = "http://www.xiaocool.cn:8016/uploads/recipe/"
-var classActivitiesImageUrl = "http://www.xiaocool.cn:8016/uploads/ClassAction/"
-var happyImageUrl = "http://www.xiaocool.cn:8016/uploads/happyschool/"
+var apiUrl = "http://wxt.xiaocool.net/index.php?g=apps&m=index&a="
+var imageUrl = "http://wxt.xiaocool.net/uploads/avatar/"
+var microblogImageUrl = "http://wxt.xiaocool.net/uploads/microblog/"
+var growCoverImageUrl = "http://wxt.xiaocool.net/uploads/growCover/"
+var foodMenuImageUrl = "http://wxt.xiaocool.net/uploads/recipe/"
+var classActivitiesImageUrl = "http://wxt.xiaocool.net/uploads/ClassAction/"
+var happyImageUrl = "http://wxt.xiaocool.net/uploads/happyschool/"
+var codeImageUrl = "http://wxt.xiaocool.net/data/QRcode/"

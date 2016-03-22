@@ -14,6 +14,7 @@ class AddressBookTableViewController: UITableViewController {
     @IBOutlet var tableSource: UITableView!
     var addSource = AddList()
     var teacherSource =  TeaList()
+    var dic = NSMutableDictionary()
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -21,6 +22,7 @@ class AddressBookTableViewController: UITableViewController {
     }
     
     func GetDate(){
+//        http://wxt.xiaocool.net/index.php?g=apps&m=index&a=MessageAddress&userid=597
         let defalutid = NSUserDefaults.standardUserDefaults()
         let uid = defalutid.stringForKey("userid")
         let url = apiUrl+"MessageAddress"
@@ -48,70 +50,50 @@ class AddressBookTableViewController: UITableViewController {
                 
                 if(status.status == "success"){
                     self.addSource = AddList(status.data!)
-                    print(self.addSource.count)
+//                    将分区组的标题和每个分区的cell的数目作为字典存起来
+                    if self.addSource.count != 0{
+                        for i in 0..<self.addSource.count {
+                            let addInfo = self.addSource.objectlist[i]
+                            let teacherList = self.addSource.objectlist[i]
+                            self.teacherSource = TeaList(teacherList.teacherinfo!)
+                            self.dic.setValue(self.teacherSource.count, forKey:addInfo.classname! )
+                        }
+                    }
                     self.tableSource.reloadData()
                 }
             }
         }
         
     }
-    
-    override func didReceiveMemoryWarning() {
-        super.didReceiveMemoryWarning()
-        // Dispose of any resources that can be recreated.
-    }
-    
-    // MARK: - Table view data source
-    
+//    分区数
     override func numberOfSectionsInTableView(tableView: UITableView) -> Int {
-        // #warning Incomplete implementation, return the number of sections
-        return 2
+        return self.addSource.count
     }
-    
-    override func tableView(tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        if(self.addSource.count != 0){
-            if(section == 0){
-                let teacherList = self.addSource.objectlist[0]
-                self.teacherSource = TeaList(teacherList.teacherinfo!)
-                //print(teacherSource.count)
-                return  teacherSource.count
-            }
-            if(section == 1){
-                let teacherList = self.addSource.objectlist[1]
-                self.teacherSource = TeaList(teacherList.teacherinfo!)
-                return teacherSource.count
-            }
-        }
-        return 0
-    }
-    
+//    分区标题
     override func tableView(tableView: UITableView, titleForHeaderInSection section: Int) -> String{
         
-        
-        if (section == 0)
-        {
-            return "托一班"
-            //return cell.AddressLabel.text = addInfo.name!
-        }
-        else if (section == 1)
-        {
-            return  "托二班"
-        }
-        return "WQE"
+        let addInfo = self.addSource.objectlist[section]
+        return addInfo.classname!
     }
-    
+//    每个分区的行数
+    override func tableView(tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
+        let addInfo = self.addSource.objectlist[section]
+        let str: String = addInfo.classname!
+        let num = dic[str] as! Int
+        return num
+    }
+//    单元格
     override func tableView(tableView: UITableView, cellForRowAtIndexPath indexPath: NSIndexPath) -> UITableViewCell {
         let cell = tableView.dequeueReusableCellWithIdentifier("AddressCell", forIndexPath: indexPath) as! AddressBookTableViewCell
-        //cell.AddressLabel.text = "李老师"
-        
-        let addInfo = self.addSource.objectlist[indexPath.row]
+        cell.selectionStyle = .None
+
+        let teacherList = self.addSource.objectlist[indexPath.section]
+        self.teacherSource = TeaList(teacherList.teacherinfo!)
         let teacherInfo = self.teacherSource.objectlist[indexPath.row]
-        self.teacherSource = TeaList(addInfo.teacherinfo!)
-        let dateformate = NSDateFormatter()
-        dateformate.dateFormat = "MM-dd"
-        cell.AddressLabel.text = teacherInfo.name!
-        cell.phone.text = teacherInfo.phone!
-        
+        cell.nameLbl.text = teacherInfo.name
+        cell.numberBtn.setTitle(teacherInfo.phone, forState: .Normal)
+        cell.numberBtn.addTarget(self, action: #selector(AddressBookTableViewController.callNumber(_:)), forControlEvents: .TouchUpInside)
+
         return cell
     }
     
@@ -123,51 +105,20 @@ class AddressBookTableViewController: UITableViewController {
     override func tableView(tableView: UITableView, heightForFooterInSection section: Int) -> CGFloat {
         return 5.0
     }
-    
-    
-    /*
-    // Override to support conditional editing of the table view.
-    override func tableView(tableView: UITableView, canEditRowAtIndexPath indexPath: NSIndexPath) -> Bool {
-    // Return false if you do not want the specified item to be editable.
-    return true
+    override func tableView(tableView: UITableView, didSelectRowAtIndexPath indexPath: NSIndexPath) {
+        let addInfo = self.addSource.objectlist[indexPath.section]
+        self.teacherSource = TeaList(addInfo.teacherinfo!)
+        let teacherInfo = self.teacherSource.objectlist[indexPath.row]
+        let chatView = ChatViewController(conversationChatter: teacherInfo.id!, conversationType: EMConversationType.eConversationTypeChat)
+        chatView.title = teacherInfo.name!
+        self.navigationController?.pushViewController(chatView, animated: true)
     }
-    */
-    
-    /*
-    // Override to support editing the table view.
-    override func tableView(tableView: UITableView, commitEditingStyle editingStyle: UITableViewCellEditingStyle, forRowAtIndexPath indexPath: NSIndexPath) {
-    if editingStyle == .Delete {
-    // Delete the row from the data source
-    tableView.deleteRowsAtIndexPaths([indexPath], withRowAnimation: .Fade)
-    } else if editingStyle == .Insert {
-    // Create a new instance of the appropriate class, insert it into the array, and add a new row to the table view
+//    打电话
+    func callNumber(sender:AnyObject){
+        let btn:UIButton = sender as! UIButton
+        var phone = String()
+        phone = "telprompt:\(String(btn.currentTitle!))"
+        UIApplication.sharedApplication().openURL(NSURL.init(string: phone)!)
     }
-    }
-    */
-    
-    /*
-    // Override to support rearranging the table view.
-    override func tableView(tableView: UITableView, moveRowAtIndexPath fromIndexPath: NSIndexPath, toIndexPath: NSIndexPath) {
-    
-    }
-    */
-    
-    /*
-    // Override to support conditional rearranging of the table view.
-    override func tableView(tableView: UITableView, canMoveRowAtIndexPath indexPath: NSIndexPath) -> Bool {
-    // Return false if you do not want the item to be re-orderable.
-    return true
-    }
-    */
-    
-    /*
-    // MARK: - Navigation
-    
-    // In a storyboard-based application, you will often want to do a little preparation before navigation
-    override func prepareForSegue(segue: UIStoryboardSegue, sender: AnyObject?) {
-    // Get the new view controller using segue.destinationViewController.
-    // Pass the selected object to the new view controller.
-    }
-    */
-    
+
 }

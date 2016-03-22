@@ -6,3 +6,7 @@
 #import "OAStackView.h"
 #import "UITableView+FDTemplateLayoutCell.h"
 #import "XKeyBoard.h"
+#import "BRPlaceholderTextView.h"
+#import "EaseMob.h"
+#import "EaseUI.h"
+#import "EMChatManagerDefs.h"

@@ -8,8 +8,6 @@
 
 import Foundation
 class ChildrenList: JSONJoy {
-//    var status:String?
-//    var errorData:String?
     var objectlist: [ChildrenInfo]
     var count: Int{
         return self.objectlist.count
@@ -19,7 +17,6 @@ class ChildrenList: JSONJoy {
         objectlist = Array<ChildrenInfo>()
     }
     required init(_ decoder: JSONDecoder) {
-//        status = decoder["status"].string
         objectlist = Array<ChildrenInfo>()
         for childs: JSONDecoder in decoder.array!{
             objectlist.append(ChildrenInfo(childs))
@@ -32,18 +29,28 @@ class ChildrenList: JSONJoy {
 }
 // MARK: -Partner
 class ChildrenInfo: JSONJoy{
-    var childrenid: String?
+    var time: String?
     var appellation:String?
-    var bind_status:String?
+    var userid:String?
     var preferred:String?
+    var id:String?
+    var relation_rank:String?
+    var studentid:String?
+    var studentname:String?
+    var studentavatar:String?
+    
     init() {
-        
     }
     required init(_ decoder: JSONDecoder){
-        childrenid = decoder["studentid"].string
+        time = decoder["time"].string
         appellation = decoder["appellation"].string
-        bind_status = decoder["bind_status"].string
+        userid = decoder["userid"].string
         preferred = decoder["preferred"].string
+        id = decoder["id"].string
+        relation_rank = decoder["relation_rank"].string
+        studentid = decoder["studentid"].string
+        studentname = decoder["studentname"].string
+        studentavatar = decoder["studentavatar"].string
     }
     
 }

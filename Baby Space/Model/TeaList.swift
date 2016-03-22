@@ -32,14 +32,15 @@ class TeaList: JSONJoy {
 }
 
 class TeaInfo: JSONJoy{
+    var id:String?
     var name:String?
     var phone:String?
-    
     
     init() {
         
     }
     required init(_ decoder: JSONDecoder){
+        id = decoder["id"].string
         name = decoder["name"].string
         phone = decoder["phone"].string
         

@@ -48,7 +48,7 @@ class BlogMainTableTableViewController: UITableViewController {
         // Dispose of any resources that can be recreated.
     }
     func DropDownUpdate(){
-        self.tableView.headerView = XWRefreshNormalHeader(target: self, action: "GetDate")
+        self.tableView.headerView = XWRefreshNormalHeader(target: self, action: #selector(BlogMainTableTableViewController.GetDate))
         //self.sourceList.reloadData()
         self.tableView.reloadData()
         self.tableView.headerView?.beginRefreshing()
@@ -56,7 +56,7 @@ class BlogMainTableTableViewController: UITableViewController {
     }
     
     func UpPullAdd(){
-        self.tableView.footerView = XWRefreshAutoNormalFooter(target: self, action: "downPlullLoadData")
+        self.tableView.footerView = XWRefreshAutoNormalFooter(target: self, action: #selector(BlogMainTableTableViewController.downPlullLoadData))
     }
     
     func GetDate(){
@@ -230,7 +230,7 @@ class BlogMainTableTableViewController: UITableViewController {
                                 blogimage!.image = imgTmp
                                 self.pictureFangda = blogimage!.image
                                 blogimage!.userInteractionEnabled = true
-                                let singleTap:UITapGestureRecognizer = UITapGestureRecognizer(target: self, action: "imageViewTouch")
+                                let singleTap:UITapGestureRecognizer = UITapGestureRecognizer(target: self, action: #selector(BlogMainTableTableViewController.imageViewTouch))
                                 blogimage!.addGestureRecognizer(singleTap)
                                 let pciInfo = self.pciSource.picturelist[i-1]
                                 let imgUrl = microblogImageUrl+(pciInfo.pictureurl)!
@@ -497,7 +497,7 @@ class BlogMainTableTableViewController: UITableViewController {
             cell3!.dianZanBtn.frame = CGRectMake(10,10,30,30)
             cell3!.pingLunBtn.frame = CGRectMake(10,45,30,30)
             cell3!.pingLunBtn.setImage(UIImage(named: "评论"), forState: UIControlState.Normal)
-            cell3!.pingLunBtn.addTarget(self, action: Selector("ToPingLun"), forControlEvents: UIControlEvents.TouchUpInside)
+            cell3!.pingLunBtn.addTarget(self, action: #selector(BlogMainTableTableViewController.ToPingLun), forControlEvents: UIControlEvents.TouchUpInside)
             cell3!.dianZanPeople.frame = CGRectMake(45,10,UIScreen.mainScreen().bounds.width-45,30)
             cell3!.dianZanPeople.font = UIFont.systemFontOfSize(15)
             cell3!.dianZanPeople.textColor = UIColor.grayColor()

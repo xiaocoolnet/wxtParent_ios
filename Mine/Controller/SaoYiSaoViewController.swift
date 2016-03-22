@@ -50,15 +50,10 @@ class SaoYiSaoViewController: UIViewController,AVCaptureMetadataOutputObjectsDel
         self.setupCamera()
         self.session.startRunning()
     }
-    override func didReceiveMemoryWarning() {
-        super.didReceiveMemoryWarning()
-        // Dispose of any resources that can be recreated.
-        
-    }
     
     func setupCamera(){
         self.session.sessionPreset = AVCaptureSessionPresetHigh
-        var error : NSError?
+//        let error : NSError?
         let input   : AVCaptureDeviceInput?
         do {
             input = try AVCaptureDeviceInput(device: device)
@@ -68,10 +63,10 @@ class SaoYiSaoViewController: UIViewController,AVCaptureMetadataOutputObjectsDel
         } catch _ {
             //Error handling, if needed
         }
-        if (error != nil) {
-            print(error!.description)
-            return
-        }
+//        if (error != nil) {
+//            print(error!.description)
+//            return
+//        }
         
         layer = AVCaptureVideoPreviewLayer(session: session)
         layer!.videoGravity = AVLayerVideoGravityResizeAspectFill
@@ -92,7 +87,7 @@ class SaoYiSaoViewController: UIViewController,AVCaptureMetadataOutputObjectsDel
     func captureOutput(captureOutput: AVCaptureOutput!, didOutputMetadataObjects metadataObjects: [AnyObject], fromConnection connection: AVCaptureConnection!){
         var stringValue:String?
         if metadataObjects.count > 0 {
-            var metadataObject = metadataObjects[0] as! AVMetadataMachineReadableCodeObject
+            let metadataObject = metadataObjects[0] as! AVMetadataMachineReadableCodeObject
             stringValue = metadataObject.stringValue
         }
         self.session.stopRunning()
@@ -101,7 +96,7 @@ class SaoYiSaoViewController: UIViewController,AVCaptureMetadataOutputObjectsDel
         //        let alertController = UIAlertController(title: "二维码", message: "扫到的二维码内容为:\(stringValue)", preferredStyle: UIAlertControllerStyle.Alert)
         //        alertController.addAction(UIAlertAction(title: "确认", style: UIAlertActionStyle.Default, handler: nil))
         //        self.presentViewController(alertController, animated: true, completion: nil)
-        var alertView = UIAlertView()
+        let alertView = UIAlertView()
         alertView.delegate=self
         alertView.title = "二维码"
         alertView.message = "扫到的二维码内容为:\(stringValue)"

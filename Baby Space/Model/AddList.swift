@@ -31,18 +31,20 @@ class AddList: JSONJoy {
 }
 
 class AddInfo: JSONJoy{
-    //var name:String?
     var teacherinfo:JSONDecoder?
     var classname:String?
-    
-    
+    var classid:String?
+    var schoolid:String?
+    var schoolname:String?
     init() {
         
     }
     required init(_ decoder: JSONDecoder){
         teacherinfo = decoder["teacherinfo"]
         classname = decoder["classname"].string
-        
+        classid = decoder["classid"].string
+        schoolid = decoder["schoolid"].string
+        schoolname = decoder["schoolname"].string
     }
     
 }

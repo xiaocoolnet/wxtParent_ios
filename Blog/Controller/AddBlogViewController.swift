@@ -32,7 +32,7 @@ class AddBlogViewController: UIViewController,UICollectionViewDataSource,UIColle
         addPictureBtn.setBackgroundImage(UIImage(named: "add2"), forState: UIControlState.Normal)
         addPictureBtn.layer.borderWidth = 1.0
         addPictureBtn.layer.borderColor = UIColor.grayColor().CGColor
-        addPictureBtn.addTarget(self, action: Selector("AddPictrures"), forControlEvents: UIControlEvents.TouchUpInside)
+        addPictureBtn.addTarget(self, action: #selector(AddBlogViewController.AddPictrures), forControlEvents: UIControlEvents.TouchUpInside)
         
         self.view.addSubview(addPictureBtn)
     }
@@ -168,21 +168,5 @@ class AddBlogViewController: UIViewController,UICollectionViewDataSource,UIColle
     override func touchesBegan(touches: Set<UITouch>, withEvent event: UIEvent?) {
         self.view.endEditing(true)
     }
-
-    /**
-    1.如果是第一次加载
-    
-    - parameter segue:  <#segue description#>
-    - parameter sender: <#sender description#>
-    */
-    /*
-    // MARK: - Navigation
-
-    // In a storyboard-based application, you will often want to do a little preparation before navigation
-    override func prepareForSegue(segue: UIStoryboardSegue, sender: AnyObject?) {
-        // Get the new view controller using segue.destinationViewController.
-        // Pass the selected object to the new view controller.
-    }
-    */
 
 }

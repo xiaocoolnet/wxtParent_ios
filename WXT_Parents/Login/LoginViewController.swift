@@ -5,7 +5,6 @@
 //  Created by 李春波 on 16/1/6.
 //  Copyright © 2016年 北京校酷网络科技有限公司. All rights reserved.
 //
-
 import UIKit
 import Alamofire
 
@@ -13,7 +12,6 @@ class LoginViewController: UIViewController ,UITextFieldDelegate{
 
     @IBOutlet weak var AccountText: UITextField!
     @IBOutlet weak var PasswordText: UITextField!
-    
     @IBOutlet weak var LoginButton: UIButton!
     var dataSource = ChildrenList()
     
@@ -25,14 +23,13 @@ class LoginViewController: UIViewController ,UITextFieldDelegate{
         //self.navigationController?.navigationBar.hidden = true
         AccountText.delegate = self
         PasswordText.delegate = self
-        LoginButton.addTarget(self, action: "Login", forControlEvents: UIControlEvents.TouchUpInside)
+        LoginButton.addTarget(self, action: #selector(LoginViewController.Login), forControlEvents: UIControlEvents.TouchUpInside)
     }
     
     override func viewWillAppear(animated: Bool) {
         self.navigationController?.navigationBar.hidden = true
-        
     }
-    
+    //        键盘消失的通知方法
     func keyboardWillHideNotification(notification:NSNotification){
         UIView.animateWithDuration(0.3) { () -> Void in
             self.topConstraint.constant = 233
@@ -40,16 +37,15 @@ class LoginViewController: UIViewController ,UITextFieldDelegate{
         }
         
     }
+//     键盘出现的通知方法
     func keyboardWillShowNotification(notification:NSNotification){
         UIView.animateWithDuration(0.3) { () -> Void in
             self.topConstraint.constant = 150
             self.view.layoutIfNeeded()
         }
     }
-
-    
+//点击登录
     func Login(){
-        
         if(AccountText.text!.isEmpty){
             let hud = MBProgressHUD.showHUDAddedTo(self.view, animated: true)
             hud.mode = MBProgressHUDMode.Text
@@ -68,6 +64,7 @@ class LoginViewController: UIViewController ,UITextFieldDelegate{
             hud.hide(true, afterDelay: 1)
             return
         }
+        
         let url = apiUrl+"applogin"
         let param = [
             "phone":self.AccountText.text!,
@@ -107,30 +104,27 @@ class LoginViewController: UIViewController ,UITextFieldDelegate{
                         
                         let userid = NSUserDefaults.standardUserDefaults()
                         userid.setValue(result.data?.id, forKey: "userid")
-                        //let uid = userid.valueForKey("userid")
-                        
+                        userid.synchronize()
+                        let name = NSUserDefaults.standardUserDefaults()
+                        name.setValue(result.data?.name, forKey: "name")
+                        name.synchronize()
+                        let password = NSUserDefaults.standardUserDefaults()
+                        password.setValue(self.PasswordText.text!, forKey: "password")
+                        password.synchronize()
                         let schoolid = NSUserDefaults.standardUserDefaults()
                         schoolid.setValue(result.data?.schoolid, forKey: "schoolid")
-                        
+                        schoolid.synchronize()
                         let classid = NSUserDefaults.standardUserDefaults()
                         classid.setValue(result.data?.classid, forKey: "classid")
-            
+                        classid.synchronize()
+//                        获取孩子信息
                         self.GetChildrenUser()
-                        let mainStoryboard = UIStoryboard(name: "Main", bundle: NSBundle.mainBundle())
-                        let vc : UIViewController = mainStoryboard.instantiateViewControllerWithIdentifier("MainView") 
-                        self.presentViewController(vc, animated: true, completion: nil)
                         
-                        
-                    }
-                    
                 }
-                
+            }
         }
-
-        
-
     }
-    
+//    获取孩子信息
     func GetChildrenUser(){
         let userid = NSUserDefaults.standardUserDefaults()
         let uid = userid.stringForKey("userid")
@@ -159,31 +153,35 @@ class LoginViewController: UIViewController ,UITextFieldDelegate{
                         let chirdinfo = self.dataSource.objectlist[i]
                         defalut = chirdinfo.preferred!
                         if(defalut == "1"){
-                            
                             let chid = NSUserDefaults.standardUserDefaults()
-                            chid.setValue(chirdinfo.childrenid!, forKey: "chid")
-                            //let defalutid = userid.valueForKey("chid")
+                            chid.setValue(chirdinfo.studentid!, forKey: "chid")
                         }
-                        //self.GetDefalutChildrenInfo()
                     }
+                    let easeMob:EaseMob = EaseMob()
+                    easeMob.registerSDKWithAppKey("xiaocool#zhixiaoyuan", apnsCertName: "wxtpush_dev")
+                    //        账号
+                    let userid = NSUserDefaults.standardUserDefaults()
+                    //        接口调用注册
+                    easeMob.chatManager.asyncRegisterNewAccount(userid.valueForKey("userid")! as! String, password:userid.valueForKey("userid")! as! String)
+                    //        //        设置自动登录
+                    easeMob.chatManager.asyncLoginWithUsername(userid.valueForKey("userid")! as! String, password: userid.valueForKey("userid")! as! String)
+                    //        检测是否设置了自动登录
+                    let isAutoLogin:Bool = easeMob.chatManager.isAutoLoginEnabled!
+                    if(!isAutoLogin){
+                        easeMob.chatManager.asyncLoginWithUsername(userid.valueForKey("userid")! as! String,password:userid.valueForKey("userid")! as! String)
+                    }
+                    
+                    let mainStoryboard = UIStoryboard(name: "Main", bundle: NSBundle.mainBundle())
+                    let vc : UIViewController = mainStoryboard.instantiateViewControllerWithIdentifier("MainView")
+                    self.presentViewController(vc, animated: true, completion: nil)
+                    
                 }
             }
-            
         }
-        
-        
     }
-
-    override func didReceiveMemoryWarning() {
-        super.didReceiveMemoryWarning()
-        // Dispose of any resources that can be recreated.
-    }
-
     //点击return收回键盘
     func textFieldShouldReturn(textField: UITextField) -> Bool
     {
-        //phoneNumberTextField.resignFirstResponder()
-        //yanzhangma.resignFirstResponder()
         AccountText.resignFirstResponder()
         PasswordText.resignFirstResponder()
         return true
@@ -193,19 +191,4 @@ class LoginViewController: UIViewController ,UITextFieldDelegate{
     override func touchesBegan(touches: Set<UITouch>, withEvent event: UIEvent?) {
         self.view.endEditing(true)
     }
-    
-    
-
-    
-
-    /*
-    // MARK: - Navigation
-
-    // In a storyboard-based application, you will often want to do a little preparation before navigation
-    override func prepareForSegue(segue: UIStoryboardSegue, sender: AnyObject?) {
-        // Get the new view controller using segue.destinationViewController.
-        // Pass the selected object to the new view controller.
-    }
-    */
-
 }
