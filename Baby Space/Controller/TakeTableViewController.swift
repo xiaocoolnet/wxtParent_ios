@@ -32,7 +32,7 @@ class TakeTableViewController: UITableViewController {
         //下面两句代码是从缓存中取出userid（入参）值
         let defalutid = NSUserDefaults.standardUserDefaults()
         let userid = defalutid.stringForKey("userid")
-        let url = "http://wxt.xiaocool.net/index.php?g=apps&m=student&a=getcollectconfirmation"
+        let url = "http://wxt.xiaocool.net/index.php?g=apps&m=student&a=gettransportconfirmation"
         let param = [
             "userid":28
         ]
