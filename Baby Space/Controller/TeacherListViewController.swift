@@ -8,8 +8,10 @@
 
 import UIKit
 import Alamofire
+import MBProgressHUD
 class TeacherListViewController: UIViewController,UITableViewDelegate,UITableViewDataSource{
 
+    var studentName:String?
     var studentid:String?
     let table = UITableView()
     var teacherSource = TeacherList()
@@ -42,7 +44,7 @@ class TeacherListViewController: UIViewController,UITableViewDelegate,UITableVie
         //下面两句代码是从缓存中取出userid（入参）值
         let url = "http://wxt.xiaocool.net/index.php?g=apps&m=student&a=getclasslist"
         let param = [
-            "studentid":597
+            "studentid":"597"//有数据的时候就用传过来的studentid
         ]
         Alamofire.request(.GET, url, parameters: param).response { request, response, json, error in
             if(error != nil){
@@ -78,12 +80,14 @@ class TeacherListViewController: UIViewController,UITableViewDelegate,UITableVie
         //http://wxt.xiaocool.net/index.php?g=apps&m=student&a=getclassteacherlist&studentid=597&classid=1
         
         //下面两句代码是从缓存中取出userid（入参）值
+        let defalutid = NSUserDefaults.standardUserDefaults()
+        let userid = defalutid.stringForKey("userid")
         let url = "http://wxt.xiaocool.net/index.php?g=apps&m=student&a=getclassteacherlist"
         let param = [
-            "studentid":597,
+            "studentid":"597",//有数据的时候就用传过来的studentid
             "classid":classid
         ]
-        Alamofire.request(.GET, url, parameters: param as? [String : AnyObject]).response { request, response, json, error in
+        Alamofire.request(.GET, url, parameters: param).response { request, response, json, error in
             if(error != nil){
             }
             else{
@@ -140,9 +144,9 @@ class TeacherListViewController: UIViewController,UITableViewDelegate,UITableVie
         cell.selectionStyle = .None
         let teacherInfo = self.teacherSource.teacherList[indexPath.row]
         cell.nameLbl.text = teacherInfo.name
-//        let imgUrl = imageUrl + teacherInfo.photo!
-//        let photourl = NSURL(string: imgUrl)
-//        cell.bigImageView.yy_setImageWithURL(photourl, placeholder: UIImage(named: "园所公告背景.png"))
+        let imgUrl = imageUrl + teacherInfo.avatar!
+        let photourl = NSURL(string: imgUrl)
+        cell.headImageView.yy_setImageWithURL(photourl, placeholder: UIImage(named: "Logo.png"))
         return cell
     }
 //    单元格点击事件
@@ -152,6 +156,7 @@ class TeacherListViewController: UIViewController,UITableViewDelegate,UITableVie
         vc.studentid = self.studentid!
         vc.teacherid = teacherInfo.id!
         vc.teacherName = teacherInfo.name!
+        vc.studentName = self.studentName!
         self.navigationController?.pushViewController(vc, animated: true)
     }
 }

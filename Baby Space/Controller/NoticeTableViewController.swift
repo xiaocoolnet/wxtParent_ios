@@ -10,11 +10,13 @@ import UIKit
 import Alamofire
 import YYWebImage
 import XWSwiftRefresh
+import MBProgressHUD
 
 class NoticeTableViewController: UITableViewController {
     
     @IBOutlet var tableSource: UITableView!
     var noticeSource = NoticeList()
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         self.DropDownUpdate()
@@ -22,7 +24,7 @@ class NoticeTableViewController: UITableViewController {
     }
     //    开始刷新
     func DropDownUpdate(){
-        self.tableSource.headerView = XWRefreshNormalHeader(target: self, action: #selector(ParentsExhortViewController.loadData))
+        self.tableSource.headerView = XWRefreshNormalHeader(target: self, action: #selector(NoticeTableViewController.loadData))
         self.tableSource.reloadData()
         self.tableSource.headerView?.beginRefreshing()
     }

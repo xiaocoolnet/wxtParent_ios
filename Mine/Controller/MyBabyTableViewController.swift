@@ -8,6 +8,7 @@
 
 import UIKit
 import Alamofire
+import MBProgressHUD
 
 class MyBabyTableViewController: UITableViewController {
 
@@ -18,12 +19,6 @@ class MyBabyTableViewController: UITableViewController {
         super.viewDidLoad()
         GetChildrenUser()
         self.tabBarController?.tabBar.hidden = true
-
-        // Uncomment the following line to preserve selection between presentations
-        // self.clearsSelectionOnViewWillAppear = false
-
-        // Uncomment the following line to display an Edit button in the navigation bar for this view controller.
-        // self.navigationItem.rightBarButtonItem = self.editButtonItem()
     }
     
     func GetChildrenUser(){
@@ -54,8 +49,6 @@ class MyBabyTableViewController: UITableViewController {
             }
             
         }
-        
-        
     }
     // MARK: - Table view data source
 
@@ -72,9 +65,14 @@ class MyBabyTableViewController: UITableViewController {
     
     override func tableView(tableView: UITableView, cellForRowAtIndexPath indexPath: NSIndexPath) -> UITableViewCell {
         let cell = tableView.dequeueReusableCellWithIdentifier("BabyCell", forIndexPath: indexPath) as! BabyTableViewCell
-
-        // Configure the cell...
-
+        cell.selectionStyle = .None
+        let childInfo = self.dataSource.objectlist[indexPath.section]
+        cell.babyName.text = childInfo.studentname
+        let imgUrl = imageUrl + childInfo.studentavatar!
+        let photourl = NSURL(string: imgUrl)
+        cell.babyAvator.yy_setImageWithURL(photourl, placeholder: UIImage(named: "Logo.png"))
+        cell.babyBtn.addTarget(self, action: #selector(MyBabyTableViewController.chooseBaby(_:)), forControlEvents: .TouchUpInside)
+        cell.babyBtn.tag = indexPath.section
         return cell
     }
     override func tableView(tableView: UITableView, heightForHeaderInSection section: Int) -> CGFloat{
@@ -85,5 +83,25 @@ class MyBabyTableViewController: UITableViewController {
     
     override func tableView(tableView: UITableView, heightForFooterInSection section: Int) -> CGFloat {
         return 1.0
+    }
+    func chooseBaby(sender:UIButton){
+        let btn:UIButton = sender
+        let childInfo = self.dataSource.objectlist[btn.tag]
+//        先清除后保存
+        NSUserDefaults.standardUserDefaults().removeObjectForKey("chid")
+        NSUserDefaults.standardUserDefaults().removeObjectForKey("chidname")
+        let studentid = NSUserDefaults.standardUserDefaults()
+        studentid.setValue(childInfo.studentid , forKey: "chid")
+        let studentname = NSUserDefaults.standardUserDefaults()
+        studentname.setValue(childInfo.studentname , forKey: "chidname")
+        NSUserDefaults.standardUserDefaults().synchronize()
+        
+//        提示
+        let hud = MBProgressHUD.showHUDAddedTo(self.view, animated: true)
+        hud.mode = MBProgressHUDMode.Text;
+        hud.labelText = "切换成功"
+        hud.margin = 10.0
+        hud.removeFromSuperViewOnHide = true
+        hud.hide(true, afterDelay: 1)
     }
 }

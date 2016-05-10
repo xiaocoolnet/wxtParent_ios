@@ -10,6 +10,7 @@ import UIKit
 import Alamofire
 import YYWebImage
 import XWSwiftRefresh
+import MBProgressHUD
 
 class TakeTableViewController: UITableViewController {
 
@@ -23,7 +24,7 @@ class TakeTableViewController: UITableViewController {
     }
     //    开始刷新
     func DropDownUpdate(){
-        self.tableSource.headerView = XWRefreshNormalHeader(target: self, action: #selector(ParentsExhortViewController.loadData))
+        self.tableSource.headerView = XWRefreshNormalHeader(target: self, action: #selector(TakeTableViewController.loadData))
         self.tableSource.reloadData()
         self.tableSource.headerView?.beginRefreshing()
     }
@@ -34,7 +35,7 @@ class TakeTableViewController: UITableViewController {
         let userid = defalutid.stringForKey("userid")
         let url = "http://wxt.xiaocool.net/index.php?g=apps&m=student&a=gettransportconfirmation"
         let param = [
-            "userid":28
+            "userid":userid!
         ]
         Alamofire.request(.GET, url, parameters: param).response { request, response, json, error in
             if(error != nil){
@@ -87,17 +88,9 @@ class TakeTableViewController: UITableViewController {
         cell.phoneBtn.addTarget(self, action: #selector(TakeTableViewController.callNumber(_:)), forControlEvents: .TouchUpInside)
         cell.phoneBtn.tag = Int(takeInfo.teacherphone!)!
         cell.agreeBtn.addTarget(self, action: #selector(TakeTableViewController.agreePress(_:)), forControlEvents: .TouchUpInside)
-        cell.agreeBtn.tag = Int(takeInfo.id!)!
+        cell.agreeBtn.tag = indexPath.row
         cell.disagreeBtn.addTarget(self, action: #selector(TakeTableViewController.disagreePress(_:)), forControlEvents: .TouchUpInside)
-        cell.disagreeBtn.tag = Int(takeInfo.id!)!
-    //        cell.titleLbl.text = noticeInfo.title
-//        cell.contentLbl.text = noticeInfo.content
-        
-//        cell.senderLbl.text = noticeInfo.username
-//        cell.readLbl.text = "已读\(String(noticeInfo.readcount!))"
-//        cell.unreadLbl.text = "未读\(String(noticeInfo.allreader!-noticeInfo.readcount!))"
-        
-
+        cell.disagreeBtn.tag = indexPath.row
         tableSource.rowHeight = 351
         return cell
     }
@@ -121,12 +114,46 @@ class TakeTableViewController: UITableViewController {
 //    同意
     func agreePress(sender:AnyObject){
         let btn:UIButton = sender as! UIButton
-        print(btn.tag)
+        self.confirmTransport(btn.tag,status: 1)
     }
 //    不同意
     func disagreePress(sender:AnyObject){
         let btn:UIButton = sender as! UIButton
-        print(btn.tag)
+        self.confirmTransport(btn.tag,status: 2)
     }
-    
+//    同意是否接送
+    func confirmTransport(row:Int,status:Int){
+        //        http://wxt.xiaocool.net/index.php?g=apps&m=student&a=confirmtransport&transportid=1&parentid=122&status=1
+        let takeInfo = self.takeSource.takeList[row]
+        //下面两句代码是从缓存中取出userid（入参）值
+        let url = "http://wxt.xiaocool.net/index.php?g=apps&m=student&a=confirmtransport"
+        let param = [
+            "transportid":takeInfo.id!,
+            "parentid":takeInfo.parentid!,
+            "status":status
+        ]
+        Alamofire.request(.GET, url, parameters: param as? [String : AnyObject]).response { request, response, json, error in
+            if(error != nil){
+            }
+            else{
+                print("request是")
+                print(request!)
+                print("====================")
+                let status = Http(JSONDecoder(json!))
+                print("状态是")
+                print(status.status)
+                if(status.status == "error"){
+                    let hud = MBProgressHUD.showHUDAddedTo(self.view, animated: true)
+                    hud.mode = MBProgressHUDMode.Text
+                    hud.labelText = status.errorData
+                    hud.margin = 10.0
+                    hud.removeFromSuperViewOnHide = true
+                    hud.hide(true, afterDelay: 1)
+                }
+                if(status.status == "success"){
+                   self.DropDownUpdate()
+                }
+            }
+        }
+    }
 }

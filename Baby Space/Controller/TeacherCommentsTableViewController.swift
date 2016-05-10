@@ -8,6 +8,8 @@
 
 import UIKit
 import Alamofire
+import MBProgressHUD
+
 class TeacherCommentsTableViewController: UITableViewController {
     @IBOutlet var tableSource: UITableView!
     var CommentSource = CommentList()

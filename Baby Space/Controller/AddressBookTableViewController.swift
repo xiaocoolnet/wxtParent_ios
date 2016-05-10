@@ -8,6 +8,7 @@
 
 import UIKit
 import Alamofire
+import MBProgressHUD
 class AddressBookTableViewController: UITableViewController {
     
     
@@ -54,8 +55,8 @@ class AddressBookTableViewController: UITableViewController {
                     if self.addSource.count != 0{
                         for i in 0..<self.addSource.count {
                             let addInfo = self.addSource.objectlist[i]
-                            let teacherList = self.addSource.objectlist[i]
-                            self.teacherSource = TeaList(teacherList.teacherinfo!)
+//                            let teacherList = self.addSource.objectlist[i]
+                            self.teacherSource = TeaList(addInfo.teacherinfo!)
                             self.dic.setValue(self.teacherSource.count, forKey:addInfo.classname! )
                         }
                     }

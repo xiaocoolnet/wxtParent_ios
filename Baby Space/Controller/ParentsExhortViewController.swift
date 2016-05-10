@@ -9,7 +9,7 @@
 import UIKit
 import Alamofire
 import XWSwiftRefresh
-
+import MBProgressHUD
 class ParentsExhortViewController: UIViewController,UITableViewDelegate,UITableViewDataSource{
     
     let table = UITableView()
@@ -93,16 +93,17 @@ class ParentsExhortViewController: UIViewController,UITableViewDelegate,UITableV
         let dateformate = NSDateFormatter()
         dateformate.dateFormat = "yyyy-MM-dd HH:mm"
         
-        cell.nameLbl.text = exhortInfo.teachername
+        cell.nameLbl.text = exhortInfo.username
         cell.contentLbl.text = exhortInfo.content
         let date = NSDate(timeIntervalSince1970: NSTimeInterval(exhortInfo.create_time!)!)
         let str:String = dateformate.stringFromDate(date)
         cell.timeLbl.text = str
+        cell.teacherNameLbl.text = exhortInfo.teachername
 //        自适应行高
         let options : NSStringDrawingOptions = NSStringDrawingOptions.UsesLineFragmentOrigin
         let screenBounds:CGRect = UIScreen.mainScreen().bounds
         let boundingRect = String(cell.contentLbl.text).boundingRectWithSize(CGSizeMake(screenBounds.width, 0), options: options, attributes: [NSFontAttributeName:UIFont.systemFontOfSize(17)], context: nil)
-        table.rowHeight = boundingRect.size.height + 50
+        table.rowHeight = boundingRect.size.height + 100
         return cell
     }
 }

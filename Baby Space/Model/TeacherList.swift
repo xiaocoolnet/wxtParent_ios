@@ -34,6 +34,7 @@ class TeacherListInfo: JSONJoy{
     var id:String?
     var name:String?
     var phone:String?
+    var avatar:String?
     
     init() {
         
@@ -42,7 +43,7 @@ class TeacherListInfo: JSONJoy{
         id = decoder["id"].string
         name = decoder["name"].string
         phone = decoder["phone"].string
-        
+        avatar = decoder["avatar"].string
     }
     
 }

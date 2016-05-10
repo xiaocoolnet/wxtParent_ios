@@ -9,6 +9,7 @@
 import UIKit
 import XWSwiftRefresh
 import Alamofire
+import MBProgressHUD
 
 class BabySpaceMainTableViewController: UITableViewController {
 
@@ -33,6 +34,7 @@ class BabySpaceMainTableViewController: UITableViewController {
         self.navigationController?.tabBarItem.badgeValue = "3"
         childrenClass.layer.cornerRadius = 8
         childrenClass.layer.masksToBounds = true
+
         DropDownUpdate()
     }
     func GetDate(){
@@ -52,6 +54,10 @@ class BabySpaceMainTableViewController: UITableViewController {
         //DropDownUpdate()
         GetDate()
         self.tabBarController?.tabBar.hidden = false
+        //        设置宝宝名字
+        let chid = NSUserDefaults.standardUserDefaults()
+        let chidname = chid.stringForKey("chidname")
+        self.childrenName.text = chidname
     }
     
     //获取宝宝今日记录

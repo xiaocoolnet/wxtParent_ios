@@ -8,7 +8,7 @@
 
 import UIKit
 import Alamofire
-
+import MBProgressHUD
 class ForgetPasswordViewController: UIViewController {
 
     @IBOutlet weak var phoneNumberText: UITextField!

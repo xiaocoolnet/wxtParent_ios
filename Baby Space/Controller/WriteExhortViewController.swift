@@ -8,11 +8,13 @@
 
 import UIKit
 import Alamofire
+import MBProgressHUD
 class WriteExhortViewController: UIViewController {
 
     var studentid:String?
     var teacherid:String?
     var teacherName:String?
+    var studentName:String?
     
     let contentTextView = BRPlaceholderTextView()
     
@@ -34,30 +36,46 @@ class WriteExhortViewController: UIViewController {
 //    创建UI
     func createUI(){
         let v1 = UIView()
-        v1.frame = CGRectMake(0, 0, self.view.frame.size.width, 60)
+        v1.frame = CGRectMake(0, 0, self.view.frame.size.width, 121)
         v1.backgroundColor = UIColor.whiteColor()
         self.view.addSubview(v1)
         
         let lbl1 = UILabel()
         lbl1.frame = CGRectMake(10, 20, 60, 20)
-        lbl1.text = "接收人"
+        lbl1.text = "叮嘱人"
         lbl1.font = UIFont.systemFontOfSize(15)
         lbl1.textColor = UIColor(red: 171/255.0, green: 171/255.0, blue: 171/255.0, alpha: 1)
         v1.addSubview(lbl1)
         
         let lbl2 = UILabel()
         lbl2.frame = CGRectMake(80, 20, 100, 20)
-        lbl2.text = teacherName!
+        lbl2.text = studentName!
         v1.addSubview(lbl2)
         
-        self.contentTextView.frame = CGRectMake(0, 70, self.view.bounds.width, 200)
+        let lineView = UIView()
+        lineView.frame = CGRectMake(0, 61, self.view.frame.size.width, 1)
+        lineView.backgroundColor = UIColor(red: 235/255.0, green: 235/255.0, blue: 235/255.0, alpha: 1)
+        v1.addSubview(lineView)
+        
+        let lbl3 = UILabel()
+        lbl3.frame = CGRectMake(10, 81, 60, 20)
+        lbl3.text = "接收人"
+        lbl3.font = UIFont.systemFontOfSize(15)
+        lbl3.textColor = UIColor(red: 171/255.0, green: 171/255.0, blue: 171/255.0, alpha: 1)
+        v1.addSubview(lbl3)
+        
+        let lbl4 = UILabel()
+        lbl4.frame = CGRectMake(80, 81, 100, 20)
+        lbl4.text = teacherName!
+        v1.addSubview(lbl4)
+        
+        self.contentTextView.frame = CGRectMake(0, 131, self.view.bounds.width, 200)
         self.contentTextView.font = UIFont.systemFontOfSize(15)
         self.contentTextView.placeholder = "说说您的叮嘱吧"
         self.view.addSubview(self.contentTextView)
     }
     func writeExhort(){
         //http://wxt.xiaocool.net/index.php?g=apps&m=student&a=addentrust&teacherid=597&userid=12&studentid=22&content=孩子有点感冒，让中午吃药
-        
         //下面两句代码是从缓存中取出userid（入参）值
         let defalutid = NSUserDefaults.standardUserDefaults()
         let uid = defalutid.stringForKey("userid")

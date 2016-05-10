@@ -7,6 +7,7 @@
 //
 import UIKit
 import Alamofire
+import MBProgressHUD
 
 class LoginViewController: UIViewController ,UITextFieldDelegate{
 
@@ -29,7 +30,7 @@ class LoginViewController: UIViewController ,UITextFieldDelegate{
     override func viewWillAppear(animated: Bool) {
         self.navigationController?.navigationBar.hidden = true
     }
-    //        键盘消失的通知方法
+//        键盘消失的通知方法
     func keyboardWillHideNotification(notification:NSNotification){
         UIView.animateWithDuration(0.3) { () -> Void in
             self.topConstraint.constant = 233
@@ -155,6 +156,8 @@ class LoginViewController: UIViewController ,UITextFieldDelegate{
                         if(defalut == "1"){
                             let chid = NSUserDefaults.standardUserDefaults()
                             chid.setValue(chirdinfo.studentid!, forKey: "chid")
+                            let chidname = NSUserDefaults.standardUserDefaults()
+                            chidname.setValue(chirdinfo.studentname, forKey: "chidname")
                         }
                     }
                     let easeMob:EaseMob = EaseMob()

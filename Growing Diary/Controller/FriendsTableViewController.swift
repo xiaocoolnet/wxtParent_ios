@@ -10,6 +10,8 @@ import UIKit
 import ImageSlideshow
 import Alamofire
 import XWSwiftRefresh
+import MBProgressHUD
+
 class FriendsTableViewController: UITableViewController {
     
     var FriendsSource = FriendsList()

@@ -16,6 +16,8 @@ class ParentsExhortTableViewCell: UITableViewCell {
     @IBOutlet weak var timeLbl: UILabel!
 //    内容
     @IBOutlet weak var contentLbl: UILabel!
+//    老师姓名
+    @IBOutlet weak var teacherNameLbl: UILabel!
     
     override func awakeFromNib() {
         super.awakeFromNib()

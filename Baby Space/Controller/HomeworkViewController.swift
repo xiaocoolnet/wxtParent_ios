@@ -9,7 +9,7 @@
 import UIKit
 import Alamofire
 import XWSwiftRefresh
-
+import MBProgressHUD
 class HomeworkViewController: UIViewController,UITableViewDelegate,UITableViewDataSource{
 
     let table = UITableView()
@@ -21,7 +21,7 @@ class HomeworkViewController: UIViewController,UITableViewDelegate,UITableViewDa
     }
     //    开始刷新
     func DropDownUpdate(){
-        self.table.headerView = XWRefreshNormalHeader(target: self, action: #selector(ParentsExhortViewController.loadData))
+        self.table.headerView = XWRefreshNormalHeader(target: self, action: #selector(HomeworkViewController.loadData))
         self.table.reloadData()
         self.table.headerView?.beginRefreshing()
     }

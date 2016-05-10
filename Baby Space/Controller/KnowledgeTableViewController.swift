@@ -8,6 +8,8 @@
 
 import UIKit
 import Alamofire
+import MBProgressHUD
+
 class KnowledgeTableViewController: UITableViewController {
     @IBOutlet var tableSource: UITableView!
     var knowSource = KnowList()

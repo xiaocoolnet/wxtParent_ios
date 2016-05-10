@@ -18,7 +18,6 @@ class BlogList: JSONJoy {
         objectlist = Array<BlogInfo>()
     }
     required init(_ decoder: JSONDecoder) {
-        //        status = decoder["status"].string
         objectlist = Array<BlogInfo>()
         for childs: JSONDecoder in decoder.array!{
             objectlist.append(BlogInfo(childs))
@@ -36,7 +35,11 @@ class BlogInfo: JSONJoy{
     var photo:String?
     var piclist:JSONDecoder?
     var dianzanlist:JSONDecoder?
+    var comment:JSONDecoder?
     var mid:String?
+    var schoolid:String?
+    var classid:String?
+    var userid:String?
     init() {
         
     }
@@ -48,7 +51,10 @@ class BlogInfo: JSONJoy{
         write_time = decoder["write_time"].string
         photo = decoder["photo"].string
         mid = decoder["mid"].string
+        schoolid = decoder["schoolid"].string
+        classid = decoder["classid"].string
+        userid = decoder["userid"].string
+        comment = decoder["comment"]
     }
-    
 }
 

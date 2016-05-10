@@ -10,6 +10,7 @@ import UIKit
 import Alamofire
 import ImageSlideshow
 import XWSwiftRefresh
+import MBProgressHUD
 
 class BlogMainTableTableViewController: UITableViewController {
 
@@ -27,12 +28,16 @@ class BlogMainTableTableViewController: UITableViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         self.navigationController?.tabBarItem.badgeValue = nil
+        self.navigationItem.rightBarButtonItem = UIBarButtonItem(barButtonSystemItem: .Add, target: self, action: #selector(BlogMainTableTableViewController.addBlog))
         ScrollViewImage()
         DropDownUpdate()
         UpPullAdd()
         
     }
-    
+    func addBlog(){
+        let vc = AddBlogViewController()
+        self.navigationController?.pushViewController(vc, animated: true)
+    }
     func ScrollViewImage(){
         scrollImageView.slideshowInterval = 5.0
         scrollImageView.setImageInputs([AFURLSource(urlString: "http://pic2.ooopic.com/01/03/51/25b1OOOPIC19.jpg")!, AFURLSource(urlString: "http://ppt360.com/background/UploadFiles_6733/201012/2010122016291897.jpg")!, AFURLSource(urlString: "http://img.taopic.com/uploads/allimg/130501/240451-13050106450911.jpg")!])
@@ -41,18 +46,11 @@ class BlogMainTableTableViewController: UITableViewController {
     override func viewWillAppear(animated: Bool) {
         self.tabBarController?.tabBar.hidden = false
     }
-    
-
-    override func didReceiveMemoryWarning() {
-        super.didReceiveMemoryWarning()
-        // Dispose of any resources that can be recreated.
-    }
     func DropDownUpdate(){
         self.tableView.headerView = XWRefreshNormalHeader(target: self, action: #selector(BlogMainTableTableViewController.GetDate))
         //self.sourceList.reloadData()
         self.tableView.reloadData()
         self.tableView.headerView?.beginRefreshing()
-        
     }
     
     func UpPullAdd(){
@@ -70,9 +68,10 @@ class BlogMainTableTableViewController: UITableViewController {
         
         let param = [
             "schoolid":scid!,
-            "classid":clid!
+            "classid":clid!,
+            "type":1
         ]
-        Alamofire.request(.GET, url, parameters: param).response { request, response, json, error in
+        Alamofire.request(.GET, url, parameters: param as? [String : AnyObject]).response { request, response, json, error in
             if(error != nil){
             }
             else{
@@ -93,7 +92,6 @@ class BlogMainTableTableViewController: UITableViewController {
                 
                 if(status.status == "success"){
                     self.blogSource = BlogList(status.data!)
-                    print(self.blogSource.count)
                     self.sourceList.reloadData()
                 }
             }
@@ -580,8 +578,6 @@ class BlogMainTableTableViewController: UITableViewController {
             if cell3!.myDianZan.containsObject(bloginfo.mid!){
                 cell3!.dianZanBtn.setImage(UIImage(named: "已点赞"), forState: .Normal)
             }
-            
-            
             return cell3!
         }
             

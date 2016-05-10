@@ -8,6 +8,7 @@
 
 import UIKit
 import Alamofire
+import MBProgressHUD
 
 class StuRelationViewController: UIViewController,UITableViewDelegate,UITableViewDataSource{
 
@@ -88,6 +89,7 @@ class StuRelationViewController: UIViewController,UITableViewDelegate,UITableVie
         let childrenInfo = self.childrenSource.objectlist[indexPath.row]
         let vc = TeacherListViewController()
         vc.studentid = childrenInfo.studentid
+        vc.studentName = childrenInfo.studentname
         self.navigationController?.pushViewController(vc, animated: true)
     }
 }

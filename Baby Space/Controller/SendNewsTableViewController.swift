@@ -7,6 +7,8 @@
 //
 import UIKit
 import Alamofire
+import MBProgressHUD
+
 class SendNewsTableViewController: UITableViewController {
     @IBOutlet var tableSource: UITableView!
     var sendSource = SendList()

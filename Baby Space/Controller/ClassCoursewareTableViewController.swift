@@ -10,6 +10,7 @@ import UIKit
 import Alamofire
 import ImageSlideshow
 import XWSwiftRefresh
+import MBProgressHUD
 
 class ClassCoursewareTableViewController: UITableViewController {
     

@@ -8,6 +8,8 @@
 
 import UIKit
 import Alamofire
+import MBProgressHUD
+
 class ClassActivitiesTableViewController: UITableViewController {
 
     @IBOutlet var tableSource: UITableView!

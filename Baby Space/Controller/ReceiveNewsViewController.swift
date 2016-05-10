@@ -8,7 +8,7 @@
 
 import UIKit
 import Alamofire
-
+import MBProgressHUD
 class ReceiveNewsViewController: UIViewController,UITableViewDelegate,UITableViewDataSource{
 
     let table = UITableView()

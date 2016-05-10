@@ -8,7 +8,7 @@
 
 import UIKit
 import Alamofire
-
+import MBProgressHUD
 class MineMainTableViewController: UITableViewController {
 
     @IBOutlet weak var userAvatar: UIImageView!
