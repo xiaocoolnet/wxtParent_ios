@@ -1,3 +1,4 @@
+platform:ios,"7.0"
 use_frameworks!
 
 pod 'Alamofire', '~> 3.0'
@@ -11,6 +12,11 @@ pod 'SwiftCharts', '~> 0.3'
 pod 'BSImagePicker'
 pod 'PagingMenuController' 
 pod 'DJKFlipper'
+pod 'JGProgressHUD'
 pod 'YYWebImage'
 pod 'EaseMobSDKFull', :git => 'https://github.com/easemob/sdk-ios-cocoapods-integration.git'
 pod 'EaseUI', :git => 'https://github.com/easemob/easeui-ios-cocoapods.git'
+pod 'ShareSDK3'
+pod 'ShareSDK3/ShareSDKUI'
+pod 'ShareSDK3/ShareSDKPlatforms/WeChat'
+pod 'MOBFoundation'

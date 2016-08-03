@@ -4,7 +4,6 @@
 //
 //  Created by 李春波 on 16/1/26.
 //  Copyright © 2016年 北京校酷网络科技有限公司. All rights reserved.
-//
 
 import Foundation
 class DianZanList: JSONJoy {
@@ -17,7 +16,6 @@ class DianZanList: JSONJoy {
         dianzanlist = Array<DianZan>()
     }
     required init(_ decoder: JSONDecoder) {
-        //        status = decoder["status"].string
         dianzanlist = Array<DianZan>()
         for childs: JSONDecoder in decoder.array!{
             dianzanlist.append(DianZan(childs))
@@ -29,6 +27,7 @@ class DianZanList: JSONJoy {
     }
 }
 class DianZan: JSONJoy{
+    var avatar:String?
     var dianZanId:String?
     var dianZanName:String?
     init() {

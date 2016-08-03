@@ -60,10 +60,14 @@ install_resource()
 if [[ "$CONFIGURATION" == "Debug" ]]; then
   install_resource "EaseMobSDKFull/EaseMobSDKFull/resources/EaseMob.bundle"
   install_resource "EaseUI/EaseUI/resources/EaseUIResource.bundle"
+  install_resource "ShareSDK3/ShareSDK/Support/Required/ShareSDK.bundle"
+  install_resource "ShareSDK3/ShareSDK/Support/Optional/ShareSDKUI.bundle"
 fi
 if [[ "$CONFIGURATION" == "Release" ]]; then
   install_resource "EaseMobSDKFull/EaseMobSDKFull/resources/EaseMob.bundle"
   install_resource "EaseUI/EaseUI/resources/EaseUIResource.bundle"
+  install_resource "ShareSDK3/ShareSDK/Support/Required/ShareSDK.bundle"
+  install_resource "ShareSDK3/ShareSDK/Support/Optional/ShareSDKUI.bundle"
 fi
 
 mkdir -p "${CONFIGURATION_BUILD_DIR}/${UNLOCALIZED_RESOURCES_FOLDER_PATH}"

@@ -14,3 +14,14 @@
 
 #import "HZQDatePickerView.h"
 #import "ConnectModel.h"
+
+#import "HYCalendarTool.h"
+#import "HYCalendarView.h"
+
+#import "HisDatePicer.h"
+
+#import "WXApi.h"
+
+#import <ShareSDK/ShareSDK.h>
+#import <ShareSDKUI/ShareSDK+SSUI.h>
+#import <ShareSDKConnector/ShareSDKConnector.h>

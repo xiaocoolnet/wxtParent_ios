@@ -9,6 +9,7 @@
 import UIKit
 import Alamofire
 import MBProgressHUD
+//  一个tableView
 class MineMainTableViewController: UITableViewController {
 
     @IBOutlet weak var userAvatar: UIImageView!
@@ -19,8 +20,11 @@ class MineMainTableViewController: UITableViewController {
     
     @IBOutlet weak var serviceTimeLabel: UILabel!
     
-    @IBOutlet weak var Logout: UIButton!
     
+    @IBAction func PersonalSettings(sender: AnyObject) {
+        let personSettingVC = QCPersonSettingVC()
+        self.navigationController?.pushViewController(personSettingVC, animated: true)
+    }
     var imageCache = Dictionary<String,UIImage>()
     var imgUrl:String?
     var phone:String?
@@ -30,18 +34,19 @@ class MineMainTableViewController: UITableViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        
+        self.title = "个人中心"
+        //  设置右按钮
+        //  进入的加载
         let hud = MBProgressHUD.showHUDAddedTo(self.view, animated: true)
         //hud.mode = MBProgressHUDMode.Text
         hud.labelText = "正在加载"
         //hud.margin = 10.0
         hud.removeFromSuperViewOnHide = true
         hud.hide(true, afterDelay: 1)
+        //  得到数据
         GetUserInfo()
         userAvatar.layer.cornerRadius = 40
         userAvatar.layer.masksToBounds = true
-        Logout.addTarget(self, action: #selector(MineMainTableViewController.Exitlogin), forControlEvents: UIControlEvents.TouchUpInside)
-        self.GetDefalutChildrenInfo()
 
     }
     
@@ -49,9 +54,27 @@ class MineMainTableViewController: UITableViewController {
         self.tabBarController?.tabBar.hidden = false
     }
 
-    func GetUserInfo(){
+    @IBAction func AccountDetails(sender: AnyObject) {
+        //  账户明细
+        let accountDetailsVC = AccountDetailsVC()
+        self.navigationController?.pushViewController(accountDetailsVC, animated: true)
         
+    }
+    
+    
+    @IBAction func PayMoney(sender: AnyObject) {
+        //  支付费用
+        let payMoneyVC = QCPayMoneyVC()
+        self.navigationController?.pushViewController(payMoneyVC, animated: true)
+
+    }
+    
+    
+    
+    func GetUserInfo(){
+        //  得到沙盒
         let userid = NSUserDefaults.standardUserDefaults()
+        //  把userid存入沙盒
         let uid = userid.stringForKey("userid")
         let url = apiUrl+"GetUsers"
         let param = [
@@ -64,6 +87,7 @@ class MineMainTableViewController: UITableViewController {
                 print("request是")
                 print(request!)
                 print("====================")
+                //  进行数据解析
                 let status = MineModel(JSONDecoder(json!))
                 print("状态是")
                 print(status.status)
@@ -78,6 +102,7 @@ class MineMainTableViewController: UITableViewController {
                 
                 if(status.status == "success"){
                     print("Success")
+                    //  手机号
                     self.phone = status.data?.phoneNumber!
                     self.userName.text = status.data?.name
                     if(status.data?.avatar != nil){
@@ -148,32 +173,36 @@ class MineMainTableViewController: UITableViewController {
         
         
     }
-    func Exitlogin(){
-        let alertController = UIAlertController(title: NSLocalizedString("", comment: "Warn"), message: NSLocalizedString("确认注销？", comment: "empty message"), preferredStyle: .Alert)
-        
-        let cancelAction = UIAlertAction(title: "取消", style: UIAlertActionStyle.Cancel, handler: nil)
-        let doneAction = UIAlertAction(title: "确定", style: UIAlertActionStyle.Default) { (UIAlertAction) -> Void in
-            let userid = NSUserDefaults.standardUserDefaults()
-            userid.setValue("", forKey: "userid")
-            let defalutid = NSUserDefaults.standardUserDefaults()
-            //cid = defalutid.stringForKey("chid")
-            defalutid.setValue("", forKey: "cid")
-            let mainStoryboard = UIStoryboard(name: "Main", bundle: NSBundle.mainBundle())
-            let vc : UIViewController = mainStoryboard.instantiateViewControllerWithIdentifier("LoginView") as! UINavigationController
-            self.presentViewController(vc, animated: true, completion: nil)
-        }
-        alertController.addAction(doneAction)
-        alertController.addAction(cancelAction)
-        self.presentViewController(alertController, animated: true, completion: nil)
-        
-    }
-    
+//    //  退出登录
+//    func Exitlogin(){
+//        let alertController = UIAlertController(title: NSLocalizedString("", comment: "Warn"), message: NSLocalizedString("确认注销？", comment: "empty message"), preferredStyle: .Alert)
+//        
+//        let cancelAction = UIAlertAction(title: "取消", style: UIAlertActionStyle.Cancel, handler: nil)
+//        let doneAction = UIAlertAction(title: "确定", style: UIAlertActionStyle.Default) { (UIAlertAction) -> Void in
+////          清除登录信息
+//            NSUserDefaults.standardUserDefaults().removeObjectForKey("userid")
+//            NSUserDefaults.standardUserDefaults().removeObjectForKey("name")
+//            NSUserDefaults.standardUserDefaults().removeObjectForKey("password")
+//            NSUserDefaults.standardUserDefaults().removeObjectForKey("schoolid")
+//            NSUserDefaults.standardUserDefaults().removeObjectForKey("classid")
+//            NSUserDefaults.standardUserDefaults().removeObjectForKey("chid")
+//            NSUserDefaults.standardUserDefaults().removeObjectForKey("chidname")
+//            NSUserDefaults.standardUserDefaults().synchronize()
+////            退出环信
+//            EaseMob.sharedInstance().chatManager.asyncLogoffWithUnbindDeviceToken(false)
+//            
+//            let mainStoryboard = UIStoryboard(name: "Main", bundle: NSBundle.mainBundle())
+//            let vc : UIViewController = mainStoryboard.instantiateViewControllerWithIdentifier("FirstView")
+//            self.navigationController?.pushViewController(vc, animated: true)
+//            
+//        }
+//        alertController.addAction(doneAction)
+//        alertController.addAction(cancelAction)
+//        self.presentViewController(alertController, animated: true, completion: nil)
+//        
+//    }
+//    
     override func prepareForSegue(segue: UIStoryboardSegue, sender: AnyObject?) {
-        if(segue.identifier == "MineInfo"){
-            let info = segue.destinationViewController as! MineInfoTableViewController
-            info.imageUrl = self.imgUrl!
-            info.phone = self.phone!
-        }
     }
     
     override func tableView(tableView: UITableView, heightForHeaderInSection section: Int) -> CGFloat{

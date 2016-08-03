@@ -26,15 +26,24 @@ class SendPhotoViewController: UIViewController,UICollectionViewDataSource,UICol
     var itemCount = 0
     var collectV:UICollectionView?
     var flowLayout = UICollectionViewFlowLayout()
+    
+    
+    var image = UIImage()
     override func viewDidLoad() {
         super.viewDidLoad()
-
+        //   打开手势交互
+        self.view.userInteractionEnabled = true
+        let tap = UITapGestureRecognizer.init(target: self, action: #selector(tapAction(_:)))
+        self.view.addGestureRecognizer(tap)
         self.title = "发布照片"
         self.view.backgroundColor = UIColor.whiteColor()
         let rightItem = UIBarButtonItem(title: "发布", style: .Done, target: self, action: #selector(SendPhotoViewController.UpdateBlog))
         self.navigationItem.rightBarButtonItem = rightItem
         //        创建UI
         self.createUI()
+    }
+    func tapAction(tap:UITapGestureRecognizer){
+        self.view.endEditing(true)
     }
     //    创建输入框
     func createUI(){
@@ -82,6 +91,10 @@ class SendPhotoViewController: UIViewController,UICollectionViewDataSource,UICol
         
         let cell:ImageCollectionViewCell  = collectV!.dequeueReusableCellWithReuseIdentifier("PhotoCell", forIndexPath: indexPath) as! ImageCollectionViewCell
         if(self.pictureArray.count != 0){
+            //  需要进行处理，防止图片失真
+
+
+            //  得到图片的大小
             cell.imageView.frame = CGRectMake(0, 0, 80, 80)
             cell.imageView.image = self.pictureArray[indexPath.row] as? UIImage
             cell.contentView.addSubview(cell.imageView)
@@ -126,6 +139,7 @@ class SendPhotoViewController: UIViewController,UICollectionViewDataSource,UICol
     }
     //    选择图片
     func getAssetThumbnail(asset: [PHAsset]) -> UIImage {
+        //  图片
         var thumbnail = UIImage()
         i+=asset.count
         if(i>9){
@@ -142,25 +156,61 @@ class SendPhotoViewController: UIViewController,UICollectionViewDataSource,UICol
             let manager = PHImageManager.defaultManager()
             let option = PHImageRequestOptions()
             option.synchronous = true
+
+
             for j in 0..<asset.count{
-                manager.requestImageForAsset(asset[j], targetSize: CGSize(width: 80.0, height: 80.0), contentMode: .AspectFit, options: option, resultHandler: {(result, info)->Void in
+                
+                //  这里的参数应该喝照片的大小一致（需要进行判断）
+            manager.requestImageForAsset(asset[j], targetSize: PHImageManagerMaximumSize, contentMode: .AspectFit, options: option, resultHandler: {(result, info)->Void in
+                //  设置像素
+                option.resizeMode = PHImageRequestOptionsResizeMode.Exact
+                let downloadFinined = !((info!["PHImageResultIsDegradedKey"]?.boolValue)!)
+                
+//                let downloadFinined:Bool = !((info!["PHImageCancelledKey"]?.boolValue)! ?? false) && !((info!["PHImageErrorKey"]?.boolValue)! ?? false) && !((info!["PHImageResultIsDegradedKey"]?.boolValue)! ?? false)
+                if downloadFinined == true {
                     thumbnail = result!
+                    print(" print(result?.images)")
+                    //  改变frame
+                    print(result)
                     print("图片是")
                     var temImage:CGImageRef = thumbnail.CGImage!
-                    temImage = CGImageCreateWithImageInRect(temImage, CGRectMake(0, 0, 80, 80))!
+                    //                    temImage = CGImageCreateWithImageInRect(temImage, CGRectMake(0, 0, 1000, 1000))!
                     let newImage = UIImage(CGImage: temImage)
-                    self.imageData.append(UIImageJPEGRepresentation(newImage, 1)!)
+                    //  压缩最多1  最少0
+                    self.imageData.append(UIImageJPEGRepresentation(newImage, 0)!)
                     self.pictureArray.addObject(newImage)
+
+                }
+//                thumbnail = result!
+
+//                
+
                 })
             }
         }
         return thumbnail
     }
+    
+    func byScalingToSize(image:UIImage,targetSize:CGSize) ->(UIImage){
+        let sourceImage = image
+        var newImage = UIImage()
+        UIGraphicsBeginImageContext(targetSize)
+        var thumbnailRect = CGRectZero;
+        thumbnailRect.origin = CGPointZero;
+        thumbnailRect.size.width  = targetSize.width;
+        thumbnailRect.size.height = targetSize.height;
+        sourceImage.drawInRect(thumbnailRect)
+        newImage = UIGraphicsGetImageFromCurrentImageContext()
+        UIGraphicsEndImageContext()
+        return newImage
+    }
     //   更新日记
     func UpdateBlog(){
         if(i != 0){
+            //  图片
             self.UpdatePic()
         }
+        //  发表日志
         self.PutBlog()
     }
     //    更新图片
@@ -196,6 +246,7 @@ class SendPhotoViewController: UIViewController,UICollectionViewDataSource,UICol
         self.isuploading = false
         
     }
+
     //    发表日记
     func PutBlog(){
 //        userid,schoolid,classid（班级相册时必填）,studentid（宝宝相册时必填）,type(1：个人动态，2，班级相册，3宝宝相册),content,picurl
@@ -247,8 +298,9 @@ class SendPhotoViewController: UIViewController,UICollectionViewDataSource,UICol
             
         }
     }
-    
+//    收键盘
     override func touchesBegan(touches: Set<UITouch>, withEvent event: UIEvent?) {
         self.view.endEditing(true)
     }
+ 
 }

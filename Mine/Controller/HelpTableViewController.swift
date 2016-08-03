@@ -12,6 +12,7 @@ class HelpTableViewController: UITableViewController {
 
     override func viewDidLoad() {
         super.viewDidLoad()
+        print("HelpTableViewController")
 
         // Uncomment the following line to preserve selection between presentations
         // self.clearsSelectionOnViewWillAppear = false

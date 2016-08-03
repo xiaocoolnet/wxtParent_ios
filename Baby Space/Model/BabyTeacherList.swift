@@ -28,11 +28,13 @@ class BabyTeacherList:JSONJoy{
     }
 }
 class TeacherInfo: JSONJoy{
+    var teacherid:String?
     var teachername:String?
     var teacherphone:String?
     init(){
     }
     required init(_ decoder: JSONDecoder) {
+        teacherid = decoder["teacherid"].string
         teachername = decoder["teachername"].string
         teacherphone = decoder["teacherphone"].string
     }

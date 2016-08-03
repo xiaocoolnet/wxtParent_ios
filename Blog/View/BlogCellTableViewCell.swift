@@ -30,9 +30,6 @@ class BlogCellTableViewCell: UITableViewCell {
     override func awakeFromNib() {
         super.awakeFromNib()
         dianZanBtn.addTarget(self, action: #selector(BlogCellTableViewCell.ChangeDianZan), forControlEvents: UIControlEvents.TouchUpInside)
-        
-
-        // Initialization code
     }
 
     func ChangeDianZan(){
@@ -40,14 +37,16 @@ class BlogCellTableViewCell: UITableViewCell {
         if(!dianZanBtn.selected){
             myDianZan.removeObject(mid!)
             QuXiaoDianZan()
-            dianZanBtn.setImage(UIImage(named: "点赞"), forState: .Normal)
+            dianZanBtn.setBackgroundImage(UIImage(named: "点赞"), forState: .Normal)
+           
         }
         else{
             myDianZan.addObject(mid!)
             GetDianZanDate()
-            dianZanBtn.setImage(UIImage(named: "已点赞"), forState: .Normal)
+            dianZanBtn.setBackgroundImage(UIImage(named: "已点赞"), forState: .Normal)
+            
         }
-
+       
     }
     
     func QuXiaoDianZan(){
@@ -56,9 +55,10 @@ class BlogCellTableViewCell: UITableViewCell {
         let uid = userid.stringForKey("userid")
         let param = [
             "mid":mid!,
-            "userid":uid!
+            "userid":uid!,
+            "type":1
         ]
-        Alamofire.request(.GET, url, parameters: param).response { request, response, json, error in
+        Alamofire.request(.GET, url, parameters: param as? [String : AnyObject]).response { request, response, json, error in
             if(error != nil){
             }
             else{
@@ -80,7 +80,7 @@ class BlogCellTableViewCell: UITableViewCell {
                 
                 if(status.status == "success"){
                     //self.dianZanBtn.selected == true
-                    self.dianZanBtn.frame = CGRectMake(10,10,30,30)
+                    self.dianZanBtn.frame = CGRectMake(10,10,20,20)
                     self.flag = 1
                     let hud = MBProgressHUD.showHUDAddedTo(self.contentView, animated: true)
                     hud.mode = MBProgressHUDMode.Text;
@@ -101,13 +101,12 @@ class BlogCellTableViewCell: UITableViewCell {
         let url = apiUrl+"SetLike"
         let userid = NSUserDefaults.standardUserDefaults()
         let uid = userid.stringForKey("userid")
-        let time = String(NSDate().timeIntervalSince1970)
         let param = [
             "mid":mid!,
             "userid":uid!,
-            "time":time
+            "type":1
         ]
-        Alamofire.request(.GET, url, parameters: param).response { request, response, json, error in
+        Alamofire.request(.GET, url, parameters: param as? [String : AnyObject]).response { request, response, json, error in
             if(error != nil){
             }
             else{
@@ -129,7 +128,7 @@ class BlogCellTableViewCell: UITableViewCell {
                 
                 if(status.status == "success"){
                     //self.dianZanBtn.selected == true
-                    self.dianZanBtn.frame = CGRectMake(10,10,30,30)
+                    self.dianZanBtn.frame = CGRectMake(10,10,20,20)
                     self.flag = 1
                     let hud = MBProgressHUD.showHUDAddedTo(self.contentView, animated: true)
                     hud.mode = MBProgressHUDMode.Text;

@@ -8,6 +8,7 @@
 
 import Foundation
 
+
 class TakeListModel: JSONJoy {
     var takeList: [TakeListInfo]
     var count: Int{
@@ -31,13 +32,13 @@ class TakeListModel: JSONJoy {
 }
 
 class TakeListInfo: JSONJoy{
-    var delivery_status:String?
+    var delivery_status = String()
     var delivery_time:String?
     var id:String?
-    var parentavatar:String?
+//    var parentavatar:String?
     var parentid:String?
-    var parentname:String?
-    var parentphone:String?
+//    var parentname:String?
+//    var parentphone:String?
     var parenttime:String?
     var photo:String?
     var teacheravatar:String?
@@ -50,13 +51,13 @@ class TakeListInfo: JSONJoy{
         
     }
     required init(_ decoder: JSONDecoder){
-        delivery_status = decoder["delivery_status"].string
+        delivery_status = decoder["delivery_status"].string!
         delivery_time = decoder["delivery_time"].string
         id = decoder["id"].string
-        parentavatar = decoder["parentavatar"].string
+//        parentavatar = decoder["parentavatar"].string
         parentid = decoder["parentid"].string
-        parentname = decoder["parentname"].string
-        parentphone = decoder["parentphone"].string
+//        parentname = decoder["parentname"].string
+//        parentphone = decoder["parentphone"].string
         parenttime = decoder["parenttime"].string
         photo = decoder["photo"].string
         teacheravatar = decoder["teacheravatar"].string

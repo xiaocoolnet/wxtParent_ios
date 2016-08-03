@@ -10,14 +10,30 @@ import UIKit
 
 class ClassActivitiesTableViewCell: UITableViewCell {
 
-    @IBOutlet var ClassActivitiesImages: UIImageView!
-    @IBOutlet var ClassActivitiesLabel: UILabel!
     
-    @IBOutlet var ClassActivitiesContent: UILabel!
-    @IBOutlet var ClassActivitesTime: UILabel!
+    @IBOutlet weak var titleLbl: UILabel!
+    
+    @IBOutlet weak var contentLbl: UILabel!
+    
+    @IBOutlet weak var bigImageView: UIImageView!
+    
+    @IBOutlet weak var senderLbl: UILabel!
+    
+    @IBOutlet weak var timeLbl: UILabel!
+//    报名人数
+    @IBOutlet weak var signUpLbl: UILabel!
+    
+    @IBOutlet weak var dianZanBtn: UIButton!
+    
+//    @IBOutlet weak var pingLunBtn: UIButton!
+    
+//    @IBOutlet weak var zanListLbl: UILabel!
+    
     override func awakeFromNib() {
         super.awakeFromNib()
-        // Initialization code
+        
+//        dianZanBtn.setBackgroundImage(UIImage(named: "点赞"), forState: .Normal)
+//        pingLunBtn.setBackgroundImage(UIImage(named: "评论"), forState: .Normal)
     }
 
     override func setSelected(selected: Bool, animated: Bool) {

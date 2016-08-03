@@ -18,7 +18,11 @@ class ChatViewController: EaseMessageViewController, EaseMessageViewControllerDe
     
     override func viewDidLoad() {
         super.viewDidLoad()
+        //  自定义左按钮
         
+        
+        
+        self.tabBarController?.tabBar.hidden = false
         self.showRefreshHeader = true
         self.delegate = self
         self.dataSource = self
@@ -36,7 +40,7 @@ class ChatViewController: EaseMessageViewController, EaseMessageViewControllerDe
 //        每条信息的背景色，有背景图的时候不显示
         EaseBaseMessageCell.appearance().backgroundColor = UIColor(red: 240 / 255.0, green: 242 / 255.0, blue: 247 / 255.0, alpha: 1)
 //      设置返回按钮
-       self._setupBarButtonItem()
+//       self._setupBarButtonItem()
         
 //        删除聊天记录
         NSNotificationCenter.defaultCenter().addObserver(self, selector: #selector(ChatViewController.deleteAllMessages(_:)), name: "RemoveAllMessages", object: nil)
@@ -46,6 +50,18 @@ class ChatViewController: EaseMessageViewController, EaseMessageViewControllerDe
     //通过会话管理者获取已收发消息
         self.tableViewDidTriggerHeaderRefresh()
     }
+    func initUI(){
+        
+        //  添加一个右按钮
+        let sureButton = UIButton()
+        sureButton.frame = CGRectMake(0,  0,  40, 20)
+        sureButton.setImage(UIImage.init(named: "back.png"), forState: .Normal)
+        sureButton.addTarget(self, action: #selector(backAction), forControlEvents: .TouchUpInside)
+        let rightButton = UIBarButtonItem(customView: sureButton)
+        self.navigationItem.leftBarButtonItem = rightButton
+        
+    }
+    
 //    返回按钮
     func _setupBarButtonItem(){
         self.navigationItem.leftBarButtonItem = UIBarButtonItem(image: UIImage(named: "back.png"), style: .Plain
@@ -56,6 +72,7 @@ class ChatViewController: EaseMessageViewController, EaseMessageViewControllerDe
             clearButton.frame = CGRectMake(0, 0, 30, 30)
             clearButton.setImage((UIImage(named: "delete.png")), forState: .Normal)
             clearButton.addTarget(self, action: #selector(ChatViewController.deleteAllMessages(_:)), forControlEvents: .TouchUpInside)
+            //  设置右按钮
             self.navigationItem.rightBarButtonItem = UIBarButtonItem.init(customView: clearButton)
             
         }
@@ -106,7 +123,7 @@ class ChatViewController: EaseMessageViewController, EaseMessageViewControllerDe
     }
 //    返回事件
     func backAction(){
-        self.navigationController?.popViewControllerAnimated(true)
+            self.navigationController?.popViewControllerAnimated(true)
     }
 //    删除全部聊天记录
     func deleteAllMessages(sender:AnyObject){
@@ -124,7 +141,7 @@ class ChatViewController: EaseMessageViewController, EaseMessageViewControllerDe
             }
             
             if self.conversation.conversationType != EMConversationType.eConversationTypeChat && isDelete {
-                  self.messageTimeIntervalTag = -1
+                self.messageTimeIntervalTag = -1
                 self.conversation.removeAllMessages()
                 self.messsagesSource.removeAllObjects()
                 self.dataArray.removeAllObjects()

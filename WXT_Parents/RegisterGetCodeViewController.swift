@@ -35,9 +35,11 @@ class RegisterGetCodeViewController: UIViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
-
+        //  得到验证码
         getCodeButton.addTarget(self, action: #selector(RegisterGetCodeViewController.GetCode), forControlEvents: UIControlEvents.TouchUpInside)
+        //  下一步
         nextButton.addTarget(self, action: #selector(RegisterGetCodeViewController.Next), forControlEvents: UIControlEvents.TouchUpInside)
+        //  隐藏时间label
         timeLabel.hidden = true
         self.navigationController?.navigationBar.hidden = false
         
@@ -174,6 +176,7 @@ class RegisterGetCodeViewController: UIViewController {
         if (count <= 0)
         {
             count = 60
+            //  倒计时
             self.showRepeatButton()
             timeNow.invalidate()
         }
@@ -190,6 +193,7 @@ class RegisterGetCodeViewController: UIViewController {
                 self.senderMessage()
                 getCodeButton.hidden = true
                 timeLabel.hidden = false
+                //  时间倒计时
                 self.timeDow()
             }
         }
@@ -208,11 +212,11 @@ class RegisterGetCodeViewController: UIViewController {
         ]
         Alamofire.request(.GET, url, parameters: param).response { request, response, json, error in
             if(error != nil){
+            }else{
+                print(request)
             }
-            else{
-                }
                 
-            }
+        }
     }
 //    收键盘
     override func touchesBegan(touches: Set<UITouch>, withEvent event: UIEvent?) {
@@ -241,12 +245,7 @@ class RegisterGetCodeViewController: UIViewController {
             return false
         }
     }
-//    override func prepareForSegue(segue: UIStoryboardSegue, sender: AnyObject?) {
-//        if (segue.identifier == "PhoneNumber"){
-//        
-//        }
-//
-//    }
+
     
 
 

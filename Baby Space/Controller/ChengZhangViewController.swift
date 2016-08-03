@@ -16,7 +16,6 @@ class ChengZhangViewController: UIViewController, DJKFlipperDataSource {
     override func viewDidLoad() {
         super.viewDidLoad()
         self.tabBarController?.tabBar.hidden = true
-        self.navigationController?.navigationBar.hidden = true
 
         let view1 = ChengZhang1ViewController(nibName: "PageTestViewController", bundle: nil)
         view1.view.frame = self.view.frame

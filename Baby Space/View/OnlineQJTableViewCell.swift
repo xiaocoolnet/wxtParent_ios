@@ -9,10 +9,14 @@
 import UIKit
 
 class OnlineQJTableViewCell: UITableViewCell {
+//    头像
+    @IBOutlet weak var headImageView: UIImageView!
 //    请假内容
     @IBOutlet weak var contentLbl: UILabel!
 //    请假者
-    @IBOutlet weak var motherNameLbl: UILabel!
+    @IBOutlet weak var studentNameLbl: UILabel!
+//    班级
+    @IBOutlet weak var classLbl: UILabel!
 //    老师名字
     @IBOutlet weak var teacherNameLbl: UILabel!
 //    请假时间

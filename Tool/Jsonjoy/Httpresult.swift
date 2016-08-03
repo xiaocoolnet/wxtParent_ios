@@ -12,6 +12,7 @@ class Httpresult: JSONJoy{
     var data:UserInfo?
     var errorData:String?
     var datastring:String?
+    var phone:String?
     //var uid:String?
     init(){
     }
@@ -30,6 +31,8 @@ class UserInfo: JSONJoy {
     var schoolid:String?
     var classid:String?
     var name:String?
+    var photo:String?
+    var phone:String?
     
     init(){
     }
@@ -38,5 +41,7 @@ class UserInfo: JSONJoy {
         classid = decoder["classid"].string
         schoolid = decoder["schoolid"].string
         name = decoder["name"].string
+        photo = decoder["photo"].string
+        phone = decoder["phone"].string
     }
 }

@@ -16,10 +16,41 @@ class AppDelegate: UIResponder, UIApplicationDelegate,UITabBarControllerDelegate
 
     func application(application: UIApplication, didFinishLaunchingWithOptions launchOptions: [NSObject: AnyObject]?) -> Bool {
         // Override point for customization after application launch.
+        //  微信分享功能 (第一个参数不知道是什么意思)
+        ShareSDK.registerApp("142e4be9863ec", activePlatforms: [SSDKPlatformType.TypeWechat.rawValue], onImport: {(platform : SSDKPlatformType) -> Void in
+            
+            switch platform{
+                //  第三个参数为需要连接社交平台SDK时触发，在此事件中写入连接代码
+                
+            case SSDKPlatformType.TypeWechat:
+                ShareSDKConnector.connectWeChat(WXApi.classForCoder())
+                
+            default:
+                break
+            }
+            }, onConfiguration: {(platform : SSDKPlatformType,appInfo : NSMutableDictionary!) -> Void in
+                switch platform {
+                    
+                
+                 
+                    
+                case SSDKPlatformType.TypeWechat:
+                    //设置微信应用信息
+                    appInfo.SSDKSetupWeChatByAppId("wx098ea71735ed0a41", appSecret: "b1e66b976880d7cd3c02a2d91e8b08f0")
+                    break
+                    
+               
+                
+                default:
+                    break
+                    
+                }
+        })
         
         NSThread.sleepForTimeInterval(2.0)
         UITabBar.appearance().tintColor = UIColor(red: 54.0 / 255.0, green: 190.0 / 255.0, blue: 100.0 / 255.0, alpha: 1.0)
-
+        //        把返回按钮的back移走
+        UIBarButtonItem.appearance().setBackButtonTitlePositionAdjustment(UIOffsetMake(0, -60), forBarMetrics: UIBarMetrics.Default)
         
         let infoDictionary = NSBundle.mainBundle().infoDictionary
         let currentAppVersion = infoDictionary!["CFBundleShortVersionString"] as! String
@@ -89,8 +120,8 @@ class AppDelegate: UIResponder, UIApplicationDelegate,UITabBarControllerDelegate
         else{//登录成功时
             let storyboard = UIStoryboard(name: "Main", bundle: nil)
             let tableBarController = storyboard.instantiateViewControllerWithIdentifier(segueId) as! UITabBarController
-            let tableBarItem = tableBarController.tabBar.items![2]
-            tableBarItem.badgeValue = "3"
+//            let tableBarItem = tableBarController.tabBar.items![2]
+//            tableBarItem.badgeValue = "3"
             self.window?.rootViewController = tableBarController
             return true
         }

@@ -1,0 +1,88 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="10117" systemVersion="15D21" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES">
+    <dependencies>
+        <deployment identifier="iOS"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="10085"/>
+    </dependencies>
+    <objects>
+        <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner"/>
+        <placeholder placeholderIdentifier="IBFirstResponder" id="-2" customClass="UIResponder"/>
+        <tableViewCell contentMode="scaleToFill" selectionStyle="default" indentationWidth="10" reuseIdentifier="ReadAllCell" rowHeight="585" id="KGk-i7-Jjw" customClass="ReadAllTableViewCell" customModule="WXT_Parents" customModuleProvider="target">
+            <rect key="frame" x="0.0" y="0.0" width="391" height="585"/>
+            <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+            <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="KGk-i7-Jjw" id="H2p-sc-9uM">
+                <rect key="frame" x="0.0" y="0.0" width="391" height="584"/>
+                <autoresizingMask key="autoresizingMask"/>
+                <subviews>
+                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="新闻标题" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="DqZ-Lt-rqm">
+                        <rect key="frame" x="10" y="10" width="371" height="20"/>
+                        <constraints>
+                            <constraint firstAttribute="height" constant="20" id="7fV-Cx-vPd"/>
+                        </constraints>
+                        <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                        <color key="textColor" cocoaTouchSystemColor="darkTextColor"/>
+                        <nil key="highlightedColor"/>
+                    </label>
+                    <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="无网络的背景" translatesAutoresizingMaskIntoConstraints="NO" id="O90-Bj-ReU">
+                        <rect key="frame" x="10" y="40" width="371" height="150"/>
+                        <constraints>
+                            <constraint firstAttribute="height" constant="150" id="dau-c2-zNP"/>
+                        </constraints>
+                    </imageView>
+                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="新闻内容新闻内容新闻内容新闻内容新闻内容新闻内容新闻内容新闻内容新闻内容新闻内容新闻内容新闻内容新闻内容新闻内容新闻内容新闻内容新闻内容" textAlignment="natural" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Edx-fN-w3n">
+                        <rect key="frame" x="10" y="200" width="371" height="54"/>
+                        <constraints>
+                            <constraint firstAttribute="height" relation="greaterThanOrEqual" constant="20" id="v5V-wE-Cd3"/>
+                        </constraints>
+                        <fontDescription key="fontDescription" type="system" pointSize="15"/>
+                        <color key="textColor" red="0.3766506577" green="0.3766506577" blue="0.3766506577" alpha="1" colorSpace="calibratedRGB"/>
+                        <nil key="highlightedColor"/>
+                    </label>
+                    <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="uvi-UI-8Jv">
+                        <rect key="frame" x="0.0" y="264" width="391" height="1"/>
+                        <color key="backgroundColor" red="0.93725490199999995" green="0.93725490199999995" blue="0.95686274510000002" alpha="1" colorSpace="calibratedRGB"/>
+                        <constraints>
+                            <constraint firstAttribute="height" constant="1" id="gzq-AP-WLX"/>
+                        </constraints>
+                    </view>
+                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="2016-03-02 12:22" textAlignment="right" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="nTP-Vq-XDs">
+                        <rect key="frame" x="231" y="275" width="150" height="20"/>
+                        <constraints>
+                            <constraint firstAttribute="width" constant="150" id="Fb5-1t-LCg"/>
+                            <constraint firstAttribute="height" constant="20" id="cVL-R3-EE0"/>
+                        </constraints>
+                        <fontDescription key="fontDescription" type="system" pointSize="15"/>
+                        <color key="textColor" white="0.67000000000000004" alpha="1" colorSpace="calibratedWhite"/>
+                        <nil key="highlightedColor"/>
+                    </label>
+                </subviews>
+                <constraints>
+                    <constraint firstAttribute="trailing" secondItem="Edx-fN-w3n" secondAttribute="trailing" constant="10" id="Ibt-5b-WY7"/>
+                    <constraint firstItem="uvi-UI-8Jv" firstAttribute="leading" secondItem="H2p-sc-9uM" secondAttribute="leading" id="JPN-1X-JM2"/>
+                    <constraint firstAttribute="trailing" secondItem="DqZ-Lt-rqm" secondAttribute="trailing" constant="10" id="Jhw-1K-Gbn"/>
+                    <constraint firstItem="DqZ-Lt-rqm" firstAttribute="top" secondItem="H2p-sc-9uM" secondAttribute="top" constant="10" id="MhG-Eg-XYD"/>
+                    <constraint firstItem="nTP-Vq-XDs" firstAttribute="top" secondItem="uvi-UI-8Jv" secondAttribute="bottom" constant="10" id="NtT-io-GbN"/>
+                    <constraint firstItem="DqZ-Lt-rqm" firstAttribute="leading" secondItem="H2p-sc-9uM" secondAttribute="leading" constant="10" id="O45-Tl-KpI"/>
+                    <constraint firstItem="Edx-fN-w3n" firstAttribute="top" secondItem="O90-Bj-ReU" secondAttribute="bottom" constant="10" id="Uwk-mu-SnY"/>
+                    <constraint firstAttribute="trailing" secondItem="O90-Bj-ReU" secondAttribute="trailing" constant="10" id="VIq-db-wNs"/>
+                    <constraint firstItem="uvi-UI-8Jv" firstAttribute="top" secondItem="Edx-fN-w3n" secondAttribute="bottom" constant="10" id="XwP-TJ-2BV"/>
+                    <constraint firstAttribute="trailing" secondItem="uvi-UI-8Jv" secondAttribute="trailing" id="Zhp-pJ-yRN"/>
+                    <constraint firstItem="O90-Bj-ReU" firstAttribute="top" secondItem="DqZ-Lt-rqm" secondAttribute="bottom" constant="10" id="gtM-XS-oTz"/>
+                    <constraint firstAttribute="trailing" secondItem="nTP-Vq-XDs" secondAttribute="trailing" constant="10" id="lKb-40-rvW"/>
+                    <constraint firstItem="Edx-fN-w3n" firstAttribute="leading" secondItem="H2p-sc-9uM" secondAttribute="leading" constant="10" id="mXh-vW-AsY"/>
+                    <constraint firstItem="O90-Bj-ReU" firstAttribute="leading" secondItem="H2p-sc-9uM" secondAttribute="leading" constant="10" id="rQU-RD-Hk3"/>
+                </constraints>
+            </tableViewCellContentView>
+            <connections>
+                <outlet property="bigImageView" destination="O90-Bj-ReU" id="xzK-XM-q9e"/>
+                <outlet property="contentLbl" destination="Edx-fN-w3n" id="u4o-Mm-sjJ"/>
+                <outlet property="timeLbl" destination="nTP-Vq-XDs" id="3Tc-Jy-SuO"/>
+                <outlet property="titleLbl" destination="DqZ-Lt-rqm" id="85L-h7-hN2"/>
+            </connections>
+            <point key="canvasLocation" x="31.5" y="387.5"/>
+        </tableViewCell>
+    </objects>
+    <resources>
+        <image name="无网络的背景" width="709" height="370"/>
+    </resources>
+</document>

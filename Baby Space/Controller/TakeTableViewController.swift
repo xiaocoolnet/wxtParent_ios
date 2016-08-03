@@ -14,30 +14,38 @@ import MBProgressHUD
 
 class TakeTableViewController: UITableViewController {
 
-    @IBOutlet var tableSource: UITableView!
     var takeSource = TakeListModel()
     var id = String()
     override func viewDidLoad() {
         super.viewDidLoad()
+        initUI()
+        self.tableView.registerClass(QCTakeBabyCell.self, forCellReuseIdentifier: "TakeCell")
+//        let cellNib = UINib(nibName: "TakeTableViewCell", bundle: nil)
+//        tableView.registerNib(cellNib, forCellReuseIdentifier: "TakeCell")
         self.DropDownUpdate()
 
     }
+    func initUI(){
+        self.tabBarController?.tabBar.hidden = true
+    }
     //    开始刷新
     func DropDownUpdate(){
-        self.tableSource.headerView = XWRefreshNormalHeader(target: self, action: #selector(TakeTableViewController.loadData))
-        self.tableSource.reloadData()
-        self.tableSource.headerView?.beginRefreshing()
+        self.tableView.headerView = XWRefreshNormalHeader(target: self, action: #selector(TakeTableViewController.loadData))
+        self.tableView.reloadData()
+        self.tableView.headerView?.beginRefreshing()
     }
+//    加载数据
     func loadData(){
-        // http://wxt.xiaocool.net/index.php?g=apps&m=student&a=getcollectconfirmation&userid=28
+        
+        //  http://wxt.xiaocool.net/index.php?g=apps&m=student&a=gettransportconfirmation&studentid=597
         //下面两句代码是从缓存中取出userid（入参）值
         let defalutid = NSUserDefaults.standardUserDefaults()
-        let userid = defalutid.stringForKey("userid")
+        let studentid = defalutid.stringForKey("chid")
         let url = "http://wxt.xiaocool.net/index.php?g=apps&m=student&a=gettransportconfirmation"
         let param = [
-            "userid":userid!
+            "studentid":studentid
         ]
-        Alamofire.request(.GET, url, parameters: param).response { request, response, json, error in
+        Alamofire.request(.GET, url, parameters: param as? [String:String]).response { request, response, json, error in
             if(error != nil){
             }
             else{
@@ -56,58 +64,83 @@ class TakeTableViewController: UITableViewController {
                     hud.hide(true, afterDelay: 1)
                 }
                 if(status.status == "success"){
-                    self.takeSource = TakeListModel(status.data!)
-                    self.tableSource.reloadData()
-                    self.tableSource.headerView?.endRefreshing()
+                    
+//                    var array = TakeListModel()
+                    for i in 0...TakeListModel(status.data!).takeList.count - 1{
+                        print((TakeListModel(status.data!).takeList)[i].delivery_status)
+                        if (TakeListModel(status.data!).takeList)[i].delivery_status == "0"{
+                            self.takeSource.takeList.append((TakeListModel(status.data!).takeList)[i])
+                        }
+                    }
+                    print(self.takeSource.count)
+                    
+                    self.tableView.reloadData()
+                    self.tableView.headerView?.endRefreshing()
                 }
             }
         }
     }
 //    行数
     override func tableView(tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        // #warning Incomplete implementation, return the number of rows
         return self.takeSource.count
     }
 //    单元格
     override func tableView(tableView: UITableView, cellForRowAtIndexPath indexPath: NSIndexPath) -> UITableViewCell {
-        let cell = tableView.dequeueReusableCellWithIdentifier("TakeCell", forIndexPath: indexPath) as!TakeTableViewCell
-        cell.selectionStyle = .None
-        let takeInfo = self.takeSource.takeList[indexPath.row]
-        let dateformate = NSDateFormatter()
-        dateformate.dateFormat = "yyyy-MM-dd HH:mm"
-        cell.nameLbl.text = takeInfo.teachername
-        let date = NSDate(timeIntervalSince1970: NSTimeInterval(takeInfo.delivery_time!)!)
-        let str:String = dateformate.stringFromDate(date)
-        cell.timeLbl.text = str
-        let imgUrl = imageUrl + takeInfo.photo!
-        let photourl = NSURL(string: imgUrl)
-        cell.bigImageView.yy_setImageWithURL(photourl, placeholder: UIImage(named: "无网络的背景.png"))
-        let imgUrl1 = imageUrl + takeInfo.teacheravatar!
-        let headImageurl = NSURL(string: imgUrl1)
-        cell.bigImageView.yy_setImageWithURL(headImageurl, placeholder: UIImage(named: "Logo.png"))
-        cell.phoneBtn.addTarget(self, action: #selector(TakeTableViewController.callNumber(_:)), forControlEvents: .TouchUpInside)
-        cell.phoneBtn.tag = Int(takeInfo.teacherphone!)!
-        cell.agreeBtn.addTarget(self, action: #selector(TakeTableViewController.agreePress(_:)), forControlEvents: .TouchUpInside)
-        cell.agreeBtn.tag = indexPath.row
-        cell.disagreeBtn.addTarget(self, action: #selector(TakeTableViewController.disagreePress(_:)), forControlEvents: .TouchUpInside)
-        cell.disagreeBtn.tag = indexPath.row
-        tableSource.rowHeight = 351
-        return cell
-    }
-
-    override func tableView(tableView: UITableView, heightForHeaderInSection section: Int) -> CGFloat{
+//        let cell = tableView.dequeueReusableCellWithIdentifier("TakeCell", forIndexPath: indexPath) as!TakeTableViewCell
+        let cell = tableView.dequeueReusableCellWithIdentifier("TakeCell", forIndexPath: indexPath) as? QCTakeBabyCell
+//        cell.textLabel?.text = "1"
+        cell!.selectionStyle = .None
+        tableView.separatorStyle = .None
         
-        return 1.0
+//        赋值
+        
+        let takeInfo = self.takeSource.takeList[indexPath.row]
+//        时间戳转换
+        if takeInfo.delivery_status == "0"{
+            let dateformate = NSDateFormatter()
+            dateformate.dateFormat = "yyyy-MM-dd HH:mm"
+            let date = NSDate(timeIntervalSince1970: NSTimeInterval(takeInfo.delivery_time!)!)
+            let str:String = dateformate.stringFromDate(date)
+            cell?.timeLabel.text = str
+            
+            cell?.nameLabel.text = takeInfo.teachername
+            
+            //        图片
+            let imgUrl = microblogImageUrl + takeInfo.photo!
+            let photourl = NSURL(string: imgUrl)
+            cell!.bigImageView.yy_setImageWithURL(photourl, placeholder: UIImage(named: "无网络的背景.png"))
+            //        头像
+            let imgUrl1 = microblogImageUrl + takeInfo.teacheravatar!
+            let headImageurl = NSURL(string: imgUrl1)
+            cell!.headImageView.yy_setImageWithURL(headImageurl, placeholder: UIImage(named: "Logo.png"))
+            let userDefaults = NSUserDefaults.standardUserDefaults()
+            let someOne = userDefaults.valueForKey("name")
+            cell!.somebodyLabel.text = (someOne as? String)! + "家长，这个人可以接走孩子么？"
+            //        同意按钮
+            cell!.agreeBtn.addTarget(self, action: #selector(TakeTableViewController.agreePress(_:)), forControlEvents: .TouchUpInside)
+            cell!.agreeBtn.tag = indexPath.row
+            //        不同意按钮
+            cell!.disagreeBtn.addTarget(self, action: #selector(TakeTableViewController.disagreePress(_:)), forControlEvents: .TouchUpInside)
+            cell!.disagreeBtn.tag = indexPath.row
+            //  cell 的高度
+            tableView.rowHeight = 450
+        }
+        
+        return cell!
     }
-    
-    override func tableView(tableView: UITableView, heightForFooterInSection section: Int) -> CGFloat {
-        return 5.0
-    }
+////    分区组的头
+//    override func tableView(tableView: UITableView, heightForHeaderInSection section: Int) -> CGFloat{
+//        return 1.0
+//    }
+////    分区组的底
+//    override func tableView(tableView: UITableView, heightForFooterInSection section: Int) -> CGFloat {
+//        return 5.0
+//    }
     //    打电话
     func callNumber(sender:AnyObject){
-        let btn:UIButton = sender as! UIButton
+        let takeInfo = self.takeSource.takeList[sender.tag]
         var phone = String()
-        phone = "telprompt:\(String(btn.tag))"
+        phone = "telprompt:\(takeInfo.teacherphone!)"
         print(phone)
         UIApplication.sharedApplication().openURL(NSURL.init(string: phone)!)
     }
@@ -123,13 +156,16 @@ class TakeTableViewController: UITableViewController {
     }
 //    同意是否接送
     func confirmTransport(row:Int,status:Int){
-        //        http://wxt.xiaocool.net/index.php?g=apps&m=student&a=confirmtransport&transportid=1&parentid=122&status=1
+//        http://wxt.xiaocool.net/index.php?g=apps&m=student&a=confirmtransport&transportid=1&parentid=122&status=1
         let takeInfo = self.takeSource.takeList[row]
         //下面两句代码是从缓存中取出userid（入参）值
+        let userDefaults = NSUserDefaults.standardUserDefaults()
+        let parentid = userDefaults.valueForKey("userid")
         let url = "http://wxt.xiaocool.net/index.php?g=apps&m=student&a=confirmtransport"
         let param = [
             "transportid":takeInfo.id!,
-            "parentid":takeInfo.parentid!,
+//            "parentid":takeInfo.parentid!,
+            "parentid":parentid,
             "status":status
         ]
         Alamofire.request(.GET, url, parameters: param as? [String : AnyObject]).response { request, response, json, error in
@@ -151,7 +187,13 @@ class TakeTableViewController: UITableViewController {
                     hud.hide(true, afterDelay: 1)
                 }
                 if(status.status == "success"){
+                    let alert = UIAlertController(title: "提示", message: "已发送", preferredStyle: .Alert)
+                    alert.addAction(UIAlertAction(title: "确定", style: .Default, handler: nil))
+                    self.presentViewController(alert, animated: true, completion: nil)
+                    self.loadData()
+                    self.tableView.reloadData()
                    self.DropDownUpdate()
+                    
                 }
             }
         }

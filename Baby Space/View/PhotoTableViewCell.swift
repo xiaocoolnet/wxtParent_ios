@@ -2,7 +2,7 @@
 //  PhotoTableViewCell.swift
 //  WXT_Parents
 //
-//  Created by zhang on 16/5/6.
+//  Created by 沈晓龙 on 16/7/29.
 //  Copyright © 2016年 北京校酷网络科技有限公司. All rights reserved.
 //
 
@@ -10,16 +10,6 @@ import UIKit
 
 class PhotoTableViewCell: UITableViewCell {
 
-//    内容
-    @IBOutlet weak var contentlbl: UILabel!
-//    图片
-    @IBOutlet weak var bigImageIVew: UIImageView!
-//    发送者
-    @IBOutlet weak var senderLbl: UILabel!
-//    时间
-    @IBOutlet weak var timeLbl: UILabel!
-//    更多
-    @IBOutlet weak var moreBtn: UIButton!
     override func awakeFromNib() {
         super.awakeFromNib()
         // Initialization code
@@ -30,5 +20,5 @@ class PhotoTableViewCell: UITableViewCell {
 
         // Configure the view for the selected state
     }
-    
+
 }

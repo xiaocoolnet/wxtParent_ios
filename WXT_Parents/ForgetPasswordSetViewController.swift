@@ -53,21 +53,11 @@ class ForgetPasswordSetViewController: UIViewController {
                     print("状态是")
                     print(status.status)
                     if(status.status == "error"){
-                        let hud = MBProgressHUD.showHUDAddedTo(self.view, animated: true)
-                        hud.mode = MBProgressHUDMode.Text;
-                        hud.labelText = status.errorData
-                        hud.margin = 10.0
-                        hud.removeFromSuperViewOnHide = true
-                        hud.hide(true, afterDelay: 1)
+                        messageHUD(self.view, messageData: status.errorData!)
                     }
                     
                     if(status.status == "success"){
-                        let hud = MBProgressHUD.showHUDAddedTo(self.view, animated: true)
-                        hud.mode = MBProgressHUDMode.Text;
-                        hud.labelText = "修改成功"
-                        hud.margin = 10.0
-                        hud.removeFromSuperViewOnHide = true
-                        hud.hide(true, afterDelay: 1)
+                        messageHUD(self.view, messageData: "修改成功")
                         self.navigationController?.popToRootViewControllerAnimated(true)
                     }
                     
@@ -78,30 +68,15 @@ class ForgetPasswordSetViewController: UIViewController {
     
     func Pankong() -> Bool{
         if(setPassword.text!.isEmpty){
-            let hud = MBProgressHUD.showHUDAddedTo(self.view, animated: true)
-            hud.mode = MBProgressHUDMode.Text
-            hud.labelText = "请输入密码"
-            hud.margin = 10.0
-            hud.removeFromSuperViewOnHide = true
-            hud.hide(true, afterDelay: 1)
+            messageHUD(self.view, messageData: "请输入密码")
             return false
         }
         if(againSetPassword.text!.isEmpty){
-            let hud = MBProgressHUD.showHUDAddedTo(self.view, animated: true)
-            hud.mode = MBProgressHUDMode.Text
-            hud.labelText = "请再次输入密码"
-            hud.margin = 10.0
-            hud.removeFromSuperViewOnHide = true
-            hud.hide(true, afterDelay: 1)
+            messageHUD(self.view, messageData: "请再次输入密码")
             return false
         }
         if(setPassword.text! != againSetPassword.text! ){
-            let hud = MBProgressHUD.showHUDAddedTo(self.view, animated: true)
-            hud.mode = MBProgressHUDMode.Text
-            hud.labelText = "请输入相同密码"
-            hud.margin = 10.0
-            hud.removeFromSuperViewOnHide = true
-            hud.hide(true, afterDelay: 1)
+            messageHUD(self.view, messageData: "请输入相同密码")
             return false
         }
         else{

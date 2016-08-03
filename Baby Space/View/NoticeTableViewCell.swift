@@ -17,15 +17,22 @@ class NoticeTableViewCell: UITableViewCell {
     @IBOutlet weak var bigImageView: UIImageView!
 //    发送者
     @IBOutlet weak var senderLbl: UILabel!
-//    已读人数
-    @IBOutlet weak var readLbl: UILabel!
-//    未读人数
-    @IBOutlet weak var unreadLbl: UILabel!
+    @IBOutlet weak var readLable: UILabel!
 //    时间
     @IBOutlet weak var timeLbl: UILabel!
+//    阅读量
+    @IBOutlet weak var readBtn: UIButton!
+////    点赞
+//    @IBOutlet weak var dianzanBtn: UIButton!
+////    评论
+//    @IBOutlet weak var pinglunBtn: UIButton!
+////    点赞列表
+//    @IBOutlet weak var zanListLbl: UILabel!
     override func awakeFromNib() {
         super.awakeFromNib()
         // Initialization code
+//        dianzanBtn.setBackgroundImage(UIImage(named: "点赞"), forState: .Normal)
+//        pinglunBtn.setBackgroundImage(UIImage(named: "评论"), forState: .Normal)
     }
 
     override func setSelected(selected: Bool, animated: Bool) {

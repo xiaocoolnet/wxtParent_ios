@@ -18,13 +18,9 @@ class HappyTableViewController: UITableViewController {
 
     override func viewDidLoad() {
         super.viewDidLoad()
+        //  数据请求
         GetDate()
-        // Uncomment the following line to preserve selection between presentations
-        // self.clearsSelectionOnViewWillAppear = false
-
-        // Uncomment the following line to display an Edit button in the navigation bar for this view controller.
-        // self.navigationItem.rightBarButtonItem = self.editButtonItem()
-    }
+        }
     
     func GetDate(){
         let defalutid = NSUserDefaults.standardUserDefaults()
@@ -44,12 +40,7 @@ class HappyTableViewController: UITableViewController {
                 print("状态是")
                 print(status.status)
                 if(status.status == "error"){
-                    let hud = MBProgressHUD.showHUDAddedTo(self.view, animated: true)
-                    hud.mode = MBProgressHUDMode.Text
-                    hud.labelText = status.errorData
-                    hud.margin = 10.0
-                    hud.removeFromSuperViewOnHide = true
-                    hud.hide(true, afterDelay: 1)
+                    messageHUD(self.view, messageData: status.errorData!)
                 }
                 
                 if(status.status == "success"){
@@ -60,13 +51,6 @@ class HappyTableViewController: UITableViewController {
         }
         
     }
-
-    override func didReceiveMemoryWarning() {
-        super.didReceiveMemoryWarning()
-        // Dispose of any resources that can be recreated.
-    }
-
-    // MARK: - Table view data source
 
     override func numberOfSectionsInTableView(tableView: UITableView) -> Int {
         return 1

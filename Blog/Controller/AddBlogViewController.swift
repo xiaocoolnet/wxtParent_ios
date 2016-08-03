@@ -143,11 +143,11 @@ class AddBlogViewController: UIViewController,UICollectionViewDataSource,UIColle
             let option = PHImageRequestOptions()
             option.synchronous = true
             for j in 0..<asset.count{
-                manager.requestImageForAsset(asset[j], targetSize: CGSize(width: 80.0, height: 80.0), contentMode: .AspectFit, options: option, resultHandler: {(result, info)->Void in
+                manager.requestImageForAsset(asset[j], targetSize: CGSize(width: 1000.0, height: 1000.0), contentMode: .AspectFit, options: option, resultHandler: {(result, info)->Void in
                     thumbnail = result!
                     print("图片是")
                     var temImage:CGImageRef = thumbnail.CGImage!
-                    temImage = CGImageCreateWithImageInRect(temImage, CGRectMake(0, 0, 80, 80))!
+                    temImage = CGImageCreateWithImageInRect(temImage, CGRectMake(0, 0, 1000.0, 1000.0))!
                     let newImage = UIImage(CGImage: temImage)
                     self.imageData.append(UIImageJPEGRepresentation(newImage, 1)!)
                     self.pictureArray.addObject(newImage)
@@ -247,7 +247,7 @@ class AddBlogViewController: UIViewController,UICollectionViewDataSource,UIColle
             
         }
     }
-    
+//    收键盘
     override func touchesBegan(touches: Set<UITouch>, withEvent event: UIEvent?) {
         self.view.endEditing(true)
     }

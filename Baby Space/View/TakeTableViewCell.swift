@@ -13,15 +13,20 @@ class TakeTableViewCell: UITableViewCell {
     @IBOutlet weak var headImageView: UIImageView!
 //    老师姓名
     @IBOutlet weak var nameLbl: UILabel!
-//    电话号码
-    @IBOutlet weak var phoneBtn: UIButton!
+
 //    时间
     @IBOutlet weak var timeLbl: UILabel!
 //    照片
     @IBOutlet weak var bigImageView: UIImageView!
 //    同意按钮
     @IBOutlet weak var agreeBtn: UIButton!
-//    不同意按钮
+
+//  某某家长
+    @IBOutlet weak var somebodyLabel: UILabel!
+    
+//  哪个班级
+    @IBOutlet weak var banjiLable: UILabel!
+    //    不同意按钮
     @IBOutlet weak var disagreeBtn: UIButton!
     override func awakeFromNib() {
         super.awakeFromNib()

@@ -10,6 +10,12 @@ import UIKit
 
 class TeacherTableViewCell: UITableViewCell {
 
+    
+    @IBOutlet weak var headImageView: UIImageView!
+    
+    @IBOutlet weak var nameLbl: UILabel!
+    
+    @IBOutlet weak var introduceLbl: UILabel!
     override func awakeFromNib() {
         super.awakeFromNib()
         // Initialization code

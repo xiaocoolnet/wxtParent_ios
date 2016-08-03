@@ -47,11 +47,6 @@ class ForgetPasswordViewController: UIViewController {
             alerView.delegate = self
             alerView.tag = 1
             alerView.show()
-        }else if (!isTelNumber(phoneNum)){//判断输入是否是电话号码
-            let alert = UIAlertController(title: "手机号输入错误", message: "请重新输入", preferredStyle: .Alert)
-            alert.addAction(UIAlertAction(title: "取消", style: .Cancel, handler: nil))
-            alert.addAction(UIAlertAction(title: "确定", style: .Default, handler: nil))
-            self.presentViewController(alert, animated: true, completion: nil)
         }else{
             let alerView:UIAlertView = UIAlertView()
             alerView.title = "发送验证码到"
@@ -94,25 +89,14 @@ class ForgetPasswordViewController: UIViewController {
                 print("状态是")
                 print(status.status)
                 if(status.status == "error"){
-                    let hud = MBProgressHUD.showHUDAddedTo(self.view, animated: true)
-                    hud.mode = MBProgressHUDMode.Text;
-                    hud.labelText = status.errorData
-                    hud.margin = 10.0
-                    hud.removeFromSuperViewOnHide = true
-                    hud.hide(true, afterDelay: 1)
+                    messageHUD(self.view, messageData: status.errorData!)
                 }
                 
                 if(status.status == "success"){
                     print("Success")
-                    let hud = MBProgressHUD.showHUDAddedTo(self.view, animated: true)
-                    hud.mode = MBProgressHUDMode.Text;
-                    hud.labelText = "登录成功"
-                    hud.margin = 10.0
-                    hud.removeFromSuperViewOnHide = true
-                    hud.hide(true, afterDelay: 1)
-                    let userid = NSUserDefaults.standardUserDefaults()
-                    userid.setValue(status.data?.id, forKey: "userid")
-                    //let uid = userid.valueForKey("userid")
+                    successHUD(self.view, successData: "登录成功")
+                    let userDefaults = NSUserDefaults.standardUserDefaults()
+                    userDefaults.setValue(status.data?.id, forKey: "userid")
                     
                     let mainStoryboard = UIStoryboard(name: "Main", bundle: NSBundle.mainBundle())
                     let vc : UIViewController = mainStoryboard.instantiateViewControllerWithIdentifier("ForgetPasswordView") 
@@ -128,29 +112,14 @@ class ForgetPasswordViewController: UIViewController {
     }
 //    判空
     func PandKong()->Bool{
-        let phoneNum:String =  (phoneNumberText.text)!
+        
         if(phoneNumberText.text!.isEmpty){
-            let hud = MBProgressHUD.showHUDAddedTo(self.view, animated: true)
-            hud.mode = MBProgressHUDMode.Text
-            hud.labelText = "请输入手机号"
-            hud.margin = 10.0
-            hud.removeFromSuperViewOnHide = true
-            hud.hide(true, afterDelay: 1)
+            messageHUD(self.view, messageData: "请输入手机号")
             return false
-        }else if (!isTelNumber(phoneNum)){//判断输入是否是电话号码
-            let alert = UIAlertController(title: "手机号输入错误", message: "请重新输入", preferredStyle: .Alert)
-            alert.addAction(UIAlertAction(title: "取消", style: .Cancel, handler: nil))
-            alert.addAction(UIAlertAction(title: "确定", style: .Default, handler: nil))
-            self.presentViewController(alert, animated: true, completion: nil)
         }
         
         if(codeText.text!.isEmpty){
-            let hud = MBProgressHUD.showHUDAddedTo(self.view, animated: true)
-            hud.mode = MBProgressHUDMode.Text
-            hud.labelText = "请输入验证码"
-            hud.margin = 10.0
-            hud.removeFromSuperViewOnHide = true
-            hud.hide(true, afterDelay: 1)
+            messageHUD(self.view, messageData: "请输入验证码")
             return false
         }
         return true
@@ -208,6 +177,8 @@ class ForgetPasswordViewController: UIViewController {
         ]
         Alamofire.request(.GET, url, parameters: param).response { request, response, json, error in
             if(error != nil){
+            }else{
+                print(request)
             }
         }
     }
@@ -215,28 +186,6 @@ class ForgetPasswordViewController: UIViewController {
     override func touchesBegan(touches: Set<UITouch>, withEvent event: UIEvent?) {
         self.view.endEditing(true)
     }
-    //    判断是否为电话号码
-    func isTelNumber(num:NSString)->Bool
-    {
-        let mobile = "^1(3[0-9]|5[0-35-9]|8[025-9])\\d{8}$"
-        let  CM = "^1(34[0-8]|(3[5-9]|5[017-9]|8[278])\\d)\\d{7}$"
-        let  CU = "^1(3[0-2]|5[256]|8[56])\\d{8}$"
-        let  CT = "^1((33|53|8[09])[0-9]|349)\\d{7}$"
-        let regextestmobile = NSPredicate(format: "SELF MATCHES %@",mobile)
-        let regextestcm = NSPredicate(format: "SELF MATCHES %@",CM )
-        let regextestcu = NSPredicate(format: "SELF MATCHES %@" ,CU)
-        let regextestct = NSPredicate(format: "SELF MATCHES %@" ,CT)
-        if ((regextestmobile.evaluateWithObject(num) == true)
-            || (regextestcm.evaluateWithObject(num)  == true)
-            || (regextestct.evaluateWithObject(num) == true)
-            || (regextestcu.evaluateWithObject(num) == true))
-        {
-            return true
-        }
-        else
-        {
-            return false
-        }
-    }
+    
 
 }

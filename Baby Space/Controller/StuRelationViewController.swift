@@ -10,10 +10,17 @@ import UIKit
 import Alamofire
 import MBProgressHUD
 
+protocol ToolProrocol:NSObjectProtocol{
+    //代理方法
+    func didRecieveStuInfo(studentid:String,studentName:String)
+}
+
 class StuRelationViewController: UIViewController,UITableViewDelegate,UITableViewDataSource{
 
     let table = UITableView()
     var childrenSource = ChildrenList()
+    weak var delegate:ToolProrocol?
+    
     override func viewDidLoad() {
         super.viewDidLoad()
 
@@ -22,6 +29,7 @@ class StuRelationViewController: UIViewController,UITableViewDelegate,UITableVie
         self.createTable()
         self.getDate()
     }
+//    创建表
     func createTable(){
         table.frame = CGRectMake(0, 0, self.view.frame.size.width, self.view.frame.size.height-64)
         table.delegate = self
@@ -31,6 +39,7 @@ class StuRelationViewController: UIViewController,UITableViewDelegate,UITableVie
         
         table.registerNib(UINib.init(nibName: "ChildrenTableViewCell", bundle: nil), forCellReuseIdentifier: "ChildrenCellID")
     }
+//    加载数据
     func getDate(){
 //        http://wxt.xiaocool.net/index.php?g=apps&m=index&a=GetUserRelation&userid=597
         
@@ -66,12 +75,15 @@ class StuRelationViewController: UIViewController,UITableViewDelegate,UITableVie
             }
         }
     }
+//    行数
     func tableView(tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         return childrenSource.count
     }
+//    行高
     func tableView(tableView: UITableView, heightForRowAtIndexPath indexPath: NSIndexPath) -> CGFloat {
         return 70
     }
+//    单元格
     func tableView(tableView: UITableView, cellForRowAtIndexPath indexPath: NSIndexPath) -> UITableViewCell {
         let cell = tableView.dequeueReusableCellWithIdentifier("ChildrenCellID", forIndexPath: indexPath)
             as! ChildrenTableViewCell
@@ -85,11 +97,10 @@ class StuRelationViewController: UIViewController,UITableViewDelegate,UITableVie
         cell.nameLbl.text = childrenInfo.studentname
         return cell
     }
+//    单元格点击事件
     func tableView(tableView: UITableView, didSelectRowAtIndexPath indexPath: NSIndexPath) {
         let childrenInfo = self.childrenSource.objectlist[indexPath.row]
-        let vc = TeacherListViewController()
-        vc.studentid = childrenInfo.studentid
-        vc.studentName = childrenInfo.studentname
-        self.navigationController?.pushViewController(vc, animated: true)
+        self.delegate?.didRecieveStuInfo(childrenInfo.studentid!, studentName: childrenInfo.studentname!)
+        self.navigationController?.popViewControllerAnimated(true)
     }
 }

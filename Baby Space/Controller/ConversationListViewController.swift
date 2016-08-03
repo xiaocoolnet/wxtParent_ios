@@ -13,21 +13,154 @@ class ConversationListViewController: EaseConversationListViewController,EaseCon
     let conversationsArray = NSMutableArray()
     let networkStateView = UIView()
 
+    override func viewWillAppear(animated: Bool) {
+        self.tabBarController?.tabBar.hidden = false
+    }
     override func viewDidLoad() {
         super.viewDidLoad()
-//        self.tabBarController?.tabBar.hidden = true
-        self.title = "聊天列表"
         
+        self.title = "聊天列表"
         self.showRefreshHeader = true
         self.delegate = self
         self.dataSource = self
         
         self.tableViewDidTriggerHeaderRefresh()
-        self.tableView.frame = CGRectMake(0, 0, self.view.frame.size.width, self.view.frame.size.height)
+        self.createUI()
+        //  改变了tableView 的高度
+        self.tableView.frame = CGRectMake(0, 281, WIDTH, HEIGHT-281 + 64)
 //        网络出现故障时
         self.NetworkStateView()
 
     }
+//    创建界面
+    func createUI(){
+        let v = UIView(frame:CGRectMake(0,0,self.view.frame.size.width,281))
+        v.backgroundColor = UIColor.whiteColor()
+        self.view.addSubview(v)
+        
+        let imageView1 = UIImageView(frame:CGRectMake(10,10,50,50))
+        imageView1.layer.cornerRadius = 25
+        imageView1.image = UIImage(named: "最新消息")
+        v.addSubview(imageView1)
+        
+        let lbl1 = UILabel(frame:CGRectMake(70,10,100,20))
+        lbl1.text = "系统消息"
+        v.addSubview(lbl1)
+        
+        let lbl11 = UILabel(frame:CGRectMake(70,40,100,20))
+        lbl11.text = "最新系统消息"
+        lbl11.font = UIFont.systemFontOfSize(14)
+        lbl11.textColor = UIColor.lightGrayColor()
+        v.addSubview(lbl11)
+        
+        let lineview = UIView(frame:CGRectMake(0,70,self.view.frame.size.width,1))
+        lineview.backgroundColor = UIColor(red: 235/255.0, green: 235/255.0, blue: 235/255.0, alpha: 1)
+        v.addSubview(lineview)
+        
+        let imageView2 = UIImageView(frame:CGRectMake(10,80,50,50))
+        imageView2.layer.cornerRadius = 25
+        imageView2.image = UIImage(named: "最新消息")
+        v.addSubview(imageView2)
+        
+        let lbl2 = UILabel(frame:CGRectMake(70,80,100,20))
+        lbl2.text = "群发消息"
+        v.addSubview(lbl2)
+        
+        let lbl21 = UILabel(frame:CGRectMake(70,110,100,20))
+        lbl21.text = "最新群发消息"
+        lbl21.font = UIFont.systemFontOfSize(14)
+        lbl21.textColor = UIColor.lightGrayColor()
+        v.addSubview(lbl21)
+        
+        let lineview1 = UIView(frame:CGRectMake(0,140,self.view.frame.size.width,1))
+        lineview1.backgroundColor = UIColor(red: 235/255.0, green: 235/255.0, blue: 235/255.0, alpha: 1)
+        v.addSubview(lineview1)
+        
+        let imageView3 = UIImageView(frame:CGRectMake(10,150,50,50))
+        imageView3.layer.cornerRadius = 25
+        imageView3.image = UIImage(named: "ic_wodezuoye.png")
+        v.addSubview(imageView3)
+        
+        let lbl3 = UILabel(frame:CGRectMake(70,150,100,20))
+        lbl3.text = "我的作业"
+        v.addSubview(lbl3)
+        
+        let lbl31 = UILabel(frame:CGRectMake(70,180,100,20))
+        lbl31.text = "今天作业"
+        lbl31.font = UIFont.systemFontOfSize(14)
+        lbl31.textColor = UIColor.lightGrayColor()
+        v.addSubview(lbl31)
+        
+        let lineview2 = UIView(frame:CGRectMake(0,210,self.view.frame.size.width,1))
+        lineview2.backgroundColor = UIColor(red: 235/255.0, green: 235/255.0, blue: 235/255.0, alpha: 1)
+        v.addSubview(lineview2)
+        
+        let imageView4 = UIImageView(frame:CGRectMake(10,220,50,50))
+        imageView4.layer.cornerRadius = 25
+        imageView4.image = UIImage(named: "Logo")
+        v.addSubview(imageView4)
+        
+        let lbl4 = UILabel(frame:CGRectMake(70,220,100,20))
+        lbl4.text = "通讯录"
+        v.addSubview(lbl4)
+        
+        let lbl41 = UILabel(frame:CGRectMake(70,250,100,20))
+        lbl41.text = "老师通讯录"
+        lbl41.font = UIFont.systemFontOfSize(14)
+        lbl41.textColor = UIColor.lightGrayColor()
+        v.addSubview(lbl41)
+        
+        let lineview3 = UIView(frame:CGRectMake(0,280,self.view.frame.size.width,1))
+        lineview3.backgroundColor = UIColor(red: 235/255.0, green: 235/255.0, blue: 235/255.0, alpha: 1)
+        v.addSubview(lineview3)
+        
+        let btn = UIButton(frame: CGRectMake(0,0,WIDTH,70))
+        btn.backgroundColor = UIColor.clearColor()
+        btn.addTarget(self, action: #selector(ConversationListViewController.systemNewsBtn), forControlEvents: .TouchUpInside)
+        v.addSubview(btn)
+        
+        let btn1 = UIButton(frame: CGRectMake(0,70,WIDTH,70))
+        btn1.backgroundColor = UIColor.clearColor()
+        btn1.addTarget(self, action: #selector(ConversationListViewController.groupNewsBtn), forControlEvents: .TouchUpInside)
+        v.addSubview(btn1)
+        
+        let btn2 = UIButton(frame: CGRectMake(0,140,WIDTH,70))
+        btn2.backgroundColor = UIColor.clearColor()
+        btn2.addTarget(self, action: #selector(ConversationListViewController.homeworkBtn), forControlEvents: .TouchUpInside)
+        v.addSubview(btn2)
+        
+        let btn3 = UIButton(frame: CGRectMake(0,210,WIDTH,70))
+        btn3.backgroundColor = UIColor.clearColor()
+        btn3.addTarget(self, action: #selector(ConversationListViewController.addressBtn), forControlEvents: .TouchUpInside)
+        v.addSubview(btn3)
+        
+
+    }
+//    我的作业
+    func homeworkBtn(){
+//        let vc = HomeworkViewController()
+        let vc = TabViewController()
+        
+        self.navigationController?.pushViewController(vc, animated: true)
+    }
+//    通讯录
+    func addressBtn(){
+        let vc = AddressViewController()
+        self.navigationController?.pushViewController(vc, animated: true)
+    }
+//    系统消息
+    func systemNewsBtn(){
+        let vc = SystemNewsViewController()
+        self.navigationController?.pushViewController(vc, animated: true)
+    }
+//    群发消息
+    func groupNewsBtn(){
+//        let vc = GroupNewsViewController()
+        let vc = FSendNewsViewController()
+        
+        self.navigationController?.pushViewController(vc, animated: true)
+    }
+//    网络判断
     func NetworkStateView()->UIView{
         if self.networkStateView.isKindOfClass(NSNull) {
            self.networkStateView.frame = CGRectMake(0, 0, self.tableView.frame.size.width, 44)
@@ -62,16 +195,6 @@ class ConversationListViewController: EaseConversationListViewController,EaseCon
         let model = EaseConversationModel(conversation: conversation)
         return model
     }
-//    最后一条的时间
-    func conversationListViewController(conversationListViewController: EaseConversationListViewController!, latestMessageTimeForConversationModel conversationModel: IConversationModel!) -> String! {
-        var latestMessageTime = ""
-        let lastMessage:EMMessage = conversationModel.conversation.latestMessage()
-        if lastMessage != "" {
-           latestMessageTime = NSDate.formattedTimeFromTimeInterval(lastMessage.timestamp)
-        }
-        return latestMessageTime
-    }
-
     
     func refreshDataSource(){
        self.tableViewDidTriggerHeaderRefresh()

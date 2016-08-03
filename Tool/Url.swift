@@ -7,6 +7,8 @@
 //
 
 import Foundation
+
+var kURL = "http://wxt.xiaocool.net/index.php?g=apps"
 var apiUrl = "http://wxt.xiaocool.net/index.php?g=apps&m=index&a="
 var imageUrl = "http://wxt.xiaocool.net/uploads/avatar/"
 var microblogImageUrl = "http://wxt.xiaocool.net/uploads/microblog/"

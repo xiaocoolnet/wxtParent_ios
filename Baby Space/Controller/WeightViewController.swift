@@ -7,77 +7,78 @@
 //
 
 import UIKit
-import SwiftCharts
+import Alamofire
+import MBProgressHUD
 
-class WeightViewController: UIViewController {
-
-    private var chart: Chart?
-    private var avrWeightChart:Chart?
-    @IBOutlet weak var weightView: UIView!
+class WeightViewController: UIViewController, HisPickerViewDelegate {
     
-    @IBOutlet weak var avrWeightView: UIView!
+    
+    @IBOutlet weak var weightTextFiled: UITextField!
+    
+    var chartView:HisDatePicer?
+    let lable = UILabel()
+    
     override func viewDidLoad() {
         super.viewDidLoad()
-
-        let labelSettings = ChartLabelSettings(font: ExamplesDefaults.labelFont)
-        let chartPoints = [(1, 22), (3, 23), (5, 24), (6, 25), (8, 25), (9, 26), (10, 26)].map{ChartPoint(x: ChartAxisValueInt($0.0), y: ChartAxisValueInt($0.1))}
-        let avrWeight = [(1, 22), (3, 23), (5, 24), (6, 25), (8, 25), (9, 26), (10, 26)].map{ChartPoint(x: ChartAxisValueInt($0.0), y: ChartAxisValueInt($0.1))}
-        let xValues = Array(1.stride(through: 12, by: 1)).map {ChartAxisValueInt($0, labelSettings: labelSettings)}
-        let yValues = Array(20.stride(through: 30, by: 2)).map {ChartAxisValueInt($0, labelSettings: labelSettings)}
         
-        let xModel = ChartAxisModel(axisValues: xValues, axisTitleLabel: ChartAxisLabel(text: "月份", settings: labelSettings))
-        let yModel = ChartAxisModel(axisValues: yValues, axisTitleLabel: ChartAxisLabel(text: "体重", settings: labelSettings))
+        self.tabBarController?.tabBar.hidden = true
+//        完成
+        self.navigationItem.rightBarButtonItem = UIBarButtonItem(title: "完成", style: .Plain, target: self, action: #selector(WeightViewController.finished))
         
-        let chartSettings = ExamplesDefaults.chartSettings
-        let coordsSpace = ChartCoordsSpaceLeftBottomSingleAxis(chartSettings: chartSettings, chartFrame: CGRectMake(1, 1, 300, 200), xModel: xModel, yModel: yModel)
-        let (xAxis, yAxis, innerFrame) = (coordsSpace.xAxis, coordsSpace.yAxis, coordsSpace.chartInnerFrame)
+        lable.frame = CGRectMake(20, 300, 200, 20)
+        lable.backgroundColor = UIColor.lightGrayColor()
+        self.view.addSubview(lable)
         
-        // create layer with line
-        let lineModel = ChartLineModel(chartPoints: chartPoints, lineColor: UIColor(red: 0.4, green: 0.4, blue: 1, alpha: 0.2), lineWidth: 3, animDuration: 0.7, animDelay: 0)
-        let avrlineModel = ChartLineModel(chartPoints: avrWeight, lineColor: UIColor(red: 0.4, green: 0.4, blue: 1, alpha: 0.2), lineWidth: 3, animDuration: 0.7, animDelay: 0)
-        let chartPointsLineLayer = ChartPointsLineLayer(xAxis: xAxis, yAxis: yAxis, innerFrame: innerFrame, lineModels: [lineModel])
-        let avrChartPointsLineLayer = ChartPointsLineLayer(xAxis: xAxis, yAxis: yAxis, innerFrame: innerFrame, lineModels: [avrlineModel])
-        
-        let circleViewGenerator = {(chartPointModel: ChartPointLayerModel, layer: ChartPointsLayer, chart: Chart) -> UIView? in
-            let circleView = ChartPointEllipseView(center: chartPointModel.screenLoc, diameter: 6)
-            circleView.animDuration = 0.5
-            circleView.fillColor = UIColor.redColor()
-            return circleView
-        }
-        let chartPointsCircleLayer = ChartPointsViewsLayer(xAxis: xAxis, yAxis: yAxis, innerFrame: innerFrame, chartPoints: chartPoints, viewGenerator: circleViewGenerator, displayDelay: 0, delayBetweenItems: 0.05)
-        let avrChartPointsCircleLayer = ChartPointsViewsLayer(xAxis: xAxis, yAxis: yAxis, innerFrame: innerFrame, chartPoints: avrWeight, viewGenerator: circleViewGenerator, displayDelay: 0, delayBetweenItems: 0.05)
-        let settings = ChartGuideLinesDottedLayerSettings(linesColor: UIColor.blackColor(), linesWidth: ExamplesDefaults.guidelinesWidth, dotWidth: 1.0, dotSpacing: 1.0)
-        let guidelinesLayer = ChartGuideLinesDottedLayer(xAxis: xAxis, yAxis: yAxis, innerFrame: innerFrame, settings: settings)
-        
-        let chart = Chart(
-            frame: CGRectMake(0, 0, 300, 200),
-            layers: [
-                xAxis,
-                yAxis,
-                guidelinesLayer,
-                chartPointsLineLayer,
-                chartPointsCircleLayer
-            ]
-        )
-        
-        let avrWeightChart = Chart(
-            frame: CGRectMake(0, 0, 300, 200),
-            layers: [
-                xAxis,
-                yAxis,
-                guidelinesLayer,
-                avrChartPointsLineLayer,
-                avrChartPointsCircleLayer
-            ]
-        )
-
-        
-        self.weightView.addSubview(chart.view)
-        self.avrWeightView.addSubview(avrWeightChart.view)
-        self.chart = chart
-        self.avrWeightChart = avrWeightChart
-        
-        
+        chartView = HisDatePicer()
+        chartView?.frame = CGRectMake(0, 350, WIDTH, HEIGHT/3)
+        chartView?.delegate = self
+//        self.view.addSubview(chartView!)
     }
-
+    
+    func hisPickerView(alertView: HisDatePicer!) {
+//        self.lable.text = [NSString stringWithFormat:"%@",alertView.Taketime];
+        self.lable.text = String(alertView.Taketime)
+    }
+    
+//    完成
+    func finished(){
+        self.GetDate()
+    }
+//    记录体重
+    func GetDate(){
+        //http://wxt.xiaocool.net/index.php?g=apps&m=index&a=RecordWeight&stuid=599&weight=40
+        //下面两句代码是从缓存中取出userid（入参）值
+        let defalutid = NSUserDefaults.standardUserDefaults()
+        let sid = defalutid.stringForKey("chid")
+        let url = "http://wxt.xiaocool.net/index.php?g=apps&m=index&a=RecordWeight"
+        let param = [
+            "stuid":sid!,
+            "weight":self.weightTextFiled.text!
+        ]
+        Alamofire.request(.GET, url, parameters: param).response { request, response, json, error in
+            if(error != nil){
+            }
+            else{
+                print("request是")
+                print(request!)
+                print("====================")
+                let status = Http(JSONDecoder(json!))
+                print("状态是")
+                print(status.status)
+                if(status.status == "error"){
+                    let hud = MBProgressHUD.showHUDAddedTo(self.view, animated: true)
+                    hud.mode = MBProgressHUDMode.Text
+                    hud.labelText = "今天已经记录"
+                    hud.margin = 10.0
+                    hud.removeFromSuperViewOnHide = true
+                    hud.hide(true, afterDelay: 1)
+                }
+                if(status.status == "success"){
+                    print("记录体重成功")
+                    let vc = WeightNoteViewController()
+                    self.navigationController?.pushViewController(vc, animated: true)
+                }
+            }
+        }
+    }
 }

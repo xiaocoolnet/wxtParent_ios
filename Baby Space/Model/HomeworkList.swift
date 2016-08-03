@@ -31,30 +31,24 @@ class HomeworkList: JSONJoy {
 }
 
 class HomeworkInfo: JSONJoy{
-    var allreader:Int?
-    var content:String?
-    var create_time:String?
+    var homework_id:String?
     var id:String?
-    var photo:String?
-    var readcount:Int?
-    var readtag:Int?
-    var userid:String?
-    var username:String?
-    var title:String?
+    var read_time:String?
+    var receiverid:String?
+
+    var homework_info:JSONDecoder?
+    var picture:JSONDecoder?
+    
     init() {
         
     }
     required init(_ decoder: JSONDecoder){
-        allreader = decoder["allreader"].integer
-        content = decoder["content"].string
-        create_time = decoder["create_time"].string
+        homework_id = decoder["homework_id"].string
         id = decoder["id"].string
-        photo = decoder["photo"].string
-        readcount = decoder["readcount"].integer
-        readtag = decoder["readtag"].integer
-        userid = decoder["userid"].string
-        username = decoder["username"].string
-        title = decoder["title"].string
+        read_time = decoder["read_time"].string
+        receiverid = decoder["receiverid"].string
+        homework_info = decoder["homework_info"]
+        picture = decoder["picture"]
     }
     
 }

@@ -31,18 +31,28 @@ class FoodList: JSONJoy {
 }
 
 class FoodInfo: JSONJoy{
-    var recipe_pic:String?
-    var recipe_title:String?
-    var recipe_info:String?
 
+    
+    var content:String?
+    var create_time:String?
+    var date:String?
+    var id:String?
+    var photo:String?
+    var title:String?
+    
     
     init() {
         
     }
     required init(_ decoder: JSONDecoder){
-        recipe_pic = decoder["recipe_pic"].string
-        recipe_title = decoder["recipe_title"].string
-        recipe_info = decoder["recipe_info"].string
+
+        
+        content = decoder["content"].string
+        create_time = decoder["create_time"].string
+        date = decoder["date"].string
+        id = decoder["id"].string
+        photo = decoder["photo"].string
+        title = decoder["title"].string
     }
     
 }

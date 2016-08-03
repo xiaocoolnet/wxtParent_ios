@@ -9,18 +9,25 @@
 import UIKit
 import Alamofire
 import MBProgressHUD
-class BabyTeachersTableViewController: UITableViewController {
+import XWSwiftRefresh
 
+class BabyTeachersTableViewController: UITableViewController,UISearchBarDelegate{
+
+    @IBOutlet weak var searchBar: UISearchBar!
     @IBOutlet var tableSource: UITableView!
-    var BabySource = BabyTeacherList()
+    var teacherSource = BabyTeacherList()
+    
     override func viewDidLoad() {
         super.viewDidLoad()
+        searchBar.delegate = self
         GetDate()
-        // Uncomment the following line to preserve selection between presentations
-        // self.clearsSelectionOnViewWillAppear = false
-
-        // Uncomment the following line to display an Edit button in the navigation bar for this view controller.
-        // self.navigationItem.rightBarButtonItem = self.editButtonItem()
+        self.DropDownUpdate()
+    }
+    //    开始刷新
+    func DropDownUpdate(){
+        self.tableSource.headerView = XWRefreshNormalHeader(target: self, action: #selector(BabyTeachersTableViewController.GetDate))
+        self.tableSource.reloadData()
+        self.tableSource.headerView?.beginRefreshing()
     }
     func GetDate(){
         let defalutid = NSUserDefaults.standardUserDefaults()
@@ -28,6 +35,7 @@ class BabyTeachersTableViewController: UITableViewController {
         let clid = defalutid.stringForKey("classid")
         let url = apiUrl + "OnlineLeaveTeacher"
         let param = [
+            //  获取还在所在班级的classid  和 schoolid
             "schoolid":sid!,
             "classid":clid!
         ]
@@ -50,45 +58,61 @@ class BabyTeachersTableViewController: UITableViewController {
                     hud.hide(true, afterDelay: 1)
                 }
                 if(status.status == "success"){
-                    self.BabySource = BabyTeacherList(status.data!)
+                    self.teacherSource = BabyTeacherList(status.data!)
                     self.tableSource.reloadData()
+                    self.tableSource.headerView?.endRefreshing()
                 }
             }
         }
-
-    
-    
     }
-    override func didReceiveMemoryWarning() {
-        super.didReceiveMemoryWarning()
-        // Dispose of any resources that can be recreated.
-    }
-
-    // MARK: - Table view data source
-
-    override func numberOfSectionsInTableView(tableView: UITableView) -> Int {
-        // #warning Incomplete implementation, return the number of sections
-        return 1
-    }
-
+    //行数
     override func tableView(tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        // #warning Incomplete implementation, return the number of rows
-        return BabySource.count
+        return teacherSource.count
     }
-
     
+    //    单元格
     override func tableView(tableView: UITableView, cellForRowAtIndexPath indexPath: NSIndexPath) -> UITableViewCell {
         let cell = tableView.dequeueReusableCellWithIdentifier("BabyTeachersCell", forIndexPath: indexPath) as!BabyTeachersTableViewCell
-        //cell.BabyTeacherLabel.text = "李老师"
-        let babyInfo = self.BabySource.objectlist[indexPath.row]
-        let dateformate = NSDateFormatter()
-        dateformate.dateFormat = "MM-dd"
-        cell.BabyTeacherLabel.text = babyInfo.teachername!
-        cell.TeacherPhone.text = babyInfo.teacherphone!
-    
-        // Configure the cell...
-
+        
+        let teacherInfo = self.teacherSource.objectlist[indexPath.row]
+        cell.teacherNameLbl.text = teacherInfo.teachername
+        cell.messgaeBtn.addTarget(self, action: #selector(BabyTeachersTableViewController.messagePress(_:)), forControlEvents: .TouchUpInside)
+        cell.messgaeBtn.tag = indexPath.row
+        cell.callBtn.addTarget(self, action: #selector(BabyTeachersTableViewController.callPress(_:)), forControlEvents: .TouchUpInside)
+        cell.callBtn.tag = indexPath.row
+        
         return cell
     }
-
+    //    －－－－－－－－－－－－－－－－－UISearchBarDelegate－－－－－－－－－－－－－－－－
+    //    搜索
+    func searchBar(searchBar: UISearchBar, textDidChange searchText: String) {
+        print(searchText)
+        if searchText == ""{
+        }else{
+            for teacherInfo in self.teacherSource.objectlist {
+                let nameStr:String = teacherInfo.teachername!
+                if nameStr.lowercaseString.hasPrefix(searchText.lowercaseString){
+                    self.teacherSource.objectlist.removeAll()
+                    self.teacherSource.objectlist.append(teacherInfo)
+                }
+            }
+        }
+        self.tableSource.reloadData()
+    }
+    //    发消息
+    func messagePress(sender:UIButton){
+        let btn:UIButton = sender
+        let teacherInfo = self.teacherSource.objectlist[btn.tag]
+        let chatView = ChatViewController(conversationChatter: teacherInfo.teacherid!, conversationType: EMConversationType.eConversationTypeChat)
+        chatView.title = teacherInfo.teachername!
+        self.navigationController?.pushViewController(chatView, animated: true)
+    }
+    //    打电话
+    func callPress(sender:UIButton){
+        let btn:UIButton = sender
+        let teacherInfo = self.teacherSource.objectlist[btn.tag]
+        var phone = String()
+        phone = "telprompt:\(String(teacherInfo.teacherphone!))"
+        UIApplication.sharedApplication().openURL(NSURL.init(string: phone)!)
+    }
 }

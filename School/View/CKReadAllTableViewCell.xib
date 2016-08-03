@@ -1,0 +1,88 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="10117" systemVersion="15D21" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES">
+    <dependencies>
+        <deployment identifier="iOS"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="10085"/>
+    </dependencies>
+    <objects>
+        <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner"/>
+        <placeholder placeholderIdentifier="IBFirstResponder" id="-2" customClass="UIResponder"/>
+        <tableViewCell contentMode="scaleToFill" selectionStyle="default" indentationWidth="10" reuseIdentifier="CKReadAllCell" rowHeight="585" id="E7K-my-czf" customClass="CKReadAllTableViewCell" customModule="WXT_Parents" customModuleProvider="target">
+            <rect key="frame" x="0.0" y="0.0" width="391" height="585"/>
+            <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+            <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="E7K-my-czf" id="hrr-il-h19">
+                <rect key="frame" x="0.0" y="0.0" width="391" height="584"/>
+                <autoresizingMask key="autoresizingMask"/>
+                <subviews>
+                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="育儿知识" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Lak-IV-eAl">
+                        <rect key="frame" x="10" y="10" width="371" height="20"/>
+                        <constraints>
+                            <constraint firstAttribute="height" constant="20" id="Jvw-PB-j0U"/>
+                        </constraints>
+                        <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                        <color key="textColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
+                        <nil key="highlightedColor"/>
+                    </label>
+                    <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="无网络的背景" translatesAutoresizingMaskIntoConstraints="NO" id="1Dd-0o-J9x">
+                        <rect key="frame" x="10" y="40" width="371" height="150"/>
+                        <constraints>
+                            <constraint firstAttribute="height" constant="150" id="OHb-Rc-SZl"/>
+                        </constraints>
+                    </imageView>
+                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="育儿知识育儿知识育儿知识育儿知识育儿知识育儿知识育儿知识育儿知识育儿知识育儿知识育儿知识育儿知识育儿知识育儿知识育儿知识" textAlignment="natural" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="pG3-Gc-tJP">
+                        <rect key="frame" x="10" y="200" width="371" height="54"/>
+                        <constraints>
+                            <constraint firstAttribute="height" relation="greaterThanOrEqual" constant="20" id="M5s-7B-kY9"/>
+                        </constraints>
+                        <fontDescription key="fontDescription" type="system" pointSize="15"/>
+                        <color key="textColor" red="0.3766506577" green="0.3766506577" blue="0.3766506577" alpha="1" colorSpace="calibratedRGB"/>
+                        <nil key="highlightedColor"/>
+                    </label>
+                    <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="N1z-0n-RLd">
+                        <rect key="frame" x="0.0" y="264" width="391" height="1"/>
+                        <color key="backgroundColor" red="0.93725490199999995" green="0.93725490199999995" blue="0.95686274510000002" alpha="1" colorSpace="calibratedRGB"/>
+                        <constraints>
+                            <constraint firstAttribute="height" constant="1" id="iNH-zc-yJw"/>
+                        </constraints>
+                    </view>
+                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="2016-03-02 12:22" textAlignment="right" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="OWs-AV-O2Z">
+                        <rect key="frame" x="231" y="275" width="150" height="20"/>
+                        <constraints>
+                            <constraint firstAttribute="height" constant="20" id="lji-tQ-8oF"/>
+                            <constraint firstAttribute="width" constant="150" id="tVQ-M3-KHy"/>
+                        </constraints>
+                        <fontDescription key="fontDescription" type="system" pointSize="15"/>
+                        <color key="textColor" white="0.67000000000000004" alpha="1" colorSpace="calibratedWhite"/>
+                        <nil key="highlightedColor"/>
+                    </label>
+                </subviews>
+                <constraints>
+                    <constraint firstAttribute="trailing" secondItem="Lak-IV-eAl" secondAttribute="trailing" constant="10" id="7ra-TG-Kep"/>
+                    <constraint firstItem="N1z-0n-RLd" firstAttribute="leading" secondItem="hrr-il-h19" secondAttribute="leading" id="Ah3-7N-JYN"/>
+                    <constraint firstAttribute="trailing" secondItem="OWs-AV-O2Z" secondAttribute="trailing" constant="10" id="BiH-Ts-CXj"/>
+                    <constraint firstItem="OWs-AV-O2Z" firstAttribute="top" secondItem="N1z-0n-RLd" secondAttribute="bottom" constant="10" id="FOg-2H-Urr"/>
+                    <constraint firstItem="N1z-0n-RLd" firstAttribute="top" secondItem="pG3-Gc-tJP" secondAttribute="bottom" constant="10" id="Oke-Ba-Yb5"/>
+                    <constraint firstItem="1Dd-0o-J9x" firstAttribute="leading" secondItem="hrr-il-h19" secondAttribute="leading" constant="10" id="UC0-g2-x8o"/>
+                    <constraint firstItem="pG3-Gc-tJP" firstAttribute="leading" secondItem="hrr-il-h19" secondAttribute="leading" constant="10" id="era-If-MFh"/>
+                    <constraint firstItem="Lak-IV-eAl" firstAttribute="leading" secondItem="hrr-il-h19" secondAttribute="leading" constant="10" id="hAG-vK-f6W"/>
+                    <constraint firstAttribute="trailing" secondItem="pG3-Gc-tJP" secondAttribute="trailing" constant="10" id="oo9-gV-o0x"/>
+                    <constraint firstItem="Lak-IV-eAl" firstAttribute="top" secondItem="hrr-il-h19" secondAttribute="top" constant="10" id="r91-IH-ZhL"/>
+                    <constraint firstItem="1Dd-0o-J9x" firstAttribute="top" secondItem="Lak-IV-eAl" secondAttribute="bottom" constant="10" id="v4A-iq-7Sg"/>
+                    <constraint firstItem="pG3-Gc-tJP" firstAttribute="top" secondItem="1Dd-0o-J9x" secondAttribute="bottom" constant="10" id="vk6-4E-1c5"/>
+                    <constraint firstAttribute="trailing" secondItem="1Dd-0o-J9x" secondAttribute="trailing" constant="10" id="wD6-Od-fra"/>
+                    <constraint firstAttribute="trailing" secondItem="N1z-0n-RLd" secondAttribute="trailing" id="wrh-BT-nCK"/>
+                </constraints>
+            </tableViewCellContentView>
+            <connections>
+                <outlet property="bigImageView" destination="1Dd-0o-J9x" id="34Z-px-hee"/>
+                <outlet property="contentLbl" destination="pG3-Gc-tJP" id="S7j-Fa-BWW"/>
+                <outlet property="timeLbl" destination="OWs-AV-O2Z" id="B24-Ru-piq"/>
+                <outlet property="titleLbl" destination="Lak-IV-eAl" id="nVh-g7-dFX"/>
+            </connections>
+            <point key="canvasLocation" x="31.5" y="387.5"/>
+        </tableViewCell>
+    </objects>
+    <resources>
+        <image name="无网络的背景" width="709" height="370"/>
+    </resources>
+</document>

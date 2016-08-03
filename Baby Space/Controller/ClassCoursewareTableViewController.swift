@@ -11,59 +11,32 @@ import Alamofire
 import ImageSlideshow
 import XWSwiftRefresh
 import MBProgressHUD
-
+//宝宝课件
 class ClassCoursewareTableViewController: UITableViewController {
     
-    
     @IBOutlet var tableSource: UITableView!
-    @IBOutlet weak var ImageSlide: ImageSlideshow!
-
-    var classSource = ClassList()
-    var imageCache = Dictionary<String,UIImage>()
+    var dataSource = CoursewareList()
     
     override func viewDidLoad() {
         super.viewDidLoad()
-      
-         DropDownUpdate()
-        ScrollViewImage()
+//     隐藏标签栏
+        self.tabBarController?.tabBar.hidden = true
         
-        
-        // Uncomment the following line to preserve selection between presentations
-        // self.clearsSelectionOnViewWillAppear = false
-        
-        // Uncomment the following line to display an Edit button in the navigation bar for this view controller.
-        // self.navigationItem.rightBarButtonItem = self.editButtonItem()
+        GETData()
     }
+//    行数
     
-    func DropDownUpdate(){
-    self.tableView.headerView = XWRefreshNormalHeader(target: self, action: #selector(ClassCoursewareTableViewController.GetDate))
-    self.tableView.headerView?.beginRefreshing()
-    
-    }
-    /*
-    json{
-           status:success
-           data{
-    
-         }
-    }
-    */
-    
+    func GETData(){
+    //  http://wxt.xiaocool.net/index.php?g=apps&m=school&a=GetClassCoursewareType&schoolid=1&classid=1
 
-    func ScrollViewImage(){
-    ImageSlide.slideshowInterval = 5.0
-    ImageSlide.setImageInputs([AFURLSource(urlString: "http://www.xiaocool.cn:8016/uploads/Viwepager/1.png")!, AFURLSource(urlString: "http://www.xiaocool.cn:8016/uploads/Viwepager/2.png")!, AFURLSource(urlString: "http://www.xiaocool.cn:8016/uploads/Viwepager/3.png")!])
-    }
-    
-    func GetDate(){
-        let defalutid = NSUserDefaults.standardUserDefaults()
-        let cid = defalutid.stringForKey("chid")
-        let url = apiUrl+"BabyGrow"
-        let param = [
-            "babyid":cid!,
-            "beginid":"0"
-        ]
-        Alamofire.request(.GET, url, parameters: param).response { request, response, json, error in
+        let url = "http://wxt.xiaocool.net/index.php?g=apps&m=school&a=GetClassCoursewareType"
+        let userDefaults = NSUserDefaults.standardUserDefaults()
+        let schoolid = userDefaults.valueForKey("schoolid")
+        let classid = userDefaults.valueForKey("classid")
+        
+        let param = ["schoolid":schoolid,"classid":classid]
+        
+        Alamofire.request(.GET, url, parameters: param as? [String:AnyObject]).response { request, response, json, error in
             if(error != nil){
             }
             else{
@@ -76,68 +49,48 @@ class ClassCoursewareTableViewController: UITableViewController {
                 if(status.status == "error"){
                     let hud = MBProgressHUD.showHUDAddedTo(self.view, animated: true)
                     hud.mode = MBProgressHUDMode.Text
-                    hud.labelText = status.errorData
                     hud.margin = 10.0
                     hud.removeFromSuperViewOnHide = true
                     hud.hide(true, afterDelay: 1)
                 }
-                
                 if(status.status == "success"){
                     
-                     self.tableView.headerView?.endRefreshing()
-                    self.classSource = ClassList(status.data!)
+                    self.dataSource = CoursewareList(status.data!)
+                    print(self.dataSource.count)
                     self.tableSource.reloadData()
+                
                 }
             }
         }
 
+        
+        
+    
     }
-    
-    override func didReceiveMemoryWarning() {
-        super.didReceiveMemoryWarning()
-        // Dispose of any resources that can be recreated.
-    }
-    
-    // MARK: - Table view data source
-    
-    override func numberOfSectionsInTableView(tableView: UITableView) -> Int {
-        // #warning Incomplete implementation, return the number of sections
-        return 1
-    }
-    
     override func tableView(tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        // #warning Incomplete implementation, return the number of rows
-      
-        return classSource.count
+        return self.dataSource.count
     }
-    
-    
+//    单元格
     override func tableView(tableView: UITableView, cellForRowAtIndexPath indexPath: NSIndexPath) -> UITableViewCell {
-        let cell = tableView.dequeueReusableCellWithIdentifier("ClassCell", forIndexPath: indexPath) as!
-        ClassCellTableViewCell
+        let cell = tableView.dequeueReusableCellWithIdentifier("CourceCell", forIndexPath: indexPath) as!
+        CourceTableViewCell
+        cell.selectionStyle = .None
+        let model = self.dataSource.objectlist[indexPath.row]
+        cell.typeLbl.text = "\(model.subject)课件"
+        cell.countLabel.text = model.count
+        cell.countLabel.textColor = UIColor.lightGrayColor()
         
-       
-        let classInfo = self.classSource.objectlist[indexPath.row]
-        let dateformate = NSDateFormatter()
-        dateformate.dateFormat = "MM-dd"
-        cell.TitleLabel.text = classInfo.title!
-        let imgUrl = growCoverImageUrl+(classInfo.cover_photo!)
-        
-        let image = self.imageCache[imgUrl] as UIImage?
-        let avatarUrl = NSURL(string: imgUrl)
-        let request: NSURLRequest = NSURLRequest(URL: avatarUrl!)
-        //异步获取
-        NSURLConnection.sendAsynchronousRequest(request, queue: NSOperationQueue.mainQueue(), completionHandler: {(response: NSURLResponse?,data: NSData?,error: NSError?)-> Void in
-        if(data != nil){
-        let imgTmp = UIImage(data: data!)
-        self.imageCache[imgUrl] = imgTmp
-        cell.diaryImage.image = imgTmp
-        cell.diaryImage.alpha = 1.0
-        
-        }
-        })
-    
+
         return cell
+    }
+//    单元格点击事件
+    override func tableView(tableView: UITableView, didSelectRowAtIndexPath indexPath: NSIndexPath) {
+        let model = self.dataSource.objectlist[indexPath.row]
+ 
+        let vc = CourseDetailViewController()
+        vc.title = "班级课件"
+        vc.id = model.id
+        self.navigationController?.pushViewController(vc, animated: true)
     }
     
 }
