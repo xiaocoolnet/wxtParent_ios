@@ -39,11 +39,13 @@ class NoticeDetailViewController: UIViewController , UITableViewDelegate, UITabl
         let cell = UITableViewCell(style: .Default, reuseIdentifier:String(indexPath.row))
         cell.selectionStyle = .None
         tableView.separatorStyle = .None
-        let model = self.dateSource
+        let mode = self.dateSource
+        
+        let model = mode?.receive_list.first
         
         let img = UIImageView()
         img.frame = CGRectMake(10, 15, 40, 40)
-        let pict = model?.avatar
+        let pict = model?.photo
         let imgUrl = microblogImageUrl + pict!
         let photourl = NSURL(string: imgUrl)
         img.sd_setImageWithURL(photourl, placeholderImage: UIImage(named: "Logo"))
@@ -51,7 +53,7 @@ class NoticeDetailViewController: UIViewController , UITableViewDelegate, UITabl
         
         let nameLab = UILabel()
         nameLab.frame = CGRectMake(60, 10, 100, 20)
-        nameLab.text = model?.username
+        nameLab.text = model?.name
         cell.contentView.addSubview(nameLab)
         
         let timeLab = UILabel()
@@ -60,14 +62,11 @@ class NoticeDetailViewController: UIViewController , UITableViewDelegate, UITabl
         timeLab.textColor = UIColor.lightGrayColor()
         let dateformate = NSDateFormatter()
         dateformate.dateFormat = "yyyy-MM-dd HH:mm"
-        let date = NSDate(timeIntervalSince1970: NSTimeInterval(model!.create_time!)!)
+        let date = NSDate(timeIntervalSince1970: NSTimeInterval(model!.create_time)!)
         let st:String = dateformate.stringFromDate(date)
         timeLab.text = st
         timeLab.textAlignment = NSTextAlignment.Right
         cell.contentView.addSubview(timeLab)
-        
-        
-
         
         
         //  活动标题
@@ -93,44 +92,20 @@ class NoticeDetailViewController: UIViewController , UITableViewDelegate, UITabl
         let boundingRect = String(contentLbl.text).boundingRectWithSize(CGSizeMake(screenBounds.width, 0), options: options, attributes: [NSFontAttributeName:UIFont.systemFontOfSize(17)], context: nil)
         let height = boundingRect.size.height + 120
         //  活动图片
-        let pic = model!.pic
+        let pic = mode!.pic
         //  图片
         var image_h = CGFloat()
         var button:UIButton?
         
         
         //判断图片张数显示
-        if pic.count == 1 {
-            image_h=(WIDTH - 40)/3.0
-            let pciInfo = pic[0]
-            let imgUrl = microblogImageUrl+(pciInfo.pictureurl)
-            let avatarUrl = NSURL(string: imgUrl)
-            let request: NSURLRequest = NSURLRequest(URL: avatarUrl!)
-            NSURLConnection.sendAsynchronousRequest(request, queue: NSOperationQueue.mainQueue(), completionHandler: {(response: NSURLResponse?,data: NSData?,error: NSError?)-> Void in
-                if(data != nil){
-                    button = UIButton()
-                    button!.frame = CGRectMake(12, height, WIDTH - 24, (WIDTH - 40)/3.0)
-                    let imgTmp = UIImage(data: data!)
-                    
-                    button!.setImage(imgTmp, forState: .Normal)
-                    if button?.imageView?.image == nil{
-                        //                        button!.setImage(UIImage(named: "园所公告背景.png"), forState: .Normal)
-                        button?.setBackgroundImage(UIImage(named: "园所公告背景.png"), forState: .Normal)
-                    }
-                    button?.tag = indexPath.row
-                    button?.addTarget(self, action: #selector(self.clickBtn), forControlEvents: .TouchUpInside)
-                    cell.contentView.addSubview(button!)
-                    
-                }
-            })
-            
-        }
-        if(pic.count>1&&pic.count<=3){
+        
+        if(pic.count>0&&pic.count<=3){
             image_h=(WIDTH - 40)/3.0
             for i in 1...pic.count{
                 var x = 12
                 let pciInfo = pic[i-1]
-                let imgUrl = microblogImageUrl+(pciInfo.pictureurl)
+                let imgUrl = microblogImageUrl+(pciInfo.photo)
                 print(imgUrl)
                 
                 //let image = self.imageCache[imgUrl] as UIImage?
@@ -146,6 +121,8 @@ class NoticeDetailViewController: UIViewController , UITableViewDelegate, UITabl
                         let imgTmp = UIImage(data: data!)
                         
                         button!.setImage(imgTmp, forState: .Normal)
+                        button?.imageView?.contentMode = .ScaleAspectFill
+                        button?.clipsToBounds = true
                         if button?.imageView?.image == nil{
                             //                            button!.setImage(UIImage(named: "Logo"), forState: .Normal)
                             button?.setBackgroundImage(UIImage(named: "Logo"), forState: .Normal)
@@ -165,10 +142,10 @@ class NoticeDetailViewController: UIViewController , UITableViewDelegate, UITabl
                 if i <= 3 {
                     var x = 12
                     let pciInfo = pic[i-1]
-                    if pciInfo.pictureurl != "" {
+                    if pciInfo.photo != "" {
                         
                         
-                        let imgUrl = microblogImageUrl+(pciInfo.pictureurl)
+                        let imgUrl = microblogImageUrl+(pciInfo.photo)
                         
                         //let image = self.imageCache[imgUrl] as UIImage?
                         let avatarUrl = NSURL(string: imgUrl)
@@ -183,6 +160,8 @@ class NoticeDetailViewController: UIViewController , UITableViewDelegate, UITabl
                                 let imgTmp = UIImage(data: data!)
                                 
                                 button!.setImage(imgTmp, forState: .Normal)
+                                button?.imageView?.contentMode = .ScaleAspectFill
+                                button?.clipsToBounds = true
                                 if button?.imageView?.image == nil{
                                     button!.setImage(UIImage(named: "Logo"), forState: .Normal)
                                 }
@@ -194,8 +173,8 @@ class NoticeDetailViewController: UIViewController , UITableViewDelegate, UITabl
                     }}else{
                     var x = 12
                     let pciInfo = pic[i-1]
-                    if pciInfo.pictureurl != "" {
-                        let imgUrl = microblogImageUrl+(pciInfo.pictureurl)
+                    if pciInfo.photo != "" {
+                        let imgUrl = microblogImageUrl+(pciInfo.photo)
                         
                         //let image = self.imageCache[imgUrl] as UIImage?
                         let avatarUrl = NSURL(string: imgUrl)
@@ -209,6 +188,8 @@ class NoticeDetailViewController: UIViewController , UITableViewDelegate, UITabl
                                 let imgTmp = UIImage(data: data!)
                                 
                                 button!.setImage(imgTmp, forState: .Normal)
+                                button?.imageView?.contentMode = .ScaleAspectFill
+                                button?.clipsToBounds = true
                                 if button?.imageView?.image == nil{
                                     button!.setImage(UIImage(named: "Logo"), forState: .Normal)
                                 }
@@ -227,8 +208,8 @@ class NoticeDetailViewController: UIViewController , UITableViewDelegate, UITabl
                 if i <= 3 {
                     var x = 12
                     let pciInfo = pic[i-1]
-                    if pciInfo.pictureurl != "" {
-                        let imgUrl = microblogImageUrl+(pciInfo.pictureurl)
+                    if pciInfo.photo != "" {
+                        let imgUrl = microblogImageUrl+(pciInfo.photo)
                         
                         //let image = self.imageCache[imgUrl] as UIImage?
                         let avatarUrl = NSURL(string: imgUrl)
@@ -242,6 +223,8 @@ class NoticeDetailViewController: UIViewController , UITableViewDelegate, UITabl
                                 let imgTmp = UIImage(data: data!)
                                 
                                 button!.setImage(imgTmp, forState: .Normal)
+                                button?.imageView?.contentMode = .ScaleAspectFill
+                                button?.clipsToBounds = true
                                 if button?.imageView?.image == nil{
                                     button!.setImage(UIImage(named: "Logo"), forState: .Normal)
                                 }
@@ -254,8 +237,8 @@ class NoticeDetailViewController: UIViewController , UITableViewDelegate, UITabl
                     }}else if (i>3&&i<=6){
                     var x = 12
                     let pciInfo = pic[i-1]
-                    if pciInfo.pictureurl != "" {
-                        let imgUrl = microblogImageUrl+(pciInfo.pictureurl)
+                    if pciInfo.photo != "" {
+                        let imgUrl = microblogImageUrl+(pciInfo.photo)
                         
                         //let image = self.imageCache[imgUrl] as UIImage?
                         let avatarUrl = NSURL(string: imgUrl)
@@ -269,6 +252,8 @@ class NoticeDetailViewController: UIViewController , UITableViewDelegate, UITabl
                                 let imgTmp = UIImage(data: data!)
                                 
                                 button!.setImage(imgTmp, forState: .Normal)
+                                button?.imageView?.contentMode = .ScaleAspectFill
+                                button?.clipsToBounds = true
                                 if button?.imageView?.image == nil{
                                     button!.setImage(UIImage(named: "Logo"), forState: .Normal)
                                 }
@@ -281,8 +266,8 @@ class NoticeDetailViewController: UIViewController , UITableViewDelegate, UITabl
                     } }else{
                     var x = 12
                     let pciInfo = pic[i-1]
-                    if pciInfo.pictureurl != "" {
-                        let imgUrl = microblogImageUrl+(pciInfo.pictureurl)
+                    if pciInfo.photo != "" {
+                        let imgUrl = microblogImageUrl+(pciInfo.photo)
                         
                         //let image = self.imageCache[imgUrl] as UIImage?
                         let avatarUrl = NSURL(string: imgUrl)
@@ -296,6 +281,8 @@ class NoticeDetailViewController: UIViewController , UITableViewDelegate, UITabl
                                 let imgTmp = UIImage(data: data!)
                                 
                                 button!.setImage(imgTmp, forState: .Normal)
+                                button?.imageView?.contentMode = .ScaleAspectFill
+                                button?.clipsToBounds = true
                                 if button?.imageView?.image == nil{
                                     button!.setImage(UIImage(named: "Logo"), forState: .Normal)
                                 }
@@ -316,8 +303,8 @@ class NoticeDetailViewController: UIViewController , UITableViewDelegate, UITabl
                 if i <= 3 {
                     var x = 12
                     let pciInfo = pic[i-1]
-                    if pciInfo.pictureurl != "" {
-                        let imgUrl = microblogImageUrl+(pciInfo.pictureurl)
+                    if pciInfo.photo != "" {
+                        let imgUrl = microblogImageUrl+(pciInfo.photo)
                         
                         //let image = self.imageCache[imgUrl] as UIImage?
                         let avatarUrl = NSURL(string: imgUrl)
@@ -332,6 +319,8 @@ class NoticeDetailViewController: UIViewController , UITableViewDelegate, UITabl
                                 let imgTmp = UIImage(data: data!)
                                 
                                 button!.setImage(imgTmp, forState: .Normal)
+                                button?.imageView?.contentMode = .ScaleAspectFill
+                                button?.clipsToBounds = true
                                 if button?.imageView?.image == nil{
                                     button!.setImage(UIImage(named: "Logo"), forState: .Normal)
                                 }
@@ -344,8 +333,8 @@ class NoticeDetailViewController: UIViewController , UITableViewDelegate, UITabl
                     }}else if (i>3&&i<=6){
                     var x = 12
                     let pciInfo = pic[i-1]
-                    if pciInfo.pictureurl != "" {
-                        let imgUrl = microblogImageUrl+(pciInfo.pictureurl)
+                    if pciInfo.photo != "" {
+                        let imgUrl = microblogImageUrl+(pciInfo.photo)
                         
                         //let image = self.imageCache[imgUrl] as UIImage?
                         let avatarUrl = NSURL(string: imgUrl)
@@ -359,6 +348,8 @@ class NoticeDetailViewController: UIViewController , UITableViewDelegate, UITabl
                                 let imgTmp = UIImage(data: data!)
                                 
                                 button!.setImage(imgTmp, forState: .Normal)
+                                button?.imageView?.contentMode = .ScaleAspectFill
+                                button?.clipsToBounds = true
                                 if button?.imageView?.image == nil{
                                     button!.setImage(UIImage(named: "Logo"), forState: .Normal)
                                 }
@@ -371,8 +362,8 @@ class NoticeDetailViewController: UIViewController , UITableViewDelegate, UITabl
                     } }else{
                     var x = 12
                     let pciInfo = pic[i-1]
-                    if pciInfo.pictureurl != "" {
-                        let imgUrl = microblogImageUrl+(pciInfo.pictureurl)
+                    if pciInfo.photo != "" {
+                        let imgUrl = microblogImageUrl+(pciInfo.photo)
                         
                         //let image = self.imageCache[imgUrl] as UIImage?
                         let avatarUrl = NSURL(string: imgUrl)
@@ -386,6 +377,8 @@ class NoticeDetailViewController: UIViewController , UITableViewDelegate, UITabl
                                 let imgTmp = UIImage(data: data!)
                                 
                                 button!.setImage(imgTmp, forState: .Normal)
+                                button?.imageView?.contentMode = .ScaleAspectFill
+                                button?.clipsToBounds = true
                                 if button?.imageView?.image == nil{
                                     button!.setImage(UIImage(named: "Logo"), forState: .Normal)
                                 }
@@ -409,7 +402,7 @@ class NoticeDetailViewController: UIViewController , UITableViewDelegate, UITabl
         
         let all = UILabel()
         all.frame = CGRectMake(10, height + image_h + 20, 60, 20)
-        all.text = "总发 \(model!.receive_list.count)"
+        all.text = "总发 \(mode!.receiv_list.count)"
         all.textColor = UIColor.orangeColor()
         all.font = UIFont.systemFontOfSize(15)
         cell.contentView.addSubview(all)
@@ -417,13 +410,13 @@ class NoticeDetailViewController: UIViewController , UITableViewDelegate, UITabl
         let already = UILabel()
         already.frame = CGRectMake(80, height + image_h + 20, 80, 20)
         let array = NSMutableArray()
-        for i in 0..<model!.receive_list.count {
-            let strr = model!.receive_list[i].receivertype
+        for i in 0..<mode!.receiv_list.count {
+            let strr = mode!.receiv_list[i].create_time
             if strr == "0" {
                 array.addObject(strr)
             }
         }
-        already.text = "已阅读 \(model!.receive_list.count - array.count)"
+        already.text = "已阅读 \(mode!.receiv_list.count - array.count)"
         already.textColor = UIColor.orangeColor()
         already.font = UIFont.systemFontOfSize(15)
         cell.contentView.addSubview(already)

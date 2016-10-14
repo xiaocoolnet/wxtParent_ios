@@ -40,6 +40,7 @@ class ClassInfo: JSONJoy{
 //    var studentavatar:String?
     var classid:String?
     var classname:String?
+    var schoolid:String?
     
     init() {
     }
@@ -54,6 +55,7 @@ class ClassInfo: JSONJoy{
 //        studentname = decoder["studentname"].string
 //        studentavatar = decoder["studentavatar"].string
         classid = decoder["classid"].string
+        schoolid = decoder["schoolid"].string
         classname = decoder["classname"].string
     }
     

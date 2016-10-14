@@ -172,8 +172,12 @@ class GDWriteCommentViewController: UIViewController,UICollectionViewDataSource,
         for i in 0..<self.imageData.count{
             let chid = NSUserDefaults.standardUserDefaults()
             let userid = chid.stringForKey("userid")
+            let date = NSDate()
+            let dateformate = NSDateFormatter()
+            dateformate.dateFormat = "yyyy-MM-dd HH:mm"//获得日期
+            let time:NSTimeInterval = (date.timeIntervalSince1970)
             let RanNumber = String(arc4random_uniform(1000) + 1000)
-            let name = "\(userid!)\(RanNumber)"
+            let name = "\(userid!)baby\(time)\(RanNumber)"
             isuploading = true
             
             dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0)) { () -> Void in
@@ -198,48 +202,49 @@ class GDWriteCommentViewController: UIViewController,UICollectionViewDataSource,
     }
     //    发表日记
     func PutBlog(){
-//        //        http://wxt.xiaocool.net/index.php?g=apps&m=school&a=SetComment
-//        let chid = NSUserDefaults.standardUserDefaults()
-//        let userid = chid.stringForKey("userid")
-//        
-//        let url = "http://wxt.xiaocool.net/index.php?g=apps&m=school&a=SetComment"
-//        if(self.imagePath.count == 0){
-//            imageUrl = ""
-//        }
-//        let param = [
-//            "userid":userid!,
-//            "id":self.id!,
-//            "type":3,
-//            "content":self.contentTextView.text!,
-//            "photo":imageUrl!
-//        ]
-//        
-//        Alamofire.request(.POST, url, parameters: param as? [String : AnyObject]).response { request, response, json, error in
-//            if(error != nil){
-//            }
-//            else{
-//                print("request是")
-//                print(request!)
-//                print("====================")
-//                let result = Httpresult(JSONDecoder(json!))
-//                print("状态是")
-//                print(result.status)
-//                if(result.status == "error"){
-//                    let hud = MBProgressHUD.showHUDAddedTo(self.view, animated: true)
-//                    hud.mode = MBProgressHUDMode.Text
-//                    hud.labelText = result.errorData
-//                    hud.margin = 10.0
-//                    hud.removeFromSuperViewOnHide = true
-//                    hud.hide(true, afterDelay: 1)
-//                }
-//                if(result.status == "success"){
-//                    print("Success")
-//                    self.navigationController?.popViewControllerAnimated(true)
-//                }
-//                
-//            }
-//            
-//        }
+        //        http://wxt.xiaocool.net/index.php?g=apps&m=school&a=SetComment
+        let chid = NSUserDefaults.standardUserDefaults()
+        let userid = chid.stringForKey("userid")
+        
+        let url = "http://wxt.xiaocool.net/index.php?g=apps&m=school&a=SetComment"
+        
+        if(self.imagePath.count == 0){
+            imageUrl = ""
+        }
+        let param = [
+            "userid":userid!,
+            "id":self.id!,
+            "type":7,
+            "content":self.contentTextView.text!,
+            "photo":imageUrl!
+        ]
+        
+        Alamofire.request(.POST, url, parameters: param as? [String : AnyObject]).response { request, response, json, error in
+            if(error != nil){
+            }
+            else{
+                print("request是")
+                print(request!)
+                print("====================")
+                let result = Httpresult(JSONDecoder(json!))
+                print("状态是")
+                print(result.status)
+                if(result.status == "error"){
+                    let hud = MBProgressHUD.showHUDAddedTo(self.view, animated: true)
+                    hud.mode = MBProgressHUDMode.Text
+                    hud.labelText = result.errorData
+                    hud.margin = 10.0
+                    hud.removeFromSuperViewOnHide = true
+                    hud.hide(true, afterDelay: 1)
+                }
+                if(result.status == "success"){
+                    print("Success")
+                    self.navigationController?.popViewControllerAnimated(true)
+                }
+                
+            }
+            
+        }
     }
 //    收键盘
     override func touchesBegan(touches: Set<UITouch>, withEvent event: UIEvent?) {

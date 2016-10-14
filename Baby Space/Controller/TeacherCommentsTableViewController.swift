@@ -28,6 +28,18 @@ class TeacherCommentsTableViewController: UITableViewController{
     //类似于OC中的typedef
     typealias CallbackSelectedValue=(value:[String])->Void
     
+    override func viewWillAppear(animated: Bool) {
+       
+        let useDefaults = NSUserDefaults.standardUserDefaults()
+        useDefaults.removeObjectForKey("commentArr")
+    }
+    
+    override func viewWillDisappear(animated: Bool) {
+        let useDefaults = NSUserDefaults.standardUserDefaults()
+        useDefaults.removeObjectForKey("commentArr")
+        
+    }
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         initUI()
@@ -35,6 +47,17 @@ class TeacherCommentsTableViewController: UITableViewController{
         createTableView()
         self.GET(endday, begindate: startday)
         
+        NSNotificationCenter.defaultCenter().addObserver(self, selector: #selector(TeacherCommentsTableViewController.gameOver(_:)), name: "push", object: nil)
+    }
+    
+    
+    func gameOver(title:NSNotification)
+    {
+//        if title == 2{
+            let vc = TeacherCommentsTableViewController()
+            self.navigationController?.pushViewController(vc, animated: true)
+            
+//        }
     }
     
     
@@ -90,6 +113,8 @@ class TeacherCommentsTableViewController: UITableViewController{
         endday = timeStamp  + (daycount - 1) * 86400
         print("最后一天：\(endday)")
         startday = timeStamp
+        
+        GET(endday, begindate: startday)
     }
     
     func createTableView(){
@@ -201,7 +226,7 @@ class TeacherCommentsTableViewController: UITableViewController{
     }
     
     override func tableView(tableView: UITableView, heightForRowAtIndexPath indexPath: NSIndexPath) -> CGFloat {
-        return  440
+        return  470
     }
     
     
@@ -211,14 +236,14 @@ class TeacherCommentsTableViewController: UITableViewController{
         //  得到url
         let url = "http://wxt.xiaocool.net/index.php?g=apps&m=student&a=GetTeacherComment"
         let student = NSUserDefaults.standardUserDefaults()
-        let studentid = student.stringForKey("userid")
+        let studentid = student.stringForKey("chid")
         //  得到请求体
         let param = [
             
             "begintime":begindate,
             "endtime":enddate,
 //            "studentid":studentid!
-            "studentid":"661"
+            "studentid":studentid!
         ]
         
         Alamofire.request(.GET, url, parameters: param as? [String : AnyObject]).response
@@ -236,7 +261,7 @@ class TeacherCommentsTableViewController: UITableViewController{
                     if(status.status == "error"){
                         let hud = MBProgressHUD.showHUDAddedTo(self.view, animated: true)
                         hud.mode = MBProgressHUDMode.Text
-                        hud.labelText = status.errorData
+                        hud.labelText = "无点评数据"
                         hud.margin = 10.0
                         hud.removeFromSuperViewOnHide = true
                         hud.hide(true, afterDelay: 1)

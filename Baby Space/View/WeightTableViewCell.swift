@@ -27,9 +27,11 @@ class WeightTableViewCell: UITableViewCell {
         // Configure the view for the selected state
     }
     func fillCellWithModel(model:sta_weiInfomation){
-        weightLbl.text = model.old_weight
+        weightLbl.text = model.weight
+        timeLbl.text = model.log_date
         //  得到现在的体重
         //  根据现在的年纪进行计算得到的年纪数据
+        
     }
     
 }

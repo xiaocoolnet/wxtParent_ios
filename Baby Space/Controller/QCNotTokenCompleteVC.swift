@@ -26,7 +26,7 @@ class QCNotTokenCompleteVC: UITableViewController {
         self.tableView.registerClass(QCTakeBabyCell.self, forCellReuseIdentifier: "TakeCell")
         //        let cellNib = UINib(nibName: "TakeTableViewCell", bundle: nil)
         //        tableView.registerNib(cellNib, forCellReuseIdentifier: "TakeCell")
-        self.DropDownUpdate()
+//        self.DropDownUpdate()
         
     }
     func initUI(){
@@ -37,6 +37,8 @@ class QCNotTokenCompleteVC: UITableViewController {
         self.tableView.headerView = XWRefreshNormalHeader(target: self, action: #selector(TakeTableViewController.loadData))
         self.tableView.reloadData()
         self.tableView.headerView?.beginRefreshing()
+        let view = UIView()
+        tableView.tableFooterView = view
     }
     //    加载数据
     func loadData(){
@@ -104,7 +106,7 @@ class QCNotTokenCompleteVC: UITableViewController {
         //        头像
         let imgUrl1 = microblogImageUrl + takeInfo.teacheravatar!
         let headImageurl = NSURL(string: imgUrl1)
-        cell!.headImageView.yy_setImageWithURL(headImageurl, placeholder: UIImage(named: "Logo.png"))
+        cell!.headImageView.yy_setImageWithURL(headImageurl, placeholder: UIImage(named: "默认头像"))
         let userDefaults = NSUserDefaults.standardUserDefaults()
         let someOne = userDefaults.valueForKey("name")
         cell!.somebodyLabel.text = (someOne as? String)! + "家长，这个人可以接走孩子么？"

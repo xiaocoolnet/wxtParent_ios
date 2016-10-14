@@ -8,101 +8,79 @@
 
 import Foundation
 
+
 class BabyClassModel: JSONJoy{
     var status:String?
-    var data: BabyClassInfo?
-    var datas = Array<BabyClassInfo>()
+    var data:BabyClassInfo?
     var errorData:String?
+    var datastring:String?
     init(){
     }
     required init(_ decoder:JSONDecoder){
-        
         status = decoder["status"].string
-        if status == "success" {
+        if status == "success"{
             data = BabyClassInfo(decoder["data"])
-        }
-        else{
+        }else{
             errorData = decoder["data"].string
         }
-    }
-}
-
-class BabyClassList: JSONJoy {
-    var status:String?
-    var objectlist: [BabyClassInfo]
-    
-    var count: Int{
-        return self.objectlist.count
-    }
-    init(){
-        objectlist = Array<BabyClassInfo>()
-    }
-    required init(_ decoder: JSONDecoder) {
         
-        objectlist = Array<BabyClassInfo>()
-        for childs: JSONDecoder in decoder.array!{
-            objectlist.append(BabyClassInfo(childs))
-        }
     }
-    
-    func append(list: [BabyClassInfo]){
-        self.objectlist = list + self.objectlist
-    }
-    
 }
 
 class BabyClassInfo: JSONJoy{
     
-    var mon = Array<MonInfo>()
-    var tu = Array<MonInfo>()
-    var we = Array<MonInfo>()
-    var th = Array<MonInfo>()
-    var fri = Array<MonInfo>()
-    var sat = Array<MonInfo>()
-    var sun = Array<MonInfo>()
+//    var mon = Array<MonInfo>()
+    var mon = [[String:JSONDecoder]]()
+    var tu = [[String:JSONDecoder]]()
+    var we = [[String:JSONDecoder]]()
+    var th = [[String:JSONDecoder]]()
+    var fri = [[String:JSONDecoder]]()
+    var sat = [[String:JSONDecoder]]()
+    var sun = [[String:JSONDecoder]]()
     
     
     required init(_ decoder: JSONDecoder){
         if decoder["mon"].array != nil {
             for childs: JSONDecoder in decoder["mon"].array!{
-                self.mon.append(MonInfo(childs))
+//                self.mon.append(MonInfo(childs))
+                self.mon.append(childs.dictionary!)
             }
         }
         if decoder["tu"].array != nil {
             for childs: JSONDecoder in decoder["tu"].array!{
-                self.tu.append(MonInfo(childs))
+                self.tu.append(childs.dictionary!)
             }
         }
         if decoder["we"].array != nil {
             for childs: JSONDecoder in decoder["we"].array!{
-                self.we.append(MonInfo(childs))
+                self.we.append(childs.dictionary!)
             }
         }
         if decoder["th"].array != nil {
             for childs: JSONDecoder in decoder["th"].array!{
-                self.th.append(MonInfo(childs))
+                self.th.append(childs.dictionary!)
             }
         }
         if decoder["fri"].array != nil {
             for childs: JSONDecoder in decoder["fri"].array!{
-                self.fri.append(MonInfo(childs))
+                self.fri.append(childs.dictionary!)
             }
         }
         if decoder["sat"].array != nil {
             for childs: JSONDecoder in decoder["sat"].array!{
-                self.sat.append(MonInfo(childs))
+                self.sat.append(childs.dictionary!)
             }
         }
         if decoder["sun"].array != nil {
             for childs: JSONDecoder in decoder["sun"].array!{
-                self.sun.append(MonInfo(childs))
+                self.sun.append(childs.dictionary!)
             }
         }
         
     }
-    func addpend(list: [MonInfo]){
-        self.mon = list + self.mon
-    }
+//    func addpend(list: [MonInfo]){
+//        self.mon = list + self.mon
+//    }
     
     
 }

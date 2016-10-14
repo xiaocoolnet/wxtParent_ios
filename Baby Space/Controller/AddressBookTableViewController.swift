@@ -18,6 +18,9 @@ class AddressBookTableViewController: UIViewController,UITableViewDelegate,UITab
     var dic = NSMutableDictionary()
     var index = Int()
     
+    var dataSource = TeaList()
+    
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         self.createTable()
@@ -40,12 +43,12 @@ class AddressBookTableViewController: UIViewController,UITableViewDelegate,UITab
     }
 //    获取通讯录
     func GetDate(){
-//        http://wxt.xiaocool.net/index.php?g=apps&m=index&a=MessageAddress&userid=597
+//        http://wxt.xiaocool.net/index.php?g=apps&m=teacher&a=getstudentclasslistandteacherlist&studentid=661
         let defalutid = NSUserDefaults.standardUserDefaults()
-        let uid = defalutid.stringForKey("userid")
-        let url = apiUrl+"MessageAddress"
+        let uid = defalutid.stringForKey("chid")
+        let url = "http://wxt.xiaocool.net/index.php?g=apps&m=teacher&a=getstudentclasslistandteacherlist"
         let param = [
-            "userid":uid!
+            "studentid":uid!
         ]
         Alamofire.request(.GET, url, parameters: param).response { request, response, json, error in
             if(error != nil){
@@ -67,16 +70,18 @@ class AddressBookTableViewController: UIViewController,UITableViewDelegate,UITab
                 }
                 
                 if(status.status == "success"){
-                    self.addSource = AddList(status.data!)
-//                    将分区组的标题和每个分区的cell的数目作为字典存起来
-                    if self.addSource.count != 0{
-                        for i in 0..<self.addSource.count {
-                            let addInfo = self.addSource.objectlist[i]
-//                            let teacherList = self.addSource.objectlist[i]
-                            self.teacherSource = TeaList(addInfo.teacherinfo!)
-                            self.dic.setValue(self.teacherSource.count, forKey:addInfo.classname! )
-                        }
-                    }
+//                    self.addSource = AddList(status.data!)
+////                    将分区组的标题和每个分区的cell的数目作为字典存起来
+//                    if self.addSource.count != 0{
+//                        for i in 0..<self.addSource.count {
+//                            let addInfo = self.addSource.objectlist[i]
+////                            let teacherList = self.addSource.objectlist[i]
+//                            self.teacherSource = TeaList(addInfo.teacherinfo!)
+//                            self.dic.setValue(self.teacherSource.count, forKey:addInfo.classname! )
+//                        }
+//                    }
+                
+                    self.dataSource = TeaList(status.data!)
                     self.table.reloadData()
                 }
             }
@@ -84,59 +89,64 @@ class AddressBookTableViewController: UIViewController,UITableViewDelegate,UITab
         
     }
 //    分区数
-    func numberOfSectionsInTableView(tableView: UITableView) -> Int {
-        return self.addSource.count
-    }
+//    func numberOfSectionsInTableView(tableView: UITableView) -> Int {
+//        return self.addSource.count
+//    }
 //    分区标题
-    func tableView(tableView: UITableView, titleForHeaderInSection section: Int) -> String?{
-        let addInfo = self.addSource.objectlist[section]
-        return addInfo.classname!
-    }
+//    func tableView(tableView: UITableView, titleForHeaderInSection section: Int) -> String?{
+//        let addInfo = self.addSource.objectlist[section]
+//        return addInfo.classname!
+//    }
 //    每个分区的行数
     func tableView(tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        let addInfo = self.addSource.objectlist[section]
-        let str: String = addInfo.classname!
-        let num = dic[str] as! Int
-        return num
+//        let addInfo = self.addSource.objectlist[section]
+//        let str: String = addInfo.classname!
+//        let num = dic[str] as! Int
+//        return num
+        if self.dataSource.objectlist.count == 0 {
+            return 1
+        }else{
+            
+            return self.dataSource.objectlist[0].teacherlist.count
+        }
     }
 //    单元格
     func tableView(tableView: UITableView, cellForRowAtIndexPath indexPath: NSIndexPath) -> UITableViewCell {
         let cell = tableView.dequeueReusableCellWithIdentifier("AddressCell", forIndexPath: indexPath) as! AddressBookTableViewCell
         cell.selectionStyle = .None
 
-        let teacherList = self.addSource.objectlist[indexPath.section]
-        self.teacherSource = TeaList(teacherList.teacherinfo!)
-        let teacherInfo = self.teacherSource.objectlist[indexPath.row]
-        cell.nameLbl.text = teacherInfo.name
-        cell.numberBtn.setTitle(teacherInfo.phone, forState: .Normal)
-        //  设置电话的图标
-        cell.phoneButton.setTitle(teacherInfo.phone, forState: .Normal)
-        //  信息按钮添加点击事件
-        cell.phoneButton.addTarget(self, action: #selector(AddressBookTableViewController.callNumber(_:)), forControlEvents: .TouchUpInside)
-        
-        
-//        cell.messageButton.setTitle(String(indexPath), forState: .Normal)
-        cell.messageButton.tag = indexPath.row
-        cell.messageButton.addTarget(self, action: #selector(messageAction(_:)), forControlEvents: .TouchUpInside)
+//        let teacherList = self.addSource.objectlist[indexPath.section]
+//        self.teacherSource = TeaList(teacherList.teacherinfo!)
+//        let teacherInfo = self.teacherSource.objectlist[indexPath.row]
+        if self.dataSource.objectlist.count != 0 {
+            let mode = self.dataSource.objectlist[0]
+            let model = mode.teacherlist[indexPath.row]
+            cell.nameLbl.text = model.name
+            cell.numberBtn.setTitle(model.phone, forState: .Normal)
+            //  设置电话的图标
+            cell.phoneButton.setTitle(model.phone, forState: .Normal)
+            //  信息按钮添加点击事件
+            cell.phoneButton.addTarget(self, action: #selector(AddressBookTableViewController.callNumber(_:)), forControlEvents: .TouchUpInside)
+            
+            
+            //        cell.messageButton.setTitle(String(indexPath), forState: .Normal)
+            cell.messageButton.tag = indexPath.row
+            cell.messageButton.addTarget(self, action: #selector(messageAction(_:)), forControlEvents: .TouchUpInside)
+            
+            let pi = model.photo
+            let imgUrl = microblogImageUrl + pi
+            let photourl = NSURL(string: imgUrl)
+            cell.headImageView.sd_setImageWithURL(photourl, placeholderImage: UIImage(named: "默认头像"))
+            cell.headImageView.layer.cornerRadius = 25
+            cell.headImageView.clipsToBounds = true
+        }
 
         return cell
     }
 //    分区头的高度
-    func tableView(tableView: UITableView, heightForHeaderInSection section: Int) -> CGFloat{
-        return 30.0
-    }
-//    单元格的点击事件（聊天）
-    func tableView(tableView: UITableView, didSelectRowAtIndexPath indexPath: NSIndexPath) {
-        //  聊天事件
-        
-        //  聊天事件
-//        let addInfo = self.addSource.objectlist[indexPath.section]
-//        self.teacherSource = TeaList(addInfo.teacherinfo!)
-//        let teacherInfo = self.teacherSource.objectlist[indexPath.row]
-//        let chatView = ChatViewController(conversationChatter: teacherInfo.id!, conversationType: EMConversationType.eConversationTypeChat)
-//        chatView.title = teacherInfo.name!
-//        self.navigationController?.pushViewController(chatView, animated: true)
-    }
+//    func tableView(tableView: UITableView, heightForHeaderInSection section: Int) -> CGFloat{
+//        return 30.0
+//    }
     
 //    打电话
     func callNumber(sender:AnyObject){
@@ -147,11 +157,13 @@ class AddressBookTableViewController: UIViewController,UITableViewDelegate,UITab
     }
     func messageAction(sender:AnyObject){
         index = sender.tag
-        let addInfo = self.addSource.objectlist[0]
-        self.teacherSource = TeaList(addInfo.teacherinfo!)
-        let teacherInfo = self.teacherSource.objectlist[index]
-        let chatView = ChatViewController(conversationChatter: teacherInfo.id!, conversationType: EMConversationType.eConversationTypeChat)
-        chatView.title = teacherInfo.name!
+//        let addInfo = self.addSource.objectlist[0]
+//        self.teacherSource = TeaList(addInfo.teacherinfo!)
+//        let teacherInfo = self.teacherSource.objectlist[index]
+        let mode = self.dataSource.objectlist[0].teacherlist
+        let model = mode[index]
+        let chatView = ChatViewController(conversationChatter: model.id, conversationType: EMConversationType.eConversationTypeChat)
+        chatView.title = model.name
         self.navigationController?.pushViewController(chatView, animated: true)
 
     }

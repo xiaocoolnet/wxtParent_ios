@@ -8,59 +8,62 @@
 
 import UIKit
 
-class CDPLViewController: UIViewController,UITableViewDelegate,UITableViewDataSource {
+class CDPLViewController: UIViewController,UICollectionViewDelegate,UICollectionViewDataSource {
 
     var id:String?
-    var commentSource :HCommentList?
+    var dataSource = Array<coursewarePicInfo>()
     
-    let table = UITableView()
+    var collectV:UICollectionView?
+    var flowLayout = UICollectionViewFlowLayout()
+    var count = NSInteger()
+    
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        self.title = "评论列表"
-        self.view.backgroundColor = UIColor.whiteColor()
-//        发表评论
-        self.navigationItem.rightBarButtonItem = UIBarButtonItem(barButtonSystemItem: .Add, target: self, action: #selector(CDPLViewController.writeComment))
-        self.createTable()
-    }
-    //    写评论
-    func writeComment(){
-        let vc = CDWirteCommentViewController()
-//        vc.id = self.id
-        self.navigationController?.pushViewController(vc, animated: true)
-    }
-    //    创建表
-    func createTable(){
-        table.frame = CGRectMake(0, 0, self.view.frame.size.width, self.view.frame.size.height-64)
-        table.delegate = self
-        table.dataSource = self
-        self.view.addSubview(table)
-//        注册cell
-        table.registerNib(UINib.init(nibName: "HCommentTableViewCell", bundle: nil), forCellReuseIdentifier: "HCommentCell")
-    }
-    //    有几行
-    func tableView(tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-//        return (self.commentSource?.count)!
-        return 3
-    }
-    //    单元格
-    func tableView(tableView: UITableView, cellForRowAtIndexPath indexPath: NSIndexPath) -> UITableViewCell {
-        let cell = tableView.dequeueReusableCellWithIdentifier("HCommentCell", forIndexPath: indexPath) as! HCommentTableViewCell
-        cell.selectionStyle = .None
-//        let hCommentInfo = self.commentSource?.commentlist[indexPath.row]
-//        cell.updateCellWithHCommentInfo(hCommentInfo!)
         
-        return cell
+        self.title = "图片"
+        
+        self.view.backgroundColor = UIColor.blackColor()
+        flowLayout.scrollDirection = UICollectionViewScrollDirection.Horizontal
+        flowLayout.itemSize = CGSizeMake(WIDTH, HEIGHT)
+        flowLayout.minimumLineSpacing = 0;
+        self.collectV = UICollectionView(frame: CGRectMake(0, 0, UIScreen.mainScreen().bounds.width, HEIGHT), collectionViewLayout: flowLayout)
+        //        注册
+        self.collectV?.registerClass(HomeWorkDetailCollectionViewCell.self, forCellWithReuseIdentifier: "cell")
+        
+        self.collectV?.delegate = self
+        self.collectV?.dataSource = self
+        self.collectV?.backgroundColor = UIColor.clearColor()
+        self.collectV!.pagingEnabled = true
+        
+        //设置每一个cell的宽高
+        //        layout.itemSize = CGSizeMake(WIDTH, HEIGHT)
+        self.view.addSubview(collectV!)
+        //        collectV!.contentOffset = CGPointMake(CGFloat(nu)*WIDTH, 0)
+        
+        
     }
-    //    单元格高度
-    func tableView(tableView: UITableView, heightForRowAtIndexPath indexPath: NSIndexPath) -> CGFloat {
-//        let hCommentInfo = self.commentSource?.commentlist[indexPath.row]
-//        //        自适应行高
-//        let options : NSStringDrawingOptions = NSStringDrawingOptions.UsesLineFragmentOrigin
-//        let screenBounds:CGRect = UIScreen.mainScreen().bounds
-//        let boundingRect = String(hCommentInfo?.content).boundingRectWithSize(CGSizeMake(screenBounds.width, 0), options: options, attributes: [NSFontAttributeName:UIFont.systemFontOfSize(17)], context: nil)
-//        return boundingRect.size.height + 210
-        return 230
+    
+    override func viewDidLayoutSubviews() {
+        collectV!.contentOffset = CGPointMake(CGFloat(count - 1)*WIDTH, 0)
+    }
+    
+    func collectionView(collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
+        
+        return self.dataSource.count
+    }
+    
+    func collectionView(collectionView: UICollectionView, cellForItemAtIndexPath indexPath: NSIndexPath) -> UICollectionViewCell {
+        let cell = collectionView.dequeueReusableCellWithReuseIdentifier("cell", forIndexPath: indexPath) as! HomeWorkDetailCollectionViewCell
+        cell.imgView.frame = CGRectMake(0, 0, WIDTH, HEIGHT)
+        cell.imgView.contentMode = .ScaleAspectFit
+        cell.clipsToBounds = true
+        let pciInfo = self.dataSource[indexPath.item]
+        let imgUrl = microblogImageUrl+(pciInfo.picture_url)
+        let photourl = NSURL(string: imgUrl)
+        cell.imgView.sd_setImageWithURL(photourl, placeholderImage: (UIImage(named: "图片默认加载")))
+        cell.contentView.addSubview(cell.imgView)
+        return cell
     }
 
 }

@@ -22,6 +22,7 @@ class LeaveteacherViewController: UIViewController,UITableViewDelegate,UITableVi
     let table = UITableView()
     var addSource = AddList()
     var teacherSource =  TeaList()
+    var dataSource = TeaList()
     var dic = NSMutableDictionary()
     weak var delegate:ToolTwoProrocol1?
     
@@ -46,14 +47,14 @@ class LeaveteacherViewController: UIViewController,UITableViewDelegate,UITableVi
     }
 //    加载数据
     func GetDate(){
-        //        http://wxt.xiaocool.net/index.php?g=apps&m=index&a=MessageAddress&userid=597
-        let defalutid = NSUserDefaults.standardUserDefaults()
-        let uid = defalutid.stringForKey("userid")
-        let url = apiUrl+"MessageAddress"
+//        http://wxt.xiaocool.net/index.php?g=apps&m=teacher&a=getstudentclasslistandteacherlist&studentid=661
+//        let defalutid = NSUserDefaults.standardUserDefaults()
+//        let uid = defalutid.stringForKey("chid")
+        let url = "http://wxt.xiaocool.net/index.php?g=apps&m=teacher&a=getstudentclasslistandteacherlist"
         let param = [
-            "userid":uid!
+            "studentid":self.studentid
         ]
-        Alamofire.request(.GET, url, parameters: param).response { request, response, json, error in
+        Alamofire.request(.GET, url, parameters: param as?[String:String]).response { request, response, json, error in
             if(error != nil){
             }
             else{
@@ -73,37 +74,20 @@ class LeaveteacherViewController: UIViewController,UITableViewDelegate,UITableVi
                 }
                 
                 if(status.status == "success"){
-                    self.addSource = AddList(status.data!)
-                    //  将分区组的标题和每个分区的cell的数目作为字典存起来
-                    if self.addSource.count != 0{
-                        for i in 0..<self.addSource.count {
-                            let addInfo = self.addSource.objectlist[i]
-                            //                            let teacherList = self.addSource.objectlist[i]
-                            self.teacherSource = TeaList(addInfo.teacherinfo!)
-                            self.dic.setValue(self.teacherSource.count, forKey:addInfo.classname! )
-                        }
-                    }
+                    self.dataSource = TeaList(status.data!)
                     self.table.reloadData()
                 }
             }
         }
         
     }
-    //    分区数
-    func numberOfSectionsInTableView(tableView: UITableView) -> Int {
-        return self.addSource.count
-    }
-    //    分区标题
-    func tableView(tableView: UITableView, titleForHeaderInSection section: Int) -> String?{
-        let addInfo = self.addSource.objectlist[section]
-        return addInfo.classname!
-    }
     //    每个分区的行数
     func tableView(tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        let addInfo = self.addSource.objectlist[section]
-        let str: String = addInfo.classname!
-        let num = dic[str] as! Int
-        return num
+        if self.dataSource.objectlist.count == 0 {
+            return 1
+        }else{
+            return self.dataSource.objectlist[0].teacherlist.count
+        }
     }
     //    单元格
     func tableView(tableView: UITableView, cellForRowAtIndexPath indexPath: NSIndexPath) -> UITableViewCell {
@@ -111,14 +95,16 @@ class LeaveteacherViewController: UIViewController,UITableViewDelegate,UITableVi
             as! TeacherInfoTableViewCell
         cell.selectionStyle = .None
         
-        let teacherList = self.addSource.objectlist[indexPath.section]
-        self.teacherSource = TeaList(teacherList.teacherinfo!)
-        let teacherInfo = self.teacherSource.objectlist[indexPath.row]
-        cell.nameLbl.text = teacherInfo.name
-        //        let imgUrl = imageUrl + teacherInfo.avatar!
-        //        let photourl = NSURL(string: imgUrl)
-        //        cell.headImageView.yy_setImageWithURL(photourl, placeholder: UIImage(named: "Logo.png"))
-        
+        if self.dataSource.objectlist.count != 0 {
+            let model = self.dataSource.objectlist[0].teacherlist[indexPath.row]
+            
+            cell.nameLbl.text = model.name
+            let pi = model.photo
+            let imgUrl = microblogImageUrl + pi
+            let photourl = NSURL(string: imgUrl)
+            cell.headImageView.sd_setImageWithURL(photourl, placeholderImage: UIImage(named: "Logo"))
+            
+        }
         return cell
     }
     //    行高
@@ -127,8 +113,8 @@ class LeaveteacherViewController: UIViewController,UITableViewDelegate,UITableVi
     }
     //    单元格点击事件
     func tableView(tableView: UITableView, didSelectRowAtIndexPath indexPath: NSIndexPath) {
-        let teacherInfo = self.teacherSource.objectlist[indexPath.row]
-        self.delegate?.didRecieveTeacherInfo(teacherInfo.id!, teacherName: teacherInfo.name!)
+        let teacherInfo = self.dataSource.objectlist[0].teacherlist[indexPath.row]
+        self.delegate?.didRecieveTeacherInfo(teacherInfo.id, teacherName: teacherInfo.name)
         self.navigationController?.popViewControllerAnimated(true)
     }
 }

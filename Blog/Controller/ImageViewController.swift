@@ -22,19 +22,19 @@ class ImageViewController: UIViewController {
         bigPicture.image = tupian
         print(imUrl)
         
-        let avatarUrl = NSURL(string: imUrl)
-        let request: NSURLRequest = NSURLRequest(URL: avatarUrl!)
-            NSURLConnection.sendAsynchronousRequest(request, queue: NSOperationQueue.mainQueue(), completionHandler: {(response: NSURLResponse?,data: NSData?,error: NSError?)-> Void in
-                if(data != nil){
-                    let imgTmp = UIImage(data: data!)
-                    
-                    self.bigPicture!.image = imgTmp
-                    
-                    //self.view.addSubview(self.bigPicture!)
-                    
-                }
-            })
-        
+//        let avatarUrl = NSURL(string: imUrl)
+//        let request: NSURLRequest = NSURLRequest(URL: avatarUrl!)
+//            NSURLConnection.sendAsynchronousRequest(request, queue: NSOperationQueue.mainQueue(), completionHandler: {(response: NSURLResponse?,data: NSData?,error: NSError?)-> Void in
+//                if(data != nil){
+//                    let imgTmp = UIImage(data: data!)
+//                    
+//                    self.bigPicture!.image = imgTmp
+//                    
+//                    //self.view.addSubview(self.bigPicture!)
+//                    
+//                }
+//            })
+//        
     }
 
 }

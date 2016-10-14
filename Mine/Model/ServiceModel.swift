@@ -29,11 +29,13 @@ class ServiceModel: JSONJoy{
 class ServiceInfo: JSONJoy {
     var status:String?
     var endtime:String?
+    var phone:String?
     init(){
     }
     required init(_ decoder:JSONDecoder){
         status = decoder["status"].string
         endtime = decoder["endtime"].string
+        phone = decoder["phone"].string
         
     }
 }

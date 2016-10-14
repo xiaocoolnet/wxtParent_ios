@@ -54,32 +54,134 @@ class SelfGrownList: JSONJoy{
 }
 //  初始化属性并赋值
 class SelfGrownInfo: JSONJoy {
-    var babyid :String?
-    var content :String?
-    var cover_photo :String?
-    var grow_id :String?
-    var name :String?
-    var title :String?
-    var userid :String?
-    var write_time :String?
+//    var mid :String?
+//    var type :String?
+//    var schoolid :String?
+//    var classid :String?
+//    var userid :String?
+//    var content :String?
+//    var status :String?
+//    var write_time :String?
+//    var name :String?
+//    var photo :String?
     
     //  绝对是数组
-    var like:JSONDecoder?
-    var comment:JSONDecoder?
+    var like = Array<selfLikeInfo>()
+    var comment = Array<selfCommentInfo>()
+//    var pic = Array<selfPicInfo>()
     init() {
         
     }
     required init(_ decoder: JSONDecoder) {
-        babyid = decoder["babyid"].string
-        content = decoder["content"].string
-        cover_photo = decoder["cover_photo"].string
-        grow_id = decoder["grow_id"].string
-        name = decoder["name"].string
-        title = decoder["title"].string
-        userid = decoder["userid"].string
-        write_time = decoder["write_time"].string
-        like = decoder["like"]
-        comment = decoder["comment"]
+//        babyid = decoder["babyid"].string
+//        content = decoder["content"].string
+//        cover_photo = decoder["cover_photo"].string
+//        grow_id = decoder["grow_id"].string
+//        name = decoder["name"].string
+//        title = decoder["title"].string
+//        userid = decoder["userid"].string
+//        write_time = decoder["write_time"].string
+//        like = decoder["like"]
+//        comment = decoder["comment"]
+        if decoder["like"].array != nil {
+            for childs: JSONDecoder in decoder["like"].array!{
+                self.like.append(selfLikeInfo(childs))
+            }
+        }
+        if decoder["comment"].array != nil {
+            for childs: JSONDecoder in decoder["comment"].array!{
+                self.comment.append(selfCommentInfo(childs))
+            }
+        }
+    }
+    func addpend(list: [selfLikeInfo]){
+        self.like = list + self.like
+    }
+    func addpend(list: [selfCommentInfo]){
+        self.comment = list + self.comment
+    }
+
+}
+
+
+
+class selfLikeList: JSONJoy {
+    var status:String?
+    var objectlist: [selfLikeInfo]
+    
+    var count: Int{
+        return self.objectlist.count
+    }
+    init(){
+        objectlist = Array<selfLikeInfo>()
+    }
+    required init(_ decoder: JSONDecoder) {
+        
+        objectlist = Array<selfLikeInfo>()
+        for childs: JSONDecoder in decoder.array!{
+            objectlist.append(selfLikeInfo(childs))
+        }
+    }
+    
+    func append(list: [selfLikeInfo]){
+        self.objectlist = list + self.objectlist
+    }
+}
+
+class selfLikeInfo: JSONJoy {
+    
+    var userid:String
+    var name:String
+    
+    required init(_ decoder: JSONDecoder){
+        name = decoder["name"].string ?? ""
+        userid = decoder["userid"].string ?? ""
         
     }
 }
+
+
+class selfCommentList: JSONJoy {
+    var status:String?
+    var objectlist: [selfCommentInfo]
+    
+    var count: Int{
+        return self.objectlist.count
+    }
+    init(){
+        objectlist = Array<selfCommentInfo>()
+    }
+    required init(_ decoder: JSONDecoder) {
+        
+        objectlist = Array<selfCommentInfo>()
+        for childs: JSONDecoder in decoder.array!{
+            objectlist.append(selfCommentInfo(childs))
+        }
+    }
+    
+    func append(list: [selfCommentInfo]){
+        self.objectlist = list + self.objectlist
+    }
+}
+
+class selfCommentInfo: JSONJoy {
+    
+    var avatar :String?
+    var comment_time :String?
+    var content :String?
+    var name :String?
+    var photo :String?
+    var userid :String?
+
+    required init(_ decoder: JSONDecoder) {
+        avatar = decoder["avatar"].string
+        comment_time = decoder["comment_time"].string
+        content = decoder["content"].string
+        name = decoder["name"].string
+        photo = decoder["photo"].string
+        userid = decoder["userid"].string
+    }
+
+    
+}
+

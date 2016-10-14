@@ -19,6 +19,10 @@ class GrowingDiaryMainViewController: UIViewController,UIScrollViewDelegate {
     var timer = NSTimer()
     var picArr = NSMutableArray()
     
+    override func viewDidAppear(animated: Bool) {
+        self.tabBarController?.tabBar.hidden = false
+    }
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         
@@ -82,7 +86,7 @@ class GrowingDiaryMainViewController: UIViewController,UIScrollViewDelegate {
             let  imageView = UIImageView()
             imageView.frame = CGRectMake(CGFloat(i)*WIDTH, 0, WIDTH, HEIGHT/4)
 //            imageView.sd_setImageWithURL(NSURL.init(string: (growCoverImageUrl + (array[i] as! String) )))
-            imageView.image = UIImage(named: array[i] as! String)
+            imageView.image = UIImage(named: array[i] )
             imageView.tag = i+1
             //为图片视图添加点击事件
             imageView.userInteractionEnabled = true

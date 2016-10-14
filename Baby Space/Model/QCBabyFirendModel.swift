@@ -9,35 +9,62 @@
 import Foundation
 
 
-class BabyFirendList:JSONJoy{
-    var objectlist:[BabyFirendInfo]
-    var count:Int{
+class BabyFirendModel: JSONJoy{
+    var status:String?
+    var data: JSONDecoder?
+    var array : Array<JSONDecoder>?
+    var errorData:String?
+    init(){
+    }
+    required init(_ decoder:JSONDecoder){
+        
+        status = decoder["status"].string
+        if status == "success" {
+            data = decoder["data"]
+        }
+        else{
+            errorData = decoder["data"].string
+        }
+    }
+}
+
+class BabyFirendList: JSONJoy {
+    var status:String?
+    var objectlist: [BabyFirendInfo]
+    
+    var count: Int{
         return self.objectlist.count
     }
     init(){
         objectlist = Array<BabyFirendInfo>()
     }
-    required init(_ decoder:JSONDecoder)
-    {
+    required init(_ decoder: JSONDecoder) {
+        
         objectlist = Array<BabyFirendInfo>()
-        for useids: JSONDecoder in decoder.array!{
-            objectlist.append(BabyFirendInfo(useids))
-            
+        for childs: JSONDecoder in decoder.array!{
+            objectlist.append(BabyFirendInfo(childs))
         }
     }
-    func append(list:[BabyFirendInfo]){
+    
+    func append(list: [BabyFirendInfo]){
         self.objectlist = list + self.objectlist
     }
+    
 }
+
 class BabyFirendInfo: JSONJoy{
     var id:String?
     var name:String?
     var photo:String?
-    init(){
-    }
-    required init(_ decoder: JSONDecoder) {
+    var blog_coutn:String?
+    var sex:String?
+    
+    required init(_ decoder: JSONDecoder){
         id = decoder["id"].string
         name = decoder["name"].string
         photo = decoder["photo"].string
+        blog_coutn = decoder["blog_coutn"].string
+        sex = decoder["sex"].string
+
     }
 }

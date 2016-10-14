@@ -185,8 +185,8 @@ class AdmissionVC: UIViewController,UIImagePickerControllerDelegate,UINavigation
         //  选择男
         sender.selected = true
             //  改变背景图片
-        isSexLabel.text = "1"
-        print(isSexLabel.text!)
+//        isSexLabel.text = "1"
+//        print(isSexLabel.text!)
         girlButton.selected = false
 
         
@@ -196,8 +196,26 @@ class AdmissionVC: UIViewController,UIImagePickerControllerDelegate,UINavigation
         //  选择女
         sender.selected = true
         boyButton.selected = false
-        isSexLabel.text! = "0"
+//        isSexLabel.text! = "0"
     }
+    
+//    func click(sender:UIButton){
+//        
+//        switch sender.tag {
+//        case 11:
+//            manImg.image = UIImage.init(named: "ic_yuan_purple")
+//            menImg.image = UIImage.init(named: "ic_yuan")
+//            flag = 2
+//        case 12:
+//            manImg.image = UIImage.init(named: "ic_yuan")
+//            menImg.image = UIImage.init(named: "ic_yuan_purple")
+//            print(manImg.image)
+//            flag = 1
+//        default:
+//            break
+//        }
+//    }
+
     
     func addPhotoAction(){
         //  添加照片(需要添加一个collectionView)

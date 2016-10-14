@@ -7,16 +7,36 @@
 //
 
 import Foundation
+class ChildrenModel: JSONJoy{
+    var status:String?
+    var data: JSONDecoder?
+    var array : Array<JSONDecoder>?
+    var errorData:String?
+    init(){
+    }
+    required init(_ decoder:JSONDecoder){
+        
+        status = decoder["status"].string
+        if status == "success" {
+            data = decoder["data"]
+        }
+        else{
+            errorData = decoder["data"].string
+        }
+    }
+}
 class ChildrenList: JSONJoy {
+    var status:String?
     var objectlist: [ChildrenInfo]
+    
     var count: Int{
         return self.objectlist.count
     }
-    
     init(){
         objectlist = Array<ChildrenInfo>()
     }
     required init(_ decoder: JSONDecoder) {
+        
         objectlist = Array<ChildrenInfo>()
         for childs: JSONDecoder in decoder.array!{
             objectlist.append(ChildrenInfo(childs))
@@ -26,7 +46,9 @@ class ChildrenList: JSONJoy {
     func append(list: [ChildrenInfo]){
         self.objectlist = list + self.objectlist
     }
+    
 }
+
 // MARK: -Partner
 class ChildrenInfo: JSONJoy{
     var time: String?
@@ -38,6 +60,7 @@ class ChildrenInfo: JSONJoy{
     var studentid:String?
     var studentname:String?
     var studentavatar:String?
+    var classlist = Array<ChildrenClassInfo>()
     
     init() {
     }
@@ -51,6 +74,56 @@ class ChildrenInfo: JSONJoy{
         studentid = decoder["studentid"].string
         studentname = decoder["studentname"].string
         studentavatar = decoder["studentavatar"].string
+        if decoder["classlist"].array != nil {
+            for childs: JSONDecoder in decoder["classlist"].array!{
+                self.classlist.append(ChildrenClassInfo(childs))
+            }
+        }
+    }
+    func addpend(list: [ChildrenClassInfo]){
+        self.classlist = list + self.classlist
+    }
+    
+}
+
+class ChildrenClassList: JSONJoy {
+    var status:String?
+    var objectlist: [ChildrenClassInfo]
+    
+    var count: Int{
+        return self.objectlist.count
+    }
+    init(){
+        objectlist = Array<ChildrenClassInfo>()
+    }
+    required init(_ decoder: JSONDecoder) {
+        
+        objectlist = Array<ChildrenClassInfo>()
+        for childs: JSONDecoder in decoder.array!{
+            objectlist.append(ChildrenClassInfo(childs))
+        }
+    }
+    
+    func append(list: [ChildrenClassInfo]){
+        self.objectlist = list + self.objectlist
+    }
+}
+
+class ChildrenClassInfo: JSONJoy {
+    
+    var classid:String?
+    var schoolid:String?
+    var classname:String?
+    
+    
+    init() {
+        
+    }
+    required init(_ decoder: JSONDecoder){
+        classid = decoder["classid"].string
+        schoolid = decoder["schoolid"].string
+        classname = decoder["classname"].string
+        
     }
     
 }

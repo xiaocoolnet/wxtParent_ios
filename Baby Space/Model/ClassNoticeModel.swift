@@ -52,31 +52,23 @@ class ClassNoticeList: JSONJoy {
 }
 
 class ClassNoticeInfo: JSONJoy{
-    var userid:String?
+    var noticeid:String?
     var id:String?
-    var title:String?
-    var content:String?
-    var type:String?
+    var receiverid:String?
+    var receivertype:String?
     var create_time:String?
-    var username:String?
-    var avatar:String?
-    //    var homework_info:JSONDecoder?
-    //    var pictur:JSONDecoder?
     var receive_list = Array<ClassReceive_listInfo>()
     var pic = Array<ClassPicInfo>()
-    
+    var receiv_list = Array<receivlistInfo>()
     
     required init(_ decoder: JSONDecoder){
-        userid = decoder["userid"].string
+        receiverid = decoder["receiverid"].string
         id = decoder["id"].string
-        title = decoder["title"].string
-        content = decoder["content"].string
-        type = decoder["type"].string
+        noticeid = decoder["noticeid"].string
+        receivertype = decoder["receivertype"].string
         create_time = decoder["create_time"].string
-        username = decoder["username"].string
-        avatar = decoder["avatar"].string
-        if decoder["receive_list"].array != nil {
-            for childs: JSONDecoder in decoder["receive_list"].array!{
+        if decoder["notice_info"].array != nil {
+            for childs: JSONDecoder in decoder["notice_info"].array!{
                 self.receive_list.append(ClassReceive_listInfo(childs))
             }
         }
@@ -85,12 +77,20 @@ class ClassNoticeInfo: JSONJoy{
                 self.pic.append(ClassPicInfo(childs))
             }
         }
+        if decoder["receiv_list"].array != nil {
+            for childs: JSONDecoder in decoder["receiv_list"].array!{
+                self.receiv_list.append(receivlistInfo(childs))
+            }
+        }
     }
     func addpend(list: [ClassReceive_listInfo]){
         self.receive_list = list + self.receive_list
     }
     func addpend(list: [ClassPicInfo]){
         self.pic = list + self.pic
+    }
+    func addpend(list: [receivlistInfo]){
+        self.receiv_list = list + self.receiv_list
     }
     
 }
@@ -122,22 +122,22 @@ class ClassReceive_listInfo: JSONJoy {
     
     var name:String
     var photo:String
-    var phone:String
-    var receiverid:String
     var id:String
-    var noticeid:String
-    var receivertype:String
+    var userid:String
+    var title:String
+    var type:String
+    var content:String
     var create_time:String
     
     
     required init(_ decoder: JSONDecoder){
         name = decoder["name"].string ?? ""
         photo = decoder["photo"].string ?? ""
-        phone = decoder["phone"].string ?? ""
-        receiverid = decoder["receiverid"].string ?? ""
         id = decoder["id"].string ?? ""
-        noticeid = decoder["noticeid"].string ?? ""
-        receivertype = decoder["receivertype"].string ?? ""
+        userid = decoder["userid"].string ?? ""
+        title = decoder["title"].string ?? ""
+        type = decoder["type"].string ?? ""
+        content = decoder["content"].string ?? ""
         create_time = decoder["create_time"].string ?? ""
         
     }
@@ -170,17 +170,52 @@ class ClassPicList: JSONJoy {
 
 class ClassPicInfo: JSONJoy {
     
-    var pictureurl:String
-    var id:String
-    var create_time:String
-    //    init() {
-    //
-    //    }
+    var photo:String
+    
     required init(_ decoder: JSONDecoder){
-        pictureurl = decoder["pictureurl"].string ?? ""
-        id = decoder["id"].string ?? ""
-        create_time = decoder["create_time"].string ?? ""
+        photo = decoder["photo"].string ?? ""
+        
         
     }
     
 }
+
+class receivlistInfoList: JSONJoy {
+    var status:String?
+    var objectlist: [receivlistInfo]
+    
+    var count: Int{
+        return self.objectlist.count
+    }
+    init(){
+        objectlist = Array<receivlistInfo>()
+    }
+    required init(_ decoder: JSONDecoder) {
+        
+        objectlist = Array<receivlistInfo>()
+        for childs: JSONDecoder in decoder.array!{
+            objectlist.append(receivlistInfo(childs))
+        }
+    }
+    
+    func append(list: [receivlistInfo]){
+        self.objectlist = list + self.objectlist
+    }
+}
+
+class receivlistInfo: JSONJoy {
+    
+    var receiverid:String
+    var create_time:String
+    var noticeid:String
+    var receivertype:String
+    
+    required init(_ decoder: JSONDecoder){
+        receiverid = decoder["receiverid"].string ?? ""
+        noticeid = decoder["noticeid"].string ?? ""
+        create_time = decoder["create_time"].string ?? ""
+        receivertype = decoder["receivertype"].string ?? ""
+    }
+    
+}
+

@@ -11,8 +11,8 @@ import MBProgressHUD
 import Alamofire
 
 class PersonInformation: UIViewController,UITableViewDataSource,UITableViewDelegate,UIImagePickerControllerDelegate,UINavigationControllerDelegate {
-    let headerImageView = UIImageView()
-    let personNameLabel = UILabel()
+    var headerImageView = UIImageView()
+    var personNameLabel = UILabel()
     let personSexLabel = UILabel()
     let personPhoneLabel = UILabel()
     var imageStr = String()
@@ -22,7 +22,21 @@ class PersonInformation: UIViewController,UITableViewDataSource,UITableViewDeleg
     var hud = MBProgressHUD()
     
     var changeImage = UIImageView()
+    var imageName = String()
+    
+    var myActionSheet:UIAlertController?
+    
+    var img = UIImageView()
 
+    var imgUrl:String?
+    var imageCache = Dictionary<String,UIImage>()
+    var userAvatar = UIImageView()
+    var name = String()
+    var sex = String()
+    var phone = String()
+    
+    
+    
 
     //  tableview
     var tableView = UITableView()
@@ -35,8 +49,7 @@ class PersonInformation: UIViewController,UITableViewDataSource,UITableViewDeleg
         self.tabBarController?.tabBar.hidden = true
         //  初始化  UI
         initUI()
-        //  数据请求
-        GetData()
+        self.GetUserInfo()
 
     }
     func initUI(){
@@ -49,9 +62,6 @@ class PersonInformation: UIViewController,UITableViewDataSource,UITableViewDeleg
         self.tableView.registerClass(UITableViewCell.self, forCellReuseIdentifier: "cell")
     }
     
-    func GetData(){
-    
-    }
     func numberOfSectionsInTableView(tableView: UITableView) -> Int {
         //  段数据
         return 5
@@ -84,11 +94,9 @@ class PersonInformation: UIViewController,UITableViewDataSource,UITableViewDeleg
             cell.contentView.addSubview(imageViewLabel)
             
             headerImageView.frame = CGRectMake(WIDTH - 120, 10, 80, 80)
-            let userDefaults = NSUserDefaults.standardUserDefaults()
-
-            imageStr = (userDefaults.valueForKey("photo") as? String)!
-            
-            headerImageView.sd_setImageWithURL(NSURL.init(string: imageUrl + imageStr))
+            headerImageView = self.userAvatar
+            headerImageView.layer.cornerRadius = 40
+            headerImageView.clipsToBounds = true
             cell.contentView.addSubview(headerImageView)
 
         }else if indexPath.section == 1{
@@ -100,10 +108,10 @@ class PersonInformation: UIViewController,UITableViewDataSource,UITableViewDeleg
             
             personNameLabel.frame = CGRectMake(WIDTH - 190, 10, 150, 30)
             personNameLabel.textAlignment = NSTextAlignment.Right
-            
-            //  得到沙盒
-            let userDefaults = NSUserDefaults.standardUserDefaults()
-            personNameLabel.text = userDefaults.valueForKey("name") as? String
+            personNameLabel.text = name
+//            //  得到沙盒
+//            let userDefaults = NSUserDefaults.standardUserDefaults()
+//            personNameLabel.text = userDefaults.valueForKey("name") as? String
             cell.contentView.addSubview(personNameLabel)
             
         }else if indexPath.section == 2{
@@ -115,10 +123,16 @@ class PersonInformation: UIViewController,UITableViewDataSource,UITableViewDeleg
             
             personSexLabel.frame = CGRectMake(WIDTH - 190, 10, 150, 30)
             personSexLabel.textAlignment = NSTextAlignment.Right
-            let userDefaults = NSUserDefaults.standardUserDefaults()
-            personSexLabel.text = userDefaults.valueForKey("sex") as? String
+//            let userDefaults = NSUserDefaults.standardUserDefaults()
+//            personSexLabel.text = userDefaults.valueForKey("sex") as? String
+            if self.sex == "1" {
+                personSexLabel.text = "男"
+            }else{
+                personSexLabel.text = "女"
 
-            if personSexLabel.text == nil{
+            }
+            
+            if self.sex == ""{
                 //  默认为男
                 personSexLabel.text = "男"
             }
@@ -133,8 +147,9 @@ class PersonInformation: UIViewController,UITableViewDataSource,UITableViewDeleg
             
             personPhoneLabel.frame = CGRectMake(WIDTH - 190, 10, 150, 30)
             personPhoneLabel.textAlignment = NSTextAlignment.Right
-            let userDefaults = NSUserDefaults.standardUserDefaults()
-            personPhoneLabel.text = userDefaults.valueForKey("phone") as? String
+            personPhoneLabel.text = self.phone
+//            let userDefaults = NSUserDefaults.standardUserDefaults()
+//            personPhoneLabel.text = userDefaults.valueForKey("phone") as? String
             cell.contentView.addSubview(personPhoneLabel)
             
         }else{
@@ -158,10 +173,6 @@ class PersonInformation: UIViewController,UITableViewDataSource,UITableViewDeleg
         //  单元格的点击事件
         if indexPath.section == 0 {
             print("修改头像")
-//            let changePageVC = ChangeInformationPageVC()
-//            changePageVC.section = indexPath.section
-//            changePageVC.headerImage = imageStr
-//            self.navigationController?.pushViewController(changePageVC, animated: true)
             //  直接弹出一个对话框，选取照片的模式
             self.changeHeaderImage()
             
@@ -213,6 +224,15 @@ class PersonInformation: UIViewController,UITableViewDataSource,UITableViewDeleg
                 userDefaults.setValue(getSex, forKey: "mima")
             }
 
+            //let changePageVC = ChangeMimaViewController()
+//            changePageVC.section = indexPath.section
+//            changePageVC.changeNumber = {(phoneNumber) -> Void in
+//                self.personPhoneLabel.text = phoneNumber
+//                let userDefaults = NSUserDefaults.standardUserDefaults()
+//                userDefaults.setValue(phoneNumber, forKey: "phone")
+//            }
+
+            
             self.navigationController?.pushViewController(changePageVC, animated: true)
         
         }
@@ -222,14 +242,14 @@ class PersonInformation: UIViewController,UITableViewDataSource,UITableViewDeleg
             (UIAlertAction) -> Void in
         }
         //  1.相册
-        let GoImageAl = UIAlertAction(title: "照片",style: UIAlertActionStyle.Default){
+        let GoImageAl = UIAlertAction(title: "相册",style: UIAlertActionStyle.Default){
             (UIAlertAction) -> Void in
-            self.GoImage()
+            self.LocalPhoto()
         }
         //  2.相机
         let GoCameraAl = UIAlertAction(title: "相机",style: UIAlertActionStyle.Default){
             (UIAlertAction) -> Void in
-            self.GoCamera()
+            self.takePhoto()
         }
         
         //    把上述的三种情况添加到我的提示框中
@@ -238,108 +258,173 @@ class PersonInformation: UIViewController,UITableViewDataSource,UITableViewDeleg
         actionSheet.addAction(GoCameraAl)
         actionSheet.addAction(GoImageAl)
         self.presentViewController(actionSheet, animated: true, completion: nil)
+
+    }
+
+    func takePhoto(){
+        let sourceType = UIImagePickerControllerSourceType.Camera
+        if UIImagePickerController.isSourceTypeAvailable(sourceType) {
+            let picker = UIImagePickerController()
+            picker.delegate = self
+            picker.allowsEditing = true
+            picker.sourceType = sourceType
+            self.presentViewController(picker, animated: true, completion: nil)
+        }else{
+            print("无法打开相机")
+        }
     }
     
-    func GoImage(){
-        let pickerImage = UIImagePickerController()
-        //  得到视图
-        
-        if !UIImagePickerController.isSourceTypeAvailable(UIImagePickerControllerSourceType.PhotoLibrary){
-            pickerImage.sourceType = UIImagePickerControllerSourceType.PhotoLibrary
-            pickerImage.mediaTypes = UIImagePickerController.availableMediaTypesForSourceType(pickerImage.sourceType)!
-        }
-        pickerImage.delegate = self
-        pickerImage.allowsEditing = true
-        //        self.presentViewController(pickerImage, animated: true, completion: nil)
-        self.presentViewController(pickerImage, animated: true) {
-            self.changeImage = self.headerImageView
-        }
-        
-    }
-    func GoCamera(){
-        var sourceType = UIImagePickerControllerSourceType.Camera
-        if !UIImagePickerController.isSourceTypeAvailable(UIImagePickerControllerSourceType.Camera){
-            sourceType = UIImagePickerControllerSourceType.PhotoLibrary
-        }
+    func LocalPhoto(){
         let picker = UIImagePickerController()
-        //picker.delegate = self
-        
+        picker.sourceType = UIImagePickerControllerSourceType.PhotoLibrary
         picker.delegate = self
-        picker.allowsEditing = true//设置可编辑
-        picker.sourceType = sourceType
-        //        self.presentViewController(picker, animated: true, completion: nil)//进入照相界面
-        self.presentViewController(picker, animated: true) {
-            self.changeImage = self.headerImageView
-        }
+        picker.allowsEditing = true
+        presentViewController(picker, animated: true, completion: nil)
     }
-    func imagePickerController(picker: UIImagePickerController, didFinishPickingMediaWithInfo info: [String : AnyObject]){
-        print("choose--------->>")
-//        print(info)
-    
-        
-        
-//        let img = info[UIImagePickerControllerOriginalImage] as! UIImage
-        let img = info[UIImagePickerControllerEditedImage] as! UIImage
-        if(img.size.width>200 || img.size.height>200)
-        {
-            data = UIImageJPEGRepresentation(img, 0.1)!
-        }
-        else
-        {
-            data = UIImageJPEGRepresentation(img, 0.3)!
-        }
-        if (data.length>104850)
-        {
-            self.hud = MBProgressHUD.showHUDAddedTo(self.view, animated: true)
-            self.hud.mode = MBProgressHUDMode.Text
-            self.hud.margin = 10
-            self.hud.removeFromSuperViewOnHide = true
-            self.hud.labelText = "图片大于1M，请重新选择"
-            self.hud.hide(true, afterDelay: 1)
+    // MARK: ------imagepickerDelegate-------
+    func imagePickerController(picker: UIImagePickerController, didFinishPickingMediaWithInfo info: [String : AnyObject]) {
+        let type = info[UIImagePickerControllerMediaType] as! String
+        if type != "public.image" {
             return
-            
         }
-        //  谁的图片需要修改
-        self.changeImage.image = img
-        //  现在有图片
-        //  存到本地
-        //  取到图片
-        //  把本地图片文件改为二进制
-        
-        self.uploadImage("" as String)
+        //裁剪后图片
+        let image = info[UIImagePickerControllerEditedImage] as! UIImage
+        let data = UIImageJPEGRepresentation(image, 0.1)!
+        let dateFormatter = NSDateFormatter()
+        dateFormatter.dateFormat = "yyyyMMddHHmmss"
+        let dateStr = dateFormatter.stringFromDate(NSDate())
         let userDefaults = NSUserDefaults.standardUserDefaults()
-        userDefaults.setValue("", forKey: "photo")
-
-
-
+        let pic = userDefaults.valueForKey("userid")
+        
+        self.imageName = dateStr + (pic as! String)
+        ConnectModel.uploadWithImageName(imageName, imageData: data, URL: "WriteMicroblog_upload") { [unowned self] (data) in
+            dispatch_async(dispatch_get_main_queue(), {
+                let result = Http(JSONDecoder(data))
+                if result.status != nil {
+                    if result.status! == "success"{
+                        self.imageName = (result.data?.string!)!
+                        //                        TCUserInfo.currentInfo.avatar = imageName!
+                        print("修改成功")
+                        
+                        self.picDate()
+                        
+                    }else{
+                    }
+                }
+            })
+        }
+        self.headerImageView.image = image
         picker.dismissViewControllerAnimated(true, completion: nil)
-        
-    }
-
-    func uploadImage(image:String){
-        //  http://wxt.xiaocool.net/index.php?g=apps&m=index&a=UpdateUserName&userid=578&avatar=2939393.jpg
-        let userDefaults = NSUserDefaults.standardUserDefaults()
-        let userid = userDefaults.valueForKey("userid")
-        let url = "http://wxt.xiaocool.net/index.php?g=apps&m=index&a=UpdateUserName"
-        let pmara = ["userid":userid,"avatar":image]
-        POSTData(url, pmara: (pmara as? [String:AnyObject])!)
-        
-        
     }
     
-    //  上传姓名
-    func POSTData(url:String,pmara:NSDictionary){
-        
-        
-        Alamofire.request(.GET, url, parameters: pmara as? [String:AnyObject]).response { request, response, json, error in
-            
-            
-        }
-    }
     func imagePickerControllerDidCancel(picker: UIImagePickerController){
         
         picker.dismissViewControllerAnimated(true, completion: nil)
     }
+    
+    func picDate(){
+        let defalutid = NSUserDefaults.standardUserDefaults()
+        let sid = defalutid.stringForKey("userid")
+        
+        let url = "http://wxt.xiaocool.net/index.php?g=apps&m=student&a=UpdateUserAvatar"
+        let param = [
+            "userid":sid!,
+            "avatar":self.imageName
+        ]
+        
+        GetName(url, param: (param))
+    }
+    
+    
+    //  上传
+    func GetName(url:String,param:NSDictionary){
+        
+        
+        Alamofire.request(.GET, url, parameters: param as? [String:String]).response { request, response, json, error in
+            
+            if(error != nil){
+            }
+            else{
+                print("request是")
+                print(request!)
+                print("====================")
+                let status = Http(JSONDecoder(json!))
+                print("状态是")
+                print(status.status)
+                if(status.status == "error"){
+                    messageHUD(self.view, messageData: status.errorData!)
+                }
+                if(status.status == "success"){
+                    
+//                    self.navigationController?.popViewControllerAnimated(true)
+                }
+            }
+        }
+        
+    }
+    
+    func GetUserInfo(){
+        //  得到沙盒
+        let userid = NSUserDefaults.standardUserDefaults()
+        //  把userid存入沙盒
+        let uid = userid.stringForKey("userid")
+        let url = apiUrl+"GetUsers"
+        let param = [
+            "userid":uid!
+        ]
+        Alamofire.request(.GET, url, parameters: param).response { request, response, json, error in
+            if(error != nil){
+            }
+            else{
+                print("request是")
+                print(request!)
+                print("====================")
+                //  进行数据解析
+                let status = MineModel(JSONDecoder(json!))
+                print("状态是")
+                print(status.status)
+                if(status.status == "error"){
+                    let hud = MBProgressHUD.showHUDAddedTo(self.view, animated: true)
+                    hud.mode = MBProgressHUDMode.Text;
+                    hud.labelText = status.errorData
+                    hud.margin = 10.0
+                    hud.removeFromSuperViewOnHide = true
+                    hud.hide(true, afterDelay: 1)
+                }
+                
+                if(status.status == "success"){
+                    print("Success")
+                    self.name = (status.data?.name)!
+                    self.sex = (status.data?.sex)!
+                    self.phone = (status.data?.phoneNumber)!
+                    if(status.data?.avatar != nil){
+                        self.imgUrl = microblogImageUrl+(status.data?.avatar)!
+                        let avatarUrl = NSURL(string: self.imgUrl!)
+                        let request: NSURLRequest = NSURLRequest(URL: avatarUrl!)
+                        //异步获取
+                        NSURLConnection.sendAsynchronousRequest(request, queue: NSOperationQueue.mainQueue(), completionHandler: {(response: NSURLResponse?,data: NSData?,error: NSError?)-> Void in
+                            if(data != nil){
+                                let imgTmp = UIImage(data: data!)
+                                self.imageCache[self.imgUrl!] = imgTmp
+                                self.userAvatar.image = imgTmp
+                                if self.userAvatar.image==nil{
+                                    self.userAvatar.image=UIImage(named: "Logo")
+                                }
+                                self.userAvatar.alpha = 1.0
+                                self.headerImageView = self.userAvatar
+                            }
+                            
+                        })
+                        self.tableView.reloadData()
+                    }
+                }
+                
+            }
+            
+        }
+    }
+
+
 
     override func didReceiveMemoryWarning() {
         super.didReceiveMemoryWarning()

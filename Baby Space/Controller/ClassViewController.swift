@@ -24,7 +24,9 @@ class ClassViewController: UIViewController,UITableViewDelegate,UITableViewDataS
     let contentTextView = UITextField()
     
     
-    
+    override func viewWillAppear(animated: Bool) {
+        self.loadData()
+    }
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -105,10 +107,39 @@ class ClassViewController: UIViewController,UITableViewDelegate,UITableViewDataS
         //            as! PhotoTableViewCell
         let cell = UITableViewCell(style: .Default, reuseIdentifier:String(indexPath.row))
         cell.selectionStyle = .None
-        // 内容
         let model = self.dataSource.objectlist[indexPath.row]
+        
+        let photo = UIImageView()
+        photo.frame = CGRectMake(10, 10, 60, 60)
+        let pi = model.photo
+        let imgUrl = microblogImageUrl + pi
+        let photourl = NSURL(string: imgUrl)
+        photo.layer.cornerRadius = 30
+        photo.clipsToBounds = true
+        photo.sd_setImageWithURL(photourl, placeholderImage: UIImage(named: "Logo"))
+        cell.contentView.addSubview(photo)
+        
+        let nameLab = UILabel()
+        nameLab.frame = CGRectMake(80, 15, WIDTH - 70, 20)
+        nameLab.text = model.name
+        nameLab.textColor = UIColor(red: 155/255, green: 229/255, blue: 180/255, alpha: 1)
+        cell.contentView.addSubview(nameLab)
+        
+        let dateformat = NSDateFormatter()
+        dateformat.dateFormat = "yyyy-MM-dd"
+        let dat = NSDate(timeIntervalSince1970: NSTimeInterval(model.write_time)!)
+        let st:String = dateformat.stringFromDate(dat)
+        let timeLb = UILabel()
+        timeLb.frame = CGRectMake(80, 45, WIDTH - 70, 20)
+        timeLb.text = st
+        timeLb.font = UIFont.systemFontOfSize(16)
+        timeLb.textColor = UIColor.lightGrayColor()
+        cell.contentView.addSubview(timeLb)
+
+        
+        // 内容
         let contentlbl = UILabel()
-        contentlbl.frame = CGRectMake(10, 10, WIDTH - 20, 20)
+        contentlbl.frame = CGRectMake(10, 90, WIDTH - 20, 20)
         contentlbl.text = model.content
         contentlbl.numberOfLines = 0
         contentlbl.sizeToFit()
@@ -117,40 +148,17 @@ class ClassViewController: UIViewController,UITableViewDelegate,UITableViewDataS
         let options : NSStringDrawingOptions = NSStringDrawingOptions.UsesLineFragmentOrigin
         let screenBounds:CGRect = UIScreen.mainScreen().bounds
         let boundingRect = String(contentlbl.text).boundingRectWithSize(CGSizeMake(screenBounds.width, 0), options: options, attributes: [NSFontAttributeName:UIFont.systemFontOfSize(17)], context: nil)
-        let height = boundingRect.size.height + 40
+        let height = boundingRect.size.height + 20 + 80
         
         
         //  图片
         var image_h = CGFloat()
-        var button:UIButton?
+        var button:CustomBtn?
         //判断图片张数显示
         
         let pic  = model.pic
-        if pic.count == 1 {
-            image_h=(WIDTH - 40)/3.0
-            let pciInfo = pic[0]
-            let imgUrl = microblogImageUrl+(pciInfo.pictureurl)!
-            let avatarUrl = NSURL(string: imgUrl)
-            let request: NSURLRequest = NSURLRequest(URL: avatarUrl!)
-            NSURLConnection.sendAsynchronousRequest(request, queue: NSOperationQueue.mainQueue(), completionHandler: {(response: NSURLResponse?,data: NSData?,error: NSError?)-> Void in
-                if(data != nil){
-                    button = UIButton()
-                    button!.frame = CGRectMake(12, height, WIDTH - 24, (WIDTH - 40)/3.0)
-                    let imgTmp = UIImage(data: data!)
-                    
-                    button!.setImage(imgTmp, forState: .Normal)
-                    if button?.imageView?.image == nil{
-                        button?.setBackgroundImage(UIImage(named: "园所公告背景.png"), forState: .Normal)
-                    }
-                    button?.tag = indexPath.row
-                    button?.addTarget(self, action: #selector(self.clickBtn), forControlEvents: .TouchUpInside)
-                    cell.contentView.addSubview(button!)
-                    
-                }
-            })
-            
-        }
-        if(pic.count>1&&pic.count<=3){
+        
+        if(pic.count>0&&pic.count<=3){
             image_h=(WIDTH - 40)/3.0
             for i in 1...pic.count{
                 var x = 12
@@ -162,13 +170,16 @@ class ClassViewController: UIViewController,UITableViewDelegate,UITableViewDataS
                 NSURLConnection.sendAsynchronousRequest(request, queue: NSOperationQueue.mainQueue(), completionHandler: {(response: NSURLResponse?,data: NSData?,error: NSError?)-> Void in
                     if(data != nil){
                         x = x+((i-1)*Int((WIDTH - 40)/3.0 + 10))
-                        button = UIButton()
+                        button = CustomBtn()
+                        button?.flag = i
                         button!.frame = CGRectMake(CGFloat(x), height, (WIDTH - 40)/3.0, (WIDTH - 40)/3.0)
                         let imgTmp = UIImage(data: data!)
                         
                         button!.setImage(imgTmp, forState: .Normal)
+                        button?.imageView?.contentMode = .ScaleAspectFill
+                        button?.clipsToBounds = true
                         if button?.imageView?.image == nil{
-                            button?.setBackgroundImage(UIImage(named: "Logo"), forState: .Normal)
+                            button?.setBackgroundImage(UIImage(named: "图片默认加载"), forState: .Normal)
                         }
                         button?.tag = indexPath.row
                         button?.addTarget(self, action: #selector(self.clickBtn), forControlEvents: .TouchUpInside)
@@ -192,12 +203,15 @@ class ClassViewController: UIViewController,UITableViewDelegate,UITableViewDataS
                         NSURLConnection.sendAsynchronousRequest(request, queue: NSOperationQueue.mainQueue(), completionHandler: {(response: NSURLResponse?,data: NSData?,error: NSError?)-> Void in
                             if(data != nil){
                                 x = x+((i-1)*Int((WIDTH - 40)/3.0 + 10))
-                                button = UIButton()
+                                button = CustomBtn()
+                                button?.flag = i
                                 button!.frame = CGRectMake(CGFloat(x), height, (WIDTH - 40)/3.0, (WIDTH - 40)/3.0)
                                 let imgTmp = UIImage(data: data!)
                                 button!.setImage(imgTmp, forState: .Normal)
+                                button?.imageView?.contentMode = .ScaleAspectFill
+                                button?.clipsToBounds = true
                                 if button?.imageView?.image == nil{
-                                    button!.setImage(UIImage(named: "Logo"), forState: .Normal)
+                                    button!.setImage(UIImage(named: "图片默认加载"), forState: .Normal)
                                 }
                                 button?.tag = indexPath.row
                                 button?.addTarget(self, action: #selector(self.clickBtn), forControlEvents: .TouchUpInside)
@@ -214,12 +228,15 @@ class ClassViewController: UIViewController,UITableViewDelegate,UITableViewDataS
                         NSURLConnection.sendAsynchronousRequest(request, queue: NSOperationQueue.mainQueue(), completionHandler: {(response: NSURLResponse?,data: NSData?,error: NSError?)-> Void in
                             if(data != nil){
                                 x = x+((i-4)*Int((WIDTH - 40)/3.0 + 10))
-                                button = UIButton()
+                                button = CustomBtn()
+                                button?.flag = i
                                 button!.frame = CGRectMake(CGFloat(x), height+(WIDTH - 40)/3.0 + 5, (WIDTH - 40)/3.0, (WIDTH - 40)/3.0)
                                 let imgTmp = UIImage(data: data!)
                                 button!.setImage(imgTmp, forState: .Normal)
+                                button?.imageView?.contentMode = .ScaleAspectFill
+                                button?.clipsToBounds = true
                                 if button?.imageView?.image == nil{
-                                    button!.setImage(UIImage(named: "Logo"), forState: .Normal)
+                                    button!.setImage(UIImage(named: "图片默认加载"), forState: .Normal)
                                 }
                                 button?.tag = indexPath.row
                                 button?.addTarget(self, action: #selector(self.clickBtn), forControlEvents: .TouchUpInside)
@@ -243,12 +260,15 @@ class ClassViewController: UIViewController,UITableViewDelegate,UITableViewDataS
                         NSURLConnection.sendAsynchronousRequest(request, queue: NSOperationQueue.mainQueue(), completionHandler: {(response: NSURLResponse?,data: NSData?,error: NSError?)-> Void in
                             if(data != nil){
                                 x = x+((i-1)*Int((WIDTH - 40)/3.0 + 10))
-                                button = UIButton()
+                                button = CustomBtn()
+                                button?.flag = i
                                 button!.frame = CGRectMake(CGFloat(x), height, (WIDTH - 40)/3.0, (WIDTH - 40)/3.0)
                                 let imgTmp = UIImage(data: data!)
                                 button!.setImage(imgTmp, forState: .Normal)
+                                button?.imageView?.contentMode = .ScaleAspectFill
+                                button?.clipsToBounds = true
                                 if button?.imageView?.image == nil{
-                                    button!.setImage(UIImage(named: "Logo"), forState: .Normal)
+                                    button!.setImage(UIImage(named: "图片默认加载"), forState: .Normal)
                                 }
                                 button?.tag = indexPath.row
                                 button?.addTarget(self, action: #selector(self.clickBtn), forControlEvents: .TouchUpInside)
@@ -266,13 +286,16 @@ class ClassViewController: UIViewController,UITableViewDelegate,UITableViewDataS
                         NSURLConnection.sendAsynchronousRequest(request, queue: NSOperationQueue.mainQueue(), completionHandler: {(response: NSURLResponse?,data: NSData?,error: NSError?)-> Void in
                             if(data != nil){
                                 x = x+((i-4)*Int((WIDTH - 40)/3.0 + 10))
-                                button = UIButton()
+                                button = CustomBtn()
+                                button?.flag = i
                                 button!.frame = CGRectMake(CGFloat(x), height+(WIDTH - 40)/3.0 + 5, (WIDTH - 40)/3.0, (WIDTH - 40)/3.0)
                                 let imgTmp = UIImage(data: data!)
                                 
                                 button!.setImage(imgTmp, forState: .Normal)
+                                button?.imageView?.contentMode = .ScaleAspectFill
+                                button?.clipsToBounds = true
                                 if button?.imageView?.image == nil{
-                                    button!.setImage(UIImage(named: "Logo"), forState: .Normal)
+                                    button!.setImage(UIImage(named: "图片默认加载"), forState: .Normal)
                                 }
                                 button?.tag = indexPath.row
                                 button?.addTarget(self, action: #selector(self.clickBtn), forControlEvents: .TouchUpInside)
@@ -290,12 +313,15 @@ class ClassViewController: UIViewController,UITableViewDelegate,UITableViewDataS
                         NSURLConnection.sendAsynchronousRequest(request, queue: NSOperationQueue.mainQueue(), completionHandler: {(response: NSURLResponse?,data: NSData?,error: NSError?)-> Void in
                             if(data != nil){
                                 x = x+((i-7)*Int((WIDTH - 40)/3.0 + 10))
-                                button = UIButton()
+                                button = CustomBtn()
+                                button?.flag = i
                                 button!.frame = CGRectMake(CGFloat(x), height+(WIDTH - 40)/3.0 + 5+(WIDTH - 40)/3.0 + 5, (WIDTH - 40)/3.0, (WIDTH - 40)/3.0)
                                 let imgTmp = UIImage(data: data!)
                                 button!.setImage(imgTmp, forState: .Normal)
+                                button?.imageView?.contentMode = .ScaleAspectFill
+                                button?.clipsToBounds = true
                                 if button?.imageView?.image == nil{
-                                    button!.setImage(UIImage(named: "Logo"), forState: .Normal)
+                                    button!.setImage(UIImage(named: "图片默认加载"), forState: .Normal)
                                 }
                                 button?.tag = indexPath.row
                                 button?.addTarget(self, action: #selector(self.clickBtn), forControlEvents: .TouchUpInside)
@@ -323,13 +349,16 @@ class ClassViewController: UIViewController,UITableViewDelegate,UITableViewDataS
                             if(data != nil){
                                 x = x+((i-1)*Int((WIDTH - 40)/3.0 + 10))
                                 print(x)
-                                button = UIButton()
+                                button = CustomBtn()
+                                button?.flag = i
                                 button!.frame = CGRectMake(CGFloat(x), height, (WIDTH - 40)/3.0, (WIDTH - 40)/3.0)
                                 let imgTmp = UIImage(data: data!)
                                 
                                 button!.setImage(imgTmp, forState: .Normal)
+                                button?.imageView?.contentMode = .ScaleAspectFill
+                                button?.clipsToBounds = true
                                 if button?.imageView?.image == nil{
-                                    button!.setImage(UIImage(named: "Logo"), forState: .Normal)
+                                    button!.setImage(UIImage(named: "图片默认加载"), forState: .Normal)
                                 }
                                 button?.tag = indexPath.row
                                 button?.addTarget(self, action: #selector(self.clickBtn), forControlEvents: .TouchUpInside)
@@ -348,13 +377,16 @@ class ClassViewController: UIViewController,UITableViewDelegate,UITableViewDataS
                         NSURLConnection.sendAsynchronousRequest(request, queue: NSOperationQueue.mainQueue(), completionHandler: {(response: NSURLResponse?,data: NSData?,error: NSError?)-> Void in
                             if(data != nil){
                                 x = x+((i-4)*Int((WIDTH - 40)/3.0 + 10))
-                                button = UIButton()
+                                button = CustomBtn()
+                                button?.flag = i
                                 button!.frame = CGRectMake(CGFloat(x), height+(WIDTH - 40)/3.0 + 5, (WIDTH - 40)/3.0, (WIDTH - 40)/3.0)
                                 let imgTmp = UIImage(data: data!)
                                 
                                 button!.setImage(imgTmp, forState: .Normal)
+                                button?.imageView?.contentMode = .ScaleAspectFill
+                                button?.clipsToBounds = true
                                 if button?.imageView?.image == nil{
-                                    button!.setImage(UIImage(named: "Logo"), forState: .Normal)
+                                    button!.setImage(UIImage(named: "图片默认加载"), forState: .Normal)
                                 }
                                 button?.tag = indexPath.row
                                 button?.addTarget(self, action: #selector(self.clickBtn), forControlEvents: .TouchUpInside)
@@ -373,13 +405,16 @@ class ClassViewController: UIViewController,UITableViewDelegate,UITableViewDataS
                         NSURLConnection.sendAsynchronousRequest(request, queue: NSOperationQueue.mainQueue(), completionHandler: {(response: NSURLResponse?,data: NSData?,error: NSError?)-> Void in
                             if(data != nil){
                                 x = x+((i-7)*Int((WIDTH - 40)/3.0 + 10))
-                                button = UIButton()
+                                button = CustomBtn()
+                                button?.flag = i
                                 button!.frame = CGRectMake(CGFloat(x), height+(WIDTH - 40)/3.0 + 5+(WIDTH - 40)/3.0 + 5, (WIDTH - 40)/3.0, (WIDTH - 40)/3.0)
                                 let imgTmp = UIImage(data: data!)
                                 
                                 button!.setImage(imgTmp, forState: .Normal)
+                                button?.imageView?.contentMode = .ScaleAspectFill
+                                button?.clipsToBounds = true
                                 if button?.imageView?.image == nil{
-                                    button!.setImage(UIImage(named: "Logo"), forState: .Normal)
+                                    button!.setImage(UIImage(named: "图片默认加载"), forState: .Normal)
                                 }
                                 button?.tag = indexPath.row
                                 button?.addTarget(self, action: #selector(self.clickBtn), forControlEvents: .TouchUpInside)
@@ -400,13 +435,13 @@ class ClassViewController: UIViewController,UITableViewDelegate,UITableViewDataS
         let senderLbl = UILabel()
         senderLbl.frame = CGRectMake(40, height + image_h + 10, 120, 20)
         senderLbl.font = UIFont.systemFontOfSize(16)
-        senderLbl.text = "发自 \(model.name!)"
+        senderLbl.text = "发自 \(model.name)"
         senderLbl.textColor = UIColor.lightGrayColor()
         cell.contentView.addSubview(senderLbl)
         
         let dateformate = NSDateFormatter()
         dateformate.dateFormat = "yyyy-MM-dd HH:mm"
-        let date = NSDate(timeIntervalSince1970: NSTimeInterval(model.write_time!)!)
+        let date = NSDate(timeIntervalSince1970: NSTimeInterval(model.write_time)!)
         let str:String = dateformate.stringFromDate(date)
         let timeLbl = UILabel()
         timeLbl.frame = CGRectMake(160, height + image_h + 10, WIDTH - 170, 20)
@@ -439,17 +474,18 @@ class ClassViewController: UIViewController,UITableViewDelegate,UITableViewDataS
         if model.like.count != 0 {
             view.frame = CGRectMake(10, height + image_h + 80, WIDTH - 20, 30)
             cell.contentView.addSubview(view)
-            let lin = UILabel()
-            lin.backgroundColor = UIColor.lightGrayColor()
-            lin.frame = CGRectMake(1, 3, WIDTH - 2, 0.5)
-            view.addSubview(lin)
+            let btn = UIButton()
+            btn.frame = CGRectMake(10, 5, 20, 20)
+            btn.setBackgroundImage(UIImage(named: "已点赞"), forState: .Normal)
+            view.addSubview(btn)
             for i in 1...model.like.count {
                 let str = model.like[i - 1].name
                 let lable = UILabel()
-                var x = 10
+                var x = 40
                 x = x+((i-1)*Int((WIDTH - 40)/4 + 5))
-                lable.frame = CGRectMake(CGFloat(x), 5, (WIDTH - 20)/4, 20)
+                lable.frame = CGRectMake(CGFloat(x), 5, (WIDTH - 50)/4, 20)
                 lable.text = str
+                lable.textColor = UIColor(red: 115/255.0, green: 229/255.0, blue: 180/255.0, alpha: 1.0)
                 lable.font = UIFont.systemFontOfSize(15)
                 view.addSubview(lable)
             }
@@ -462,6 +498,7 @@ class ClassViewController: UIViewController,UITableViewDelegate,UITableViewDataS
                 pingView = UIView()
                 h = CGFloat( 50 * (i))
                 pingView.frame = CGRectMake(10, height + image_h + 90 + view.frame.size.height , WIDTH - 20, h)
+//                pingView.backgroundColor = UIColor.lightGrayColor()
                 cell.contentView.addSubview(pingView)
                 let name = UILabel()
                 name.frame = CGRectMake(50, 5 + CGFloat( 50 * (i - 1)), 60, 20)
@@ -512,15 +549,18 @@ class ClassViewController: UIViewController,UITableViewDelegate,UITableViewDataS
     func tableView(tableView: UITableView, didSelectRowAtIndexPath indexPath: NSIndexPath) {
         let vc = MyPhotoDetailViewController()
         vc.dataSource = self.dataSource.objectlist[indexPath.row]
+        vc.num = indexPath.row
+        vc.type = "2"
         self.navigationController?.pushViewController(vc, animated: true)
     }
 
     
     // 点击图片跳转
-    func clickBtn(sender:UIButton){
+    func clickBtn(sender:CustomBtn){
         let vc = ImagesViewController()
         vc.arrayInfo = self.dataSource.objectlist[sender.tag].pic
         vc.nu = vc.arrayInfo.count
+        vc.count = sender.flag
         self.navigationController?.pushViewController(vc, animated: true)
         
     }
@@ -545,7 +585,7 @@ class ClassViewController: UIViewController,UITableViewDelegate,UITableViewDataS
                 "userid":uid!,
                 "type":"2"
             ]
-            Alamofire.request(.GET, url, parameters: param as? [String:String] ).response { request, response, json, error in
+            Alamofire.request(.GET, url, parameters: param).response { request, response, json, error in
                 print(request)
                 if(error != nil){
                     
@@ -583,7 +623,7 @@ class ClassViewController: UIViewController,UITableViewDelegate,UITableViewDataS
                 "userid":uid!,
                 "type":"2"
             ]
-            Alamofire.request(.GET, url, parameters: param as? [String:String]).response { request, response, json, error in
+            Alamofire.request(.GET, url, parameters: param).response { request, response, json, error in
                 print(request)
                 if(error != nil){
                     
@@ -639,25 +679,25 @@ class ClassViewController: UIViewController,UITableViewDelegate,UITableViewDataS
         
         self.num = sender.tag
         
-        NSNotificationCenter.defaultCenter().addObserver(self, selector: #selector(MyPhotoViewController.keyboardWillAppear(_:)), name: UIKeyboardWillShowNotification, object: nil)
+        NSNotificationCenter.defaultCenter().addObserver(self, selector: #selector(ClassViewController.keyboardWillAppear(_:)), name: UIKeyboardWillShowNotification, object: nil)
         
         NSNotificationCenter.defaultCenter().addObserver(self, selector: #selector(keyboardDidAppear), name: UIKeyboardDidShowNotification, object: nil)
         
-        NSNotificationCenter.defaultCenter().addObserver(self, selector: #selector(MyPhotoViewController.keyboardWillDisappear(_:)), name:UIKeyboardWillHideNotification, object: nil)
+        NSNotificationCenter.defaultCenter().addObserver(self, selector: #selector(ClassViewController.keyboardWillDisappear(_:)), name:UIKeyboardWillHideNotification, object: nil)
         
     }
     
     func keyboardWillAppear(notification: NSNotification) {
         
         // 获取键盘信息
-        let keyboardinfo = notification.userInfo![UIKeyboardFrameBeginUserInfoKey]
+        let keyboardinfo = notification.userInfo![UIKeyboardFrameEndUserInfoKey]
         
         let keyboardheight:CGFloat = (keyboardinfo?.CGRectValue.size.height)!
         
         UIView.animateWithDuration(0.3) {
             //            self.contentTableView.contentOffset = CGPoint.init(x: 0, y: self.contentTableView.contentSize.height-keyboardheight-49)
             self.bview.frame = CGRectMake(0, HEIGHT - keyboardheight - 185, WIDTH, 80)
-            self.table.frame = CGRectMake(0, 0, WIDTH, HEIGHT - keyboardheight - 185 - 80)
+            self.table.frame = CGRectMake(0, 0, WIDTH, HEIGHT - keyboardheight - 185)
         }
         
         print("键盘弹起")
@@ -690,7 +730,7 @@ class ClassViewController: UIViewController,UITableViewDelegate,UITableViewDataS
             "type":"2",
             "content":self.contentTextView.text!,
             ]
-        Alamofire.request(.POST, url, parameters: param as? [String : String]).response { request, response, json, error in
+        Alamofire.request(.POST, url, parameters: param).response { request, response, json, error in
             if(error != nil){
             }
             else{
@@ -710,6 +750,7 @@ class ClassViewController: UIViewController,UITableViewDelegate,UITableViewDataS
                 }
                 if(result.status == "success"){
                     print("Success")
+                    textField.text = ""
                     self.table.frame = CGRectMake(0, 0, self.view.frame.size.width, self.view.frame.size.height)
                     self.loadData()
                     self.bview.hidden = true
@@ -730,6 +771,7 @@ class ClassViewController: UIViewController,UITableViewDelegate,UITableViewDataS
             self.view.endEditing(true)
             keyboardShowState = false
         }
+        contentTextView.text = ""
     }
     
     

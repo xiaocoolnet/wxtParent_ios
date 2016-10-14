@@ -270,32 +270,36 @@ class SendPhotoViewController: UIViewController,UICollectionViewDataSource,UICol
             "content":self.contentTextView.text!,
             "picurl":imageUrl!
         ]
-        
-        Alamofire.request(.POST, url, parameters: param as? [String : AnyObject]).response { request, response, json, error in
-            if(error != nil){
-            }
-            else{
-                print("request是")
-                print(request!)
-                print("====================")
-                let result = Httpresult(JSONDecoder(json!))
-                print("状态是")
-                print(result.status)
-                if(result.status == "error"){
-                    let hud = MBProgressHUD.showHUDAddedTo(self.view, animated: true)
-                    hud.mode = MBProgressHUDMode.Text
-                    hud.labelText = result.errorData
-                    hud.margin = 10.0
-                    hud.removeFromSuperViewOnHide = true
-                    hud.hide(true, afterDelay: 1)
+        if imageUrl == "" {
+            messageHUD(self.view, messageData: "请添加照片")
+        }else{
+            
+            Alamofire.request(.POST, url, parameters: param as? [String : AnyObject]).response { request, response, json, error in
+                if(error != nil){
                 }
-                if(result.status == "success"){
-                    print("Success")
-                    self.navigationController?.popViewControllerAnimated(true)
+                else{
+                    print("request是")
+                    print(request!)
+                    print("====================")
+                    let result = Httpresult(JSONDecoder(json!))
+                    print("状态是")
+                    print(result.status)
+                    if(result.status == "error"){
+                        let hud = MBProgressHUD.showHUDAddedTo(self.view, animated: true)
+                        hud.mode = MBProgressHUDMode.Text
+                        hud.labelText = result.errorData
+                        hud.margin = 10.0
+                        hud.removeFromSuperViewOnHide = true
+                        hud.hide(true, afterDelay: 1)
+                    }
+                    if(result.status == "success"){
+                        print("Success")
+                        self.navigationController?.popViewControllerAnimated(true)
+                    }
+                    
                 }
                 
             }
-            
         }
     }
 //    收键盘

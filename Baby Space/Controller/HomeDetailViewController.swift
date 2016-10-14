@@ -27,13 +27,7 @@ class HomeDetailViewController: UIViewController, UITableViewDelegate, UITableVi
     var homeInfo = Array<LikeInfo>()
     var pic = Array<PiInfo>()
     
-    
-    
-    
     var a = 0
-    
-    
-    
     
     override func viewWillAppear(animated: Bool) {
         //        self.createTable()
@@ -87,18 +81,25 @@ class HomeDetailViewController: UIViewController, UITableViewDelegate, UITableVi
         cell.name.text = model?.name
         cell.titleLab.text = model?.title
 //        cell.create_time.text = model?.create_time
-        cell.contentLab.text = model?.content
         cell.subjectLab.text = (model?.subject)! + ":"
+        cell.contentLab.text = model?.content
+        cell.contentLab.numberOfLines = 0
+        cell.contentLab.sizeToFit()
+            //        自适应行高
+        let options : NSStringDrawingOptions = NSStringDrawingOptions.UsesLineFragmentOrigin
+        let screenBounds:CGRect = UIScreen.mainScreen().bounds
+        let boundingRect = String(cell.contentLab.text).boundingRectWithSize(CGSizeMake(screenBounds.width, 0), options: options, attributes: [NSFontAttributeName:UIFont.systemFontOfSize(17)], context: nil)
+        let height = boundingRect.size.height + 130
         let pict = model?.photo
         let imgUrl = microblogImageUrl + pict!
         let photourl = NSURL(string: imgUrl)
-        cell.photoBtn.sd_setImageWithURL(photourl, placeholderImage: UIImage(named: "Logo"))
+        cell.photoBtn.sd_setImageWithURL(photourl, placeholderImage: UIImage(named: "默认头像"))
         
         
         
         var image_h = CGFloat()
         
-        var button:UIButton?
+        var button:CustomBtn?
         
         
         //判断图片张数显示
@@ -118,16 +119,16 @@ class HomeDetailViewController: UIViewController, UITableViewDelegate, UITableVi
                     if(data != nil){
                         x = x+((i-1)*Int((WIDTH - 40)/3.0 + 10))
                         //                        blogimage = UIImageView(frame: CGRectMake(CGFloat(x), 150, 110, 80))
-                        button = UIButton()
-                        button!.frame = CGRectMake(CGFloat(x), 150, (WIDTH - 40)/3.0, (WIDTH - 40)/3.0)
+                        button = CustomBtn()
+                        button?.flag = i
+                        button!.frame = CGRectMake(CGFloat(x), height, (WIDTH - 40)/3.0, (WIDTH - 40)/3.0)
                         let imgTmp = UIImage(data: data!)
-                        //self.imageCache[imgUrl] = imgTmp
-                        //                        blogimage!.image = imgTmp
-                        //                        if blogimage?.image==nil{
-                        //                            blogimage?.image=UIImage(named: "Logo")
-                        //                        }
-                        //                        cell.addSubview(blogimage!)
                         button!.setImage(imgTmp, forState: .Normal)
+                        button?.imageView?.contentMode = .ScaleAspectFill
+                        button?.clipsToBounds = true
+                        if button?.imageView?.image == nil{
+                            button!.setImage(UIImage(named: "图片默认加载"), forState: .Normal)
+                        }
                         button?.tag = indexPath.row
                         button?.addTarget(self, action: #selector(self.clickBtn), forControlEvents: .TouchUpInside)
                         cell.contentView.addSubview(button!)
@@ -155,18 +156,17 @@ class HomeDetailViewController: UIViewController, UITableViewDelegate, UITableVi
                         NSURLConnection.sendAsynchronousRequest(request, queue: NSOperationQueue.mainQueue(), completionHandler: {(response: NSURLResponse?,data: NSData?,error: NSError?)-> Void in
                             if(data != nil){
                                 x = x+((i-1)*Int((WIDTH - 40)/3.0 + 10))
-                                button = UIButton()
-                                button!.frame = CGRectMake(CGFloat(x), 150, (WIDTH - 40)/3.0, (WIDTH - 40)/3.0)
+                                button = CustomBtn()
+                                button?.flag = i
+                                button!.frame = CGRectMake(CGFloat(x), height, (WIDTH - 40)/3.0, (WIDTH - 40)/3.0)
                                 
                                 let imgTmp = UIImage(data: data!)
-                                //self.imageCache[imgUrl] = imgTmp
-                                //                                blogimage!.image = imgTmp
-                                //                                if blogimage?.image==nil{
-                                //                                    blogimage?.image=UIImage(named: "Logo")
-                                //                                }
-                                //
-                                //                                cell.addSubview(blogimage!)
                                 button!.setImage(imgTmp, forState: .Normal)
+                                button?.imageView?.contentMode = .ScaleAspectFill
+                                button?.clipsToBounds = true
+                                if button?.imageView?.image == nil{
+                                    button!.setImage(UIImage(named: "图片默认加载"), forState: .Normal)
+                                }
                                 button?.tag = indexPath.row
                                 button?.addTarget(self, action: #selector(self.clickBtn), forControlEvents: .TouchUpInside)
                                 cell.contentView.addSubview(button!)
@@ -185,16 +185,16 @@ class HomeDetailViewController: UIViewController, UITableViewDelegate, UITableVi
                         NSURLConnection.sendAsynchronousRequest(request, queue: NSOperationQueue.mainQueue(), completionHandler: {(response: NSURLResponse?,data: NSData?,error: NSError?)-> Void in
                             if(data != nil){
                                 x = x+((i-4)*Int((WIDTH - 40)/3.0 + 10))
-                                button = UIButton()
-                                button!.frame = CGRectMake(CGFloat(x), 150+(WIDTH - 40)/3.0 + 5, (WIDTH - 40)/3.0, (WIDTH - 40)/3.0)
+                                button = CustomBtn()
+                                button?.flag = i
+                                button!.frame = CGRectMake(CGFloat(x), height+(WIDTH - 40)/3.0 + 5, (WIDTH - 40)/3.0, (WIDTH - 40)/3.0)
                                 let imgTmp = UIImage(data: data!)
-                                //self.imageCache[imgUrl] = imgTmp
-                                //                                blogimage!.image = imgTmp
-                                //                                if blogimage?.image==nil{
-                                //                                    blogimage?.image=UIImage(named: "Logo")
-                                //                                }
-                                //                                cell.addSubview(blogimage!)
                                 button!.setImage(imgTmp, forState: .Normal)
+                                button?.imageView?.contentMode = .ScaleAspectFill
+                                button?.clipsToBounds = true
+                                if button?.imageView?.image == nil{
+                                    button!.setImage(UIImage(named: "图片默认加载"), forState: .Normal)
+                                }
                                 button?.tag = indexPath.row
                                 button?.addTarget(self, action: #selector(self.clickBtn), forControlEvents: .TouchUpInside)
                                 cell.contentView.addSubview(button!)
@@ -220,16 +220,16 @@ class HomeDetailViewController: UIViewController, UITableViewDelegate, UITableVi
                         NSURLConnection.sendAsynchronousRequest(request, queue: NSOperationQueue.mainQueue(), completionHandler: {(response: NSURLResponse?,data: NSData?,error: NSError?)-> Void in
                             if(data != nil){
                                 x = x+((i-1)*Int((WIDTH - 40)/3.0 + 10))
-                                button = UIButton()
-                                button!.frame = CGRectMake(CGFloat(x), 150, (WIDTH - 40)/3.0, (WIDTH - 40)/3.0)
+                                button = CustomBtn()
+                                button?.flag = i
+                                button!.frame = CGRectMake(CGFloat(x), height, (WIDTH - 40)/3.0, (WIDTH - 40)/3.0)
                                 let imgTmp = UIImage(data: data!)
-                                //self.imageCache[imgUrl] = imgTmp
-//                                blogimage!.image = imgTmp
-                                //                                if blogimage?.image==nil{
-                                //                                    blogimage?.image=UIImage(named: "Logo")
-                                //                                }
-                                //                                cell.addSubview(blogimage!)
                                 button!.setImage(imgTmp, forState: .Normal)
+                                button?.imageView?.contentMode = .ScaleAspectFill
+                                button?.clipsToBounds = true
+                                if button?.imageView?.image == nil{
+                                    button!.setImage(UIImage(named: "图片默认加载"), forState: .Normal)
+                                }
                                 button?.tag = indexPath.row
                                 button?.addTarget(self, action: #selector(self.clickBtn), forControlEvents: .TouchUpInside)
                                 cell.contentView.addSubview(button!)
@@ -249,16 +249,16 @@ class HomeDetailViewController: UIViewController, UITableViewDelegate, UITableVi
                         NSURLConnection.sendAsynchronousRequest(request, queue: NSOperationQueue.mainQueue(), completionHandler: {(response: NSURLResponse?,data: NSData?,error: NSError?)-> Void in
                             if(data != nil){
                                 x = x+((i-4)*Int((WIDTH - 40)/3.0 + 10))
-                                button = UIButton()
-                                button!.frame = CGRectMake(CGFloat(x), 150+(WIDTH - 40)/3.0 + 5, (WIDTH - 40)/3.0, (WIDTH - 40)/3.0)
+                                button = CustomBtn()
+                                button?.flag = i
+                                button!.frame = CGRectMake(CGFloat(x), height+(WIDTH - 40)/3.0 + 5, (WIDTH - 40)/3.0, (WIDTH - 40)/3.0)
                                 let imgTmp = UIImage(data: data!)
-                                //self.imageCache[imgUrl] = imgTmp
-                                //                                blogimage!.image = imgTmp
-                                //                                if blogimage?.image==nil{
-                                //                                    blogimage?.image=UIImage(named: "Logo")
-                                //                                }
-                                //                                cell.addSubview(blogimage!)
                                 button!.setImage(imgTmp, forState: .Normal)
+                                button?.imageView?.contentMode = .ScaleAspectFill
+                                button?.clipsToBounds = true
+                                if button?.imageView?.image == nil{
+                                    button!.setImage(UIImage(named: "图片默认加载"), forState: .Normal)
+                                }
                                 button?.tag = indexPath.row
                                 button?.addTarget(self, action: #selector(self.clickBtn), forControlEvents: .TouchUpInside)
                                 cell.contentView.addSubview(button!)
@@ -278,16 +278,16 @@ class HomeDetailViewController: UIViewController, UITableViewDelegate, UITableVi
                         NSURLConnection.sendAsynchronousRequest(request, queue: NSOperationQueue.mainQueue(), completionHandler: {(response: NSURLResponse?,data: NSData?,error: NSError?)-> Void in
                             if(data != nil){
                                 x = x+((i-7)*Int((WIDTH - 40)/3.0 + 10))
-                                button = UIButton()
-                                button!.frame = CGRectMake(CGFloat(x), 150+(WIDTH - 40)/3.0 + 5+(WIDTH - 40)/3.0 + 5, (WIDTH - 40)/3.0, (WIDTH - 40)/3.0)
+                                button = CustomBtn()
+                                button?.flag = i
+                                button!.frame = CGRectMake(CGFloat(x), height+(WIDTH - 40)/3.0 + 5+(WIDTH - 40)/3.0 + 5, (WIDTH - 40)/3.0, (WIDTH - 40)/3.0)
                                 let imgTmp = UIImage(data: data!)
-                                //self.imageCache[imgUrl] = imgTmp
-                                //                                blogimage!.image = imgTmp
-                                //                                if blogimage?.image==nil{
-                                //                                    blogimage?.image=UIImage(named: "Logo")
-                                //                                }
-                                //                                cell.addSubview(blogimage!)
                                 button!.setImage(imgTmp, forState: .Normal)
+                                button?.imageView?.contentMode = .ScaleAspectFill
+                                button?.clipsToBounds = true
+                                if button?.imageView?.image == nil{
+                                    button!.setImage(UIImage(named: "图片默认加载"), forState: .Normal)
+                                }
                                 button?.tag = indexPath.row
                                 button?.addTarget(self, action: #selector(self.clickBtn), forControlEvents: .TouchUpInside)
                                 cell.contentView.addSubview(button!)
@@ -316,16 +316,16 @@ class HomeDetailViewController: UIViewController, UITableViewDelegate, UITableVi
                             if(data != nil){
                                 x = x+((i-1)*Int((WIDTH - 40)/3.0 + 10))
                                 print(x)
-                                button = UIButton()
-                                button!.frame = CGRectMake(CGFloat(x), 150, (WIDTH - 40)/3.0, (WIDTH - 40)/3.0)
+                                button = CustomBtn()
+                                button?.flag = i
+                                button!.frame = CGRectMake(CGFloat(x), height, (WIDTH - 40)/3.0, (WIDTH - 40)/3.0)
                                 let imgTmp = UIImage(data: data!)
-                                //self.imageCache[imgUrl] = imgTmp
-                                //                                blogimage!.image = imgTmp
-                                //                                if blogimage?.image==nil{
-                                //                                    blogimage?.image=UIImage(named: "Logo")
-                                //                                }
-                                //                                cell.addSubview(blogimage!)
                                 button!.setImage(imgTmp, forState: .Normal)
+                                button?.imageView?.contentMode = .ScaleAspectFill
+                                button?.clipsToBounds = true
+                                if button?.imageView?.image == nil{
+                                    button!.setImage(UIImage(named: "图片默认加载"), forState: .Normal)
+                                }
                                 button?.tag = indexPath.row
                                 button?.addTarget(self, action: #selector(self.clickBtn), forControlEvents: .TouchUpInside)
                                 cell.contentView.addSubview(button!)
@@ -345,16 +345,16 @@ class HomeDetailViewController: UIViewController, UITableViewDelegate, UITableVi
                         NSURLConnection.sendAsynchronousRequest(request, queue: NSOperationQueue.mainQueue(), completionHandler: {(response: NSURLResponse?,data: NSData?,error: NSError?)-> Void in
                             if(data != nil){
                                 x = x+((i-4)*Int((WIDTH - 40)/3.0 + 10))
-                                button = UIButton()
-                                button!.frame = CGRectMake(CGFloat(x), 150+(WIDTH - 40)/3.0 + 5, (WIDTH - 40)/3.0, (WIDTH - 40)/3.0)
+                                button = CustomBtn()
+                                button?.flag = i
+                                button!.frame = CGRectMake(CGFloat(x), height+(WIDTH - 40)/3.0 + 5, (WIDTH - 40)/3.0, (WIDTH - 40)/3.0)
                                 let imgTmp = UIImage(data: data!)
-                                //self.imageCache[imgUrl] = imgTmp
-                                //                                blogimage!.image = imgTmp
-                                //                                if blogimage?.image==nil{
-                                //                                    blogimage?.image=UIImage(named: "Logo")
-                                //                                }
-                                //                                cell.addSubview(blogimage!)
                                 button!.setImage(imgTmp, forState: .Normal)
+                                button?.imageView?.contentMode = .ScaleAspectFill
+                                button?.clipsToBounds = true
+                                if button?.imageView?.image == nil{
+                                    button!.setImage(UIImage(named: "图片默认加载"), forState: .Normal)
+                                }
                                 button?.tag = indexPath.row
                                 button?.addTarget(self, action: #selector(self.clickBtn), forControlEvents: .TouchUpInside)
                                 cell.contentView.addSubview(button!)
@@ -374,16 +374,16 @@ class HomeDetailViewController: UIViewController, UITableViewDelegate, UITableVi
                         NSURLConnection.sendAsynchronousRequest(request, queue: NSOperationQueue.mainQueue(), completionHandler: {(response: NSURLResponse?,data: NSData?,error: NSError?)-> Void in
                             if(data != nil){
                                 x = x+((i-7)*Int((WIDTH - 40)/3.0 + 10))
-                                button = UIButton()
-                                button!.frame = CGRectMake(CGFloat(x), 150+(WIDTH - 40)/3.0 + 5+(WIDTH - 40)/3.0 + 5, (WIDTH - 40)/3.0, (WIDTH - 40)/3.0)
+                                button = CustomBtn()
+                                button?.flag = i
+                                button!.frame = CGRectMake(CGFloat(x), height+(WIDTH - 40)/3.0 + 5+(WIDTH - 40)/3.0 + 5, (WIDTH - 40)/3.0, (WIDTH - 40)/3.0)
                                 let imgTmp = UIImage(data: data!)
-                                //self.imageCache[imgUrl] = imgTmp
-                                //                                blogimage!.image = imgTmp
-                                //                                if blogimage?.image==nil{
-                                //                                    blogimage?.image=UIImage(named: "Logo")
-                                //                                }
-                                //                                cell.addSubview(blogimage!)
                                 button!.setImage(imgTmp, forState: .Normal)
+                                button?.imageView?.contentMode = .ScaleAspectFill
+                                button?.clipsToBounds = true
+                                if button?.imageView?.image == nil{
+                                    button!.setImage(UIImage(named: "图片默认加载"), forState: .Normal)
+                                }
                                 button?.tag = indexPath.row
                                 button?.addTarget(self, action: #selector(self.clickBtn(_:)), forControlEvents: .TouchUpInside)
                                 cell.contentView.addSubview(button!)
@@ -396,7 +396,7 @@ class HomeDetailViewController: UIViewController, UITableViewDelegate, UITableVi
                 
             }
         }
-        tableView.rowHeight=image_h + 150 + 20
+        tableView.rowHeight=image_h + height + 20
         
         
         //  时间
@@ -409,10 +409,11 @@ class HomeDetailViewController: UIViewController, UITableViewDelegate, UITableVi
         return cell
     }
     
-    func clickBtn(sender:UIButton){
+    func clickBtn(sender:CustomBtn){
         let vc = HomeWorkDetailViewController()
         vc.arrayInfo = self.pic
         vc.nu = vc.arrayInfo.count
+        vc.count = sender.flag!
         self.navigationController?.pushViewController(vc, animated: true)
         
     }

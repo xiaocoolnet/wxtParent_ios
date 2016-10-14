@@ -20,6 +20,7 @@ class MineMainTableViewController: UITableViewController {
     
     @IBOutlet weak var serviceTimeLabel: UILabel!
     
+    @IBOutlet weak var ServiceBtn: UIButton!
     
     @IBAction func PersonalSettings(sender: AnyObject) {
         let personSettingVC = QCPersonSettingVC()
@@ -45,6 +46,7 @@ class MineMainTableViewController: UITableViewController {
         hud.hide(true, afterDelay: 1)
         //  得到数据
         GetUserInfo()
+        GetService()
         userAvatar.layer.cornerRadius = 40
         userAvatar.layer.masksToBounds = true
 
@@ -52,24 +54,31 @@ class MineMainTableViewController: UITableViewController {
     
     override func viewWillAppear(animated: Bool) {
         self.tabBarController?.tabBar.hidden = false
+        GetUserInfo()
     }
 
     @IBAction func AccountDetails(sender: AnyObject) {
         //  账户明细
-        let accountDetailsVC = AccountDetailsVC()
-        self.navigationController?.pushViewController(accountDetailsVC, animated: true)
+//        let accountDetailsVC = AccountDetailsVC()
+//        self.navigationController?.pushViewController(accountDetailsVC, animated: true)
+        messageHUD(self.view, messageData: "此app暂无此功能")
         
     }
     
     
     @IBAction func PayMoney(sender: AnyObject) {
         //  支付费用
-        let payMoneyVC = QCPayMoneyVC()
-        self.navigationController?.pushViewController(payMoneyVC, animated: true)
-
+//        let payMoneyVC = QCPayMoneyVC()
+//        self.navigationController?.pushViewController(payMoneyVC, animated: true)
+        messageHUD(self.view, messageData: "此app暂无此功能")
     }
     
     
+    @IBAction func clickSeviceBtn(sender: AnyObject) {
+        var phone = String()
+        phone = "telprompt:\(String(ServiceBtn.currentTitle!))"
+        UIApplication.sharedApplication().openURL(NSURL.init(string: phone)!)
+    }
     
     func GetUserInfo(){
         //  得到沙盒
@@ -106,7 +115,7 @@ class MineMainTableViewController: UITableViewController {
                     self.phone = status.data?.phoneNumber!
                     self.userName.text = status.data?.name
                     if(status.data?.avatar != nil){
-                        self.imgUrl = imageUrl+(status.data?.avatar)!
+                        self.imgUrl = microblogImageUrl+(status.data?.avatar)!
                         
                         //let image = self.imageCache[imgUrl] as UIImage?
                         let avatarUrl = NSURL(string: self.imgUrl!)
@@ -173,35 +182,6 @@ class MineMainTableViewController: UITableViewController {
         
         
     }
-//    //  退出登录
-//    func Exitlogin(){
-//        let alertController = UIAlertController(title: NSLocalizedString("", comment: "Warn"), message: NSLocalizedString("确认注销？", comment: "empty message"), preferredStyle: .Alert)
-//        
-//        let cancelAction = UIAlertAction(title: "取消", style: UIAlertActionStyle.Cancel, handler: nil)
-//        let doneAction = UIAlertAction(title: "确定", style: UIAlertActionStyle.Default) { (UIAlertAction) -> Void in
-////          清除登录信息
-//            NSUserDefaults.standardUserDefaults().removeObjectForKey("userid")
-//            NSUserDefaults.standardUserDefaults().removeObjectForKey("name")
-//            NSUserDefaults.standardUserDefaults().removeObjectForKey("password")
-//            NSUserDefaults.standardUserDefaults().removeObjectForKey("schoolid")
-//            NSUserDefaults.standardUserDefaults().removeObjectForKey("classid")
-//            NSUserDefaults.standardUserDefaults().removeObjectForKey("chid")
-//            NSUserDefaults.standardUserDefaults().removeObjectForKey("chidname")
-//            NSUserDefaults.standardUserDefaults().synchronize()
-////            退出环信
-//            EaseMob.sharedInstance().chatManager.asyncLogoffWithUnbindDeviceToken(false)
-//            
-//            let mainStoryboard = UIStoryboard(name: "Main", bundle: NSBundle.mainBundle())
-//            let vc : UIViewController = mainStoryboard.instantiateViewControllerWithIdentifier("FirstView")
-//            self.navigationController?.pushViewController(vc, animated: true)
-//            
-//        }
-//        alertController.addAction(doneAction)
-//        alertController.addAction(cancelAction)
-//        self.presentViewController(alertController, animated: true, completion: nil)
-//        
-//    }
-//    
     override func prepareForSegue(segue: UIStoryboardSegue, sender: AnyObject?) {
     }
     
@@ -213,6 +193,42 @@ class MineMainTableViewController: UITableViewController {
     
     override func tableView(tableView: UITableView, heightForFooterInSection section: Int) -> CGFloat {
         return 5.0
+    }
+    
+    func GetService(){
+        let defalutid = NSUserDefaults.standardUserDefaults()
+        let cid = defalutid.stringForKey("schoolid")
+        let url = "http://wxt.xiaocool.net/index.php?g=apps&m=index&a=service_phone"
+        let param = [
+            "schoolid":cid!
+        ]
+        Alamofire.request(.GET, url, parameters: param).response { request, response, json, error in
+            if(error != nil){
+            }
+            else{
+                print("request是")
+                print(request!)
+                print("====================")
+                let status = ServiceModel(JSONDecoder(json!))
+                print("状态是")
+                print(status.status)
+                if(status.status == "error"){
+                    let hud = MBProgressHUD.showHUDAddedTo(self.view, animated: true)
+                    hud.mode = MBProgressHUDMode.Text;
+                    hud.labelText = status.errorData
+                    hud.margin = 10.0
+                    hud.removeFromSuperViewOnHide = true
+                    hud.hide(true, afterDelay: 1)
+                }
+                
+                if(status.status == "success"){
+//                    self.ServiceBtn.titleLabel?.text = status.data?.phone!
+                    self.ServiceBtn.setTitle(status.data?.phone!, forState: .Normal)
+                }
+            }
+            
+        }
+
     }
 
 }

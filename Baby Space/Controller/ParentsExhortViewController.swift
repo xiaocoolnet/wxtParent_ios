@@ -21,6 +21,15 @@ class ParentsExhortViewController: UIViewController,UITableViewDelegate,UITableV
     override func viewWillAppear(animated: Bool) {
         self.createTable()
         self.DropDownUpdate()
+        self.tabBarController?.tabBar.hidden = false
+        let useDefaults = NSUserDefaults.standardUserDefaults()
+        useDefaults.removeObjectForKey("trustArr")
+    }
+    
+    override func viewWillDisappear(animated: Bool) {
+        let useDefaults = NSUserDefaults.standardUserDefaults()
+        useDefaults.removeObjectForKey("trustArr")
+        
     }
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -95,7 +104,7 @@ class ParentsExhortViewController: UIViewController,UITableViewDelegate,UITableV
         let cell = UITableViewCell(style: .Default, reuseIdentifier:String(indexPath.row))
         cell.selectionStyle = .None
         let exhortInfo = self.parentsExhortSource.objectlist[indexPath.row]
-        let pic = exhortInfo.pic
+        var pic = exhortInfo.pic
         // 名字
         let username = UILabel()
         username.frame = CGRectMake(10, 10, 100, 20)
@@ -112,32 +121,11 @@ class ParentsExhortViewController: UIViewController,UITableViewDelegate,UITableV
         var image_h = CGFloat()
         var button:UIButton?
         //判断图片张数显示
-        if pic.count == 1 {
-            image_h=(WIDTH - 40)/3.0
-            let pciInfo = pic[0]
-            let imgUrl = microblogImageUrl+(pciInfo.picture_url)!
-            let avatarUrl = NSURL(string: imgUrl)
-            let request: NSURLRequest = NSURLRequest(URL: avatarUrl!)
-            NSURLConnection.sendAsynchronousRequest(request, queue: NSOperationQueue.mainQueue(), completionHandler: {(response: NSURLResponse?,data: NSData?,error: NSError?)-> Void in
-                if(data != nil){
-                    button = UIButton()
-                    button!.frame = CGRectMake(12, 70, WIDTH - 24, (WIDTH - 40)/3.0)
-                    let imgTmp = UIImage(data: data!)
-                    
-                    button!.setImage(imgTmp, forState: .Normal)
-                    if button?.imageView?.image == nil{
-                        //                        button!.setImage(UIImage(named: "园所公告背景.png"), forState: .Normal)
-                        button?.setBackgroundImage(UIImage(named: "园所公告背景.png"), forState: .Normal)
-                    }
-                    button?.tag = indexPath.row
-//                    button?.addTarget(self, action: #selector(self.clickBtn), forControlEvents: .TouchUpInside)
-                    cell.contentView.addSubview(button!)
-                    
-                }
-            })
-            
+        //解决数据返回有null和“”的错误图片显示
+        if pic.count==1&&(pic.first?.picture_url=="null"||pic.first?.picture_url=="") {
+            pic.removeAll()
         }
-        if(pic.count>1&&pic.count<=3){
+        if(pic.count>0&&pic.count<=3){
             image_h=(WIDTH - 40)/3.0
             for i in 1...pic.count{
                 var x = 12
@@ -152,18 +140,18 @@ class ParentsExhortViewController: UIViewController,UITableViewDelegate,UITableV
                 NSURLConnection.sendAsynchronousRequest(request, queue: NSOperationQueue.mainQueue(), completionHandler: {(response: NSURLResponse?,data: NSData?,error: NSError?)-> Void in
                     if(data != nil){
                         x = x+((i-1)*Int((WIDTH - 40)/3.0 + 10))
-                        //                        blogimage = UIImageView(frame: CGRectMake(CGFloat(x), 150, 110, 80))
+                        
                         button = UIButton()
                         button!.frame = CGRectMake(CGFloat(x), 70, (WIDTH - 40)/3.0, (WIDTH - 40)/3.0)
                         let imgTmp = UIImage(data: data!)
                         
                         button!.setImage(imgTmp, forState: .Normal)
                         if button?.imageView?.image == nil{
-                            //                            button!.setImage(UIImage(named: "Logo"), forState: .Normal)
+                           
                             button?.setBackgroundImage(UIImage(named: "Logo"), forState: .Normal)
                         }
                         button?.tag = indexPath.row
-//                        button?.addTarget(self, action: #selector(self.clickBtn), forControlEvents: .TouchUpInside)
+
                         cell.contentView.addSubview(button!)
                         
                     }
@@ -441,11 +429,14 @@ class ParentsExhortViewController: UIViewController,UITableViewDelegate,UITableV
         
         let agreeLable = UILabel()
         agreeLable.frame  = CGRectMake(WIDTH - 90, 10, 80, 30)
+//        agreeLable.textColor = UIColor.redColor()
+        agreeLable.textAlignment = NSTextAlignment.Right
         cell.contentView.addSubview(agreeLable)
         
         let commentModel = exhortInfo.comment
         if commentModel.count != 0 {
             agreeLable.text = "已回复"
+            agreeLable.textColor = UIColor(red: 155/255, green: 229/255, blue: 180/255, alpha: 1)
             let view = UIView()
             view.frame = CGRectMake(8, 100 + image_h, WIDTH - 16 , 60 * CGFloat(commentModel.count))
             view.backgroundColor = RGBA(242.0, g: 242.0, b: 242.0, a: 1)
@@ -456,7 +447,7 @@ class ParentsExhortViewController: UIViewController,UITableViewDelegate,UITableV
                 photo.frame = CGRectMake(10, 10 * CGFloat(i), 40, 40)
                 let imgUrl = microblogImageUrl + com.photo!
                 let teach = NSURL(string: imgUrl)
-                photo.sd_setImageWithURL(teach, placeholderImage: UIImage(named: "Logo"))
+                photo.sd_setImageWithURL(teach, placeholderImage: UIImage(named: "默认头像"))
                 view.addSubview(photo)
                 
                 let name = UILabel()
@@ -492,6 +483,7 @@ class ParentsExhortViewController: UIViewController,UITableViewDelegate,UITableV
             
         }else{
             agreeLable.text = "未回复"
+            agreeLable.textColor = UIColor.orangeColor()
         }
         let line = UILabel()
         line.backgroundColor = UIColor.lightGrayColor()

@@ -14,7 +14,7 @@ class AddressViewController: UIViewController {
 
     override func viewDidLoad() {
         super.viewDidLoad()
-        initUI()
+//        initUI()
 
         view.backgroundColor = UIColor.whiteColor()
         //  是否显示视图控制器
@@ -24,7 +24,7 @@ class AddressViewController: UIViewController {
         viewController.title = "老师"
         
         let viewController2 = FriendsViewController()
-        viewController2.title = "好友"
+        viewController2.title = "家长"
         
         let viewControllers = [viewController, viewController2]
         

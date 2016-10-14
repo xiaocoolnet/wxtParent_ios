@@ -74,11 +74,6 @@ class WriteQJViewController: UIViewController,HZQDatePickerViewDelegate,ToolTwoP
 
     }
     
-
-//    func sendQJ(){
-//        self.writeQJ()
-//        
-//    }
     //    创建UI
     func createUI(){
         scrollView = UIScrollView(frame: CGRectMake(0, 0, WIDTH, HEIGHT-49))
@@ -222,10 +217,10 @@ class WriteQJViewController: UIViewController,HZQDatePickerViewDelegate,ToolTwoP
         
         //  添加图片
         let addImageButton = UIButton()
-        addImageButton.frame = CGRectMake(10, 820, 80, 80)
-        addImageButton.setImage(UIImage.init(named: "1"), forState: .Normal)
+        addImageButton.frame = CGRectMake(10, 530, 80, 80)
+        addImageButton.setBackgroundImage(UIImage(named: "add2"), forState: .Normal)
         addImageButton.addTarget(self, action: #selector(addImage), forControlEvents: .TouchUpInside)
-        scrollView.addSubview(addImageButton)
+        
         
         //        创建流视图
         flowLayout.scrollDirection = UICollectionViewScrollDirection.Vertical
@@ -238,6 +233,7 @@ class WriteQJViewController: UIViewController,HZQDatePickerViewDelegate,ToolTwoP
         self.collectV?.dataSource = self
         self.collectV?.backgroundColor = UIColor.clearColor()
         scrollView.addSubview(self.collectV!)
+        scrollView.addSubview(addImageButton)
     }
     
     //    行数
@@ -282,19 +278,8 @@ class WriteQJViewController: UIViewController,HZQDatePickerViewDelegate,ToolTwoP
             hud.hide(true, afterDelay: 2)
         }
     }
-    
-    //    发送
-    func sendQJ(){
-        if(i != 0){
-            self.UpdatePic()
-        }
-        self.writeQJ()
-    }
-    
+    //   添加图片
     func addImage(){
-    
-        //  添加图片
-        print("添加图片")
         let vc = BSImagePickerViewController()
         vc.maxNumberOfSelections = 9
         bs_presentImagePickerController(vc, animated: true,
@@ -310,6 +295,7 @@ class WriteQJViewController: UIViewController,HZQDatePickerViewDelegate,ToolTwoP
     }
     //    选择图片
     func getAssetThumbnail(asset: [PHAsset]) -> UIImage {
+        //  图片
         var thumbnail = UIImage()
         i+=asset.count
         if(i>9){
@@ -326,38 +312,85 @@ class WriteQJViewController: UIViewController,HZQDatePickerViewDelegate,ToolTwoP
             let manager = PHImageManager.defaultManager()
             let option = PHImageRequestOptions()
             option.synchronous = true
+            
+            
             for j in 0..<asset.count{
-                manager.requestImageForAsset(asset[j], targetSize: CGSize(width: 1000.0, height: 1000.0), contentMode: .AspectFit, options: option, resultHandler: {(result, info)->Void in
-                    thumbnail = result!
-                    print("图片是")
-                    var temImage:CGImageRef = thumbnail.CGImage!
-                    temImage = CGImageCreateWithImageInRect(temImage, CGRectMake(0, 0, 1000.0, 1000.0))!
-                    let newImage = UIImage(CGImage: temImage)
-                    self.imageData.append(UIImageJPEGRepresentation(newImage, 1)!)
-                    self.pictureArray.addObject(newImage)
+                
+                //  这里的参数应该喝照片的大小一致（需要进行判断）
+                manager.requestImageForAsset(asset[j], targetSize: PHImageManagerMaximumSize, contentMode: .AspectFit, options: option, resultHandler: {(result, info)->Void in
+                    //  设置像素
+                    option.resizeMode = PHImageRequestOptionsResizeMode.Exact
+                    let downloadFinined = !((info!["PHImageResultIsDegradedKey"]?.boolValue)!)
+                    
+                    //                let downloadFinined:Bool = !((info!["PHImageCancelledKey"]?.boolValue)! ?? false) && !((info!["PHImageErrorKey"]?.boolValue)! ?? false) && !((info!["PHImageResultIsDegradedKey"]?.boolValue)! ?? false)
+                    if downloadFinined == true {
+                        thumbnail = result!
+                        print(" print(result?.images)")
+                        //  改变frame
+                        print(result)
+                        print("图片是")
+                        let temImage:CGImageRef = thumbnail.CGImage!
+                        //                    temImage = CGImageCreateWithImageInRect(temImage, CGRectMake(0, 0, 1000, 1000))!
+                        let newImage = UIImage(CGImage: temImage)
+                        //  压缩最多1  最少0
+                        self.imageData.append(UIImageJPEGRepresentation(newImage, 0)!)
+                        self.pictureArray.addObject(newImage)
+                        
+                    }
+                    //                thumbnail = result!
+                    
+                    //
+                    
                 })
             }
         }
         return thumbnail
     }
     
+    func byScalingToSize(image:UIImage,targetSize:CGSize) ->(UIImage){
+        let sourceImage = image
+        var newImage = UIImage()
+        UIGraphicsBeginImageContext(targetSize)
+        var thumbnailRect = CGRectZero;
+        thumbnailRect.origin = CGPointZero;
+        thumbnailRect.size.width  = targetSize.width;
+        thumbnailRect.size.height = targetSize.height;
+        sourceImage.drawInRect(thumbnailRect)
+        newImage = UIGraphicsGetImageFromCurrentImageContext()
+        UIGraphicsEndImageContext()
+        return newImage
+    }
+    //   更新日记
+    func sendQJ(){
+        if(i != 0){
+            if teacherid != nil && studentid != nil && (btn.titleLabel?.text!)! != "" && self.contentTextView.text != "" && (btn1.titleLabel?.text!)! != "" {
+                
+                self.UpdatePic()
+            }
+        }
+        self.writeQJ()
+    }
     //    更新图片
     func UpdatePic(){
         for i in 0..<self.imageData.count{
             let chid = NSUserDefaults.standardUserDefaults()
-            let userid = chid.stringForKey("userid")
+            let studentid = chid.stringForKey("chid")
+            let date = NSDate()
+            let dateformate = NSDateFormatter()
+            dateformate.dateFormat = "yyyy-MM-dd HH:mm"//获得日期
+            let time:NSTimeInterval = (date.timeIntervalSince1970)
             let RanNumber = String(arc4random_uniform(1000) + 1000)
-            //            let name = "\(userid!)\(RanNumber)"
+            let name = "\(studentid!)baby\(time)\(RanNumber)"
             isuploading = true
             
             dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0)) { () -> Void in
-                ConnectModel.uploadWithImageName(RanNumber, imageData:self.imageData[i], URL: "WriteMicroblog_upload", finish: { (data) -> Void in
+                ConnectModel.uploadWithImageName(name, imageData:self.imageData[i], URL: "WriteMicroblog_upload", finish: { (data) -> Void in
                     print("返回值")
                     print(data)
                     
                 })
             }
-            self.imagePath.addObject(userid! + RanNumber + ".png")
+            self.imagePath.addObject(name + ".png")
         }
         self.imageUrl = self.imagePath.componentsJoinedByString(",")
         print(self.imageUrl!)
@@ -417,68 +450,65 @@ class WriteQJViewController: UIViewController,HZQDatePickerViewDelegate,ToolTwoP
 //    写请假条
     func writeQJ(){
         
-//        print(teacherid)
-//        print(studentid)
-//        print((btn.titleLabel?.text!)!)
-//        print((btn1.titleLabel?.text!)!)
-//        print(contentTextView.text)
-        
-        if teacherid == nil || studentid == nil || (btn.titleLabel?.text!)! == nil || self.contentTextView.text == nil || (btn1.titleLabel?.text!)! == nil {
-            return
-        }
-        //  这个接口没有添加图片的功能
-        //http://wxt.xiaocool.net/index.php?g=apps&m=student&a=addleave&teacherid=1&parentid=122&studentid=12&begintime=2016-05-01&endtime=2016-05-06&reason=生病了
-        //     将字符串转换成时间戳
-        let dateformate = NSDateFormatter()
-        dateformate.dateFormat = "yyyy-MM-dd"
-        let date = dateformate.dateFromString((btn.titleLabel?.text!)!)
-        let begintime:NSTimeInterval = (date?.timeIntervalSince1970)!
-        let date1 = dateformate.dateFromString((btn1.titleLabel?.text!)!)
-        let endtime:NSTimeInterval = (date1?.timeIntervalSince1970)!
-        
-        //下面两句代码是从缓存中取出userid（入参）值
-        let defalutid = NSUserDefaults.standardUserDefaults()
-        let uid = defalutid.stringForKey("userid")
-        let url = "http://wxt.xiaocool.net/index.php?g=apps&m=student&a=addleave"
-        let param = [
-            "teacherid":teacherid,
-            "studentid":studentid,
-            "parentid":uid!,
-            "begintime":begintime,
-            "endtime":endtime,
-            "reason":self.contentTextView.text,
-//            "picture_url":imageUrl!
-        ]
-        
-        Alamofire.request(.GET, url, parameters: param as? [String : AnyObject]).response { request, response, json, error in
-            if(error != nil){
+        if teacherid == nil || studentid == nil || (btn.titleLabel?.text!)! == "" || self.contentTextView.text == "" || (btn1.titleLabel?.text!)! == "" {
+            messageHUD(self.view, messageData: "请补全假条信息")
+        }else{
+            
+            //     将字符串转换成时间戳
+            let dateformate = NSDateFormatter()
+            dateformate.dateFormat = "yyyy-MM-dd"
+            let date = dateformate.dateFromString((btn.titleLabel?.text!)!)
+            let begintime:NSTimeInterval = (date?.timeIntervalSince1970)!
+            let date1 = dateformate.dateFromString((btn1.titleLabel?.text!)!)
+            let endtime:NSTimeInterval = (date1?.timeIntervalSince1970)!
+            
+            //下面两句代码是从缓存中取出userid（入参）值
+            let defalutid = NSUserDefaults.standardUserDefaults()
+            let uid = defalutid.stringForKey("userid")
+            let url = "http://wxt.xiaocool.net/index.php?g=apps&m=student&a=addleave"
+            if(self.imagePath.count == 0){
+                imageUrl = ""
             }
-            else{
-                print("request是")
-                print(request!)
-                print("====================")
-                let status = Http(JSONDecoder(json!))
-                print("状态是")
-                print(status.status)
-                if(status.status == "error"){
-                    let hud = MBProgressHUD.showHUDAddedTo(self.view, animated: true)
-                    hud.mode = MBProgressHUDMode.Text
-                    hud.labelText = status.errorData
-                    hud.margin = 10.0
-                    hud.removeFromSuperViewOnHide = true
-                    hud.hide(true, afterDelay: 1)
+            let param = [
+                "teacherid":teacherid,
+                "studentid":studentid,
+                "parentid":uid!,
+                "begintime":begintime,
+                "endtime":endtime,
+                "reason":self.contentTextView.text,
+                "picture_url":imageUrl!
+            ]
+            
+            Alamofire.request(.GET, url, parameters: param as? [String : AnyObject]).response { request, response, json, error in
+                if(error != nil){
                 }
-                if(status.status == "success"){
-                    print("请假条发送成功")
-                    let hud = MBProgressHUD.showHUDAddedTo(self.view, animated: true)
-                    hud.mode = MBProgressHUDMode.Text
-                    hud.labelText = "请假条发送成功"
-                    hud.margin = 10.0
-                    hud.removeFromSuperViewOnHide = true
-                    hud.hide(true, afterDelay: 1)
-                    self.view.endEditing(true)
-                    // 返回上一个界面
-                    self.navigationController?.popViewControllerAnimated(true)
+                else{
+                    print("request是")
+                    print(request!)
+                    print("====================")
+                    let status = Http(JSONDecoder(json!))
+                    print("状态是")
+                    print(status.status)
+                    if(status.status == "error"){
+                        let hud = MBProgressHUD.showHUDAddedTo(self.view, animated: true)
+                        hud.mode = MBProgressHUDMode.Text
+                        hud.labelText = status.errorData
+                        hud.margin = 10.0
+                        hud.removeFromSuperViewOnHide = true
+                        hud.hide(true, afterDelay: 1)
+                    }
+                    if(status.status == "success"){
+                        print("请假条发送成功")
+                        let hud = MBProgressHUD.showHUDAddedTo(self.view, animated: true)
+                        hud.mode = MBProgressHUDMode.Text
+                        hud.labelText = "请假条发送成功"
+                        hud.margin = 10.0
+                        hud.removeFromSuperViewOnHide = true
+                        hud.hide(true, afterDelay: 1)
+                        self.view.endEditing(true)
+                        // 返回上一个界面
+                        self.navigationController?.popViewControllerAnimated(true)
+                    }
                 }
             }
         }
@@ -532,9 +562,9 @@ class WriteQJViewController: UIViewController,HZQDatePickerViewDelegate,ToolTwoP
         }
     }
     
-//    //    收键盘
-//    override func touchesBegan(touches: Set<UITouch>, withEvent event: UIEvent?) {
-//        self.view.endEditing(true)
-//    }
+    func scrollViewWillBeginDragging(scrollView: UIScrollView) {
+        self.contentTextView.resignFirstResponder()
+    }
+    
     
 }

@@ -64,6 +64,8 @@ class NewsInfo:JSONJoy{
     var schoolid:String?
     var smeta:String?
     var thumb:String?
+    var term_name:String?
+    
     required init(_ decoder: JSONDecoder) {
         //  给得到的属性进行赋值(初始化)
         id = decoder["id"].string
@@ -73,6 +75,7 @@ class NewsInfo:JSONJoy{
         schoolid = decoder["schoolid"].string
         smeta = decoder["smeta"].string
         thumb = decoder["thumb"].string
+        term_name = decoder["term_name"].string
     }
 }
 

@@ -39,7 +39,7 @@ class QCFriendsCell: UITableViewCell {
 //        let string = imageUrl + model.phone!
 //        headerImageView.sd_setImageWithURL(NSURL.init(string: string))
         
-        nameLabel.text = model.name
+//        nameLabel.text = model.name
     }
     //  MARK: - 认证cell
     class func QCFriendsCell() -> String{

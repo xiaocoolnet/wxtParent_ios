@@ -12,6 +12,9 @@ import MBProgressHUD
 
 class FoodMenuViewController: UIViewController,UITableViewDelegate,UITableViewDataSource{
 
+    @IBOutlet weak var leftBtn: UIButton!
+    @IBOutlet weak var dataLbl: UILabel!
+    @IBOutlet weak var rightBtn: UIButton!
     var dateLbl=UILabel()
     let table = UITableView()
     //  数据源
@@ -30,17 +33,11 @@ class FoodMenuViewController: UIViewController,UITableViewDelegate,UITableViewDa
         super.viewDidLoad()
         self.title="每周食谱"
         self.view.backgroundColor=UIColor.whiteColor()
-        dateLbl.frame=CGRectMake(WIDTH/4, 0, WIDTH/2, 40)
-        dateLbl.textAlignment = .Center
-        self.view.addSubview(dateLbl)
-        let lastBT = UIButton(frame: CGRectMake(WIDTH/5,10,20,20))
-        lastBT.addTarget(self, action: #selector(LastWeekAction(_:)), forControlEvents: .TouchUpInside)
-        lastBT.setImage(UIImage(named: "上一天"), forState: .Normal)
-        self.view.addSubview(lastBT)
-        let nextBT = UIButton(frame: CGRectMake(WIDTH-(WIDTH/5+20),10,20,20))
-        nextBT.setImage(UIImage(named: "下一天"), forState:.Normal)
-        nextBT.addTarget(self, action: #selector(nextWeekAction(_:)), forControlEvents: .TouchUpInside)
-        self.view.addSubview(nextBT)
+        
+        leftBtn.addTarget(self, action: #selector(LastWeekAction(_:)), forControlEvents: .TouchUpInside)
+        
+        rightBtn.addTarget(self, action: #selector(nextWeekAction(_:)), forControlEvents: .TouchUpInside)
+//        self.view.addSubview(nextBT)
         
         //      得到当前日期
         nowDate()
@@ -83,15 +80,16 @@ class FoodMenuViewController: UIViewController,UITableViewDelegate,UITableViewDa
         let dformatter = NSDateFormatter()
         dformatter.dateFormat = "yyyy-MM-dd"
         print("对应的日期时间：\(dformatter.stringFromDate(mondayDate))")
-        dateLbl.text = dformatter.stringFromDate(mondayDate)
+        dataLbl.text = dformatter.stringFromDate(mondayDate)
+        dataLbl.textAlignment = NSTextAlignment.Center
         
     }
     func nowDate(){
         let nowDate = NSDate()
         let dateformatter = NSDateFormatter()
         dateformatter.dateFormat = "yyyy-MM-dd"
-        dateLbl.text = dateformatter.stringFromDate(nowDate)
-        
+        dataLbl.text = dateformatter.stringFromDate(nowDate)
+        dataLbl.textAlignment = NSTextAlignment.Center
     }
     func GETDate(){
         //  获取当前时间
@@ -238,6 +236,10 @@ class FoodMenuViewController: UIViewController,UITableViewDelegate,UITableViewDa
         self.view.addSubview(table)
         //        注册cell
         table.registerNib(UINib.init(nibName: "FoodMenuTableViewCell", bundle: nil), forCellReuseIdentifier: "FoodMenuCell")
+        
+        let view = UIView()
+        table.tableFooterView = view
+        
     }
     //    分区数
     func numberOfSectionsInTableView(tableView: UITableView) -> Int {
@@ -313,7 +315,7 @@ class FoodMenuViewController: UIViewController,UITableViewDelegate,UITableViewDa
             let foodIV = UIImageView(frame: CGRectMake(90, 40, 80, 80))
             let str = microblogImageUrl+info.photo!
             let url = NSURL(string: str)
-            foodIV.yy_setImageWithURL(url, placeholder: UIImage(named: "Logo"))
+            foodIV.yy_setImageWithURL(url, placeholder: UIImage(named: "图片默认加载"))
             cell.contentView.addSubview(foodIV)
         }
         tableView.rowHeight=40+CGFloat(image_h)

@@ -29,14 +29,23 @@ class BlogMainTableTableViewController: UITableViewController,UITextFieldDelegat
     var num = 0
     let contentTextView = UITextField()
     
+    override func viewDidAppear(animated: Bool) {
+        self.tabBarController?.tabBar.hidden = false
+//        self.DropDownUpdate()
+        self.GetDate()
+    }
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         self.navigationController?.tabBarItem.badgeValue = nil
         self.navigationItem.rightBarButtonItem = UIBarButtonItem(barButtonSystemItem: .Add, target: self, action: #selector(BlogMainTableTableViewController.addBlog))
         self.tableView.frame = CGRectMake(0, 0, WIDTH, HEIGHT)
+        self.tableView.separatorStyle = .None
         ScrollViewImage()
-        DropDownUpdate()
+//        DropDownUpdate()
         UpPullAdd()
+    
+        
         
     }
 //    发动态
@@ -63,23 +72,27 @@ class BlogMainTableTableViewController: UITableViewController,UITextFieldDelegat
     }
 //    加载
     func UpPullAdd(){
-        self.tableView.footerView = XWRefreshAutoNormalFooter(target: self, action: #selector(BlogMainTableTableViewController.downPlullLoadData))
+        self.tableView.footerView = XWRefreshAutoNormalFooter(target: self, action: #selector(BlogMainTableTableViewController.GetDate))
     }
 //    加载数据
     func GetDate(){
         let url = apiUrl+"GetMicroblog"
-        //  http://wxt.xiaocool.net/index.php?g=apps&m=index&a=GetMicroblog&schoolid=1&classid=1
-        
+//        http://wxt.xiaocool.net/index.php?g=apps&m=index&a=GetMicroblog&userid=681&classid=1&schoolid=1&type=1&beginid=null
         let userDefaults = NSUserDefaults.standardUserDefaults()
         let scid = userDefaults.stringForKey("schoolid")
         let clid = userDefaults.stringForKey("classid")
+        let userid = userDefaults.stringForKey("userid")
+        
         
         let param = [
             "schoolid":scid!,
             "classid":clid!,
+            "userid":userid,
+            "type":"1",
+            "beginid":""
             
         ]
-        Alamofire.request(.GET, url, parameters: param).response { request, response, json, error in
+        Alamofire.request(.GET, url, parameters: param as? [String:String]).response { request, response, json, error in
             if(error != nil){
             }
             else{
@@ -109,6 +122,7 @@ class BlogMainTableTableViewController: UITableViewController,UITextFieldDelegat
     }
 //    刷新
     func downPlullLoadData(){
+        GetDate()
         self.tableView.footerView?.endRefreshing()
     }
 
@@ -125,10 +139,38 @@ class BlogMainTableTableViewController: UITableViewController,UITextFieldDelegat
     override func tableView(tableView: UITableView, cellForRowAtIndexPath indexPath: NSIndexPath) -> UITableViewCell {
         let cell = UITableViewCell(style: .Default, reuseIdentifier:String(indexPath.row))
         cell.selectionStyle = .None
-        // 内容
         let model = self.dataSource.objectlist[indexPath.row]
+        
+        let photo = UIImageView()
+        photo.frame = CGRectMake(10, 10, 60, 60)
+        let pi = model.photo
+        let imgUrl = microblogImageUrl + pi
+        let photourl = NSURL(string: imgUrl)
+        photo.layer.cornerRadius = 30
+        photo.clipsToBounds = true
+        photo.sd_setImageWithURL(photourl, placeholderImage: UIImage(named: "默认头像"))
+        cell.contentView.addSubview(photo)
+        
+        let nameLab = UILabel()
+        nameLab.frame = CGRectMake(80, 15, WIDTH - 70, 20)
+        nameLab.text = model.name
+        nameLab.textColor = UIColor(red: 155/255, green: 229/255, blue: 180/255, alpha: 1)
+        cell.contentView.addSubview(nameLab)
+        
+        let dateformat = NSDateFormatter()
+        dateformat.dateFormat = "yyyy-MM-dd"
+        let dat = NSDate(timeIntervalSince1970: NSTimeInterval(model.write_time)!)
+        let st:String = dateformat.stringFromDate(dat)
+        let timeLb = UILabel()
+        timeLb.frame = CGRectMake(80, 45, WIDTH - 70, 20)
+        timeLb.text = st
+        timeLb.font = UIFont.systemFontOfSize(16)
+        timeLb.textColor = UIColor.lightGrayColor()
+        cell.contentView.addSubview(timeLb)
+        
+        // 内容
         let contentlbl = UILabel()
-        contentlbl.frame = CGRectMake(10, 10, WIDTH - 20, 20)
+        contentlbl.frame = CGRectMake(10, 90, WIDTH - 20, 20)
         contentlbl.text = model.content
         contentlbl.numberOfLines = 0
         contentlbl.sizeToFit()
@@ -137,40 +179,17 @@ class BlogMainTableTableViewController: UITableViewController,UITextFieldDelegat
         let options : NSStringDrawingOptions = NSStringDrawingOptions.UsesLineFragmentOrigin
         let screenBounds:CGRect = UIScreen.mainScreen().bounds
         let boundingRect = String(contentlbl.text).boundingRectWithSize(CGSizeMake(screenBounds.width, 0), options: options, attributes: [NSFontAttributeName:UIFont.systemFontOfSize(17)], context: nil)
-        let height = boundingRect.size.height + 40
+        let height = boundingRect.size.height + 20 + 80
         
         
         //  图片
         var image_h = CGFloat()
-        var button:UIButton?
+        var button:CustomBtn?
         //判断图片张数显示
         
         let pic  = model.pic
-        if pic.count == 1 {
-            image_h=(WIDTH - 40)/3.0
-            let pciInfo = pic[0]
-            let imgUrl = microblogImageUrl+(pciInfo.pictureurl)!
-            let avatarUrl = NSURL(string: imgUrl)
-            let request: NSURLRequest = NSURLRequest(URL: avatarUrl!)
-            NSURLConnection.sendAsynchronousRequest(request, queue: NSOperationQueue.mainQueue(), completionHandler: {(response: NSURLResponse?,data: NSData?,error: NSError?)-> Void in
-                if(data != nil){
-                    button = UIButton()
-                    button!.frame = CGRectMake(12, height, WIDTH - 24, (WIDTH - 40)/3.0)
-                    let imgTmp = UIImage(data: data!)
-                    
-                    button!.setImage(imgTmp, forState: .Normal)
-                    if button?.imageView?.image == nil{
-                        button?.setBackgroundImage(UIImage(named: "园所公告背景.png"), forState: .Normal)
-                    }
-                    button?.tag = indexPath.row
-//                    button?.addTarget(self, action: #selector(self.clickBtn), forControlEvents: .TouchUpInside)
-                    cell.contentView.addSubview(button!)
-                    
-                }
-            })
-            
-        }
-        if(pic.count>1&&pic.count<=3){
+        
+        if(pic.count>0&&pic.count<=3){
             image_h=(WIDTH - 40)/3.0
             for i in 1...pic.count{
                 var x = 12
@@ -182,16 +201,19 @@ class BlogMainTableTableViewController: UITableViewController,UITextFieldDelegat
                 NSURLConnection.sendAsynchronousRequest(request, queue: NSOperationQueue.mainQueue(), completionHandler: {(response: NSURLResponse?,data: NSData?,error: NSError?)-> Void in
                     if(data != nil){
                         x = x+((i-1)*Int((WIDTH - 40)/3.0 + 10))
-                        button = UIButton()
+                        button = CustomBtn()
                         button!.frame = CGRectMake(CGFloat(x), height, (WIDTH - 40)/3.0, (WIDTH - 40)/3.0)
                         let imgTmp = UIImage(data: data!)
                         
                         button!.setImage(imgTmp, forState: .Normal)
+                        button?.imageView?.contentMode = .ScaleAspectFill
+                        button?.clipsToBounds = true
                         if button?.imageView?.image == nil{
                             button?.setBackgroundImage(UIImage(named: "Logo"), forState: .Normal)
                         }
                         button?.tag = indexPath.row
-//                        button?.addTarget(self, action: #selector(self.clickBtn), forControlEvents: .TouchUpInside)
+                        button!.flag = i
+                        button?.addTarget(self, action: #selector(self.clickBtn), forControlEvents: .TouchUpInside)
                         cell.contentView.addSubview(button!)
                         
                     }
@@ -212,15 +234,17 @@ class BlogMainTableTableViewController: UITableViewController,UITextFieldDelegat
                         NSURLConnection.sendAsynchronousRequest(request, queue: NSOperationQueue.mainQueue(), completionHandler: {(response: NSURLResponse?,data: NSData?,error: NSError?)-> Void in
                             if(data != nil){
                                 x = x+((i-1)*Int((WIDTH - 40)/3.0 + 10))
-                                button = UIButton()
+                                button = CustomBtn()
                                 button!.frame = CGRectMake(CGFloat(x), height, (WIDTH - 40)/3.0, (WIDTH - 40)/3.0)
                                 let imgTmp = UIImage(data: data!)
                                 button!.setImage(imgTmp, forState: .Normal)
+                                button?.imageView?.contentMode = .ScaleAspectFill
+                                button?.clipsToBounds = true
                                 if button?.imageView?.image == nil{
                                     button!.setImage(UIImage(named: "Logo"), forState: .Normal)
                                 }
                                 button?.tag = indexPath.row
-//                                button?.addTarget(self, action: #selector(self.clickBtn), forControlEvents: .TouchUpInside)
+                                button?.addTarget(self, action: #selector(self.clickBtn), forControlEvents: .TouchUpInside)
                                 cell.contentView.addSubview(button!)
                             }
                         })
@@ -234,15 +258,17 @@ class BlogMainTableTableViewController: UITableViewController,UITextFieldDelegat
                         NSURLConnection.sendAsynchronousRequest(request, queue: NSOperationQueue.mainQueue(), completionHandler: {(response: NSURLResponse?,data: NSData?,error: NSError?)-> Void in
                             if(data != nil){
                                 x = x+((i-4)*Int((WIDTH - 40)/3.0 + 10))
-                                button = UIButton()
+                                button = CustomBtn()
                                 button!.frame = CGRectMake(CGFloat(x), height+(WIDTH - 40)/3.0 + 5, (WIDTH - 40)/3.0, (WIDTH - 40)/3.0)
                                 let imgTmp = UIImage(data: data!)
                                 button!.setImage(imgTmp, forState: .Normal)
+                                button?.imageView?.contentMode = .ScaleAspectFill
+                                button?.clipsToBounds = true
                                 if button?.imageView?.image == nil{
                                     button!.setImage(UIImage(named: "Logo"), forState: .Normal)
                                 }
                                 button?.tag = indexPath.row
-//                                button?.addTarget(self, action: #selector(self.clickBtn), forControlEvents: .TouchUpInside)
+                                button?.addTarget(self, action: #selector(self.clickBtn), forControlEvents: .TouchUpInside)
                                 cell.contentView.addSubview(button!)
                             }
                         })
@@ -263,15 +289,17 @@ class BlogMainTableTableViewController: UITableViewController,UITextFieldDelegat
                         NSURLConnection.sendAsynchronousRequest(request, queue: NSOperationQueue.mainQueue(), completionHandler: {(response: NSURLResponse?,data: NSData?,error: NSError?)-> Void in
                             if(data != nil){
                                 x = x+((i-1)*Int((WIDTH - 40)/3.0 + 10))
-                                button = UIButton()
+                                button = CustomBtn()
                                 button!.frame = CGRectMake(CGFloat(x), height, (WIDTH - 40)/3.0, (WIDTH - 40)/3.0)
                                 let imgTmp = UIImage(data: data!)
                                 button!.setImage(imgTmp, forState: .Normal)
+                                button?.imageView?.contentMode = .ScaleAspectFill
+                                button?.clipsToBounds = true
                                 if button?.imageView?.image == nil{
                                     button!.setImage(UIImage(named: "Logo"), forState: .Normal)
                                 }
                                 button?.tag = indexPath.row
-//                                button?.addTarget(self, action: #selector(self.clickBtn), forControlEvents: .TouchUpInside)
+                                button?.addTarget(self, action: #selector(self.clickBtn), forControlEvents: .TouchUpInside)
                                 cell.contentView.addSubview(button!)
                             }
                         })
@@ -286,16 +314,18 @@ class BlogMainTableTableViewController: UITableViewController,UITextFieldDelegat
                         NSURLConnection.sendAsynchronousRequest(request, queue: NSOperationQueue.mainQueue(), completionHandler: {(response: NSURLResponse?,data: NSData?,error: NSError?)-> Void in
                             if(data != nil){
                                 x = x+((i-4)*Int((WIDTH - 40)/3.0 + 10))
-                                button = UIButton()
+                                button = CustomBtn()
                                 button!.frame = CGRectMake(CGFloat(x), height+(WIDTH - 40)/3.0 + 5, (WIDTH - 40)/3.0, (WIDTH - 40)/3.0)
                                 let imgTmp = UIImage(data: data!)
                                 
                                 button!.setImage(imgTmp, forState: .Normal)
+                                button?.imageView?.contentMode = .ScaleAspectFill
+                                button?.clipsToBounds = true
                                 if button?.imageView?.image == nil{
                                     button!.setImage(UIImage(named: "Logo"), forState: .Normal)
                                 }
                                 button?.tag = indexPath.row
-//                                button?.addTarget(self, action: #selector(self.clickBtn), forControlEvents: .TouchUpInside)
+                                button?.addTarget(self, action: #selector(self.clickBtn), forControlEvents: .TouchUpInside)
                                 cell.contentView.addSubview(button!)
                             }
                         })
@@ -310,15 +340,17 @@ class BlogMainTableTableViewController: UITableViewController,UITextFieldDelegat
                         NSURLConnection.sendAsynchronousRequest(request, queue: NSOperationQueue.mainQueue(), completionHandler: {(response: NSURLResponse?,data: NSData?,error: NSError?)-> Void in
                             if(data != nil){
                                 x = x+((i-7)*Int((WIDTH - 40)/3.0 + 10))
-                                button = UIButton()
+                                button = CustomBtn()
                                 button!.frame = CGRectMake(CGFloat(x), height+(WIDTH - 40)/3.0 + 5+(WIDTH - 40)/3.0 + 5, (WIDTH - 40)/3.0, (WIDTH - 40)/3.0)
                                 let imgTmp = UIImage(data: data!)
                                 button!.setImage(imgTmp, forState: .Normal)
+                                button?.imageView?.contentMode = .ScaleAspectFill
+                                button?.clipsToBounds = true
                                 if button?.imageView?.image == nil{
                                     button!.setImage(UIImage(named: "Logo"), forState: .Normal)
                                 }
                                 button?.tag = indexPath.row
-//                                button?.addTarget(self, action: #selector(self.clickBtn), forControlEvents: .TouchUpInside)
+                                button?.addTarget(self, action: #selector(self.clickBtn), forControlEvents: .TouchUpInside)
                                 cell.contentView.addSubview(button!)
                             }
                         })
@@ -343,7 +375,7 @@ class BlogMainTableTableViewController: UITableViewController,UITextFieldDelegat
                             if(data != nil){
                                 x = x+((i-1)*Int((WIDTH - 40)/3.0 + 10))
                                 print(x)
-                                button = UIButton()
+                                button = CustomBtn()
                                 button!.frame = CGRectMake(CGFloat(x), height, (WIDTH - 40)/3.0, (WIDTH - 40)/3.0)
                                 let imgTmp = UIImage(data: data!)
                                 
@@ -352,7 +384,7 @@ class BlogMainTableTableViewController: UITableViewController,UITextFieldDelegat
                                     button!.setImage(UIImage(named: "Logo"), forState: .Normal)
                                 }
                                 button?.tag = indexPath.row
-//                                button?.addTarget(self, action: #selector(self.clickBtn), forControlEvents: .TouchUpInside)
+                                button?.addTarget(self, action: #selector(self.clickBtn), forControlEvents: .TouchUpInside)
                                 cell.contentView.addSubview(button!)
                             }
                         })
@@ -368,7 +400,7 @@ class BlogMainTableTableViewController: UITableViewController,UITextFieldDelegat
                         NSURLConnection.sendAsynchronousRequest(request, queue: NSOperationQueue.mainQueue(), completionHandler: {(response: NSURLResponse?,data: NSData?,error: NSError?)-> Void in
                             if(data != nil){
                                 x = x+((i-4)*Int((WIDTH - 40)/3.0 + 10))
-                                button = UIButton()
+                                button = CustomBtn()
                                 button!.frame = CGRectMake(CGFloat(x), height+(WIDTH - 40)/3.0 + 5, (WIDTH - 40)/3.0, (WIDTH - 40)/3.0)
                                 let imgTmp = UIImage(data: data!)
                                 
@@ -377,7 +409,7 @@ class BlogMainTableTableViewController: UITableViewController,UITextFieldDelegat
                                     button!.setImage(UIImage(named: "Logo"), forState: .Normal)
                                 }
                                 button?.tag = indexPath.row
-//                                button?.addTarget(self, action: #selector(self.clickBtn), forControlEvents: .TouchUpInside)
+                                button?.addTarget(self, action: #selector(self.clickBtn), forControlEvents: .TouchUpInside)
                                 cell.contentView.addSubview(button!)
                             }
                         })
@@ -393,7 +425,7 @@ class BlogMainTableTableViewController: UITableViewController,UITextFieldDelegat
                         NSURLConnection.sendAsynchronousRequest(request, queue: NSOperationQueue.mainQueue(), completionHandler: {(response: NSURLResponse?,data: NSData?,error: NSError?)-> Void in
                             if(data != nil){
                                 x = x+((i-7)*Int((WIDTH - 40)/3.0 + 10))
-                                button = UIButton()
+                                button = CustomBtn()
                                 button!.frame = CGRectMake(CGFloat(x), height+(WIDTH - 40)/3.0 + 5+(WIDTH - 40)/3.0 + 5, (WIDTH - 40)/3.0, (WIDTH - 40)/3.0)
                                 let imgTmp = UIImage(data: data!)
                                 
@@ -402,7 +434,7 @@ class BlogMainTableTableViewController: UITableViewController,UITextFieldDelegat
                                     button!.setImage(UIImage(named: "Logo"), forState: .Normal)
                                 }
                                 button?.tag = indexPath.row
-//                                button?.addTarget(self, action: #selector(self.clickBtn), forControlEvents: .TouchUpInside)
+                                button?.addTarget(self, action: #selector(self.clickBtn), forControlEvents: .TouchUpInside)
                                 cell.contentView.addSubview(button!)
                             }
                         })
@@ -420,13 +452,13 @@ class BlogMainTableTableViewController: UITableViewController,UITextFieldDelegat
         let senderLbl = UILabel()
         senderLbl.frame = CGRectMake(40, height + image_h + 10, 120, 20)
         senderLbl.font = UIFont.systemFontOfSize(16)
-        senderLbl.text = "发自 \(model.name!)"
+        senderLbl.text = "发自 \(model.name)"
         senderLbl.textColor = UIColor.lightGrayColor()
         cell.contentView.addSubview(senderLbl)
         
         let dateformate = NSDateFormatter()
         dateformate.dateFormat = "yyyy-MM-dd HH:mm"
-        let date = NSDate(timeIntervalSince1970: NSTimeInterval(model.write_time!)!)
+        let date = NSDate(timeIntervalSince1970: NSTimeInterval(model.write_time)!)
         let str:String = dateformate.stringFromDate(date)
         let timeLbl = UILabel()
         timeLbl.frame = CGRectMake(10, height + image_h + 50, WIDTH - 150, 20)
@@ -445,31 +477,32 @@ class BlogMainTableTableViewController: UITableViewController,UITextFieldDelegat
         zanBtn.frame = CGRectMake(WIDTH - 100, height + image_h + 50, 20, 20)
         zanBtn.setBackgroundImage(UIImage(named: "已点赞"), forState: .Normal)
         zanBtn.tag = indexPath.row
-//        zanBtn.addTarget(self, action: #selector(self.clickZan), forControlEvents: .TouchUpInside)
+        zanBtn.addTarget(self, action: #selector(self.clickZan), forControlEvents: .TouchUpInside)
         cell.contentView.addSubview(zanBtn)
         
         let pinglunBtn = UIButton()
         pinglunBtn.frame = CGRectMake(WIDTH - 40, height + image_h + 50, 20, 20)
         pinglunBtn.setBackgroundImage(UIImage(named: "评论"), forState: .Normal)
         pinglunBtn.tag = indexPath.row
-//        pinglunBtn.addTarget(self, action: #selector(self.pinglunBtn(_:)), forControlEvents: .TouchUpInside)
+        pinglunBtn.addTarget(self, action: #selector(self.pinglunBtn(_:)), forControlEvents: .TouchUpInside)
         cell.contentView.addSubview(pinglunBtn)
         
         let view = UIView()
         if model.like.count != 0 {
             view.frame = CGRectMake(10, height + image_h + 80, WIDTH - 20, 30)
             cell.contentView.addSubview(view)
-            let lin = UILabel()
-            lin.backgroundColor = UIColor.lightGrayColor()
-            lin.frame = CGRectMake(1, 3, WIDTH - 2, 0.5)
-            view.addSubview(lin)
+            let btn = UIButton()
+            btn.frame = CGRectMake(10, 5, 20, 20)
+            btn.setBackgroundImage(UIImage(named: "已点赞"), forState: .Normal)
+            view.addSubview(btn)
             for i in 1...model.like.count {
                 let str = model.like[i - 1].name
                 let lable = UILabel()
-                var x = 10
+                var x = 40
                 x = x+((i-1)*Int((WIDTH - 40)/4 + 5))
-                lable.frame = CGRectMake(CGFloat(x), 5, (WIDTH - 20)/4, 20)
+                lable.frame = CGRectMake(CGFloat(x), 5, (WIDTH - 50)/4, 20)
                 lable.text = str
+                lable.textColor = UIColor(red: 115/255.0, green: 229/255.0, blue: 180/255.0, alpha: 1.0)
                 lable.font = UIFont.systemFontOfSize(15)
                 view.addSubview(lable)
             }
@@ -482,6 +515,8 @@ class BlogMainTableTableViewController: UITableViewController,UITextFieldDelegat
                 pingView = UIView()
                 h = CGFloat( 50 * (i))
                 pingView.frame = CGRectMake(10, height + image_h + 90 + view.frame.size.height , WIDTH - 20, h)
+                
+//                pingView.backgroundColor = UIColor.lightGrayColor()
                 cell.contentView.addSubview(pingView)
                 let name = UILabel()
                 name.frame = CGRectMake(50, 5 + CGFloat( 50 * (i - 1)), 60, 20)
@@ -494,7 +529,9 @@ class BlogMainTableTableViewController: UITableViewController,UITextFieldDelegat
                 let pict = model.comment[i - 1].avatar
                 let imgUrl = microblogImageUrl + pict
                 let photourl = NSURL(string: imgUrl)
-                img.sd_setImageWithURL(photourl, placeholderImage: UIImage(named: "Logo"))
+                img.layer.cornerRadius = 15
+                img.clipsToBounds = true
+                img.sd_setImageWithURL(photourl, placeholderImage: UIImage(named: "默认头像"))
                 pingView.addSubview(img)
                 
                 let dateformat = NSDateFormatter()
@@ -528,6 +565,25 @@ class BlogMainTableTableViewController: UITableViewController,UITextFieldDelegat
         
         return cell
     }
+    
+    override func tableView(tableView: UITableView, didSelectRowAtIndexPath indexPath: NSIndexPath) {
+        let vc = BlogDetailViewController()
+        vc.dataSource = self.dataSource.objectlist[indexPath.row]
+        vc.num = indexPath.row
+        vc.type = "1"
+        self.navigationController?.pushViewController(vc, animated: true)
+    }
+
+    // 点击图片跳转
+    func clickBtn(sender:CustomBtn){
+        let vc = ImagesViewController()
+        vc.arrayInfo = self.dataSource.objectlist[sender.tag].pic
+        vc.nu = vc.arrayInfo.count
+        vc.count = sender.flag!
+        self.navigationController?.pushViewController(vc, animated: true)
+        
+    }
+    
 
     //    点赞
     func clickZan(sender:UIButton){
@@ -542,6 +598,7 @@ class BlogMainTableTableViewController: UITableViewController,UITextFieldDelegat
         for j in 0 ..< str.count {
             answerInfo = str[j].userid
         }
+        
         if answerInfo != uid {
             let url = "http://wxt.xiaocool.net/index.php?g=apps&m=school&a=SetLike"
             let param = [
@@ -549,7 +606,7 @@ class BlogMainTableTableViewController: UITableViewController,UITextFieldDelegat
                 "userid":uid!,
                 "type":"1"
             ]
-            Alamofire.request(.GET, url, parameters: param as? [String:String] ).response { request, response, json, error in
+            Alamofire.request(.GET, url, parameters: param).response { request, response, json, error in
                 print(request)
                 if(error != nil){
                     
@@ -588,7 +645,7 @@ class BlogMainTableTableViewController: UITableViewController,UITextFieldDelegat
                 "userid":uid!,
                 "type":"1"
             ]
-            Alamofire.request(.GET, url, parameters: param as? [String:String]).response { request, response, json, error in
+            Alamofire.request(.GET, url, parameters: param).response { request, response, json, error in
                 print(request)
                 if(error != nil){
                     
@@ -630,10 +687,12 @@ class BlogMainTableTableViewController: UITableViewController,UITextFieldDelegat
     // 评论
     func pinglunBtn(sender:UIButton) {
         
-        //            bview.frame.origin.y = 50
+        bview = UIView()
+        bview.frame = CGRectMake(0, HEIGHT - 185 + self.tableView.contentOffset.y, WIDTH, 80)
+        bview.backgroundColor = UIColor.lightGrayColor()
+        self.view.addSubview(bview)
         
         bview.bringSubviewToFront(tableView)
-        tableView.frame = CGRectMake(0, 0, WIDTH, HEIGHT - 64 - 49 - 100)
         contentTextView.frame = CGRectMake(20 , 20, WIDTH - 40, 40)
         contentTextView.borderStyle = UITextBorderStyle.RoundedRect
         contentTextView.placeholder = "评论"
@@ -654,21 +713,15 @@ class BlogMainTableTableViewController: UITableViewController,UITextFieldDelegat
     }
     
     func keyboardWillAppear(notification: NSNotification) {
-        
         // 获取键盘信息
-        let keyboardinfo = notification.userInfo![UIKeyboardFrameBeginUserInfoKey]
+        let keyboardinfo = notification.userInfo![UIKeyboardFrameEndUserInfoKey]
         
         let keyboardheight:CGFloat = (keyboardinfo?.CGRectValue.size.height)!
-        
-        //            UIView.animateWithDuration(0.3) {
-        //    //            self.contentTableView.contentOffset = CGPoint.init(x: 0, y: self.contentTableView.contentSize.height-keyboardheight-49)
-        //                self.bview.frame = CGRectMake(0, self.view.frame.size.height - keyboardheight - 500, WIDTH, 80)
-        //            }
-        self.bview.frame = CGRectMake(0, HEIGHT - keyboardheight - 185, WIDTH, 80)
-        self.tableView.frame = CGRectMake(0, 0, WIDTH, HEIGHT - keyboardheight - 185 - 80)
-        
+       
+        self.bview.frame = CGRectMake(0, HEIGHT - keyboardheight - 144 + self.tableView.contentOffset.y, WIDTH, 80)
         print("键盘弹起")
         print(keyboardheight)
+//        keyboardShowState = true
         
     }
     
@@ -677,12 +730,7 @@ class BlogMainTableTableViewController: UITableViewController,UITextFieldDelegat
     }
     
     func keyboardWillDisappear(notification:NSNotification){
-        UIView.animateWithDuration(0.3) {
-            //            self.contentTableView.contentOffset = CGPoint.init(x: 0, y: self.contentTableView.contentSize.height-self.contentTableView.frame.size.height)
-            self.bview.frame = CGRectMake(0, HEIGHT - 180, WIDTH, 80)
-            //                self.bview.hidden = true
-            self.tableView.frame = CGRectMake(0, 0, self.view.frame.size.width, self.view.frame.size.height)
-        }
+        self.bview.hidden = true
         print("键盘落下")
     }
     
@@ -694,10 +742,10 @@ class BlogMainTableTableViewController: UITableViewController,UITextFieldDelegat
         let param = [
             "userid":userid!,
             "id":self.dataSource.objectlist[self.num].mid,
-            "type":"3",
+            "type":"1",
             "content":self.contentTextView.text!,
             ]
-        Alamofire.request(.POST, url, parameters: param as? [String : String]).response { request, response, json, error in
+        Alamofire.request(.POST, url, parameters: param).response { request, response, json, error in
             if(error != nil){
             }
             else{
@@ -717,7 +765,8 @@ class BlogMainTableTableViewController: UITableViewController,UITextFieldDelegat
                 }
                 if(result.status == "success"){
                     print("Success")
-                    self.tableView.frame = CGRectMake(0, 0, self.view.frame.size.width, self.view.frame.size.height)
+                    textField.text = ""
+                    self.bview.hidden = true
                     self.GetDate()
                 }
                 
@@ -738,6 +787,9 @@ class BlogMainTableTableViewController: UITableViewController,UITextFieldDelegat
         }
     }
 
-    
+    override func scrollViewDidScroll(scrollView: UIScrollView) {
+        self.bview.hidden = true
+        contentTextView.text = ""
+    }
     
 }

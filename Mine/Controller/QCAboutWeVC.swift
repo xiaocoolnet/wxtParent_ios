@@ -7,10 +7,14 @@
 //
 
 import UIKit
+import Alamofire
+import MBProgressHUD
 
-class QCAboutWeVC: UIViewController {
+class QCAboutWeVC: UIViewController, UIWebViewDelegate {
     var row : Int!
 
+    var webView = UIWebView()
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         initUI()
@@ -27,12 +31,15 @@ class QCAboutWeVC: UIViewController {
         if self.row == 0 {
             //
             self.title = "使用帮助"
-            getLabel("使用帮助")
+            createUI()
+            GETDate()
         }
-        if self.row == 2{
+        if self.row == 1{
             //
             self.title = "关于我们"
-            getLabel("AboutUS")
+            createUI()
+            GETData()
+            
         }
     }
     func getLabel(content:String){
@@ -42,5 +49,30 @@ class QCAboutWeVC: UIViewController {
         label.font = UIFont.systemFontOfSize(50)
         self.view.addSubview(label)
     }
+    
+    func createUI(){
+        self.tabBarController?.tabBar.hidden = true
+        //  进行webView的请求
+        webView.frame = CGRectMake(0, 0, WIDTH, HEIGHT - 20)
+        self.view.addSubview(webView)
+        
+    }
+    func GETData(){
+        
+        let url = NSURL(string: "http://wxt.xiaocool.net/index.php?g=portal&m=OurParent&a=index")
+        let request = NSURLRequest(URL: url!)
+        webView.loadRequest(request)
+        
+    }
+    
+    func GETDate(){
+        
+        let url = NSURL(string: "http://wxt.xiaocool.net/index.php?g=portal&m=help&a=index")
+        let request = NSURLRequest(URL: url!)
+        webView.loadRequest(request)
+        
+    }
+    
+    
 
 }

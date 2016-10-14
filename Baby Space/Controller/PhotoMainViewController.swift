@@ -10,6 +10,8 @@ import UIKit
 import PagingMenuController
 
 class PhotoMainViewController: UIViewController {
+    
+    
 
     override func viewDidLoad() {
         super.viewDidLoad()

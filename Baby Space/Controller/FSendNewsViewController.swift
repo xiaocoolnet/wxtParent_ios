@@ -30,7 +30,17 @@ class FSendNewsViewController: UIViewController,UITableViewDelegate,UITableViewD
         self.tabBarController?.tabBar.hidden = true
         //  下拉刷新
         //        self.DropDownUpdate()
+        self.loadData()
+        let useDefaults = NSUserDefaults.standardUserDefaults()
+        useDefaults.removeObjectForKey("count")
     }
+    
+    override func viewWillDisappear(animated: Bool) {
+        let useDefaults = NSUserDefaults.standardUserDefaults()
+        useDefaults.removeObjectForKey("count")
+        
+    }
+
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -62,7 +72,7 @@ class FSendNewsViewController: UIViewController,UITableViewDelegate,UITableViewD
     func loadData(){
         
         //  http://wxt.xiaocool.net/index.php?g=Apps&m=Message&a=user_reception_message&receiver_user_id=682
-        //
+        
         //下面两hid句代码是从缓存中取出userid（入参）值
         let defalutid = NSUserDefaults.standardUserDefaults()
         let chid = defalutid.stringForKey("chid")
@@ -89,8 +99,8 @@ class FSendNewsViewController: UIViewController,UITableViewDelegate,UITableViewD
                     hud.hide(true, afterDelay: 1)
                 }
                 if(status.status == "success"){
-                    self.messageSource = sendMessageList(status.data!)
-                
+                    //                    self.messageSource = sendMessageList(status.data!)
+                    
                     self.dataSource = FSendList(status.data!)
                     
                     self.table.reloadData()
@@ -120,7 +130,7 @@ class FSendNewsViewController: UIViewController,UITableViewDelegate,UITableViewD
         let model = self.dataSource.objectlist[indexPath.row]
         let messageModel = model.send_message
         //        let picModel = model.picture
-        let receiveModel = model.receiver
+        let receiveModel = (model.receiver)
        
         
         
@@ -137,7 +147,7 @@ class FSendNewsViewController: UIViewController,UITableViewDelegate,UITableViewD
         let yiDu = UILabel()
         let meiDu = UILabel()
         
-        contentLabel.textColor = UIColor.lightGrayColor()
+//        contentLabel.textColor = UIColor.lightGrayColor()
         cell.contentView.addSubview(contentLabel)
         cell.contentView.addSubview(teacherLabel)
         cell.contentView.addSubview(comment)
@@ -159,15 +169,30 @@ class FSendNewsViewController: UIViewController,UITableViewDelegate,UITableViewD
         meiDu.text = "未读"
         cell.contentView.addSubview(meiDu)
         
+        contentLabel.frame = CGRectMake(10, 10, WIDTH - 20, 30)
+        contentLabel.text = messageModel.first?.message_content
+        contentLabel.numberOfLines = 0
+        contentLabel.sizeToFit()
+        // 计算群发内容高度
+        let options : NSStringDrawingOptions = NSStringDrawingOptions.UsesLineFragmentOrigin
+        let screenBounds:CGRect = UIScreen.mainScreen().bounds
+        let boundingRect = String(contentLabel.text).boundingRectWithSize(CGSizeMake(screenBounds.width, 0), options: options, attributes: [NSFontAttributeName:UIFont.systemFontOfSize(17)], context: nil)
+        let contentheight = boundingRect.size.height + 10
+        
         
         //  图片
         var image_h = CGFloat()
-        let pic = model.picture
+        var pic = model.picture
         
-        var button:UIButton?
+        var button:CustomBtn?
         
         
         //判断图片张数显示
+        //解决数据返回有null和“”的错误图片显示
+        if pic.count==1&&(pic.first?.picture_url=="null"||pic.first?.picture_url=="") {
+            pic.removeAll()
+        }
+        
         if(pic.count>0&&pic.count<=3){
             image_h=(WIDTH - 40)/3.0
             for i in 1...pic.count{
@@ -184,21 +209,18 @@ class FSendNewsViewController: UIViewController,UITableViewDelegate,UITableViewD
                     if(data != nil){
                         x = x+((i-1)*Int((WIDTH - 40)/3.0 + 10))
                         //                        blogimage = UIImageView(frame: CGRectMake(CGFloat(x), 150, 110, 80))
-                        button = UIButton()
-                        button!.frame = CGRectMake(CGFloat(x), 40, (WIDTH - 40)/3.0, (WIDTH - 40)/3.0)
+                        button = CustomBtn()
+                        button?.flag = i
+                        button!.frame = CGRectMake(CGFloat(x), contentheight + 10, (WIDTH - 40)/3.0, (WIDTH - 40)/3.0)
                         let imgTmp = UIImage(data: data!)
-                        //self.imageCache[imgUrl] = imgTmp
-                        //                        blogimage!.image = imgTmp
-                        //                        if blogimage?.image==nil{
-                        //                            blogimage?.image=UIImage(named: "Logo")
-                        //                        }
-                        //                        cell.addSubview(blogimage!)
+                    
                         button!.setImage(imgTmp, forState: .Normal)
+                        button?.imageView?.contentMode = .ScaleAspectFill
+                        button?.clipsToBounds = true
                         if button?.imageView?.image == nil{
-                            button!.setImage(UIImage(named: "Logo"), forState: .Normal)
+                            button!.setImage(UIImage(named: "图片默认加载"), forState: .Normal)
                         }
-//                        button?.setImageForState(.Normal, withURL: imgTmp, placeholderImage: "Logo")
-//                        button.set
+
                         button?.tag = indexPath.row
                         button?.addTarget(self, action: #selector(self.clickBtn), forControlEvents: .TouchUpInside)
                         cell.contentView.addSubview(button!)
@@ -226,20 +248,17 @@ class FSendNewsViewController: UIViewController,UITableViewDelegate,UITableViewD
                         NSURLConnection.sendAsynchronousRequest(request, queue: NSOperationQueue.mainQueue(), completionHandler: {(response: NSURLResponse?,data: NSData?,error: NSError?)-> Void in
                             if(data != nil){
                                 x = x+((i-1)*Int((WIDTH - 40)/3.0 + 10))
-                                button = UIButton()
-                                button!.frame = CGRectMake(CGFloat(x), 40, (WIDTH - 40)/3.0, (WIDTH - 40)/3.0)
+                                button = CustomBtn()
+                                button?.flag = i
+                                button!.frame = CGRectMake(CGFloat(x), contentheight+10, (WIDTH - 40)/3.0, (WIDTH - 40)/3.0)
                                 
                                 let imgTmp = UIImage(data: data!)
-                                //self.imageCache[imgUrl] = imgTmp
-                                //                                blogimage!.image = imgTmp
-                                //                                if blogimage?.image==nil{
-                                //                                    blogimage?.image=UIImage(named: "Logo")
-                                //                                }
-                                //
-                                //                                cell.addSubview(blogimage!)
+                                
                                 button!.setImage(imgTmp, forState: .Normal)
+                                button?.imageView?.contentMode = .ScaleAspectFill
+                                button?.clipsToBounds = true
                                 if button?.imageView?.image == nil{
-                                    button!.setImage(UIImage(named: "Logo"), forState: .Normal)
+                                    button!.setImage(UIImage(named: "图片默认加载"), forState: .Normal)
                                 }
                                 button?.tag = indexPath.row
                                 button?.addTarget(self, action: #selector(self.clickBtn), forControlEvents: .TouchUpInside)
@@ -259,18 +278,16 @@ class FSendNewsViewController: UIViewController,UITableViewDelegate,UITableViewD
                         NSURLConnection.sendAsynchronousRequest(request, queue: NSOperationQueue.mainQueue(), completionHandler: {(response: NSURLResponse?,data: NSData?,error: NSError?)-> Void in
                             if(data != nil){
                                 x = x+((i-4)*Int((WIDTH - 40)/3.0 + 10))
-                                button = UIButton()
-                                button!.frame = CGRectMake(CGFloat(x), 40+(WIDTH - 40)/3.0 + 5, (WIDTH - 40)/3.0, (WIDTH - 40)/3.0)
+                                button = CustomBtn()
+                                button?.flag = i
+                                button!.frame = CGRectMake(CGFloat(x), contentheight+10+(WIDTH - 40)/3.0 + 5, (WIDTH - 40)/3.0, (WIDTH - 40)/3.0)
                                 let imgTmp = UIImage(data: data!)
-                                //self.imageCache[imgUrl] = imgTmp
-                                //                                blogimage!.image = imgTmp
-                                //                                if blogimage?.image==nil{
-                                //                                    blogimage?.image=UIImage(named: "Logo")
-                                //                                }
-                                //                                cell.addSubview(blogimage!)
+                                
                                 button!.setImage(imgTmp, forState: .Normal)
+                                button?.imageView?.contentMode = .ScaleAspectFill
+                                button?.clipsToBounds = true
                                 if button?.imageView?.image == nil{
-                                    button!.setImage(UIImage(named: "Logo"), forState: .Normal)
+                                    button!.setImage(UIImage(named: "图片默认加载"), forState: .Normal)
                                 }
                                 button?.tag = indexPath.row
                                 button?.addTarget(self, action: #selector(self.clickBtn), forControlEvents: .TouchUpInside)
@@ -297,13 +314,16 @@ class FSendNewsViewController: UIViewController,UITableViewDelegate,UITableViewD
                         NSURLConnection.sendAsynchronousRequest(request, queue: NSOperationQueue.mainQueue(), completionHandler: {(response: NSURLResponse?,data: NSData?,error: NSError?)-> Void in
                             if(data != nil){
                                 x = x+((i-1)*Int((WIDTH - 40)/3.0 + 10))
-                                button = UIButton()
-                                button!.frame = CGRectMake(CGFloat(x), 40, (WIDTH - 40)/3.0, (WIDTH - 40)/3.0)
+                                button = CustomBtn()
+                                button?.flag = i
+                                button!.frame = CGRectMake(CGFloat(x), contentheight+10, (WIDTH - 40)/3.0, (WIDTH - 40)/3.0)
                                 let imgTmp = UIImage(data: data!)
                                 
                                 button!.setImage(imgTmp, forState: .Normal)
+                                button?.imageView?.contentMode = .ScaleAspectFill
+                                button?.clipsToBounds = true
                                 if button?.imageView?.image == nil{
-                                    button!.setImage(UIImage(named: "Logo"), forState: .Normal)
+                                    button!.setImage(UIImage(named: "图片默认加载"), forState: .Normal)
                                 }
                                 button?.tag = indexPath.row
                                 button?.addTarget(self, action: #selector(self.clickBtn), forControlEvents: .TouchUpInside)
@@ -324,13 +344,16 @@ class FSendNewsViewController: UIViewController,UITableViewDelegate,UITableViewD
                         NSURLConnection.sendAsynchronousRequest(request, queue: NSOperationQueue.mainQueue(), completionHandler: {(response: NSURLResponse?,data: NSData?,error: NSError?)-> Void in
                             if(data != nil){
                                 x = x+((i-4)*Int((WIDTH - 40)/3.0 + 10))
-                                button = UIButton()
-                                button!.frame = CGRectMake(CGFloat(x), 40+(WIDTH - 40)/3.0 + 5, (WIDTH - 40)/3.0, (WIDTH - 40)/3.0)
+                                button = CustomBtn()
+                                button?.flag = i
+                                button!.frame = CGRectMake(CGFloat(x), contentheight+10+(WIDTH - 40)/3.0 + 5, (WIDTH - 40)/3.0, (WIDTH - 40)/3.0)
                                 let imgTmp = UIImage(data: data!)
                                
                                 button!.setImage(imgTmp, forState: .Normal)
+                                button?.imageView?.contentMode = .ScaleAspectFill
+                                button?.clipsToBounds = true
                                 if button?.imageView?.image == nil{
-                                    button!.setImage(UIImage(named: "Logo"), forState: .Normal)
+                                    button!.setImage(UIImage(named: "图片默认加载"), forState: .Normal)
                                 }
                                 button?.tag = indexPath.row
                                 button?.addTarget(self, action: #selector(self.clickBtn), forControlEvents: .TouchUpInside)
@@ -351,18 +374,16 @@ class FSendNewsViewController: UIViewController,UITableViewDelegate,UITableViewD
                         NSURLConnection.sendAsynchronousRequest(request, queue: NSOperationQueue.mainQueue(), completionHandler: {(response: NSURLResponse?,data: NSData?,error: NSError?)-> Void in
                             if(data != nil){
                                 x = x+((i-7)*Int((WIDTH - 40)/3.0 + 10))
-                                button = UIButton()
-                                button!.frame = CGRectMake(CGFloat(x), 40+(WIDTH - 40)/3.0 + 5+(WIDTH - 40)/3.0 + 5, (WIDTH - 40)/3.0, (WIDTH - 40)/3.0)
+                                button = CustomBtn()
+                                button?.flag = i
+                                button!.frame = CGRectMake(CGFloat(x), contentheight+10+(WIDTH - 40)/3.0 + 5+(WIDTH - 40)/3.0 + 5, (WIDTH - 40)/3.0, (WIDTH - 40)/3.0)
                                 let imgTmp = UIImage(data: data!)
-                                //self.imageCache[imgUrl] = imgTmp
-                                //                                blogimage!.image = imgTmp
-                                //                                if blogimage?.image==nil{
-                                //                                    blogimage?.image=UIImage(named: "Logo")
-                                //                                }
-                                //                                cell.addSubview(blogimage!)
+                                
                                 button!.setImage(imgTmp, forState: .Normal)
+                                button?.imageView?.contentMode = .ScaleAspectFill
+                                button?.clipsToBounds = true
                                 if button?.imageView?.image == nil{
-                                    button!.setImage(UIImage(named: "Logo"), forState: .Normal)
+                                    button!.setImage(UIImage(named: "图片默认加载"), forState: .Normal)
                                 }
                                 button?.tag = indexPath.row
                                 button?.addTarget(self, action: #selector(self.clickBtn), forControlEvents: .TouchUpInside)
@@ -392,18 +413,16 @@ class FSendNewsViewController: UIViewController,UITableViewDelegate,UITableViewD
                             if(data != nil){
                                 x = x+((i-1)*Int((WIDTH - 40)/3.0 + 10))
                                 print(x)
-                                button = UIButton()
-                                button!.frame = CGRectMake(CGFloat(x), 40, (WIDTH - 40)/3.0, (WIDTH - 40)/3.0)
+                                button = CustomBtn()
+                                button?.flag = i
+                                button!.frame = CGRectMake(CGFloat(x), contentheight+10, (WIDTH - 40)/3.0, (WIDTH - 40)/3.0)
                                 let imgTmp = UIImage(data: data!)
-                                //self.imageCache[imgUrl] = imgTmp
-                                //                                blogimage!.image = imgTmp
-                                //                                if blogimage?.image==nil{
-                                //                                    blogimage?.image=UIImage(named: "Logo")
-                                //                                }
-                                //                                cell.addSubview(blogimage!)
+                                
                                 button!.setImage(imgTmp, forState: .Normal)
+                                button?.imageView?.contentMode = .ScaleAspectFill
+                                button?.clipsToBounds = true
                                 if button?.imageView?.image == nil{
-                                    button!.setImage(UIImage(named: "Logo"), forState: .Normal)
+                                    button!.setImage(UIImage(named: "图片默认加载"), forState: .Normal)
                                 }
                                 button?.tag = indexPath.row
                                 button?.addTarget(self, action: #selector(self.clickBtn), forControlEvents: .TouchUpInside)
@@ -424,18 +443,16 @@ class FSendNewsViewController: UIViewController,UITableViewDelegate,UITableViewD
                         NSURLConnection.sendAsynchronousRequest(request, queue: NSOperationQueue.mainQueue(), completionHandler: {(response: NSURLResponse?,data: NSData?,error: NSError?)-> Void in
                             if(data != nil){
                                 x = x+((i-4)*Int((WIDTH - 40)/3.0 + 10))
-                                button = UIButton()
-                                button!.frame = CGRectMake(CGFloat(x), 40+(WIDTH - 40)/3.0 + 5, (WIDTH - 40)/3.0, (WIDTH - 40)/3.0)
+                                button = CustomBtn()
+                                button?.flag = i
+                                button!.frame = CGRectMake(CGFloat(x), contentheight+10+(WIDTH - 40)/3.0 + 5, (WIDTH - 40)/3.0, (WIDTH - 40)/3.0)
                                 let imgTmp = UIImage(data: data!)
-                                //self.imageCache[imgUrl] = imgTmp
-                                //                                blogimage!.image = imgTmp
-                                //                                if blogimage?.image==nil{
-                                //                                    blogimage?.image=UIImage(named: "Logo")
-                                //                                }
-                                //                                cell.addSubview(blogimage!)
+                               
                                 button!.setImage(imgTmp, forState: .Normal)
+                                button?.imageView?.contentMode = .ScaleAspectFill
+                                button?.clipsToBounds = true
                                 if button?.imageView?.image == nil{
-                                    button!.setImage(UIImage(named: "Logo"), forState: .Normal)
+                                    button!.setImage(UIImage(named: "图片默认加载"), forState: .Normal)
                                 }
                                 button?.tag = indexPath.row
                                 button?.addTarget(self, action: #selector(self.clickBtn), forControlEvents: .TouchUpInside)
@@ -456,18 +473,16 @@ class FSendNewsViewController: UIViewController,UITableViewDelegate,UITableViewD
                         NSURLConnection.sendAsynchronousRequest(request, queue: NSOperationQueue.mainQueue(), completionHandler: {(response: NSURLResponse?,data: NSData?,error: NSError?)-> Void in
                             if(data != nil){
                                 x = x+((i-7)*Int((WIDTH - 40)/3.0 + 10))
-                                button = UIButton()
-                                button!.frame = CGRectMake(CGFloat(x), 40+(WIDTH - 40)/3.0 + 5+(WIDTH - 40)/3.0 + 5, (WIDTH - 40)/3.0, (WIDTH - 40)/3.0)
+                                button = CustomBtn()
+                                button?.flag = i
+                                button!.frame = CGRectMake(CGFloat(x), contentheight+10+(WIDTH - 40)/3.0 + 5+(WIDTH - 40)/3.0 + 5, (WIDTH - 40)/3.0, (WIDTH - 40)/3.0)
                                 let imgTmp = UIImage(data: data!)
-                                //self.imageCache[imgUrl] = imgTmp
-                                //                                blogimage!.image = imgTmp
-                                //                                if blogimage?.image==nil{
-                                //                                    blogimage?.image=UIImage(named: "Logo")
-                                //                                }
-                                //                                cell.addSubview(blogimage!)
+                                
                                 button!.setImage(imgTmp, forState: .Normal)
+                                button?.imageView?.contentMode = .ScaleAspectFill
+                                button?.clipsToBounds = true
                                 if button?.imageView?.image == nil{
-                                    button!.setImage(UIImage(named: "Logo"), forState: .Normal)
+                                    button!.setImage(UIImage(named: "图片默认加载"), forState: .Normal)
                                 }
                                 button?.tag = indexPath.row
                                 button?.addTarget(self, action: #selector(self.clickBtn(_:)), forControlEvents: .TouchUpInside)
@@ -481,58 +496,43 @@ class FSendNewsViewController: UIViewController,UITableViewDelegate,UITableViewD
                 
             }
         }
-        tableView.rowHeight=130+image_h
         
         
-        let view = UIView()
-        view.frame = CGRectMake(0, 110 + image_h, WIDTH, 20)
-        view.backgroundColor = RGBA(242.0, g: 242.0, b: 242.0, a: 1)
-        cell.addSubview(view)
-        
-        
-        contentLabel.frame = CGRectMake(10, 10, WIDTH - 20, 30)
-        teacherLabel.frame = CGRectMake(40, 40 + image_h + 10, 100, 20)
-        timeLabel.frame = CGRectMake(WIDTH - 150, 40 + image_h + 10, 140, 20)
+        teacherLabel.frame = CGRectMake(40, contentheight + image_h + 20, 100, 20)
+        teacherLabel.text = messageModel.first?.send_user_name
+        timeLabel.frame = CGRectMake(WIDTH - 150, contentheight + image_h + 20, 140, 20)
         timeLabel.textAlignment = NSTextAlignment.Right
+        timeLabel.text = changeTime((model.send_message.first?.message_time)!)
         
-        zong.frame = CGRectMake(10, 70 + image_h + 20, 30, 20)
+        
+        zong.frame = CGRectMake(10, 10 + contentLabel.frame.height + 10 + image_h + 40, 30, 30)
         zong.font = UIFont.systemFontOfSize(15)
-        allLable.frame = CGRectMake(40, 70 + image_h + 20, 20, 20)
+        zong.textColor = UIColor.orangeColor()
+        allLable.frame = CGRectMake(40, 10 + contentLabel.frame.height + 10 + image_h + 40, 20, 30)
         allLable.font = UIFont.systemFontOfSize(15)
-        yiDu.frame = CGRectMake(65, 70 + image_h + 20, 35, 20)
+        allLable.textColor = UIColor.orangeColor()
+        yiDu.frame = CGRectMake(65, 10 + contentLabel.frame.height + 10 + image_h + 40, 40, 30)
         yiDu.font = UIFont.systemFontOfSize(15)
-        already.frame = CGRectMake(100, 70 + image_h + 20, 20, 20)
+        yiDu.textColor = UIColor.orangeColor()
+        already.frame = CGRectMake(100, 10 + contentLabel.frame.height + 10 + image_h + 40, 20, 30)
         already.font = UIFont.systemFontOfSize(15)
-        meiDu.frame = CGRectMake(125, 70 + image_h + 20, 30, 20)
+        already.textColor = UIColor.orangeColor()
+        meiDu.frame = CGRectMake(125, 10 + contentLabel.frame.height + 10 + image_h + 40, 40, 30)
         meiDu.font = UIFont.systemFontOfSize(15)
-        weiDu.frame = CGRectMake(155, 70 + image_h + 20, 20, 20)
+        meiDu.textColor = UIColor.orangeColor()
+        weiDu.frame = CGRectMake(155, 10 + contentLabel.frame.height + 10 + image_h + 40, 40, 30)
         weiDu.font = UIFont.systemFontOfSize(15)
+        weiDu.textColor = UIColor.orangeColor()
         
         let line = UILabel()
-        line.frame = CGRectMake(1, 80 + image_h, WIDTH - 2, 0.5)
+        line.frame = CGRectMake(1, contentLabel.frame.height + 10 + image_h + 20, WIDTH - 2, 0.5)
         line.backgroundColor = UIColor.lightGrayColor()
         cell.addSubview(line)
         
         let imageView = UIImageView()
-        imageView.frame = CGRectMake(10, 40 + image_h + 10, 21, 21)
+        imageView.frame = CGRectMake(10, contentheight + image_h + 20, 21, 21)
         imageView.image = UIImage.init(named: "ic_fasong")
         cell.contentView.addSubview(imageView)
-        
-
-        
-//        for i in 1...messageModel.count {
-//            let strInfo = messageModel[i - 1]
-//            contentLabel.text = strInfo.message_content
-//            teacherLabel.text = strInfo.send_user_name
-//            
-//            let dateformate = NSDateFormatter()
-//            dateformate.dateFormat = "yyyy-MM-dd HH:mm"
-//            let date = NSDate(timeIntervalSince1970: NSTimeInterval(strInfo.message_time!)!)
-//             timeLabel.text = dateformate.stringFromDate(date)
-////            cell.timeLabel.text = str
-//            
-//        }
-//        cell.zong.text = ""
         
         allLable.text = String(receiveModel.count)
         let array = NSMutableArray()
@@ -548,20 +548,117 @@ class FSendNewsViewController: UIViewController,UITableViewDelegate,UITableViewD
         already.text = String(receiveModel.count - array.count)
         cell.contentView.addSubview(already)
         
+        let view = UIView()
+        view.frame = CGRectMake(0, weiDu.frame.maxY, WIDTH, 20)
+        view.backgroundColor = RGBA(242.0, g: 242.0, b: 242.0, a: 1)
+        cell.addSubview(view)
         weiDu.text = String(array.count)
         cell.contentView.addSubview(weiDu)
+        
+        //  已读
+        let readLabel = UILabel()
+        readLabel.frame = CGRectMake(WIDTH - 60, 10 + contentLabel.frame.height + 10 + image_h + 40, 50, 30)
+        //        readLabel.text = "已读"
+        readLabel.font = UIFont.systemFontOfSize(17)
+//        readLabel.textColor = UIColor.redColor()
+        cell.contentView.addSubview(readLabel)
+        
+        
+//        if receiveModel.read_time != "" {
+//            readLabel.text = "已读"
+//        }else{
+//            readLabel.text = "未读"
+//        }
+        
+        for i in 1...receiveModel.count {
+            let defalutid = NSUserDefaults.standardUserDefaults()
+            let chid = defalutid.stringForKey("chid")
+            if receiveModel[i - 1].receiver_user_id == chid {
+                let str = receiveModel[i - 1].read_time
+                if str != "" {
+                    readLabel.text = "已读"
+                    readLabel.textColor = UIColor(red: 155/255, green: 229/255, blue: 180/255, alpha: 1)
+                }else{
+                    readLabel.text = "未读"
+                    readLabel.textColor = UIColor.orangeColor()
+                }
+            }
+            
+        }
+
+        
+        table.rowHeight = 40 + contentLabel.frame.height + 10 + image_h + 10 + 20 + 3 + 20 + 6
+        
         
         return cell
     }
     
     
-    func clickBtn(sender:UIButton){
+    func clickBtn(sender:CustomBtn){
         let vc = GroupPicViewController()
         vc.arrayInfo = self.dataSource.objectlist[(sender.tag)].picture
         vc.nu = vc.arrayInfo.count
+        vc.count = sender.flag!
         self.navigationController?.pushViewController(vc, animated: true)
         
     }
+    
+    func tableView(tableView: UITableView, didSelectRowAtIndexPath indexPath: NSIndexPath) {
+        let vc = FSendDetailViewController()
+        let model = self.dataSource.objectlist[indexPath.row]
+        let str = model.message_id
+        self.createState(str!)
+        vc.dataSource = model
+        self.navigationController?.pushViewController(vc, animated: true)
+    }
+    
+    //时间戳转时间
+    func changeTime(string:String)->String{
+        let dateformate = NSDateFormatter()
+        dateformate.dateFormat = "yyyy-MM-dd HH:mm"//获得日期
+        let date = NSDate(timeIntervalSince1970: NSTimeInterval(string)!)
+        let str:String = dateformate.stringFromDate(date)
+        return str
+    }
+    
+    func createState(str:String){
+        //        http://wxt.xiaocool.net/index.php?g=apps&m=student&a=read_homework&receiverid=599&homework_id=11
+        
+        let defalutid = NSUserDefaults.standardUserDefaults()
+        let receiverid = defalutid.stringForKey("chid")
+        let url = "http://wxt.xiaocool.net/index.php?g=Apps&m=Message&a=read_message"
+        let param = [
+            //            "classid":classid!,
+            "receiver_user_id":receiverid!,
+            "message_id":str
+            
+        ]
+        Alamofire.request(.GET, url, parameters: param).response { request, response, json, error in
+            if(error != nil){
+            }
+            else{
+                print("request是")
+                print(request!)
+                print("====================")
+                let status = Http(JSONDecoder(json!))
+                print("状态是")
+                print(status.status)
+                if(status.status == "error"){
+                    let hud = MBProgressHUD.showHUDAddedTo(self.view, animated: true)
+                    hud.mode = MBProgressHUDMode.Text
+                    hud.labelText = status.errorData
+                    hud.margin = 10.0
+                    hud.removeFromSuperViewOnHide = true
+                    hud.hide(true, afterDelay: 1)
+                }
+                if(status.status == "success"){
+                    self.loadData()
+                }
+            }
+        }
+        
+    }
+
     
     
     

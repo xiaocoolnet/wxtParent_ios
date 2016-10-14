@@ -16,12 +16,17 @@ class ImagesViewController: UIViewController,UICollectionViewDelegate,UICollecti
 
     var img = NSString()
     var nu = 0
-    var count = 0
+    var count : NSInteger?
     var collectV:UICollectionView?
     var flowLayout = UICollectionViewFlowLayout()
     
     var arrayInfo = Array<BabyPicInfo>()
     var dataSouce = Array<BabyPhotoInfo>()
+    
+    
+    override func viewWillAppear(animated: Bool) {
+        self.tabBarController?.tabBar.hidden = true
+    }
     
     
     
@@ -49,9 +54,14 @@ class ImagesViewController: UIViewController,UICollectionViewDelegate,UICollecti
         //设置每一个cell的宽高
         //        layout.itemSize = CGSizeMake(WIDTH, HEIGHT)
         self.view.addSubview(collectV!)
-        collectV!.contentOffset = CGPointMake(CGFloat(nu)*WIDTH, 0)
         
         
+        
+    }
+    
+    override func viewDidLayoutSubviews() {
+        collectV!.contentOffset = CGPointMake(CGFloat(Int(count!) - 1)*WIDTH, 0)
+
     }
     
     func collectionView(collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {

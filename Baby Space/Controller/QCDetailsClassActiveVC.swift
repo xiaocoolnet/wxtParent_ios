@@ -82,57 +82,53 @@ class QCDetailsClassActiveVC: UIViewController,UITableViewDelegate,UITableViewDa
         
         let dateformate1 = NSDateFormatter()
         dateformate1.dateFormat = "yy-MM-dd"
-        let data1 = NSDate(timeIntervalSince1970: NSTimeInterval(activity_listModel.finishtime!)!)
+        let data1 = NSDate(timeIntervalSince1970: NSTimeInterval(activity_listModel.begintime!)!)
         cell?.startTime.frame = CGRectMake(10, (cell?.contentLabel.frame.size.height)!+cell!.contentLabel.frame.origin.y + 20, WIDTH - 20, 30)
-        cell?.startTime.text = "大赛举办时间\(dateformate.stringFromDate(data1))"
+        cell?.startTime.text = "活动开始时间\(dateformate.stringFromDate(data1))"
         cell?.startTime.sizeToFit()
         
         let dateformate2 = NSDateFormatter()
         dateformate2.dateFormat = "MM-dd"
         let data2 = NSDate(timeIntervalSince1970: NSTimeInterval(activity_listModel.starttime!)!)
-        let data3 = NSDate(timeIntervalSince1970: NSTimeInterval(activity_listModel.finishtime!)!)
-        cell?.activeTimes.frame = CGRectMake(10, (cell?.startTime.frame.size.height)!+cell!.contentLabel.frame.origin.y + 50, WIDTH - 20, 30)
-        cell?.activeTimes.text = "报名截止日期\(dateformate.stringFromDate(data2))到\(dateformate.stringFromDate(data3))"
-    
+        let data3 = NSDate(timeIntervalSince1970: NSTimeInterval(activity_listModel.endtime!)!)
+        let data4 = NSDate(timeIntervalSince1970: NSTimeInterval(activity_listModel.finishtime!)!)
+        cell?.activeTimes.frame = CGRectMake(10, (cell?.startTime.frame.size.height)!+cell!.startTime.frame.origin.y + 20, WIDTH - 20, 30)
+        cell?.activeTimes.text = "活动结束时间\(dateformate.stringFromDate(data3))"
         
-        let pic = self.picSource.activityList
+        cell?.startime.frame = CGRectMake(10, (cell?.activeTimes.frame.size.height)!+cell!.activeTimes.frame.origin.y + 20, WIDTH - 20, 30)
+        if activity_listModel.starttime != "0" {
+            
+            cell?.startime.text = "活动报名时间\(dateformate.stringFromDate(data2))"
+        }else{
+            cell?.startime.text = "活动开始报名时间:  无"
+        }
+        
+        cell?.finishtime.frame = CGRectMake(10, (cell?.startime.frame.size.height)!+cell!.startime.frame.origin.y + 20, WIDTH - 20, 30)
+        if activity_listModel.finishtime == "0" {
+            cell?.finishtime.text = "活动结束报名时间:  无"
+        }else{
+            
+            cell?.finishtime.text = "活动结束报名时间\(dateformate.stringFromDate(data4))"
+        }
+        
+        var pic = self.picSource.activityList
         //        print(picModel.count)
         
         
         
         //  图片
         var image_h = CGFloat()
-        var button:UIButton?
+        var button:CustomBtn?
         
-        let height = (cell?.activeTimes.frame.size.height)!+cell!.activeTimes.frame.origin.y + 30
+        let height = (cell?.finishtime.frame.size.height)!+cell!.finishtime.frame.origin.y + 30
         
         
         //判断图片张数显示
-        if pic.count == 1 {
-            image_h=(WIDTH - 40)/3.0
-            let pciInfo = pic[0]
-            let imgUrl = microblogImageUrl+(pciInfo.picture_url)!
-            let avatarUrl = NSURL(string: imgUrl)
-            let request: NSURLRequest = NSURLRequest(URL: avatarUrl!)
-            NSURLConnection.sendAsynchronousRequest(request, queue: NSOperationQueue.mainQueue(), completionHandler: {(response: NSURLResponse?,data: NSData?,error: NSError?)-> Void in
-                if(data != nil){
-                    button = UIButton()
-                    button!.frame = CGRectMake(12, height, WIDTH - 24, (WIDTH - 40)/3.0)
-                    let imgTmp = UIImage(data: data!)
-                    
-                    button!.setImage(imgTmp, forState: .Normal)
-                    if button?.imageView?.image == nil{
-                        //                        button!.setImage(UIImage(named: "园所公告背景.png"), forState: .Normal)
-                        button?.setBackgroundImage(UIImage(named: "园所公告背景.png"), forState: .Normal)
-                    }
-                    button?.tag = indexPath.row
-                    button?.addTarget(self, action: #selector(self.clickBtn), forControlEvents: .TouchUpInside)
-                    cell!.contentView.addSubview(button!)
-                    
-                }
-            })
-            
+        //解决数据返回有null和“”的错误图片显示
+        if pic.count==1&&(pic.first?.picture_url=="null"||pic.first?.picture_url=="") {
+            pic.removeAll()
         }
+
         if(pic.count>1&&pic.count<=3){
             image_h=(WIDTH - 40)/3.0
             for i in 1...pic.count{
@@ -149,14 +145,15 @@ class QCDetailsClassActiveVC: UIViewController,UITableViewDelegate,UITableViewDa
                     if(data != nil){
                         x = x+((i-1)*Int((WIDTH - 40)/3.0 + 10))
                         //                        blogimage = UIImageView(frame: CGRectMake(CGFloat(x), 150, 110, 80))
-                        button = UIButton()
+                        button = CustomBtn()
+                        button?.flag = i
                         button!.frame = CGRectMake(CGFloat(x), height, (WIDTH - 40)/3.0, (WIDTH - 40)/3.0)
                         let imgTmp = UIImage(data: data!)
                         
                         button!.setImage(imgTmp, forState: .Normal)
                         if button?.imageView?.image == nil{
                             //                            button!.setImage(UIImage(named: "Logo"), forState: .Normal)
-                            button?.setBackgroundImage(UIImage(named: "Logo"), forState: .Normal)
+                            button?.setBackgroundImage(UIImage(named: "图片默认加载"), forState: .Normal)
                         }
                         button?.tag = indexPath.row
                         button?.addTarget(self, action: #selector(self.clickBtn), forControlEvents: .TouchUpInside)
@@ -185,14 +182,15 @@ class QCDetailsClassActiveVC: UIViewController,UITableViewDelegate,UITableViewDa
                         NSURLConnection.sendAsynchronousRequest(request, queue: NSOperationQueue.mainQueue(), completionHandler: {(response: NSURLResponse?,data: NSData?,error: NSError?)-> Void in
                             if(data != nil){
                                 x = x+((i-1)*Int((WIDTH - 40)/3.0 + 10))
-                                button = UIButton()
+                                button = CustomBtn()
+                                button?.flag = i
                                 button!.frame = CGRectMake(CGFloat(x), height, (WIDTH - 40)/3.0, (WIDTH - 40)/3.0)
                                 
                                 let imgTmp = UIImage(data: data!)
                                 
                                 button!.setImage(imgTmp, forState: .Normal)
                                 if button?.imageView?.image == nil{
-                                    button!.setImage(UIImage(named: "Logo"), forState: .Normal)
+                                    button!.setImage(UIImage(named: "图片默认加载"), forState: .Normal)
                                 }
                                 button?.tag = indexPath.row
                                 button?.addTarget(self, action: #selector(self.clickBtn), forControlEvents: .TouchUpInside)
@@ -212,13 +210,14 @@ class QCDetailsClassActiveVC: UIViewController,UITableViewDelegate,UITableViewDa
                         NSURLConnection.sendAsynchronousRequest(request, queue: NSOperationQueue.mainQueue(), completionHandler: {(response: NSURLResponse?,data: NSData?,error: NSError?)-> Void in
                             if(data != nil){
                                 x = x+((i-4)*Int((WIDTH - 40)/3.0 + 10))
-                                button = UIButton()
+                                button = CustomBtn()
+                                button?.flag = i
                                 button!.frame = CGRectMake(CGFloat(x), height+(WIDTH - 40)/3.0 + 5, (WIDTH - 40)/3.0, (WIDTH - 40)/3.0)
                                 let imgTmp = UIImage(data: data!)
                                 
                                 button!.setImage(imgTmp, forState: .Normal)
                                 if button?.imageView?.image == nil{
-                                    button!.setImage(UIImage(named: "Logo"), forState: .Normal)
+                                    button!.setImage(UIImage(named: "图片默认加载"), forState: .Normal)
                                 }
                                 button?.tag = indexPath.row
                                 button?.addTarget(self, action: #selector(self.clickBtn), forControlEvents: .TouchUpInside)
@@ -245,13 +244,14 @@ class QCDetailsClassActiveVC: UIViewController,UITableViewDelegate,UITableViewDa
                         NSURLConnection.sendAsynchronousRequest(request, queue: NSOperationQueue.mainQueue(), completionHandler: {(response: NSURLResponse?,data: NSData?,error: NSError?)-> Void in
                             if(data != nil){
                                 x = x+((i-1)*Int((WIDTH - 40)/3.0 + 10))
-                                button = UIButton()
+                                button = CustomBtn()
+                                button?.flag = i
                                 button!.frame = CGRectMake(CGFloat(x), height, (WIDTH - 40)/3.0, (WIDTH - 40)/3.0)
                                 let imgTmp = UIImage(data: data!)
                                 
                                 button!.setImage(imgTmp, forState: .Normal)
                                 if button?.imageView?.image == nil{
-                                    button!.setImage(UIImage(named: "Logo"), forState: .Normal)
+                                    button!.setImage(UIImage(named: "图片默认加载"), forState: .Normal)
                                 }
                                 button?.tag = indexPath.row
                                 button?.addTarget(self, action: #selector(self.clickBtn), forControlEvents: .TouchUpInside)
@@ -272,13 +272,14 @@ class QCDetailsClassActiveVC: UIViewController,UITableViewDelegate,UITableViewDa
                         NSURLConnection.sendAsynchronousRequest(request, queue: NSOperationQueue.mainQueue(), completionHandler: {(response: NSURLResponse?,data: NSData?,error: NSError?)-> Void in
                             if(data != nil){
                                 x = x+((i-4)*Int((WIDTH - 40)/3.0 + 10))
-                                button = UIButton()
+                                button = CustomBtn()
+                                button?.flag = i
                                 button!.frame = CGRectMake(CGFloat(x), height+(WIDTH - 40)/3.0 + 5, (WIDTH - 40)/3.0, (WIDTH - 40)/3.0)
                                 let imgTmp = UIImage(data: data!)
                                 
                                 button!.setImage(imgTmp, forState: .Normal)
                                 if button?.imageView?.image == nil{
-                                    button!.setImage(UIImage(named: "Logo"), forState: .Normal)
+                                    button!.setImage(UIImage(named: "图片默认加载"), forState: .Normal)
                                 }
                                 button?.tag = indexPath.row
                                 button?.addTarget(self, action: #selector(self.clickBtn), forControlEvents: .TouchUpInside)
@@ -299,13 +300,14 @@ class QCDetailsClassActiveVC: UIViewController,UITableViewDelegate,UITableViewDa
                         NSURLConnection.sendAsynchronousRequest(request, queue: NSOperationQueue.mainQueue(), completionHandler: {(response: NSURLResponse?,data: NSData?,error: NSError?)-> Void in
                             if(data != nil){
                                 x = x+((i-7)*Int((WIDTH - 40)/3.0 + 10))
-                                button = UIButton()
+                                button = CustomBtn()
+                                button?.flag = i
                                 button!.frame = CGRectMake(CGFloat(x), height+(WIDTH - 40)/3.0 + 5+(WIDTH - 40)/3.0 + 5, (WIDTH - 40)/3.0, (WIDTH - 40)/3.0)
                                 let imgTmp = UIImage(data: data!)
                                 
                                 button!.setImage(imgTmp, forState: .Normal)
                                 if button?.imageView?.image == nil{
-                                    button!.setImage(UIImage(named: "Logo"), forState: .Normal)
+                                    button!.setImage(UIImage(named: "图片默认加载"), forState: .Normal)
                                 }
                                 button?.tag = indexPath.row
                                 button?.addTarget(self, action: #selector(self.clickBtn), forControlEvents: .TouchUpInside)
@@ -335,13 +337,14 @@ class QCDetailsClassActiveVC: UIViewController,UITableViewDelegate,UITableViewDa
                             if(data != nil){
                                 x = x+((i-1)*Int((WIDTH - 40)/3.0 + 10))
                                 print(x)
-                                button = UIButton()
+                                button = CustomBtn()
+                                button?.flag = i
                                 button!.frame = CGRectMake(CGFloat(x), height, (WIDTH - 40)/3.0, (WIDTH - 40)/3.0)
                                 let imgTmp = UIImage(data: data!)
                                 
                                 button!.setImage(imgTmp, forState: .Normal)
                                 if button?.imageView?.image == nil{
-                                    button!.setImage(UIImage(named: "Logo"), forState: .Normal)
+                                    button!.setImage(UIImage(named: "图片默认加载"), forState: .Normal)
                                 }
                                 button?.tag = indexPath.row
                                 button?.addTarget(self, action: #selector(self.clickBtn), forControlEvents: .TouchUpInside)
@@ -362,13 +365,14 @@ class QCDetailsClassActiveVC: UIViewController,UITableViewDelegate,UITableViewDa
                         NSURLConnection.sendAsynchronousRequest(request, queue: NSOperationQueue.mainQueue(), completionHandler: {(response: NSURLResponse?,data: NSData?,error: NSError?)-> Void in
                             if(data != nil){
                                 x = x+((i-4)*Int((WIDTH - 40)/3.0 + 10))
-                                button = UIButton()
+                                button = CustomBtn()
+                                button?.flag = i
                                 button!.frame = CGRectMake(CGFloat(x), height+(WIDTH - 40)/3.0 + 5, (WIDTH - 40)/3.0, (WIDTH - 40)/3.0)
                                 let imgTmp = UIImage(data: data!)
                                 
                                 button!.setImage(imgTmp, forState: .Normal)
                                 if button?.imageView?.image == nil{
-                                    button!.setImage(UIImage(named: "Logo"), forState: .Normal)
+                                    button!.setImage(UIImage(named: "图片默认加载"), forState: .Normal)
                                 }
                                 button?.tag = indexPath.row
                                 button?.addTarget(self, action: #selector(self.clickBtn), forControlEvents: .TouchUpInside)
@@ -389,13 +393,14 @@ class QCDetailsClassActiveVC: UIViewController,UITableViewDelegate,UITableViewDa
                         NSURLConnection.sendAsynchronousRequest(request, queue: NSOperationQueue.mainQueue(), completionHandler: {(response: NSURLResponse?,data: NSData?,error: NSError?)-> Void in
                             if(data != nil){
                                 x = x+((i-7)*Int((WIDTH - 40)/3.0 + 10))
-                                button = UIButton()
+                                button = CustomBtn()
+                                button?.flag = i
                                 button!.frame = CGRectMake(CGFloat(x), height+(WIDTH - 40)/3.0 + 5+(WIDTH - 40)/3.0 + 5, (WIDTH - 40)/3.0, (WIDTH - 40)/3.0)
                                 let imgTmp = UIImage(data: data!)
                                 
                                 button!.setImage(imgTmp, forState: .Normal)
                                 if button?.imageView?.image == nil{
-                                    button!.setImage(UIImage(named: "Logo"), forState: .Normal)
+                                    button!.setImage(UIImage(named: "图片默认加载"), forState: .Normal)
                                 }
                                 button?.tag = indexPath.row
                                 button?.addTarget(self, action: #selector(self.clickBtn(_:)), forControlEvents: .TouchUpInside)
@@ -436,6 +441,12 @@ class QCDetailsClassActiveVC: UIViewController,UITableViewDelegate,UITableViewDa
         cell?.joinCountLabel.frame = CGRectMake(10, height + image_h + 80, WIDTH - 20, 20)
     
         cell?.joinCountLabel.text = "已报名\(self.apply_countSource.activityList.count + self.likeNum)"
+        if activity_listModel.starttime == "0" {
+            
+        }else{
+            cell?.contentView.addSubview((cell?.joinButton)!)
+            cell?.contentView.addSubview((cell?.joinCountLabel)!)
+        }
         
         return cell!
     }
@@ -443,7 +454,7 @@ class QCDetailsClassActiveVC: UIViewController,UITableViewDelegate,UITableViewDa
         return 1
     }
     
-    func clickBtn(sender:UIButton){
+    func clickBtn(sender:CustomBtn){
         let activityInfo = self.activitySource
         let detailsVC = PicDetailViewController()
         
@@ -451,6 +462,7 @@ class QCDetailsClassActiveVC: UIViewController,UITableViewDelegate,UITableViewDa
         detailsVC.activity_listSource = activity_listList(activityInfo.activity_list!)
         detailsVC.apply_countSource = apply_countList(activityInfo.apply_count!)
         detailsVC.picSource = picList(activityInfo.pic!)
+        detailsVC.count = sender.flag!
         self.navigationController?.pushViewController(detailsVC, animated: true)
     }
     

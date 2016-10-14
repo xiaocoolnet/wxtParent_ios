@@ -11,17 +11,24 @@ import Alamofire
 import MBProgressHUD
 import XWSwiftRefresh
 
-class BabyFriendsTableViewController: UITableViewController,UISearchBarDelegate{
+class BabyFriendsTableViewController: UITableViewController{
 
     
-    @IBOutlet weak var searchBar: UISearchBar!//搜索框
     @IBOutlet var tableSource: UITableView!
+    
     var teacherSource = BabyFirendList()
+    
+    override func viewWillAppear(animated: Bool) {
+        self.tabBarController?.tabBar.hidden = false
+        self.GetDate()
+    }
     
     override func viewDidLoad() {
         super.viewDidLoad()
         self.tabBarController?.tabBar.hidden = true
-        searchBar.delegate = self
+        
+        self.tableSource.backgroundColor = RGBA(242.0, g: 242.0, b: 242.0, a: 1)
+        
         GetDate()
         
         self.DropDownUpdate()
@@ -36,7 +43,7 @@ class BabyFriendsTableViewController: UITableViewController,UISearchBarDelegate{
 //    加载数据
     func GetDate(){
 
-        //  http://wxt.xiaocool.net/index.php?g=apps&m=student&a=getfriendlist&studentid=682
+        //  http://wxt.xiaocool.net/index.php?g=apps&m=student&a=getfriendlist&studentid=597
         //下面两句代码是从缓存中取出userid（入参）值
         let defalutid = NSUserDefaults.standardUserDefaults()
         let sid = defalutid.stringForKey("chid")
@@ -67,62 +74,117 @@ class BabyFriendsTableViewController: UITableViewController,UISearchBarDelegate{
         }
     }
     
+    override func numberOfSectionsInTableView(tableView: UITableView) -> Int {
+        return 2
+    }
+    
+    override func tableView(tableView: UITableView, heightForFooterInSection section: Int) -> CGFloat {
+        return 10
+    }
+    
 //    行数
     override func tableView(tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        return teacherSource.count
+        if section == 0 {
+            return 1
+        }else{
+            return self.teacherSource.count
+            
+        }
     }
 //    单元格
     override func tableView(tableView: UITableView, cellForRowAtIndexPath indexPath: NSIndexPath) -> UITableViewCell {
-        let cell = tableView.dequeueReusableCellWithIdentifier("BabyFriendsCell", forIndexPath: indexPath) as! BabyFriendsTableViewCell
-//        赋值
-        cell.selectionStyle = .None
-        //  添加箭头
-        cell.accessoryType = .DisclosureIndicator
-        let teacherInfo = self.teacherSource.objectlist[indexPath.row]
-//        cell.nameLbl.text = teacherInfo.name
-////        头像
-//        let imgUrl = imageUrl + teacherInfo.photo!
-//        let photourl = NSURL(string: imgUrl)
-//        cell.headImageView.yy_setImageWithURL(photourl, placeholder: UIImage(named: "Logo.png"))
-        cell.fillCellWithModel(teacherInfo)
-        cell.contentLabel.text = nil
+        if indexPath.section == 0 {
+            let cell = UITableViewCell(style: .Default, reuseIdentifier:String(indexPath.row))
+            cell.selectionStyle = .None
+            
+            let img = UIImageView()
+            img.frame = CGRectMake(20, 10, 70, 70)
+            img.image = UIImage(named: "add2")
+            cell.contentView.addSubview(img)
+            
+            let tit = UILabel()
+            tit.frame = CGRectMake(100, 25, 120, 40)
+            tit.text = "添加好友"
+            tit.font = UIFont.systemFontOfSize(19)
+            cell.contentView.addSubview(tit)
+            
+            
+            return cell
+        }else{
+            let cell = UITableViewCell(style: .Default, reuseIdentifier:String(indexPath.row))
+            cell.accessoryType = UITableViewCellAccessoryType.DisclosureIndicator
+            cell.selectionStyle = .None
+            let model = self.teacherSource.objectlist[indexPath.row]
+            
+            let imgBtn = UIButton()
+            imgBtn.frame = CGRectMake(10, 15, 60, 60)
+            let pic = model.photo
+            let imgUrl = microblogImageUrl + pic!
+            let photourl = NSURL(string: imgUrl)
+            imgBtn.layer.cornerRadius = 30
+            imgBtn.clipsToBounds = true
+            imgBtn.setBackgroundImageForState(.Normal, withURL: photourl!, placeholderImage: UIImage(named: "默认头像"))
+            cell.contentView.addSubview(imgBtn)
+            
+            let name = UILabel()
+            name.frame = CGRectMake(90, 10, 120, 30)
+            name.text = model.name
+            cell.contentView.addSubview(name)
+            
+            let phone = UILabel()
+            phone.frame = CGRectMake(90, 50, 25, 30)
+            phone.text = "共"
+            phone.textColor = UIColor.lightGrayColor()
+            cell.contentView.addSubview(phone)
+            
+            let phon = UILabel()
+            phon.frame = CGRectMake(115, 50, 20, 30)
+            phon.text = model.blog_coutn
+            phon.textColor = UIColor.lightGrayColor()
+            cell.contentView.addSubview(phon)
+
+            let pho = UILabel()
+            pho.frame = CGRectMake(135, 50, WIDTH - 165, 30)
+            pho.text = "条成长日记"
+            pho.textColor = UIColor.lightGrayColor()
+            cell.contentView.addSubview(pho)
+
+            
+            let line = UILabel()
+            line.frame = CGRectMake(0, 89.5, WIDTH, 0.5)
+            
+            
+            return cell
+        }
         
-        return cell
     }
 //    行高
     override func tableView(tableView: UITableView, heightForRowAtIndexPath indexPath: NSIndexPath) -> CGFloat {
-        return 50
+        return 90
     }
-//    单元格点击事件（老师点评）
+    
     override func tableView(tableView: UITableView, didSelectRowAtIndexPath indexPath: NSIndexPath) {
-//        let teacherInfo = self.teacherSource.objectlist[indexPath.row]
-//        let vc = TCommentsViewController()
-//        vc.teacherid = teacherInfo.id
-//        vc.title = "\(teacherInfo.name!)老师点评记录"
-//        self.navigationController?.pushViewController(vc, animated: true)
-        
-        //  得到ID
-        let teacherInfo = self.teacherSource.objectlist[indexPath.row]
-        let id = teacherInfo.id
-        //  进行正向传值
-        
-    }
-// MARK: －－－UISearchBarDelegate－－－－－（搜查框的代理方法）
-    //    搜索
-    func searchBar(searchBar: UISearchBar, textDidChange searchText: String) {
-        print(searchText)
-        if searchText == ""{
-        }else{
-            for teacherInfo in self.teacherSource.objectlist {
-                let nameStr:String = teacherInfo.name!
-                //  点击旁边的内容则取消搜索内容并且返回原来的页面
-                if nameStr.lowercaseString.hasPrefix(searchText.lowercaseString){
-                    self.teacherSource.objectlist.removeAll()
-                    self.teacherSource.objectlist.append(teacherInfo)
-                }
+        if indexPath.section == 0 {
+            let vc = AddFriendViewController()
+            self.navigationController?.pushViewController(vc, animated: true)
+            
+        }
+        if indexPath.section == 1 {
+            if self.teacherSource.objectlist[indexPath.row].blog_coutn! == "0" {
+                let vc = NoneViewController()
+                let model = self.teacherSource.objectlist[indexPath.row]
+                vc.title = model.name
+                self.navigationController?.pushViewController(vc, animated: true)
+                
+            }else{
+                
+                let vc = BabyViewController()
+                vc.strId = self.teacherSource.objectlist[indexPath.row].id!
+                let model = self.teacherSource.objectlist[indexPath.row]
+                vc.title = model.name
+                self.navigationController?.pushViewController(vc, animated: true)
             }
         }
-        self.tableSource.reloadData()
     }
 
 }

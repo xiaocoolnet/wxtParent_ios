@@ -27,9 +27,9 @@ class ClassCoursewareTableViewController: UITableViewController {
 //    行数
     
     func GETData(){
-    //  http://wxt.xiaocool.net/index.php?g=apps&m=school&a=GetClassCoursewareType&schoolid=1&classid=1
+    //  http://wxt.xiaocool.net/index.php?g=apps&m=index&a=SchoolCourseware&schoolid=1&classid=1
 
-        let url = "http://wxt.xiaocool.net/index.php?g=apps&m=school&a=GetClassCoursewareType"
+        let url = "http://wxt.xiaocool.net/index.php?g=apps&m=index&a=SchoolCourseware"
         let userDefaults = NSUserDefaults.standardUserDefaults()
         let schoolid = userDefaults.valueForKey("schoolid")
         let classid = userDefaults.valueForKey("classid")
@@ -63,22 +63,41 @@ class ClassCoursewareTableViewController: UITableViewController {
             }
         }
 
-        
-        
-    
     }
+    
+    override func tableView(tableView: UITableView, heightForRowAtIndexPath indexPath: NSIndexPath) -> CGFloat {
+        return 60
+    }
+    
     override func tableView(tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         return self.dataSource.count
     }
 //    单元格
     override func tableView(tableView: UITableView, cellForRowAtIndexPath indexPath: NSIndexPath) -> UITableViewCell {
-        let cell = tableView.dequeueReusableCellWithIdentifier("CourceCell", forIndexPath: indexPath) as!
-        CourceTableViewCell
+        let cell = UITableViewCell(style: .Default, reuseIdentifier:String(indexPath.row))
         cell.selectionStyle = .None
+        cell.accessoryType = UITableViewCellAccessoryType.DisclosureIndicator
+        tableSource.separatorStyle = .None
         let model = self.dataSource.objectlist[indexPath.row]
-        cell.typeLbl.text = "\(model.subject)课件"
-        cell.countLabel.text = model.count
-        cell.countLabel.textColor = UIColor.lightGrayColor()
+        let typeLbl = UILabel()
+        typeLbl.frame = CGRectMake(10, 10, 200, 40)
+        typeLbl.text = (model.subject)
+        typeLbl.font = UIFont.systemFontOfSize(19)
+        cell.contentView.addSubview(typeLbl)
+        let str = model.courseware_info
+        let countLabel = UILabel()
+        countLabel.frame = CGRectMake(210, 10, WIDTH - 260, 40)
+        countLabel.text = String(str.count)
+        countLabel.font = UIFont.systemFontOfSize(19)
+        countLabel.textAlignment = NSTextAlignment.Right
+        countLabel.textColor = UIColor.lightGrayColor()
+        cell.contentView.addSubview(countLabel)
+        
+        let line = UILabel()
+        line.frame = CGRectMake(2, 59.5, WIDTH - 2, 0.5)
+        line.backgroundColor = UIColor.lightGrayColor()
+        cell.contentView.addSubview(line)
+        
         
 
         return cell
@@ -86,10 +105,10 @@ class ClassCoursewareTableViewController: UITableViewController {
 //    单元格点击事件
     override func tableView(tableView: UITableView, didSelectRowAtIndexPath indexPath: NSIndexPath) {
         let model = self.dataSource.objectlist[indexPath.row]
- 
         let vc = CourseDetailViewController()
-        vc.title = "班级课件"
+        vc.title = model.subject! + "课件"
         vc.id = model.id
+        vc.dataSource = model
         self.navigationController?.pushViewController(vc, animated: true)
     }
     

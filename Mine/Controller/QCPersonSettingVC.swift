@@ -39,7 +39,7 @@ class QCPersonSettingVC: UIViewController,UITableViewDataSource,UITableViewDeleg
     }
 //    MARK: - 退出登录
     func Exitlogin(){
-        let alertController = UIAlertController(title: NSLocalizedString("", comment: "Warn"), message: NSLocalizedString("确认注销？", comment: "empty message"), preferredStyle: .Alert)
+        let alertController = UIAlertController(title: NSLocalizedString("", comment: "Warn"), message: NSLocalizedString("确认退出？", comment: "empty message"), preferredStyle: .Alert)
         
         let cancelAction = UIAlertAction(title: "取消", style: UIAlertActionStyle.Cancel, handler: nil)
         let doneAction = UIAlertAction(title: "确定", style: UIAlertActionStyle.Default) { (UIAlertAction) -> Void in
@@ -65,6 +65,7 @@ class QCPersonSettingVC: UIViewController,UITableViewDataSource,UITableViewDeleg
         alertController.addAction(cancelAction)
         self.presentViewController(alertController, animated: true, completion: nil)
 
+        
     }
 //    MARK: - createTableView
     func createTableView(){
@@ -72,18 +73,18 @@ class QCPersonSettingVC: UIViewController,UITableViewDataSource,UITableViewDeleg
         tableView.delegate = self
         tableView.dataSource = self
         tableView.registerClass(UITableViewCell.self, forCellReuseIdentifier: "cell")
-        tableView.rowHeight = 50
+        tableView.rowHeight = 66
         self.view.addSubview(tableView)
     }
 //    MARK: - UITableViewDataSource,UITableViewdeleGate
     func tableView(tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        return 4
+        return 3
     }
     func tableView(tableView: UITableView, cellForRowAtIndexPath indexPath: NSIndexPath) -> UITableViewCell {
         self.indexPath = indexPath
         let cell = tableView.dequeueReusableCellWithIdentifier("cell", forIndexPath: indexPath)
         self.cell = cell
-        if indexPath.row == 3 {
+        if indexPath.row == 2 {
         }else{
         cell.accessoryType = UITableViewCellAccessoryType.DisclosureIndicator
         }
@@ -100,17 +101,14 @@ class QCPersonSettingVC: UIViewController,UITableViewDataSource,UITableViewDeleg
             useHelpVC.row = indexPath.row
             self.navigationController?.pushViewController(useHelpVC, animated: true)
         }
+        
         if indexPath.row == 1 {
-            let opinion = QCOpinionVC()
-            self.navigationController?.pushViewController(opinion, animated: true)
-        }
-        if indexPath.row == 2 {
             let aboutWeVC = QCAboutWeVC()
             aboutWeVC.row = indexPath.row
             self.navigationController?.pushViewController(aboutWeVC, animated: true)
 
         }
-        if indexPath.row == 3 {
+        if indexPath.row == 2 {
             // 取出cache文件夹路径
             let cachePath = NSSearchPathForDirectoriesInDomains(NSSearchPathDirectory.CachesDirectory, NSSearchPathDomainMask.UserDomainMask, true).first
             // 打印路径,需要测试的可以往这个路径下放东西
@@ -165,12 +163,9 @@ class QCPersonSettingVC: UIViewController,UITableViewDataSource,UITableViewDeleg
             getLabel("使用帮助")
         }
         if indexPath.row == 1 {
-            getLabel("意见反馈")
-        }
-        if indexPath.row == 2 {
             getLabel("关于我们")
         }
-        if indexPath.row == 3 {
+        if indexPath.row == 2 {
             getLabel("清除缓存")
         }
     }

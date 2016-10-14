@@ -52,6 +52,10 @@ class HomeWorkDetailViewController: UIViewController, UICollectionViewDelegate, 
         
     }
     
+    override func viewDidLayoutSubviews() {
+        collectV!.contentOffset = CGPointMake(CGFloat(count - 1)*WIDTH, 0)
+    }
+    
     func collectionView(collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
         
         
@@ -67,7 +71,7 @@ class HomeWorkDetailViewController: UIViewController, UICollectionViewDelegate, 
         let str = arrayInfo[indexPath.item].picture_url
         let imgUrl = microblogImageUrl + str
         let photourl = NSURL(string: imgUrl)
-        cell.imgView.sd_setImageWithURL(photourl, placeholderImage: (UIImage(named: "无网络的背景.png")))
+        cell.imgView.sd_setImageWithURL(photourl, placeholderImage: (UIImage(named: "图片默认加载")))
         cell.contentView.addSubview(cell.imgView)
         return cell
     }

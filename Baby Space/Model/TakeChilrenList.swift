@@ -38,7 +38,7 @@ class TakeListInfo: JSONJoy{
 //    var parentavatar:String?
     var parentid:String?
 //    var parentname:String?
-//    var parentphone:String?
+    var content:String?
     var parenttime:String?
     var photo:String?
     var teacheravatar:String?
@@ -57,7 +57,7 @@ class TakeListInfo: JSONJoy{
 //        parentavatar = decoder["parentavatar"].string
         parentid = decoder["parentid"].string
 //        parentname = decoder["parentname"].string
-//        parentphone = decoder["parentphone"].string
+        content = decoder["content"].string
         parenttime = decoder["parenttime"].string
         photo = decoder["photo"].string
         teacheravatar = decoder["teacheravatar"].string

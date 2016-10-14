@@ -23,31 +23,55 @@ class MyPhotoDetailViewController: UIViewController,UITableViewDelegate,UITableV
     var num = 0
     let contentTextView = UITextField()
     
+    var array = Array<BabyLikeInfo>()
+    
+    var data = BabyPhotoList()
+    var type = String()
+    
+    
     
     
     
     override func viewDidLoad() {
         super.viewDidLoad()
         self.createTable()
-//        self.DropDownUpdate()
+        self.DropDownUpdate()
+        self.view.backgroundColor = UIColor.whiteColor()
+        
         self.bview = UIView()
         bview.backgroundColor = UIColor.lightGrayColor()
-        bview.frame = CGRectMake(0, HEIGHT - 50, WIDTH, 50)
+        bview.frame = CGRectMake(0, HEIGHT - 140, WIDTH, 80)
         
         self.view.addSubview(bview)
         
+        
+        contentTextView.frame = CGRectMake(20 , 20, WIDTH - 40, 40)
+        contentTextView.borderStyle = UITextBorderStyle.RoundedRect
+        contentTextView.placeholder = "评论"
+        contentTextView.returnKeyType = UIReturnKeyType.Send
+        contentTextView.delegate = self
+        bview.addSubview(contentTextView)
+        
+        NSNotificationCenter.defaultCenter().addObserver(self, selector: #selector(MyPhotoViewController.keyboardWillAppear(_:)), name: UIKeyboardWillShowNotification, object: nil)
+        
+        NSNotificationCenter.defaultCenter().addObserver(self, selector: #selector(keyboardDidAppear), name: UIKeyboardDidShowNotification, object: nil)
+        
+        NSNotificationCenter.defaultCenter().addObserver(self, selector: #selector(MyPhotoViewController.keyboardWillDisappear(_:)), name:UIKeyboardWillHideNotification, object: nil)
+        
         self.title = "评论"
+        
+        self.loadData()
     }
     //    刷新
     func DropDownUpdate(){
-        self.table.headerView = XWRefreshNormalHeader(target: self, action: #selector(MyPhotoViewController.loadData))
+        self.table.headerView = XWRefreshNormalHeader(target: self, action: #selector(MyPhotoDetailViewController.loadData))
         //self.sourceList.reloadData()
         self.table.reloadData()
         self.table.headerView?.beginRefreshing()
     }
     //    创建表
     func createTable(){
-        table.frame = CGRectMake(0, 0, self.view.frame.size.width, self.view.frame.size.height - 64)
+        table.frame = CGRectMake(0, 0, self.view.frame.size.width, self.view.frame.size.height - 140)
         table.delegate = self
         table.dataSource = self
         table.separatorStyle = .None
@@ -68,7 +92,7 @@ class MyPhotoDetailViewController: UIViewController,UITableViewDelegate,UITableV
         let param = [
             "schoolid":scid!,
             "classid":clid!,
-            "type":"3"
+            "type":type
         ]
         Alamofire.request(.GET, url, parameters: param).response { request, response, json, error in
             if(error != nil){
@@ -90,7 +114,10 @@ class MyPhotoDetailViewController: UIViewController,UITableViewDelegate,UITableV
                 }
                 
                 if(status.status == "success"){
-//                    self.dataSource = BabyPhotoList(status.data!)
+                    self.data = BabyPhotoList(status.data!)
+//                    self.table.reloadData()
+                    print("13456789765432134567")
+                    print(self.data.objectlist.count)
                     self.table.reloadData()
                 }
             }
@@ -98,38 +125,52 @@ class MyPhotoDetailViewController: UIViewController,UITableViewDelegate,UITableV
         }
         self.table.headerView?.endRefreshing()
     }
+
     //    行数
     func tableView(tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        return 1
+        if self.data.objectlist.count == 0 {
+            return 0
+        }else{
+            
+            return 1
+        }
     }
+    
+    func tableView(tableView: UITableView, heightForRowAtIndexPath indexPath: NSIndexPath) -> CGFloat {
+        return self.table.frame.height
+    }
+    
     //    单元格
     func tableView(tableView: UITableView, cellForRowAtIndexPath indexPath: NSIndexPath) -> UITableViewCell {
-        //        let cell = tableView.dequeueReusableCellWithIdentifier("PhotoCellID", forIndexPath: indexPath)
-        //            as! PhotoTableViewCell
+        
         let cell = UITableViewCell(style: .Default, reuseIdentifier:String(indexPath.row))
         cell.selectionStyle = .None
         // 内容
-        let model = self.dataSource
+//        let model = self.dataSource
+        print(self.data.objectlist.count)
+        let model = self.data.objectlist[num]
         
         let photo = UIImageView()
         photo.frame = CGRectMake(10, 15, 40, 40)
-        let pi = model!.photo
-        let imgUrl = microblogImageUrl + pi!
+        let pi = model.photo
+        let imgUrl = microblogImageUrl + pi
         let photourl = NSURL(string: imgUrl)
         photo.sd_setImageWithURL(photourl, placeholderImage: UIImage(named: "Logo"))
+        photo.layer.cornerRadius = 20
+        photo.clipsToBounds = true
         cell.contentView.addSubview(photo)
         
         let nameLab = UILabel()
         nameLab.frame = CGRectMake(60, 10, WIDTH - 70, 20)
-        nameLab.text = model?.name
-        nameLab.textColor = UIColor.greenColor()
+        nameLab.text = model.name
+        nameLab.textColor = UIColor(red: 155/255, green: 229/255, blue: 180/255, alpha: 1)
         cell.contentView.addSubview(nameLab)
         
         
         
         let contentlbl = UILabel()
         contentlbl.frame = CGRectMake(10, 80, WIDTH - 20, 20)
-        contentlbl.text = model!.content
+        contentlbl.text = model.content
         contentlbl.numberOfLines = 0
         contentlbl.sizeToFit()
         cell.contentView.addSubview(contentlbl)
@@ -142,35 +183,12 @@ class MyPhotoDetailViewController: UIViewController,UITableViewDelegate,UITableV
         
         //  图片
         var image_h = CGFloat()
-        var button:UIButton?
+        var button:CustomBtn?
         //判断图片张数显示
         
-        let pic  = model!.pic
-        if pic.count == 1 {
-            image_h=(WIDTH - 40)/3.0
-            let pciInfo = pic[0]
-            let imgUrl = microblogImageUrl+(pciInfo.pictureurl)!
-            let avatarUrl = NSURL(string: imgUrl)
-            let request: NSURLRequest = NSURLRequest(URL: avatarUrl!)
-            NSURLConnection.sendAsynchronousRequest(request, queue: NSOperationQueue.mainQueue(), completionHandler: {(response: NSURLResponse?,data: NSData?,error: NSError?)-> Void in
-                if(data != nil){
-                    button = UIButton()
-                    button!.frame = CGRectMake(12, height, WIDTH - 24, (WIDTH - 40)/3.0)
-                    let imgTmp = UIImage(data: data!)
-                    
-                    button!.setImage(imgTmp, forState: .Normal)
-                    if button?.imageView?.image == nil{
-                        button?.setBackgroundImage(UIImage(named: "园所公告背景.png"), forState: .Normal)
-                    }
-                    button?.tag = indexPath.row
-                    button?.addTarget(self, action: #selector(self.clickBtn), forControlEvents: .TouchUpInside)
-                    cell.contentView.addSubview(button!)
-                    
-                }
-            })
-            
-        }
-        if(pic.count>1&&pic.count<=3){
+        let pic  = model.pic
+        
+        if(pic.count>0&&pic.count<=3){
             image_h=(WIDTH - 40)/3.0
             for i in 1...pic.count{
                 var x = 12
@@ -182,11 +200,14 @@ class MyPhotoDetailViewController: UIViewController,UITableViewDelegate,UITableV
                 NSURLConnection.sendAsynchronousRequest(request, queue: NSOperationQueue.mainQueue(), completionHandler: {(response: NSURLResponse?,data: NSData?,error: NSError?)-> Void in
                     if(data != nil){
                         x = x+((i-1)*Int((WIDTH - 40)/3.0 + 10))
-                        button = UIButton()
+                        button = CustomBtn()
+                        button?.flag = i
                         button!.frame = CGRectMake(CGFloat(x), height, (WIDTH - 40)/3.0, (WIDTH - 40)/3.0)
                         let imgTmp = UIImage(data: data!)
                         
                         button!.setImage(imgTmp, forState: .Normal)
+                        button?.imageView?.contentMode = .ScaleAspectFill
+                        button?.clipsToBounds = true
                         if button?.imageView?.image == nil{
                             button?.setBackgroundImage(UIImage(named: "Logo"), forState: .Normal)
                         }
@@ -212,10 +233,13 @@ class MyPhotoDetailViewController: UIViewController,UITableViewDelegate,UITableV
                         NSURLConnection.sendAsynchronousRequest(request, queue: NSOperationQueue.mainQueue(), completionHandler: {(response: NSURLResponse?,data: NSData?,error: NSError?)-> Void in
                             if(data != nil){
                                 x = x+((i-1)*Int((WIDTH - 40)/3.0 + 10))
-                                button = UIButton()
+                                button = CustomBtn()
+                                button?.flag = i
                                 button!.frame = CGRectMake(CGFloat(x), height, (WIDTH - 40)/3.0, (WIDTH - 40)/3.0)
                                 let imgTmp = UIImage(data: data!)
                                 button!.setImage(imgTmp, forState: .Normal)
+                                button?.imageView?.contentMode = .ScaleAspectFill
+                                button?.clipsToBounds = true
                                 if button?.imageView?.image == nil{
                                     button!.setImage(UIImage(named: "Logo"), forState: .Normal)
                                 }
@@ -234,10 +258,13 @@ class MyPhotoDetailViewController: UIViewController,UITableViewDelegate,UITableV
                         NSURLConnection.sendAsynchronousRequest(request, queue: NSOperationQueue.mainQueue(), completionHandler: {(response: NSURLResponse?,data: NSData?,error: NSError?)-> Void in
                             if(data != nil){
                                 x = x+((i-4)*Int((WIDTH - 40)/3.0 + 10))
-                                button = UIButton()
+                                button = CustomBtn()
+                                button?.flag = i
                                 button!.frame = CGRectMake(CGFloat(x), height+(WIDTH - 40)/3.0 + 5, (WIDTH - 40)/3.0, (WIDTH - 40)/3.0)
                                 let imgTmp = UIImage(data: data!)
                                 button!.setImage(imgTmp, forState: .Normal)
+                                button?.imageView?.contentMode = .ScaleAspectFill
+                                button?.clipsToBounds = true
                                 if button?.imageView?.image == nil{
                                     button!.setImage(UIImage(named: "Logo"), forState: .Normal)
                                 }
@@ -263,10 +290,13 @@ class MyPhotoDetailViewController: UIViewController,UITableViewDelegate,UITableV
                         NSURLConnection.sendAsynchronousRequest(request, queue: NSOperationQueue.mainQueue(), completionHandler: {(response: NSURLResponse?,data: NSData?,error: NSError?)-> Void in
                             if(data != nil){
                                 x = x+((i-1)*Int((WIDTH - 40)/3.0 + 10))
-                                button = UIButton()
+                                button = CustomBtn()
+                                button?.flag = i
                                 button!.frame = CGRectMake(CGFloat(x), height, (WIDTH - 40)/3.0, (WIDTH - 40)/3.0)
                                 let imgTmp = UIImage(data: data!)
                                 button!.setImage(imgTmp, forState: .Normal)
+                                button?.imageView?.contentMode = .ScaleAspectFill
+                                button?.clipsToBounds = true
                                 if button?.imageView?.image == nil{
                                     button!.setImage(UIImage(named: "Logo"), forState: .Normal)
                                 }
@@ -286,11 +316,14 @@ class MyPhotoDetailViewController: UIViewController,UITableViewDelegate,UITableV
                         NSURLConnection.sendAsynchronousRequest(request, queue: NSOperationQueue.mainQueue(), completionHandler: {(response: NSURLResponse?,data: NSData?,error: NSError?)-> Void in
                             if(data != nil){
                                 x = x+((i-4)*Int((WIDTH - 40)/3.0 + 10))
-                                button = UIButton()
+                                button = CustomBtn()
+                                button?.flag = i
                                 button!.frame = CGRectMake(CGFloat(x), height+(WIDTH - 40)/3.0 + 5, (WIDTH - 40)/3.0, (WIDTH - 40)/3.0)
                                 let imgTmp = UIImage(data: data!)
                                 
                                 button!.setImage(imgTmp, forState: .Normal)
+                                button?.imageView?.contentMode = .ScaleAspectFill
+                                button?.clipsToBounds = true
                                 if button?.imageView?.image == nil{
                                     button!.setImage(UIImage(named: "Logo"), forState: .Normal)
                                 }
@@ -310,10 +343,13 @@ class MyPhotoDetailViewController: UIViewController,UITableViewDelegate,UITableV
                         NSURLConnection.sendAsynchronousRequest(request, queue: NSOperationQueue.mainQueue(), completionHandler: {(response: NSURLResponse?,data: NSData?,error: NSError?)-> Void in
                             if(data != nil){
                                 x = x+((i-7)*Int((WIDTH - 40)/3.0 + 10))
-                                button = UIButton()
+                                button = CustomBtn()
+                                button?.flag = i
                                 button!.frame = CGRectMake(CGFloat(x), height+(WIDTH - 40)/3.0 + 5+(WIDTH - 40)/3.0 + 5, (WIDTH - 40)/3.0, (WIDTH - 40)/3.0)
                                 let imgTmp = UIImage(data: data!)
                                 button!.setImage(imgTmp, forState: .Normal)
+                                button?.imageView?.contentMode = .ScaleAspectFill
+                                button?.clipsToBounds = true
                                 if button?.imageView?.image == nil{
                                     button!.setImage(UIImage(named: "Logo"), forState: .Normal)
                                 }
@@ -343,11 +379,14 @@ class MyPhotoDetailViewController: UIViewController,UITableViewDelegate,UITableV
                             if(data != nil){
                                 x = x+((i-1)*Int((WIDTH - 40)/3.0 + 10))
                                 print(x)
-                                button = UIButton()
+                                button = CustomBtn()
+                                button?.flag = i
                                 button!.frame = CGRectMake(CGFloat(x), height, (WIDTH - 40)/3.0, (WIDTH - 40)/3.0)
                                 let imgTmp = UIImage(data: data!)
                                 
                                 button!.setImage(imgTmp, forState: .Normal)
+                                button?.imageView?.contentMode = .ScaleAspectFill
+                                button?.clipsToBounds = true
                                 if button?.imageView?.image == nil{
                                     button!.setImage(UIImage(named: "Logo"), forState: .Normal)
                                 }
@@ -368,11 +407,14 @@ class MyPhotoDetailViewController: UIViewController,UITableViewDelegate,UITableV
                         NSURLConnection.sendAsynchronousRequest(request, queue: NSOperationQueue.mainQueue(), completionHandler: {(response: NSURLResponse?,data: NSData?,error: NSError?)-> Void in
                             if(data != nil){
                                 x = x+((i-4)*Int((WIDTH - 40)/3.0 + 10))
-                                button = UIButton()
+                                button = CustomBtn()
+                                button?.flag = i
                                 button!.frame = CGRectMake(CGFloat(x), height+(WIDTH - 40)/3.0 + 5, (WIDTH - 40)/3.0, (WIDTH - 40)/3.0)
                                 let imgTmp = UIImage(data: data!)
                                 
                                 button!.setImage(imgTmp, forState: .Normal)
+                                button?.imageView?.contentMode = .ScaleAspectFill
+                                button?.clipsToBounds = true
                                 if button?.imageView?.image == nil{
                                     button!.setImage(UIImage(named: "Logo"), forState: .Normal)
                                 }
@@ -393,11 +435,14 @@ class MyPhotoDetailViewController: UIViewController,UITableViewDelegate,UITableV
                         NSURLConnection.sendAsynchronousRequest(request, queue: NSOperationQueue.mainQueue(), completionHandler: {(response: NSURLResponse?,data: NSData?,error: NSError?)-> Void in
                             if(data != nil){
                                 x = x+((i-7)*Int((WIDTH - 40)/3.0 + 10))
-                                button = UIButton()
+                                button = CustomBtn()
+                                button?.flag = i
                                 button!.frame = CGRectMake(CGFloat(x), height+(WIDTH - 40)/3.0 + 5+(WIDTH - 40)/3.0 + 5, (WIDTH - 40)/3.0, (WIDTH - 40)/3.0)
                                 let imgTmp = UIImage(data: data!)
                                 
                                 button!.setImage(imgTmp, forState: .Normal)
+                                button?.imageView?.contentMode = .ScaleAspectFill
+                                button?.clipsToBounds = true
                                 if button?.imageView?.image == nil{
                                     button!.setImage(UIImage(named: "Logo"), forState: .Normal)
                                 }
@@ -413,20 +458,11 @@ class MyPhotoDetailViewController: UIViewController,UITableViewDelegate,UITableV
                 
             }}
         
-//        let img = UIImageView()
-//        img.frame = CGRectMake(10, height + image_h + 10, 20, 20)
-//        img.image = UIImage(named: "ic_fasong")
-//        cell.contentView.addSubview(img)
-//        let senderLbl = UILabel()
-//        senderLbl.frame = CGRectMake(40, height + image_h + 10, 120, 20)
-//        senderLbl.font = UIFont.systemFontOfSize(16)
-//        senderLbl.text = "发自 \(model!.name!)"
-//        senderLbl.textColor = UIColor.lightGrayColor()
-//        cell.contentView.addSubview(senderLbl)
+
         
         let dateformate = NSDateFormatter()
         dateformate.dateFormat = "yyyy-MM-dd HH:mm"
-        let date = NSDate(timeIntervalSince1970: NSTimeInterval(model!.write_time!)!)
+        let date = NSDate(timeIntervalSince1970: NSTimeInterval(model.write_time)!)
         let str:String = dateformate.stringFromDate(date)
         let timeLbl = UILabel()
         timeLbl.frame = CGRectMake(60, 40, WIDTH - 70, 20)
@@ -456,42 +492,44 @@ class MyPhotoDetailViewController: UIViewController,UITableViewDelegate,UITableV
         cell.contentView.addSubview(pinglunBtn)
         
         let view = UIView()
-        if model!.like.count != 0 {
+        if model.like.count != 0 {
             view.frame = CGRectMake(10, height + image_h + 10, WIDTH - 20, 30)
             cell.contentView.addSubview(view)
-            let lin = UILabel()
-            lin.backgroundColor = UIColor.lightGrayColor()
-            lin.frame = CGRectMake(1, 3, WIDTH - 2, 0.5)
-            view.addSubview(lin)
-            for i in 1...model!.like.count {
-                let str = model!.like[i - 1].name
+            let btn = UIButton()
+            btn.frame = CGRectMake(10, 5, 20, 20)
+            btn.setBackgroundImage(UIImage(named: "已点赞"), forState: .Normal)
+            view.addSubview(btn)
+            for i in 1...model.like.count {
+                let str = model.like[i - 1].name
                 let lable = UILabel()
-                var x = 10
+                var x = 40
                 x = x+((i-1)*Int((WIDTH - 40)/4 + 5))
-                lable.frame = CGRectMake(CGFloat(x), 5, (WIDTH - 20)/4, 20)
+                lable.frame = CGRectMake(CGFloat(x), 5, (WIDTH - 50)/4, 20)
                 lable.text = str
+                lable.textColor = UIColor(red: 115/255.0, green: 229/255.0, blue: 180/255.0, alpha: 1.0)
                 lable.font = UIFont.systemFontOfSize(15)
                 view.addSubview(lable)
             }
+
         }
         
         var pingView = UIView()
         var h = CGFloat()
-        if model!.comment.count != 0 {
-            for i in 1...model!.comment.count {
+        if model.comment.count != 0 {
+            for i in 1...model.comment.count {
                 pingView = UIView()
                 h = CGFloat( 50 * (i))
-                pingView.frame = CGRectMake(10, height + image_h + 60 + view.frame.size.height , WIDTH - 20, h)
+                pingView.frame = CGRectMake(10, height + image_h + 70 + view.frame.size.height , WIDTH - 20, h)
                 cell.contentView.addSubview(pingView)
                 let name = UILabel()
                 name.frame = CGRectMake(50, 5 + CGFloat( 50 * (i - 1)), 60, 20)
-                name.text = model!.comment[i - 1].name
+                name.text = model.comment[i - 1].name
                 name.font = UIFont.systemFontOfSize(15)
                 pingView.addSubview(name)
                 
                 let img = UIImageView()
                 img.frame = CGRectMake(10, 5 + CGFloat( 50 * (i - 1)), 30, 30)
-                let pict = model!.comment[i - 1].avatar
+                let pict = model.comment[i - 1].avatar
                 let imgUrl = microblogImageUrl + pict
                 let photourl = NSURL(string: imgUrl)
                 img.sd_setImageWithURL(photourl, placeholderImage: UIImage(named: "Logo"))
@@ -499,7 +537,7 @@ class MyPhotoDetailViewController: UIViewController,UITableViewDelegate,UITableV
                 
                 let dateformat = NSDateFormatter()
                 dateformat.dateFormat = "yyyy-MM-dd HH:mm"
-                let date = NSDate(timeIntervalSince1970: NSTimeInterval(model!.comment[i - 1].comment_time)!)
+                let date = NSDate(timeIntervalSince1970: NSTimeInterval(model.comment[i - 1].comment_time)!)
                 let st:String = dateformat.stringFromDate(date)
                 let time = UILabel()
                 time.frame = CGRectMake(110, 5 + CGFloat( 50 * (i - 1)), WIDTH - 130, 20)
@@ -511,7 +549,7 @@ class MyPhotoDetailViewController: UIViewController,UITableViewDelegate,UITableV
                 let con = UILabel()
                 con.frame = CGRectMake(50, 25 + CGFloat( 50 * (i - 1)), WIDTH - 50, 20)
                 con.font = UIFont.systemFontOfSize(15)
-                con.text = model!.comment[i - 1].content
+                con.text = model.comment[i - 1].content
                 con.numberOfLines = 0
                 con.sizeToFit()
                 pingView.addSubview(con)
@@ -529,11 +567,16 @@ class MyPhotoDetailViewController: UIViewController,UITableViewDelegate,UITableV
         return cell
     }
     
+    func tableView(tableView: UITableView, didSelectRowAtIndexPath indexPath: NSIndexPath) {
+        print(111)
+    }
+    
     // 点击图片跳转
-    func clickBtn(sender:UIButton){
+    func clickBtn(sender:CustomBtn){
         let vc = ImagesViewController()
-        vc.arrayInfo = self.dataSource!.pic
+        vc.arrayInfo = self.data.objectlist[num].pic
         vc.nu = vc.arrayInfo.count
+        vc.count = sender.flag
         self.navigationController?.pushViewController(vc, animated: true)
         
     }
@@ -543,9 +586,10 @@ class MyPhotoDetailViewController: UIViewController,UITableViewDelegate,UITableV
     func clickZan(sender:UIButton){
         let user = NSUserDefaults.standardUserDefaults()
         let uid = user.stringForKey("userid")
+        
         print(uid)
-        let model = self.dataSource
-        let str = model!.like
+        let model = self.data.objectlist[num]
+        let str = model.like
         var answerInfo = NSString()
         
         for j in 0 ..< str.count {
@@ -554,11 +598,11 @@ class MyPhotoDetailViewController: UIViewController,UITableViewDelegate,UITableV
         if answerInfo != uid {
             let url = "http://wxt.xiaocool.net/index.php?g=apps&m=school&a=SetLike"
             let param = [
-                "id":model!.mid,
+                "id":model.mid,
                 "userid":uid!,
-                "type":"3"
+                "type":self.type
             ]
-            Alamofire.request(.GET, url, parameters: param as? [String:String] ).response { request, response, json, error in
+            Alamofire.request(.GET, url, parameters: param).response { request, response, json, error in
                 print(request)
                 if(error != nil){
                     
@@ -584,6 +628,10 @@ class MyPhotoDetailViewController: UIViewController,UITableViewDelegate,UITableV
                         hud.hide(true, afterDelay: 1)
                         user.setObject("true", forKey: "isLike")
                         self.isLike=true
+//                        let dic = ["name",user.stringForKey("name")]
+//                        
+//                        self.array = BabyLikeInfo init(JSONDecoder:dic)
+                        self.table.reloadData()
                         self.loadData()
                         
                     }
@@ -592,11 +640,11 @@ class MyPhotoDetailViewController: UIViewController,UITableViewDelegate,UITableV
         }else{
             let url = "http://wxt.xiaocool.net/index.php?g=apps&m=school&a=ResetLike"
             let param = [
-                "id":model!.mid,
+                "id":model.mid,
                 "userid":uid!,
-                "type":"3"
+                "type":type
             ]
-            Alamofire.request(.GET, url, parameters: param as? [String:String]).response { request, response, json, error in
+            Alamofire.request(.GET, url, parameters: param).response { request, response, json, error in
                 print(request)
                 if(error != nil){
                     
@@ -624,6 +672,7 @@ class MyPhotoDetailViewController: UIViewController,UITableViewDelegate,UITableV
                         print(status.data)
                         self.isLike=false
                         user.setObject("false", forKey: "isLike")
+                        self.table.reloadData()
                         self.loadData()
                     }
                 }
@@ -638,36 +687,30 @@ class MyPhotoDetailViewController: UIViewController,UITableViewDelegate,UITableV
     func pinglunBtn(sender:UIButton) {
         
         
-        //        let contentTextView = UITextField()
-        contentTextView.frame = CGRectMake(40 , 10, WIDTH - 50, 30)
         contentTextView.borderStyle = UITextBorderStyle.RoundedRect
-        contentTextView.placeholder = "评论"
         contentTextView.returnKeyType = UIReturnKeyType.Send
-        contentTextView.delegate = self
-        bview.addSubview(contentTextView)
-        
-        print(1111)
         
         self.num = sender.tag
         
-        NSNotificationCenter.defaultCenter().addObserver(self, selector: #selector(MyPhotoViewController.keyboardWillAppear(_:)), name: UIKeyboardWillShowNotification, object: nil)
+        NSNotificationCenter.defaultCenter().addObserver(self, selector: #selector(MyPhotoDetailViewController.keyboardWillAppear(_:)), name: UIKeyboardWillShowNotification, object: nil)
         
         NSNotificationCenter.defaultCenter().addObserver(self, selector: #selector(keyboardDidAppear), name: UIKeyboardDidShowNotification, object: nil)
         
-        NSNotificationCenter.defaultCenter().addObserver(self, selector: #selector(MyPhotoViewController.keyboardWillDisappear(_:)), name:UIKeyboardWillHideNotification, object: nil)
+        NSNotificationCenter.defaultCenter().addObserver(self, selector: #selector(MyPhotoDetailViewController.keyboardWillDisappear(_:)), name:UIKeyboardWillHideNotification, object: nil)
         
     }
     
     func keyboardWillAppear(notification: NSNotification) {
         
         // 获取键盘信息
-        let keyboardinfo = notification.userInfo![UIKeyboardFrameBeginUserInfoKey]
+        let keyboardinfo = notification.userInfo![UIKeyboardFrameEndUserInfoKey]
         
         let keyboardheight:CGFloat = (keyboardinfo?.CGRectValue.size.height)!
         
         UIView.animateWithDuration(0.3) {
             //            self.contentTableView.contentOffset = CGPoint.init(x: 0, y: self.contentTableView.contentSize.height-keyboardheight-49)
-            self.bview.frame = CGRectMake(0, self.view.frame.size.height - keyboardheight - 49, WIDTH, 59)
+            self.bview.frame = CGRectMake(0, HEIGHT - keyboardheight - 145, WIDTH, 80)
+            self.table.frame = CGRectMake(0, 0, WIDTH, HEIGHT - keyboardheight - 145)
         }
         
         print("键盘弹起")
@@ -682,7 +725,8 @@ class MyPhotoDetailViewController: UIViewController,UITableViewDelegate,UITableV
     func keyboardWillDisappear(notification:NSNotification){
         UIView.animateWithDuration(0.3) {
             //            self.contentTableView.contentOffset = CGPoint.init(x: 0, y: self.contentTableView.contentSize.height-self.contentTableView.frame.size.height)
-            self.bview.frame = CGRectMake(0, HEIGHT - 50, WIDTH, 50)
+            self.bview.frame = CGRectMake(0, HEIGHT - 140, WIDTH, 80)
+            self.table.frame = CGRectMake(0, 0, self.view.frame.size.width, self.view.frame.size.height - 140)
         }
         print("键盘落下")
     }
@@ -694,11 +738,11 @@ class MyPhotoDetailViewController: UIViewController,UITableViewDelegate,UITableV
         let url = "http://wxt.xiaocool.net/index.php?g=apps&m=school&a=SetComment"
         let param = [
             "userid":userid!,
-            "id":self.dataSource!.mid,
-            "type":"3",
+            "id":self.data.objectlist[num].mid,
+            "type":type,
             "content":self.contentTextView.text!,
             ]
-        Alamofire.request(.POST, url, parameters: param as? [String : String]).response { request, response, json, error in
+        Alamofire.request(.POST, url, parameters: param).response { request, response, json, error in
             if(error != nil){
             }
             else{
@@ -718,6 +762,8 @@ class MyPhotoDetailViewController: UIViewController,UITableViewDelegate,UITableV
                 }
                 if(result.status == "success"){
                     print("Success")
+                    textField.text = ""
+                    self.table.reloadData()
                     self.loadData()
                 }
                 
@@ -736,6 +782,7 @@ class MyPhotoDetailViewController: UIViewController,UITableViewDelegate,UITableV
             self.view.endEditing(true)
             keyboardShowState = false
         }
+        contentTextView.text = ""
     }
     
     

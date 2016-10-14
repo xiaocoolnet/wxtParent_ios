@@ -122,21 +122,21 @@ class DiaryTableViewCell: UITableViewCell,UITableViewDataSource,UITableViewDeleg
         return cell
     }
 
-    func fillCellWithModel(selfGrownInfo:SelfGrownInfo){
-        contentLbl.text = selfGrownInfo.content!
-        print("contentLbl.text")
-        print(contentLbl.text)
-        print("contentLbl.text")
-        timeLbl.text = selfGrownInfo.write_time!
-        senderLbl.text = selfGrownInfo.name!
-        //  对视图cell进行处理
-        //  图片尺寸，图片大小
-        bigImageView.sd_setImageWithURL(NSURL.init(string: (microblogImageUrl+selfGrownInfo.cover_photo!)))
-        
-        //  对write_time  进行拆分，进行填充数据
-        //  
-        
-    }
+//    func fillCellWithModel(selfGrownInfo:SelfGrownInfo){
+//        contentLbl.text = selfGrownInfo.content!
+//        print("contentLbl.text")
+//        print(contentLbl.text)
+//        print("contentLbl.text")
+//        timeLbl.text = selfGrownInfo.write_time!
+//        senderLbl.text = selfGrownInfo.name!
+//        //  对视图cell进行处理
+//        //  图片尺寸，图片大小
+////        bigImageView.sd_setImageWithURL(NSURL.init(string: (microblogImageUrl+selfGrownInfo.cover_photo!)))
+//        
+//        //  对write_time  进行拆分，进行填充数据
+//        //  
+//        
+//    }
 
     override func setSelected(selected: Bool, animated: Bool) {
         super.setSelected(selected, animated: animated)

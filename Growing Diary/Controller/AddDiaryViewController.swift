@@ -14,6 +14,8 @@ import Alamofire
 //  写日志
 class AddDiaryViewController: UIViewController,UICollectionViewDataSource,UICollectionViewDelegate {
 
+    var id:String?
+    
     var imageData:[NSData] = []
     var isuploading = false
     var imageUrl:String?
@@ -126,6 +128,7 @@ class AddDiaryViewController: UIViewController,UICollectionViewDataSource,UIColl
     }
     //    选择图片
     func getAssetThumbnail(asset: [PHAsset]) -> UIImage {
+        //  图片
         var thumbnail = UIImage()
         i+=asset.count
         if(i>9){
@@ -142,19 +145,53 @@ class AddDiaryViewController: UIViewController,UICollectionViewDataSource,UIColl
             let manager = PHImageManager.defaultManager()
             let option = PHImageRequestOptions()
             option.synchronous = true
+            
+            
             for j in 0..<asset.count{
-                manager.requestImageForAsset(asset[j], targetSize: CGSize(width: 1000.0, height: 1000.0), contentMode: .AspectFit, options: option, resultHandler: {(result, info)->Void in
-                    thumbnail = result!
-                    print("图片是")
-                    var temImage:CGImageRef = thumbnail.CGImage!
-                    temImage = CGImageCreateWithImageInRect(temImage, CGRectMake(0, 0, 1000.0, 1000.0))!
-                    let newImage = UIImage(CGImage: temImage)
-                    self.imageData.append(UIImageJPEGRepresentation(newImage, 1)!)
-                    self.pictureArray.addObject(newImage)
+                
+                //  这里的参数应该喝照片的大小一致（需要进行判断）
+                manager.requestImageForAsset(asset[j], targetSize: PHImageManagerMaximumSize, contentMode: .AspectFit, options: option, resultHandler: {(result, info)->Void in
+                    //  设置像素
+                    option.resizeMode = PHImageRequestOptionsResizeMode.Exact
+                    let downloadFinined = !((info!["PHImageResultIsDegradedKey"]?.boolValue)!)
+                    
+                    //                let downloadFinined:Bool = !((info!["PHImageCancelledKey"]?.boolValue)! ?? false) && !((info!["PHImageErrorKey"]?.boolValue)! ?? false) && !((info!["PHImageResultIsDegradedKey"]?.boolValue)! ?? false)
+                    if downloadFinined == true {
+                        thumbnail = result!
+                        print(" print(result?.images)")
+                        //  改变frame
+                        print(result)
+                        print("图片是")
+                        let temImage:CGImageRef = thumbnail.CGImage!
+                        //                    temImage = CGImageCreateWithImageInRect(temImage, CGRectMake(0, 0, 1000, 1000))!
+                        let newImage = UIImage(CGImage: temImage)
+                        //  压缩最多1  最少0
+                        self.imageData.append(UIImageJPEGRepresentation(newImage, 0)!)
+                        self.pictureArray.addObject(newImage)
+                        
+                    }
+                    //                thumbnail = result!
+                    
+                    //
+                    
                 })
             }
         }
         return thumbnail
+    }
+    
+    func byScalingToSize(image:UIImage,targetSize:CGSize) ->(UIImage){
+        let sourceImage = image
+        var newImage = UIImage()
+        UIGraphicsBeginImageContext(targetSize)
+        var thumbnailRect = CGRectZero;
+        thumbnailRect.origin = CGPointZero;
+        thumbnailRect.size.width  = targetSize.width;
+        thumbnailRect.size.height = targetSize.height;
+        sourceImage.drawInRect(thumbnailRect)
+        newImage = UIGraphicsGetImageFromCurrentImageContext()
+        UIGraphicsEndImageContext()
+        return newImage
     }
     //   更新日记
     func UpdateBlog(){
@@ -166,34 +203,34 @@ class AddDiaryViewController: UIViewController,UICollectionViewDataSource,UIColl
     //    更新图片
     func UpdatePic(){
         for i in 0..<self.imageData.count{
-            let chid = NSUserDefaults.standardUserDefaults()
-            let studentid = chid.stringForKey("chid")
-            let date = NSDate()
-            let dateformate = NSDateFormatter()
-            dateformate.dateFormat = "yyyy-MM-dd HH:mm"//获得日期
-            let time:NSTimeInterval = (date.timeIntervalSince1970)
-            let RanNumber = String(arc4random_uniform(1000) + 1000)
-            let name = "\(studentid!)baby\(time)\(RanNumber)"
-            isuploading = true
-            
-            dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0)) { () -> Void in
-                ConnectModel.uploadWithImageName(name, imageData:self.imageData[i], URL: "WriteMicroblog_upload", finish: { (data) -> Void in
-                    print("返回值")
-                    print(data)
-                    
-                })
+                let chid = NSUserDefaults.standardUserDefaults()
+                let studentid = chid.stringForKey("chid")
+                let date = NSDate()
+                let dateformate = NSDateFormatter()
+                dateformate.dateFormat = "yyyy-MM-dd HH:mm"//获得日期
+                let time:NSTimeInterval = (date.timeIntervalSince1970)
+                let RanNumber = String(arc4random_uniform(1000) + 1000)
+                let name = "\(studentid!)baby\(time)\(RanNumber)"
+                isuploading = true
+                
+                dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0)) { () -> Void in
+                    ConnectModel.uploadWithImageName(name, imageData:self.imageData[i], URL: "WriteMicroblog_upload", finish: { (data) -> Void in
+                        print("返回值")
+                        print(data)
+                        
+                    })
+                }
+                self.imagePath.addObject(name + ".png")
             }
-            self.imagePath.addObject(name + ".png")
-        }
-        self.imageUrl = self.imagePath.componentsJoinedByString(",")
-        print(self.imageUrl!)
-        let hud = MBProgressHUD.showHUDAddedTo(self.view, animated: true)
-        hud.mode = MBProgressHUDMode.Text
-        hud.margin = 10
-        hud.removeFromSuperViewOnHide = true
-        hud.labelText = "上传完成"
-        hud.hide(true, afterDelay: 1)
-        self.isuploading = false
+            self.imageUrl = self.imagePath.componentsJoinedByString(",")
+            print(self.imageUrl!)
+            let hud = MBProgressHUD.showHUDAddedTo(self.view, animated: true)
+            hud.mode = MBProgressHUDMode.Text
+            hud.margin = 10
+            hud.removeFromSuperViewOnHide = true
+            hud.labelText = "上传完成"
+            hud.hide(true, afterDelay: 1)
+            self.isuploading = false
         
     }
     //    发表日记
@@ -201,32 +238,30 @@ class AddDiaryViewController: UIViewController,UICollectionViewDataSource,UIColl
 //    出参：无
 //    Demo:http://wxt.xiaocool.net/index.php?g=apps&m=index&a=WriteBabyGrow
     func PutBlog(){
-//        //        userid,schoolid,classid（班级相册时必填）,studentid（宝宝相册时必填）,type(1：个人动态，2，班级相册，3宝宝相册),content,picurl
+        
         let chid = NSUserDefaults.standardUserDefaults()
-        let stuid = chid.stringForKey("chid")
-        let userid = chid.stringForKey("userid")
-//        let schoolid = chid.stringForKey("schoolid")
-//        let classid = chid.stringForKey("classid")
-//        
-//        
-        let url = "http://wxt.xiaocool.net/index.php?g=apps&m=index&a=WriteBabyGrow"
+//        let stuid = chid.stringForKey("chid")
+        let userid = chid.stringForKey("chid")
+        let schoolid = chid.stringForKey("schoolid")
+        let classid = chid.stringForKey("classid")
+        
+        
+        let url = "http://wxt.xiaocool.net/index.php?g=apps&m=index&a=WriteMicroblog"
         if(self.imagePath.count == 0){
             imageUrl = ""
         }
         let param = [
-            "babyid":stuid!,
+            "schoolid":schoolid!,
+//            "studentid":stuid!,
             "userid":userid!,
-            "cover_photo":imageUrl!,
-            
-//            添加一个文字框
-            "title":"111",
-
+            "classid":classid!,
+            "type":"7",
             "content":self.contentTextView.text!,
-            "write_time":"公元211年"
+            "picurl":imageUrl!
         ]
-//      
-        print(imageUrl!)
-        Alamofire.request(.POST, url, parameters: param as? [String : String]).response { request, response, json, error in
+        
+        
+        Alamofire.request(.GET, url, parameters: param).response { request, response, json, error in
             if(error != nil){
             }
             else{
@@ -252,6 +287,7 @@ class AddDiaryViewController: UIViewController,UICollectionViewDataSource,UIColl
             }
             
         }
+
     }
 //    收键盘
     override func touchesBegan(touches: Set<UITouch>, withEvent event: UIEvent?) {

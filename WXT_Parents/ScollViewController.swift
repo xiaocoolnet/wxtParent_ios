@@ -17,7 +17,7 @@ class ScollViewController: UIViewController{
     
     private var scrollView: UIScrollView!
     
-    private let numOfPages = 4
+    private let numOfPages = 3
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -38,7 +38,7 @@ class ScollViewController: UIViewController{
         scrollView.delegate = self
         
         for index  in 0..<numOfPages {
-            let imageView = UIImageView(image: UIImage(named: "wxt_\(index + 1)"))
+            let imageView = UIImageView(image: UIImage(named: "引导页模板-\(index + 1)"))
             imageView.frame = CGRect(x: frame.size.width * CGFloat(index), y: 0, width: frame.size.width, height: frame.size.height)
             scrollView.addSubview(imageView)
         }
@@ -47,6 +47,7 @@ class ScollViewController: UIViewController{
         
         // 给开始按钮设置圆角
         startButton.layer.cornerRadius = 5.0
+        startButton.layer.borderColor = UIColor.lightGrayColor().CGColor
         // 隐藏开始按钮
         startButton.alpha = 0.0
     }

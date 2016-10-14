@@ -47,9 +47,11 @@ class GroupPicViewController: UIViewController, UICollectionViewDelegate, UIColl
         //设置每一个cell的宽高
         //        layout.itemSize = CGSizeMake(WIDTH, HEIGHT)
         self.view.addSubview(collectV!)
-        collectV!.contentOffset = CGPointMake(CGFloat(nu)*WIDTH, 0)
         
-        
+    }
+    
+    override func viewDidLayoutSubviews() {
+        collectV!.contentOffset = CGPointMake(CGFloat(count - 1)*WIDTH, 0)
     }
     
     func collectionView(collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {

@@ -59,7 +59,7 @@ class NoticePicViewController: UIViewController, UICollectionViewDelegate, UICol
         cell.imgView.frame = CGRectMake(0, 0, WIDTH, HEIGHT)
         cell.imgView.contentMode = .ScaleAspectFit
         cell.clipsToBounds = true
-        let str = arrayInfo[indexPath.item].pictureurl
+        let str = arrayInfo[indexPath.item].photo
         let imgUrl = microblogImageUrl + str
         let photourl = NSURL(string: imgUrl)
         cell.imgView.sd_setImageWithURL(photourl, placeholderImage: (UIImage(named: "无网络的背景.png")))

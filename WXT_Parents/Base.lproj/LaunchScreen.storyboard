@@ -18,7 +18,7 @@
                         <rect key="frame" x="0.0" y="0.0" width="320" height="568"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
-                            <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="lanunch" translatesAutoresizingMaskIntoConstraints="NO" id="rso-YC-79M">
+                            <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="Wel" translatesAutoresizingMaskIntoConstraints="NO" id="rso-YC-79M">
                                 <rect key="frame" x="-4" y="0.0" width="328" height="568"/>
                             </imageView>
                         </subviews>
@@ -37,6 +37,6 @@
         </scene>
     </scenes>
     <resources>
-        <image name="lanunch" width="640" height="1038"/>
+        <image name="Wel" width="750" height="1334"/>
     </resources>
 </document>

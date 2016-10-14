@@ -61,7 +61,7 @@ class HomeDetailTableViewCell: UITableViewCell {
         
         contentLab.frame = CGRectMake(75, 120, WIDTH - 85, 20)
         contentLab.textColor = UIColor.lightGrayColor()
-        contentLab.font = UIFont.systemFontOfSize(16)
+        contentLab.font = UIFont.systemFontOfSize(17)
         contentView.addSubview(contentLab)
         
         contentView.addSubview(picBtn)

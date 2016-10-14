@@ -8,6 +8,7 @@
 
 import UIKit
 import Alamofire
+import MBProgressHUD
 
 //  闭包传值
 typealias giveData = (String) -> Void
@@ -130,6 +131,9 @@ class ChangeInformationPageVC: UIViewController,UITableViewDelegate,UITableViewD
             GetName(url, pmara: (pmara as? [String:AnyObject])!)
         }
         self.navigationController?.popViewControllerAnimated(true)
+    
+//        let <#name#> = <#value#>
+        
     }
     
     //  上传姓名
@@ -151,6 +155,9 @@ class ChangeInformationPageVC: UIViewController,UITableViewDelegate,UITableViewD
             messageHUD(self.view, messageData: "请输原始密码")
             return
         }
+        let defalutid = NSUserDefaults.standardUserDefaults()
+        passWord = defalutid.stringForKey("password")
+        
         if oldPassWordField.text == passWord {
             if newPassWordField.text!.isEmpty {
                 packUpfield()
@@ -173,10 +180,46 @@ class ChangeInformationPageVC: UIViewController,UITableViewDelegate,UITableViewD
             packUpfield()
             if self.changePassWord != nil {
                 //  进行传值 保存新密码的操作
+                //            http://wxt.xiaocool.net/index.php?g=apps&m=index&a=forgetPass_Activate&userid=28&pass=123
+                let defalutid = NSUserDefaults.standardUserDefaults()
+                let studentid = defalutid.stringForKey("userid")
+                let param = ["userid":studentid,
+                             "pass":self.newPassWordField.text!
+                ]
+                let url = "http://wxt.xiaocool.net/index.php?g=apps&m=index&a=forgetPass_Activate"
+                Alamofire.request(.GET, url, parameters: param as? [String:String]).response { request, response, json, error in
+                    if(error != nil){
+                    }
+                    else{
+                        print("request是")
+                        print(request!)
+                        print("====================")
+                        let status = Http(JSONDecoder(json!))
+                        print("状态是")
+                        print(status.status)
+                        if(status.status == "error"){
+                            let hud = MBProgressHUD.showHUDAddedTo(self.view, animated: true)
+                            hud.mode = MBProgressHUDMode.Text
+                            hud.labelText = status.errorData
+                            hud.margin = 10.0
+                            hud.removeFromSuperViewOnHide = true
+                            hud.hide(true, afterDelay: 1)
+                        }
+                        if(status.status == "success"){
+                            let hud = MBProgressHUD.showHUDAddedTo(self.view, animated: true)
+                            hud.mode = MBProgressHUDMode.Text;
+                            hud.labelText = "修改成功"
+                            hud.margin = 10.0
+                            hud.removeFromSuperViewOnHide = true
+                            hud.hide(true, afterDelay: 1)
+                        }
+                    }
+                }
+
             }
             messageHUD(self.view, messageData: "修改密码成功")
             //    进行修改密码
-            
+
             
             self.navigationController?.popViewControllerAnimated(true)
             

@@ -15,11 +15,10 @@ import MBProgressHUD
 class CourseDetailViewController: UIViewController,UITableViewDelegate,UITableViewDataSource {
 
     let table = UITableView()
-    var homeworkSource = CoursewareDetailsList()
-    var dianzanSource = DianZanList()
-    var commentSource = HCommentList()
-    let arrayPeople = NSMutableArray()
+
     var id : String!
+    var dataSource : CoursewareInfo?
+    
     
 //    override func viewWillAppear(animated: Bool) {
 //        self.DropDownUpdate()
@@ -29,13 +28,7 @@ class CourseDetailViewController: UIViewController,UITableViewDelegate,UITableVi
 
         self.view.backgroundColor = UIColor.whiteColor()
         self.createTable()
-        self.loadData()
-    }
-    //    开始刷新
-    func DropDownUpdate(){
-        self.table.headerView = XWRefreshNormalHeader(target: self, action: #selector(CourseDetailViewController.loadData))
-        self.table.reloadData()
-        self.table.headerView?.beginRefreshing()
+        
     }
     //    创建表
     func createTable(){
@@ -44,49 +37,6 @@ class CourseDetailViewController: UIViewController,UITableViewDelegate,UITableVi
         table.dataSource = self
         table.separatorStyle = .None
         self.view.addSubview(table)
-        
-        table.registerNib(UINib.init(nibName: "CourseDetailTableViewCell", bundle: nil), forCellReuseIdentifier: "CourseDetailCell")
-    }
-//    加载数据
-    func loadData(){
-    
-    //  http://wxt.xiaocool.net/index.php?g=apps&m=school&a=GetClassCoursewareList&schoolid=1&classid=1&subjectid=1
-//
-        //下面两句代码是从缓存中取出userid（入参）值
-        let defalutid = NSUserDefaults.standardUserDefaults()
-        let schoolid = defalutid.stringForKey("schoolid")
-        let classid = defalutid.stringForKey("classid")
-        let url = "http://wxt.xiaocool.net/index.php?g=apps&m=school&a=GetClassCoursewareList"
-        let param = [
-            "schoolid":schoolid!,
-            "classid":classid!,
-            "subjectid":id!
-        ]
-        Alamofire.request(.GET, url, parameters: param).response { request, response, json, error in
-            if(error != nil){
-            }
-            else{
-                print("request是")
-                print(request!)
-                print("====================")
-                let status = Http(JSONDecoder(json!))
-                print("状态是")
-                print(status.status)
-                if(status.status == "error"){
-                    let hud = MBProgressHUD.showHUDAddedTo(self.view, animated: true)
-                    hud.mode = MBProgressHUDMode.Text
-                    hud.labelText = status.errorData
-                    hud.margin = 10.0
-                    hud.removeFromSuperViewOnHide = true
-                    hud.hide(true, afterDelay: 1)
-                }
-                if(status.status == "success"){
-                    self.homeworkSource = CoursewareDetailsList(status.data!)
-                    self.table.reloadData()
-                    self.table.headerView?.endRefreshing()
-                }
-            }
-        }
     }
 //    分区数
     func numberOfSectionsInTableView(tableView: UITableView) -> Int {
@@ -94,201 +44,358 @@ class CourseDetailViewController: UIViewController,UITableViewDelegate,UITableVi
     }
 //    行数
     func tableView(tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-//        return homeworkSource.count
-        return self.homeworkSource.count
+
+        return (self.dataSource?.courseware_info.count)!
     }
 //    单元格
     func tableView(tableView: UITableView, cellForRowAtIndexPath indexPath: NSIndexPath) -> UITableViewCell {
-        let cell = tableView.dequeueReusableCellWithIdentifier("CourseDetailCell", forIndexPath: indexPath)
-            as! CourseDetailTableViewCell
+        let cell = UITableViewCell(style: .Default, reuseIdentifier: String(indexPath.row))
         cell.selectionStyle = .None
-        let homeworkInfo = self.homeworkSource.objectlist[indexPath.row]
-//        let dateformate = NSDateFormatter()
-//        dateformate.dateFormat = "yyyy-MM-dd HH:mm"
-//        
-        cell.titleLbl.text = homeworkInfo.post_title
-        cell.contentLbl.text = homeworkInfo.post_content
-        cell.timeLbl.text = homeworkInfo.post_date
-//
-//        let imgUrl = imageUrl + homeworkInfo.photo!
-//        let photourl = NSURL(string: imgUrl)
-//        cell.bigImageView.yy_setImageWithURL(photourl, placeholder: UIImage(named: "园所公告背景.png"))
-//        cell.senderLbl.text = homeworkInfo.username
-//        点赞按钮
-//        cell.dianzanBtn.addTarget(self, action: #selector(HomeworkViewController.dianZan(_:)), forControlEvents: .TouchUpInside)
-//        cell.dianzanBtn.setBackgroundImage(UIImage(named: "已点赞.png"), forState:.Selected)
-//        cell.dianzanBtn.tag = indexPath.row
-////        评论按钮
-//        cell.pinglunBtn.addTarget(self, action: #selector(HomeworkViewController.pingLun(_:)), forControlEvents: .TouchUpInside)
-//        cell.pinglunBtn.tag = indexPath.row
-//
-//        let date = NSDate(timeIntervalSince1970: NSTimeInterval(homeworkInfo.create_time!)!)
-//        let str:String = dateformate.stringFromDate(date)
-//        cell.timeLbl.text = str
-//        
-//        //        自适应行高
-//        let options : NSStringDrawingOptions = NSStringDrawingOptions.UsesLineFragmentOrigin
-//        let screenBounds:CGRect = UIScreen.mainScreen().bounds
-//        let boundingRect = String(cell.contentLbl.text).boundingRectWithSize(CGSizeMake(screenBounds.width, 0), options: options, attributes: [NSFontAttributeName:UIFont.systemFontOfSize(17)], context: nil)
-//        //        判断是有人点赞
-//        self.dianzanSource = DianZanList(homeworkInfo.dianzanlist!)
-//        if self.dianzanSource.count == 0 {
-//            cell.zanListLbl.text = "0人点赞"
-//            table.rowHeight = boundingRect.size.height + 391
-//        }else{
-//            //                先清空
-//            arrayPeople.removeAllObjects()
-//            //循环遍历点赞数量，对比是否自己点过赞
-//            for i in 0..<dianzanSource.count{
-//                let dianzanInfo = self.dianzanSource.dianzanlist[i]
-//                //如果点过赞，则显示点赞图标
-//                let userid = NSUserDefaults.standardUserDefaults()
-//                let uid = userid.stringForKey("userid")
-//                if(dianzanInfo.dianZanId == uid){
-//                    cell.dianzanBtn.selected = true
-//                    cell.dianzanBtn.setBackgroundImage(UIImage(named: "已点赞"), forState:.Normal)
-//                }else{//如果没点过赞，显示灰色图标
-//                    cell.dianzanBtn.selected = false
-//                    cell.dianzanBtn.setBackgroundImage(UIImage(named: "点赞"), forState: .Normal)
-//                }
-//            }
-//            if dianzanSource.count>4{
-//                for i in 0..<4{
-//                    let dianzanInfo = self.dianzanSource.dianzanlist[i]
-//                    arrayPeople.addObject(dianzanInfo.dianZanName!)
-//                    let peopleArray = arrayPeople.componentsJoinedByString(",")
-//                    cell.zanListLbl.text = "\(peopleArray)等\(dianzanSource.count)人觉得很赞"
-//                }
-//            }else{
-//                for i in 0..<dianzanSource.count{
-//                    let dianzanInfo = self.dianzanSource.dianzanlist[i]
-//                    arrayPeople.addObject(dianzanInfo.dianZanName!)
-//                    let peopleArray = arrayPeople.componentsJoinedByString(",")
-//                    cell.zanListLbl.text = "\(peopleArray)等\(dianzanSource.count)人觉得很赞"
-//                }
-//            }
-//            
-//            table.rowHeight = boundingRect.size.height + 391
-//        }
+
+        let model = self.dataSource?.courseware_info[indexPath.row]
+        // 标题
+        let title = UILabel()
+        title.frame = CGRectMake(10, 10, WIDTH - 20, 30)
+        title.text = model?.courseware_title
+        title.textAlignment = NSTextAlignment.Center
+        title.font = UIFont.systemFontOfSize(18)
+        cell.contentView.addSubview(title)
+        // 内容
+        let content = UILabel()
+        content.frame = CGRectMake(10, 50, WIDTH - 20, 20)
+        content.text = model?.courseware_content
+        content.numberOfLines = 0
+        content.sizeToFit()
+        cell.contentView.addSubview(content)
+        //        自适应行高
+        let options : NSStringDrawingOptions = NSStringDrawingOptions.UsesLineFragmentOrigin
+        let screenBounds:CGRect = UIScreen.mainScreen().bounds
+        let boundingRect = String(content.text).boundingRectWithSize(CGSizeMake(screenBounds.width, 0), options: options, attributes: [NSFontAttributeName:UIFont.systemFontOfSize(17)], context: nil)
+        content.textColor = UIColor.lightGrayColor()
+        let height = boundingRect.size.height + 20 + 50
+        
+        //  图片
+        var image_h = CGFloat()
+        var button:CustomBtn?
+        //判断图片张数显示
+        
+        let pic  = model?.coursewarePic
+        if(pic!.count>0&&pic!.count<=3){
+            image_h=(WIDTH - 40)/3.0
+            for i in 1...pic!.count{
+                var x = 12
+                let pciInfo = pic![i-1]
+                let imgUrl = microblogImageUrl+(pciInfo.picture_url)
+                let avatarUrl = NSURL(string: imgUrl)
+                let request: NSURLRequest = NSURLRequest(URL: avatarUrl!)
+                
+                NSURLConnection.sendAsynchronousRequest(request, queue: NSOperationQueue.mainQueue(), completionHandler: {(response: NSURLResponse?,data: NSData?,error: NSError?)-> Void in
+                    if(data != nil){
+                        x = x+((i-1)*Int((WIDTH - 40)/3.0 + 10))
+                        button = CustomBtn()
+                        button?.flag = i
+                        button!.frame = CGRectMake(CGFloat(x), height, (WIDTH - 40)/3.0, (WIDTH - 40)/3.0)
+                        let imgTmp = UIImage(data: data!)
+                        
+                        button!.setImage(imgTmp, forState: .Normal)
+                        button?.imageView?.contentMode = .ScaleAspectFill
+                        button?.clipsToBounds = true
+                        if button?.imageView?.image == nil{
+                            button?.setBackgroundImage(UIImage(named: "图片默认加载"), forState: .Normal)
+                        }
+                        button?.tag = indexPath.row
+                        button?.addTarget(self, action: #selector(self.clickBtn), forControlEvents: .TouchUpInside)
+                        cell.contentView.addSubview(button!)
+                        
+                    }
+                })
+                
+            }
+        }
+        if(pic!.count>3&&pic!.count<=6){
+            image_h=(WIDTH - 40)/3.0*2 + 10
+            for i in 1...pic!.count{
+                if i <= 3 {
+                    var x = 12
+                    let pciInfo = pic![i-1]
+                    if pciInfo.picture_url != "" {
+                        let imgUrl = microblogImageUrl+(pciInfo.picture_url)
+                        let avatarUrl = NSURL(string: imgUrl)
+                        let request: NSURLRequest = NSURLRequest(URL: avatarUrl!)
+                        NSURLConnection.sendAsynchronousRequest(request, queue: NSOperationQueue.mainQueue(), completionHandler: {(response: NSURLResponse?,data: NSData?,error: NSError?)-> Void in
+                            if(data != nil){
+                                x = x+((i-1)*Int((WIDTH - 40)/3.0 + 10))
+                                button = CustomBtn()
+                                button?.flag = i
+                                button!.frame = CGRectMake(CGFloat(x), height, (WIDTH - 40)/3.0, (WIDTH - 40)/3.0)
+                                let imgTmp = UIImage(data: data!)
+                                button!.setImage(imgTmp, forState: .Normal)
+                                button?.imageView?.contentMode = .ScaleAspectFill
+                                button?.clipsToBounds = true
+                                if button?.imageView?.image == nil{
+                                    button!.setImage(UIImage(named: "图片默认加载"), forState: .Normal)
+                                }
+                                button?.tag = indexPath.row
+                                button?.addTarget(self, action: #selector(self.clickBtn), forControlEvents: .TouchUpInside)
+                                cell.contentView.addSubview(button!)
+                            }
+                        })
+                    }}else{
+                    var x = 12
+                    let pciInfo = pic![i-1]
+                    if pciInfo.picture_url != "" {
+                        let imgUrl = microblogImageUrl+(pciInfo.picture_url)
+                        let avatarUrl = NSURL(string: imgUrl)
+                        let request: NSURLRequest = NSURLRequest(URL: avatarUrl!)
+                        NSURLConnection.sendAsynchronousRequest(request, queue: NSOperationQueue.mainQueue(), completionHandler: {(response: NSURLResponse?,data: NSData?,error: NSError?)-> Void in
+                            if(data != nil){
+                                x = x+((i-4)*Int((WIDTH - 40)/3.0 + 10))
+                                button = CustomBtn()
+                                button?.flag = i
+                                button!.frame = CGRectMake(CGFloat(x), height+(WIDTH - 40)/3.0 + 5, (WIDTH - 40)/3.0, (WIDTH - 40)/3.0)
+                                let imgTmp = UIImage(data: data!)
+                                button!.setImage(imgTmp, forState: .Normal)
+                                button?.imageView?.contentMode = .ScaleAspectFill
+                                button?.clipsToBounds = true
+                                if button?.imageView?.image == nil{
+                                    button!.setImage(UIImage(named: "图片默认加载"), forState: .Normal)
+                                }
+                                button?.tag = indexPath.row
+                                button?.addTarget(self, action: #selector(self.clickBtn), forControlEvents: .TouchUpInside)
+                                cell.contentView.addSubview(button!)
+                            }
+                        })
+                        
+                    }
+                }
+            }}
+        if(pic!.count>6&&pic!.count<=9){
+            image_h=(WIDTH - 40)/3.0*3+20
+            for i in 1...pic!.count{
+                if i <= 3 {
+                    var x = 12
+                    let pciInfo = pic![i-1]
+                    if pciInfo.picture_url != "" {
+                        let imgUrl = microblogImageUrl+(pciInfo.picture_url)
+                        let avatarUrl = NSURL(string: imgUrl)
+                        let request: NSURLRequest = NSURLRequest(URL: avatarUrl!)
+                        NSURLConnection.sendAsynchronousRequest(request, queue: NSOperationQueue.mainQueue(), completionHandler: {(response: NSURLResponse?,data: NSData?,error: NSError?)-> Void in
+                            if(data != nil){
+                                x = x+((i-1)*Int((WIDTH - 40)/3.0 + 10))
+                                button = CustomBtn()
+                                button?.flag = i
+                                button!.frame = CGRectMake(CGFloat(x), height, (WIDTH - 40)/3.0, (WIDTH - 40)/3.0)
+                                let imgTmp = UIImage(data: data!)
+                                button!.setImage(imgTmp, forState: .Normal)
+                                button?.imageView?.contentMode = .ScaleAspectFill
+                                button?.clipsToBounds = true
+                                if button?.imageView?.image == nil{
+                                    button!.setImage(UIImage(named: "图片默认加载"), forState: .Normal)
+                                }
+                                button?.tag = indexPath.row
+                                button?.addTarget(self, action: #selector(self.clickBtn), forControlEvents: .TouchUpInside)
+                                cell.contentView.addSubview(button!)
+                            }
+                        })
+                        
+                    }}else if (i>3&&i<=6){
+                    var x = 12
+                    let pciInfo = pic![i-1]
+                    if pciInfo.picture_url != "" {
+                        let imgUrl = microblogImageUrl+(pciInfo.picture_url)
+                        let avatarUrl = NSURL(string: imgUrl)
+                        let request: NSURLRequest = NSURLRequest(URL: avatarUrl!)
+                        NSURLConnection.sendAsynchronousRequest(request, queue: NSOperationQueue.mainQueue(), completionHandler: {(response: NSURLResponse?,data: NSData?,error: NSError?)-> Void in
+                            if(data != nil){
+                                x = x+((i-4)*Int((WIDTH - 40)/3.0 + 10))
+                                button = CustomBtn()
+                                button?.flag = i
+                                button!.frame = CGRectMake(CGFloat(x), height+(WIDTH - 40)/3.0 + 5, (WIDTH - 40)/3.0, (WIDTH - 40)/3.0)
+                                let imgTmp = UIImage(data: data!)
+                                
+                                button!.setImage(imgTmp, forState: .Normal)
+                                button?.imageView?.contentMode = .ScaleAspectFill
+                                button?.clipsToBounds = true
+                                if button?.imageView?.image == nil{
+                                    button!.setImage(UIImage(named: "图片默认加载"), forState: .Normal)
+                                }
+                                button?.tag = indexPath.row
+                                button?.addTarget(self, action: #selector(self.clickBtn), forControlEvents: .TouchUpInside)
+                                cell.contentView.addSubview(button!)
+                            }
+                        })
+                        
+                    } }else{
+                    var x = 12
+                    let pciInfo = pic![i-1]
+                    if pciInfo.picture_url != "" {
+                        let imgUrl = microblogImageUrl+(pciInfo.picture_url)
+                        let avatarUrl = NSURL(string: imgUrl)
+                        let request: NSURLRequest = NSURLRequest(URL: avatarUrl!)
+                        NSURLConnection.sendAsynchronousRequest(request, queue: NSOperationQueue.mainQueue(), completionHandler: {(response: NSURLResponse?,data: NSData?,error: NSError?)-> Void in
+                            if(data != nil){
+                                x = x+((i-7)*Int((WIDTH - 40)/3.0 + 10))
+                                button = CustomBtn()
+                                button?.flag = i
+                                button!.frame = CGRectMake(CGFloat(x), height+(WIDTH - 40)/3.0 + 5+(WIDTH - 40)/3.0 + 5, (WIDTH - 40)/3.0, (WIDTH - 40)/3.0)
+                                let imgTmp = UIImage(data: data!)
+                                button!.setImage(imgTmp, forState: .Normal)
+                                button?.imageView?.contentMode = .ScaleAspectFill
+                                button?.clipsToBounds = true
+                                if button?.imageView?.image == nil{
+                                    button!.setImage(UIImage(named: "Logo"), forState: .Normal)
+                                }
+                                button?.tag = indexPath.row
+                                button?.addTarget(self, action: #selector(self.clickBtn), forControlEvents: .TouchUpInside)
+                                cell.contentView.addSubview(button!)
+                            }
+                        })
+                        
+                    }
+                    
+                }
+                
+            }}
+        if pic!.count > 9 {
+            image_h=(WIDTH - 40)/3.0*3 + 20
+            for i in 1...pic!.count{
+                if i <= 3 {
+                    var x = 12
+                    let pciInfo = pic![i-1]
+                    if pciInfo.picture_url != "" {
+                        let imgUrl = microblogImageUrl+(pciInfo.picture_url)
+                        let avatarUrl = NSURL(string: imgUrl)
+                        let request: NSURLRequest = NSURLRequest(URL: avatarUrl!)
+                        
+                        NSURLConnection.sendAsynchronousRequest(request, queue: NSOperationQueue.mainQueue(), completionHandler: {(response: NSURLResponse?,data: NSData?,error: NSError?)-> Void in
+                            if(data != nil){
+                                x = x+((i-1)*Int((WIDTH - 40)/3.0 + 10))
+                                print(x)
+                                button = CustomBtn()
+                                button?.flag = i
+                                button!.frame = CGRectMake(CGFloat(x), height, (WIDTH - 40)/3.0, (WIDTH - 40)/3.0)
+                                let imgTmp = UIImage(data: data!)
+                                
+                                button!.setImage(imgTmp, forState: .Normal)
+                                button?.imageView?.contentMode = .ScaleAspectFill
+                                button?.clipsToBounds = true
+                                if button?.imageView?.image == nil{
+                                    button!.setImage(UIImage(named: "图片默认加载"), forState: .Normal)
+                                }
+                                button?.tag = indexPath.row
+                                button?.addTarget(self, action: #selector(self.clickBtn), forControlEvents: .TouchUpInside)
+                                cell.contentView.addSubview(button!)
+                            }
+                        })
+                        
+                    }}else if (i>3&&i<=6){
+                    var x = 12
+                    let pciInfo = pic![i-1]
+                    if pciInfo.picture_url != "" {
+                        let imgUrl = microblogImageUrl+(pciInfo.picture_url)
+                        let avatarUrl = NSURL(string: imgUrl)
+                        let request: NSURLRequest = NSURLRequest(URL: avatarUrl!)
+                        
+                        NSURLConnection.sendAsynchronousRequest(request, queue: NSOperationQueue.mainQueue(), completionHandler: {(response: NSURLResponse?,data: NSData?,error: NSError?)-> Void in
+                            if(data != nil){
+                                x = x+((i-4)*Int((WIDTH - 40)/3.0 + 10))
+                                button = CustomBtn()
+                                button?.flag = i
+                                button!.frame = CGRectMake(CGFloat(x), height+(WIDTH - 40)/3.0 + 5, (WIDTH - 40)/3.0, (WIDTH - 40)/3.0)
+                                let imgTmp = UIImage(data: data!)
+                                
+                                button!.setImage(imgTmp, forState: .Normal)
+                                button?.imageView?.contentMode = .ScaleAspectFill
+                                button?.clipsToBounds = true
+                                if button?.imageView?.image == nil{
+                                    button!.setImage(UIImage(named: "图片默认加载"), forState: .Normal)
+                                }
+                                button?.tag = indexPath.row
+                                button?.addTarget(self, action: #selector(self.clickBtn), forControlEvents: .TouchUpInside)
+                                cell.contentView.addSubview(button!)
+                            }
+                        })
+                        
+                    } }else{
+                    var x = 12
+                    let pciInfo = pic![i-1]
+                    if pciInfo.picture_url != "" {
+                        let imgUrl = microblogImageUrl+(pciInfo.picture_url)
+                        let avatarUrl = NSURL(string: imgUrl)
+                        let request: NSURLRequest = NSURLRequest(URL: avatarUrl!)
+                        
+                        NSURLConnection.sendAsynchronousRequest(request, queue: NSOperationQueue.mainQueue(), completionHandler: {(response: NSURLResponse?,data: NSData?,error: NSError?)-> Void in
+                            if(data != nil){
+                                x = x+((i-7)*Int((WIDTH - 40)/3.0 + 10))
+                                button = CustomBtn()
+                                button?.flag = i
+                                button!.frame = CGRectMake(CGFloat(x), height+(WIDTH - 40)/3.0 + 5+(WIDTH - 40)/3.0 + 5, (WIDTH - 40)/3.0, (WIDTH - 40)/3.0)
+                                let imgTmp = UIImage(data: data!)
+                                
+                                button!.setImage(imgTmp, forState: .Normal)
+                                button?.imageView?.contentMode = .ScaleAspectFill
+                                button?.clipsToBounds = true
+                                if button?.imageView?.image == nil{
+                                    button!.setImage(UIImage(named: "图片默认加载"), forState: .Normal)
+                                }
+                                button?.tag = indexPath.row
+                                button?.addTarget(self, action: #selector(self.clickBtn), forControlEvents: .TouchUpInside)
+                                cell.contentView.addSubview(button!)
+                            }
+                        })
+                        
+                    }
+                    
+                }
+                
+            }}
+
+        let imageView = UIImageView()
+        imageView.frame = CGRectMake(10, 10 + image_h + height, 21, 21)
+        imageView.image = UIImage.init(named: "ic_fasong")
+        cell.contentView.addSubview(imageView)
+        
+        let teacher = UILabel()
+        teacher.frame = CGRectMake(41, 10 + image_h + height, 100, 20)
+        teacher.text = model?.teacher_name
+        cell.contentView.addSubview(teacher)
+        
+        let dateformate = NSDateFormatter()
+        dateformate.dateFormat = "yyyy-MM-dd HH:mm"
+        let date = NSDate(timeIntervalSince1970: NSTimeInterval(model!.courseware_time!)!)
+        let str:String = dateformate.stringFromDate(date)
+        let timeLbl = UILabel()
+        timeLbl.frame = CGRectMake(160, height + image_h + 10, WIDTH - 170, 20)
+        timeLbl.text = str
+        timeLbl.font = UIFont.systemFontOfSize(16)
+        timeLbl.textColor = UIColor.lightGrayColor()
+        timeLbl.textAlignment = NSTextAlignment.Right
+        cell.contentView.addSubview(timeLbl)
+
+        let view = UIView()
+        view.frame = CGRectMake(0, height + image_h + 30, WIDTH, 15)
+        view.backgroundColor = RGBA(242.0, g: 242.0, b: 242.0, a: 1)
+        cell.contentView.addSubview(view)
+        
+        table.rowHeight = height + image_h + 45
+        
         
         return cell
     }
-//    行高
-    func tableView(tableView: UITableView, heightForRowAtIndexPath indexPath: NSIndexPath) -> CGFloat {
-        return 320
-    }
-    //    点赞
-    func dianZan(sender:UIButton){
-        let btn:UIButton = sender
-//        let homeworkInfo = self.homeworkSource.homeworkList[btn.tag]
-        if btn.selected {
-            btn.selected = false
-//            self.xuXiaoDianZan(homeworkInfo.id!)
-        }else{
-            btn.selected = true
-//            self.getDianZan(homeworkInfo.id!)
-        }
-    }
-//    //    去点赞
-//    func getDianZan(id:String){
-//        let url = "http://wxt.xiaocool.net/index.php?g=apps&m=school&a=SetLike"
-//        let userid = NSUserDefaults.standardUserDefaults()
-//        let uid = userid.stringForKey("userid")
-//        let param = [
-//            "id":id,
-//            "userid":uid!,
-//            "type":2
-//        ]
-//        Alamofire.request(.GET, url, parameters: param as? [String : AnyObject]).response { request, response, json, error in
-//            if(error != nil){
-//            }
-//            else{
-//                print("request是")
-//                print(request!)
-//                print("====================")
-//                let status = MineModel(JSONDecoder(json!))
-//                print("状态是")
-//                print(status.status)
-//                if(status.status == "error"){
-//                    
-//                    let hud = MBProgressHUD.showHUDAddedTo(self.view, animated: true)
-//                    hud.mode = MBProgressHUDMode.Text;
-//                    hud.labelText = status.errorData
-//                    hud.margin = 10.0
-//                    hud.removeFromSuperViewOnHide = true
-//                    hud.hide(true, afterDelay: 1)
-//                }
-//                
-//                if(status.status == "success"){
-//                    //self.dianZanBtn.selected == true
-//                    let hud = MBProgressHUD.showHUDAddedTo(self.view, animated: true)
-//                    hud.mode = MBProgressHUDMode.Text;
-//                    hud.labelText = "点赞成功"
-//                    hud.margin = 10.0
-//                    hud.removeFromSuperViewOnHide = true
-//                    hud.hide(true, afterDelay: 1)
-//                    self.loadData()
-//                }
-//                
-//            }
-//            
-//        }
-//        
-//    }
-//    //    取消点赞
-//    func xuXiaoDianZan(id:String){
-//        let url = "http://wxt.xiaocool.net/index.php?g=apps&m=school&a=ResetLike"
-//        let userid = NSUserDefaults.standardUserDefaults()
-//        let uid = userid.stringForKey("userid")
-//        let param = [
-//            "id":id,
-//            "userid":uid!,
-//            "type":2
-//        ]
-//        Alamofire.request(.GET, url, parameters: param as? [String : AnyObject]).response { request, response, json, error in
-//            if(error != nil){
-//            }
-//            else{
-//                print("request是")
-//                print(request!)
-//                print("====================")
-//                let status = MineModel(JSONDecoder(json!))
-//                print("状态是")
-//                print(status.status)
-//                if(status.status == "error"){
-//                    
-//                    let hud = MBProgressHUD.showHUDAddedTo(self.view, animated: true)
-//                    hud.mode = MBProgressHUDMode.Text;
-//                    hud.labelText = status.errorData
-//                    hud.margin = 10.0
-//                    hud.removeFromSuperViewOnHide = true
-//                    hud.hide(true, afterDelay: 1)
-//                }
-//                
-//                if(status.status == "success"){
-//                    //self.dianZanBtn.selected == true
-//                    let hud = MBProgressHUD.showHUDAddedTo(self.view, animated: true)
-//                    hud.mode = MBProgressHUDMode.Text;
-//                    hud.labelText = "取消点赞"
-//                    hud.margin = 10.0
-//                    hud.removeFromSuperViewOnHide = true
-//                    hud.hide(true, afterDelay: 1)
-//                    self.loadData()
-//                }
-//                
-//            }
-//            
-//        }
-//    }
-    //   评论
-    func pingLun(sender:UIButton){
-        let btn:UIButton = sender
-//        let homeworkInfo = self.homeworkSource.homeworkList[btn.tag]
-//        self.commentSource = HCommentList(homeworkInfo.comment!)
+    
+    
+    func clickBtn(sender:CustomBtn){
         let vc = CDPLViewController()
-//        vc.id = homeworkInfo.id
-//        vc.commentSource = self.commentSource
+        vc.dataSource = (self.dataSource?.courseware_info[sender.tag].coursewarePic)!
+        vc.count = sender.flag!
         self.navigationController?.pushViewController(vc, animated: true)
     }
+    
+    func tableView(tableView: UITableView, didSelectRowAtIndexPath indexPath: NSIndexPath) {
+        let vc = CDWirteCommentViewController()
+        vc.dataSource = self.dataSource?.courseware_info[indexPath.row]
+        self.navigationController?.pushViewController(vc, animated: true)
+    }
+
     
 }

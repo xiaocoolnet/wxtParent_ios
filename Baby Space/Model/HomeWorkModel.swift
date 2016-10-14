@@ -61,7 +61,7 @@ class NewsIn: JSONJoy{
 //    var pictur:JSONDecoder?
     var homework_inf = Array<LikeInfo>()
     var pictur = Array<PiInfo>()
-    
+    var receive_list = Array<HomeInfo>()
     
     required init(_ decoder: JSONDecoder){
         homework_id = decoder["homework_id"].string
@@ -80,6 +80,11 @@ class NewsIn: JSONJoy{
                 self.pictur.append(PiInfo(childs))
             }
         }
+        if decoder["receive_list"].array != nil {
+            for childs: JSONDecoder in decoder["receive_list"].array!{
+                self.receive_list.append(HomeInfo(childs))
+            }
+        }
     }
     func addpend(list: [LikeInfo]){
         self.homework_inf = list + self.homework_inf
@@ -87,6 +92,10 @@ class NewsIn: JSONJoy{
     func addpend(list: [PiInfo]){
         self.pictur = list + self.pictur
     }
+    func addpend(list: [HomeInfo]){
+        self.receive_list = list + self.receive_list
+    }
+
     
 }
 
@@ -177,5 +186,41 @@ class PiInfo: JSONJoy {
     }
     
 }
+
+class HomeList: JSONJoy {
+    var status:String?
+    var objectlist: [HomeInfo]
+    
+    var count: Int{
+        return self.objectlist.count
+    }
+    init(){
+        objectlist = Array<HomeInfo>()
+    }
+    required init(_ decoder: JSONDecoder) {
+        
+        objectlist = Array<HomeInfo>()
+        for childs: JSONDecoder in decoder.array!{
+            objectlist.append(HomeInfo(childs))
+        }
+    }
+    
+    func append(list: [HomeInfo]){
+        self.objectlist = list + self.objectlist
+    }
+}
+
+class HomeInfo: JSONJoy {
+    
+    var read_time:String
+    
+
+    required init(_ decoder: JSONDecoder){
+        read_time = decoder["read_time"].string ?? ""
+        
+    }
+    
+}
+
 
 

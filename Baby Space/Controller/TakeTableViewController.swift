@@ -33,6 +33,8 @@ class TakeTableViewController: UITableViewController {
         self.tableView.headerView = XWRefreshNormalHeader(target: self, action: #selector(TakeTableViewController.loadData))
         self.tableView.reloadData()
         self.tableView.headerView?.beginRefreshing()
+        let view = UIView()
+        tableView.tableFooterView = view
     }
 //    加载数据
     func loadData(){
@@ -108,19 +110,23 @@ class TakeTableViewController: UITableViewController {
             //        图片
             let imgUrl = microblogImageUrl + takeInfo.photo!
             let photourl = NSURL(string: imgUrl)
-            cell!.bigImageView.yy_setImageWithURL(photourl, placeholder: UIImage(named: "无网络的背景.png"))
+            cell!.bigImageView.yy_setImageWithURL(photourl, placeholder: UIImage(named: "图片默认加载"))
             //        头像
             let imgUrl1 = microblogImageUrl + takeInfo.teacheravatar!
             let headImageurl = NSURL(string: imgUrl1)
             cell!.headImageView.yy_setImageWithURL(headImageurl, placeholder: UIImage(named: "Logo.png"))
-            let userDefaults = NSUserDefaults.standardUserDefaults()
-            let someOne = userDefaults.valueForKey("name")
-            cell!.somebodyLabel.text = (someOne as? String)! + "家长，这个人可以接走孩子么？"
+//            let userDefaults = NSUserDefaults.standardUserDefaults()
+//            let someOne = userDefaults.valueForKey("name")
+//            cell!.somebodyLabel.text = (someOne as? String)! + "家长，这个人可以接走孩子么？"
+            cell?.somebodyLabel.text = takeInfo.content
+            cell?.somebodyLabel.numberOfLines = 0
             //        同意按钮
             cell!.agreeBtn.addTarget(self, action: #selector(TakeTableViewController.agreePress(_:)), forControlEvents: .TouchUpInside)
+            cell?.agreeBtn.setTitleColor(UIColor.orangeColor(), forState: .Normal)
             cell!.agreeBtn.tag = indexPath.row
             //        不同意按钮
             cell!.disagreeBtn.addTarget(self, action: #selector(TakeTableViewController.disagreePress(_:)), forControlEvents: .TouchUpInside)
+            cell?.disagreeBtn.setTitleColor(UIColor(red: 155/255, green: 229/255, blue: 180/255, alpha: 1), forState: .Normal)
             cell!.disagreeBtn.tag = indexPath.row
             //  cell 的高度
             tableView.rowHeight = 450
@@ -187,11 +193,12 @@ class TakeTableViewController: UITableViewController {
                     hud.hide(true, afterDelay: 1)
                 }
                 if(status.status == "success"){
-                    let alert = UIAlertController(title: "提示", message: "已发送", preferredStyle: .Alert)
-                    alert.addAction(UIAlertAction(title: "确定", style: .Default, handler: nil))
-                    self.presentViewController(alert, animated: true, completion: nil)
-                    self.loadData()
+//                    let alert = UIAlertController(title: "提示", message: "已发送", preferredStyle: .Alert)
+//                    alert.addAction(UIAlertAction(title: "确定", style: .Default, handler: nil))
+//                    self.presentViewController(alert, animated: true, completion: nil)
+                    self.takeSource.takeList.removeAll()
                     self.tableView.reloadData()
+                    self.loadData()
                    self.DropDownUpdate()
                     
                 }

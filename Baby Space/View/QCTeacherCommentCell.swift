@@ -267,6 +267,10 @@ class QCTeacherCommentCell: UITableViewCell {
         contentLable.numberOfLines = 0
         contentLable.text = "孩子在学校表现很好，经常打架，调皮，还骂老师，打女同学，又好吃又懒，完全是火星来的吧，真是服了！～～～～"
         self.contentView.addSubview(contentLable)
+        let view = UIView()
+        view.frame = CGRectMake(0, 460, WIDTH, 10)
+        view.backgroundColor = RGBA(242.0, g: 242.0, b: 242.0, a: 1)
+        contentView.addSubview(view)
 
     }
     
@@ -305,7 +309,7 @@ class QCTeacherCommentCell: UITableViewCell {
             let pict = info!.teacher_photo
             let imgUrl = microblogImageUrl + pict!
             let photourl = NSURL(string: imgUrl)
-            headerImageView.sd_setImageWithURL(photourl, placeholderImage: UIImage(named: "1"))
+            headerImageView.sd_setImageWithURL(photourl, placeholderImage: UIImage(named: "默认头像"))
             
             
             if info!.learn == "1" {

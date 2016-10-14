@@ -20,6 +20,19 @@ class QCTokenCompleteVC: UITableViewController {
     
         var takeSource = TakeListModel()
         var id = String()
+    
+    override func viewWillAppear(animated: Bool) {
+        self.loadData()
+        let useDefaults = NSUserDefaults.standardUserDefaults()
+        useDefaults.removeObjectForKey("deliArr")
+    }
+
+    
+    override func viewWillDisappear(animated: Bool) {
+        let useDefaults = NSUserDefaults.standardUserDefaults()
+        useDefaults.removeObjectForKey("deliArr")
+        
+    }
         override func viewDidLoad() {
             super.viewDidLoad()
             initUI()
@@ -37,6 +50,8 @@ class QCTokenCompleteVC: UITableViewController {
             self.tableView.headerView = XWRefreshNormalHeader(target: self, action: #selector(TakeTableViewController.loadData))
             self.tableView.reloadData()
             self.tableView.headerView?.beginRefreshing()
+            let view = UIView()
+            tableView.tableFooterView = view
         }
         //    加载数据
         func loadData(){
@@ -110,17 +125,16 @@ class QCTokenCompleteVC: UITableViewController {
             //        图片
             let imgUrl = microblogImageUrl + takeInfo.photo!
             let photourl = NSURL(string: imgUrl)
-            cell!.bigImageView.yy_setImageWithURL(photourl, placeholder: UIImage(named: "无网络的背景.png"))
+            cell!.bigImageView.yy_setImageWithURL(photourl, placeholder: UIImage(named: "图片默认加载"))
             //        头像
             let imgUrl1 = microblogImageUrl + takeInfo.teacheravatar!
             let headImageurl = NSURL(string: imgUrl1)
-            cell!.headImageView.yy_setImageWithURL(headImageurl, placeholder: UIImage(named: "Logo.png"))
-            let userDefaults = NSUserDefaults.standardUserDefaults()
-            let someOne = userDefaults.valueForKey("name")
-            cell!.somebodyLabel.text = (someOne as? String)! + "家长，这个人可以接走孩子么？"
-            
-//            let someClass = userDefaults.valueForKey("class")
-//            cell?.banjiLable.text = (someClass as? String)!
+            cell!.headImageView.yy_setImageWithURL(headImageurl, placeholder: UIImage(named: "默认头像"))
+//            let userDefaults = NSUserDefaults.standardUserDefaults()
+//            let someOne = userDefaults.valueForKey("name")
+//            cell!.somebodyLabel.text = (someOne as? String)! + "家长，这个人可以接走孩子么？"
+            cell?.somebodyLabel.text = takeInfo.content
+            cell?.somebodyLabel.numberOfLines = 0
                 
             cell!.agreeBtn.removeFromSuperview()
             cell!.disagreeBtn.removeFromSuperview()
@@ -128,9 +142,11 @@ class QCTokenCompleteVC: UITableViewController {
 //            agreeLabel.frame = CGRectMake(WIDTH / 4 * 3, 415, WIDTH / 4 - 10, 30)
             if takeInfo.delivery_status == "1"{
             cell!.agreeLabel.text = "已同意"
+                cell?.agreeLabel.textColor = UIColor(red: 155/255, green: 229/255, blue: 180/255, alpha: 1)
             }
             if takeInfo.delivery_status == "2" {
                 cell!.agreeLabel.text = "不同意"
+                cell?.agreeLabel.textColor = UIColor.orangeColor()
             }
 //            cell!.addSubview(agreeLabel)
             tableView.rowHeight = 450

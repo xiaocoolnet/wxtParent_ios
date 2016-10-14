@@ -103,13 +103,13 @@ class WriteExhortViewController: UIViewController,UICollectionViewDataSource,UIC
             hud.hide(true, afterDelay: 3)
         }
         let backGroudView = UIView(frame: CGRectMake(0,331,WIDTH,HEIGHT-331-49))
-        let height = HEIGHT-331-49
+//        let height = HEIGHT-331-49
         backGroudView.backgroundColor = UIColor.whiteColor()
         self.view.addSubview(backGroudView)
-        addPictureBtn.frame = CGRectMake(10,height - 90, 80, 80)
-        addPictureBtn.setBackgroundImage(UIImage(named: "add2"), forState: UIControlState.Normal)
-        addPictureBtn.layer.borderWidth = 1.0
-        addPictureBtn.layer.borderColor = UIColor.grayColor().CGColor
+        addPictureBtn.frame = CGRectMake(10,10, 80, 80)
+        addPictureBtn.setBackgroundImage(UIImage(named: "add2"), forState: .Normal)
+//        addPictureBtn.layer.borderWidth = 2.0
+//        addPictureBtn.layer.borderColor = UIColor.lightGrayColor().CGColor
         addPictureBtn.addTarget(self, action: #selector(WriteExhortViewController.AddPictrures), forControlEvents: UIControlEvents.TouchUpInside)
         flowLayout.scrollDirection = UICollectionViewScrollDirection.Vertical
         flowLayout.itemSize = CGSizeMake(80,80)
@@ -155,48 +155,52 @@ class WriteExhortViewController: UIViewController,UICollectionViewDataSource,UIC
     }
 //    网络请求
     func writeExhort(){
-        //http://wxt.xiaocool.net/index.php?g=apps&m=student&a=addentrust&teacherid=597&userid=12&studentid=22&content=孩子有点感冒，让中午吃药
+        //http://wxt.xiaocool.net/index.php?g=apps&m=student&a=addentrust&teacherid=597&userid=12&studentid=22&content=孩子有点感冒，让中午吃药&picture_url=1.png,2.png
         //下面两句代码是从缓存中取出userid（入参）值
 //        if teacherid!.isEmpty || studentid!.isEmpty || self.contentTextView.text == nil || imageUrl!.isEmpty {
 //            return
 //        }
-        if self.teacherid == nil || self.studentid == nil || self.contentTextView.text == nil {
-            return
-        }
-        let defalutid = NSUserDefaults.standardUserDefaults()
-        let uid = defalutid.stringForKey("userid")
-        let url = "http://wxt.xiaocool.net/index.php?g=apps&m=student&a=addentrust"
-        if(self.imagePath.count == 0){
-            imageUrl = ""
-        }
-        let param = [
-            "teacherid":teacherid!,
-            "studentid":studentid!,
-            "userid":uid!,
-            "content":self.contentTextView.text,
-            "pictrue_url":imageUrl!
-        ]
-        Alamofire.request(.POST, url, parameters: param).response { request, response, json, error in
-            if(error != nil){
+        if self.teacherid == nil || self.studentid == nil || self.contentTextView.text == "" {
+            messageHUD(self.view, messageData: "请补全叮嘱信息")
+        }else{
+            
+            let defalutid = NSUserDefaults.standardUserDefaults()
+            let uid = defalutid.stringForKey("userid")
+            let url = "http://wxt.xiaocool.net/index.php?g=apps&m=student&a=addentrust"
+            if(self.imagePath.count == 0){
+                imageUrl = ""
             }
-            else{
-                print("request是")
-                print(request!)
-                print("====================")
-                let status = Http(JSONDecoder(json!))
-                print("状态是")
-                print(status.status)
-                if(status.status == "error"){
-                    let hud = MBProgressHUD.showHUDAddedTo(self.view, animated: true)
-                    hud.mode = MBProgressHUDMode.Text
-                    hud.labelText = status.errorData
-                    hud.margin = 10.0
-                    hud.removeFromSuperViewOnHide = true
-                    hud.hide(true, afterDelay: 1)
+            let param = [
+                "teacherid":teacherid!,
+                "studentid":studentid!,
+                "userid":uid!,
+                "content":self.contentTextView.text,
+                "picture_url":imageUrl!
+            ]
+            print("wertrewdfgh")
+            print(imageUrl)
+            Alamofire.request(.POST, url, parameters: param).response { request, response, json, error in
+                if(error != nil){
                 }
-                if(status.status == "success"){
-                  print("叮嘱发送成功")
-                    self.navigationController?.popViewControllerAnimated(true)
+                else{
+                    print("request是")
+                    print(request!)
+                    print("====================")
+                    let status = Http(JSONDecoder(json!))
+                    print("状态是")
+                    print(status.status)
+                    if(status.status == "error"){
+                        let hud = MBProgressHUD.showHUDAddedTo(self.view, animated: true)
+                        hud.mode = MBProgressHUDMode.Text
+                        hud.labelText = status.errorData
+                        hud.margin = 10.0
+                        hud.removeFromSuperViewOnHide = true
+                        hud.hide(true, afterDelay: 1)
+                    }
+                    if(status.status == "success"){
+                        print("叮嘱发送成功")
+                        self.navigationController?.popViewControllerAnimated(true)
+                    }
                 }
             }
         }
@@ -243,15 +247,6 @@ class WriteExhortViewController: UIViewController,UICollectionViewDataSource,UIC
             hud.hide(true, afterDelay: 2)
         }
     }
-
-//    发送
-    func sendExhort(){
-        if(i != 0){
-            self.UpdatePic()
-        }
-        self.writeExhort()
-    }
-    
     //   添加图片
     func AddPictrures(){
         let vc = BSImagePickerViewController()
@@ -269,6 +264,7 @@ class WriteExhortViewController: UIViewController,UICollectionViewDataSource,UIC
     }
     //    选择图片
     func getAssetThumbnail(asset: [PHAsset]) -> UIImage {
+        //  图片
         var thumbnail = UIImage()
         i+=asset.count
         if(i>9){
@@ -285,38 +281,85 @@ class WriteExhortViewController: UIViewController,UICollectionViewDataSource,UIC
             let manager = PHImageManager.defaultManager()
             let option = PHImageRequestOptions()
             option.synchronous = true
+            
+            
             for j in 0..<asset.count{
-                manager.requestImageForAsset(asset[j], targetSize: CGSize(width: 1000.0, height: 1000.0), contentMode: .AspectFit, options: option, resultHandler: {(result, info)->Void in
-                    thumbnail = result!
-                    print("图片是")
-                    var temImage:CGImageRef = thumbnail.CGImage!
-                    temImage = CGImageCreateWithImageInRect(temImage, CGRectMake(0, 0, 1000.0, 1000.0))!
-                    let newImage = UIImage(CGImage: temImage)
-                    self.imageData.append(UIImageJPEGRepresentation(newImage, 1)!)
-                    self.pictureArray.addObject(newImage)
+                
+                //  这里的参数应该喝照片的大小一致（需要进行判断）
+                manager.requestImageForAsset(asset[j], targetSize: PHImageManagerMaximumSize, contentMode: .AspectFit, options: option, resultHandler: {(result, info)->Void in
+                    //  设置像素
+                    option.resizeMode = PHImageRequestOptionsResizeMode.Exact
+                    let downloadFinined = !((info!["PHImageResultIsDegradedKey"]?.boolValue)!)
+                    
+                    //                let downloadFinined:Bool = !((info!["PHImageCancelledKey"]?.boolValue)! ?? false) && !((info!["PHImageErrorKey"]?.boolValue)! ?? false) && !((info!["PHImageResultIsDegradedKey"]?.boolValue)! ?? false)
+                    if downloadFinined == true {
+                        thumbnail = result!
+                        print(" print(result?.images)")
+                        //  改变frame
+                        print(result)
+                        print("图片是")
+                        let temImage:CGImageRef = thumbnail.CGImage!
+                        //                    temImage = CGImageCreateWithImageInRect(temImage, CGRectMake(0, 0, 1000, 1000))!
+                        let newImage = UIImage(CGImage: temImage)
+                        //  压缩最多1  最少0
+                        self.imageData.append(UIImageJPEGRepresentation(newImage, 0)!)
+                        self.pictureArray.addObject(newImage)
+                        
+                    }
+                    //                thumbnail = result!
+                    
+                    //
+                    
                 })
             }
         }
         return thumbnail
     }
- 
+    
+    func byScalingToSize(image:UIImage,targetSize:CGSize) ->(UIImage){
+        let sourceImage = image
+        var newImage = UIImage()
+        UIGraphicsBeginImageContext(targetSize)
+        var thumbnailRect = CGRectZero;
+        thumbnailRect.origin = CGPointZero;
+        thumbnailRect.size.width  = targetSize.width;
+        thumbnailRect.size.height = targetSize.height;
+        sourceImage.drawInRect(thumbnailRect)
+        newImage = UIGraphicsGetImageFromCurrentImageContext()
+        UIGraphicsEndImageContext()
+        return newImage
+    }
+    //   更新日记
+    func sendExhort(){
+        if(i != 0){
+            if self.teacherid != nil && self.studentid != nil && self.contentTextView.text != "" {
+                
+                self.UpdatePic()
+            }
+        }
+        self.writeExhort()
+    }
     //    更新图片
     func UpdatePic(){
         for i in 0..<self.imageData.count{
             let chid = NSUserDefaults.standardUserDefaults()
-            let userid = chid.stringForKey("userid")
+            let studentid = chid.stringForKey("chid")
+            let date = NSDate()
+            let dateformate = NSDateFormatter()
+            dateformate.dateFormat = "yyyy-MM-dd HH:mm"//获得日期
+            let time:NSTimeInterval = (date.timeIntervalSince1970)
             let RanNumber = String(arc4random_uniform(1000) + 1000)
-//            let name = "\(userid!)\(RanNumber)"
+            let name = "\(studentid!)baby\(time)\(RanNumber)"
             isuploading = true
             
             dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0)) { () -> Void in
-                ConnectModel.uploadWithImageName(RanNumber, imageData:self.imageData[i], URL: "WriteMicroblog_upload", finish: { (data) -> Void in
+                ConnectModel.uploadWithImageName(name, imageData:self.imageData[i], URL: "WriteMicroblog_upload", finish: { (data) -> Void in
                     print("返回值")
                     print(data)
                     
                 })
             }
-            self.imagePath.addObject(userid! + RanNumber + ".png")
+            self.imagePath.addObject(name + ".png")
         }
         self.imageUrl = self.imagePath.componentsJoinedByString(",")
         print(self.imageUrl!)

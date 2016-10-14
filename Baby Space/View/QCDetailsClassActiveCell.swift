@@ -21,6 +21,8 @@ class QCDetailsClassActiveCell: UITableViewCell {
     var contentImageView = UIImageView()
     var joinButton = UIButton()
     var joinCountLabel = UILabel()
+    var startime = UILabel()
+    var finishtime = UILabel()
     
     
     override init(style: UITableViewCellStyle, reuseIdentifier: String?) {
@@ -71,6 +73,14 @@ class QCDetailsClassActiveCell: UITableViewCell {
         activeTimes.text = "报名起止日期07-18到08-15"
         self.contentView.addSubview(activeTimes)
         
+        startime.textColor = UIColor.lightGrayColor()
+        startime.text = "报名起止日期07-18到08-15"
+        self.contentView.addSubview(startime)
+        
+        finishtime.textColor = UIColor.lightGrayColor()
+        finishtime.text = "报名起止日期07-18到08-15"
+        self.contentView.addSubview(finishtime)
+        
         contentImageView.frame = CGRectMake(10, 390, WIDTH - 20, (WIDTH - 20) * 0.66)
         contentImageView.image = UIImage.init(named: "1.png")
 //        self.contentView.addSubview(contentImageView)
@@ -80,12 +90,12 @@ class QCDetailsClassActiveCell: UITableViewCell {
         joinButton.setTitle("报名", forState: .Normal)
         joinButton.cornerRadius = 4
         joinButton.addTarget(self, action: #selector(joinAction), forControlEvents: .TouchUpInside)
-        self.contentView.addSubview(joinButton)
+//        self.contentView.addSubview(joinButton)
         
         joinCountLabel.frame = CGRectMake(10, 460 + WIDTH * 0.66, WIDTH - 20, 20)
         joinCountLabel.textColor = UIColor.orangeColor()
         joinCountLabel.text = "已报名人数为22"
-        self.contentView.addSubview(joinCountLabel)
+//        self.contentView.addSubview(joinCountLabel)
         
         
     }

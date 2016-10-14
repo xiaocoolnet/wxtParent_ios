@@ -15,6 +15,7 @@ class FriendsViewController: UIViewController,UITableViewDataSource,UITableViewD
     let table = UITableView()
     var addSource = AddList()
     var teacherSource =  TeaList()
+    var dataSource = AllFamilyList()
     var dic = NSMutableDictionary()
     
     override func viewDidLoad() {
@@ -36,14 +37,12 @@ class FriendsViewController: UIViewController,UITableViewDataSource,UITableViewD
     }
 //    获取好友的通讯录（这里先用老师的通讯录进行测试）
     func GetDate(){
-        //        http://wxt.xiaocool.net/index.php?g=apps&m=index&a=MessageAddress&userid=597
-        
-        //  http://wxt.xiaocool.net/index.php?g=apps&m=student&a=getfriendlist&studentid=661
+//        http://wxt.xiaocool.net/index.php?g=apps&m=student&a=GetParentList&studentid=661
         let defalutid = NSUserDefaults.standardUserDefaults()
-        let uid = defalutid.stringForKey("userid")
-        let url = apiUrl+"MessageAddress"
+        let uid = defalutid.stringForKey("chid")
+        let url = "http://wxt.xiaocool.net/index.php?g=apps&m=student&a=GetParentList"
         let param = [
-            "userid":uid!
+            "studentid":uid!
         ]
         Alamofire.request(.GET, url, parameters: param).response { request, response, json, error in
             if(error != nil){
@@ -65,53 +64,133 @@ class FriendsViewController: UIViewController,UITableViewDataSource,UITableViewD
                 }
                 
                 if(status.status == "success"){
-                    self.addSource = AddList(status.data!)
-                    //                    将分区组的标题和每个分区的cell的数目作为字典存起来
-                    if self.addSource.count != 0{
-                        for i in 0..<self.addSource.count {
-                            let addInfo = self.addSource.objectlist[i]
-                            //                            let teacherList = self.addSource.objectlist[i]
-                            self.teacherSource = TeaList(addInfo.teacherinfo!)
-                            self.dic.setValue(self.teacherSource.count, forKey:addInfo.classname! )
-                        }
-                    }
+                    self.dataSource = AllFamilyList(status.data!)
                     self.table.reloadData()
                 }
             }
         }
         
     }
-    //    分区数
-    func numberOfSectionsInTableView(tableView: UITableView) -> Int {
-        return self.addSource.count
-    }
-    //    分区标题
-    func tableView(tableView: UITableView, titleForHeaderInSection section: Int) -> String?{
-        let addInfo = self.addSource.objectlist[section]
-        return addInfo.classname!
-    }
-    //    每个分区的行数
+    //MARK: delegate
     func tableView(tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        let addInfo = self.addSource.objectlist[section]
-        let str: String = addInfo.classname!
-        let num = dic[str] as! Int
-        return num
-    }
-    //    单元格
-    func tableView(tableView: UITableView, cellForRowAtIndexPath indexPath: NSIndexPath) -> UITableViewCell {
-        let cell = tableView.dequeueReusableCellWithIdentifier("cell", forIndexPath: indexPath) as! QCFriendsCell
-        cell.selectionStyle = .None
+        if (self.dataSource.objectlist[0].stu_par_list[section].isOpen) {
+//            print(self.dataSource.objectlist[section].isOpen)
+            return self.dataSource.objectlist[0].stu_par_list[section].parent_info.count
+        }else{
+            return 0;
+        }
         
-        let teacherList = self.addSource.objectlist[indexPath.section]
-        self.teacherSource = TeaList(teacherList.teacherinfo!)
-        let teacherInfo = self.teacherSource.objectlist[indexPath.row]
-        cell.fillCellWithModel(teacherInfo)
+    }
+    
+    
+    func numberOfSectionsInTableView(tableView: UITableView) -> Int {
+        if self.dataSource.objectlist.count != 0 {
+            
+            return self.dataSource.objectlist[0].stu_par_list.count
+        }else{
+            return 0
+        }
+    }
+    
+    func tableView(tableView: UITableView, heightForRowAtIndexPath indexPath: NSIndexPath) -> CGFloat {
+        return 70
+    }
+    
+    func tableView(tableView: UITableView, heightForHeaderInSection section: Int) -> CGFloat {
+        return 40
+    }
+    
+    func tableView(tableView: UITableView, viewForHeaderInSection section: Int) -> UIView? {
+        
+        
+        let headerView = UIView()
+        headerView.frame = CGRectMake(0, 0, WIDTH, 40)
+        headerView.backgroundColor = UIColor.whiteColor()
+        
+        //展开折叠按钮
+        let big_select_btn = UIButton()
+        big_select_btn.frame = CGRectMake(0, 0, WIDTH, 40)
+        big_select_btn.tag = section
+        big_select_btn.selected = self.dataSource.objectlist[0].stu_par_list[section].isOpen
+        big_select_btn.addTarget(self, action: #selector(self.outspread(_:)), forControlEvents: UIControlEvents.TouchUpInside)
+        headerView.addSubview(big_select_btn)
+        
+        //组头展开折叠按钮
+        let point_btn = UIButton()
+        point_btn.frame = CGRectMake(WIDTH - 30, 10, 15, 15)
+        point_btn.setBackgroundImage(UIImage(named: "right"), forState: UIControlState.Normal)
+        point_btn.setBackgroundImage(UIImage(named: "down"), forState: UIControlState.Selected)
+        point_btn.tag = section
+        point_btn.selected = self.dataSource.objectlist[0].stu_par_list[section].isOpen
+        headerView.addSubview(point_btn)
+        
+        let img = UIImageView()
+        img.frame = CGRectMake(10, 5, 30, 30)
+        let pi = self.dataSource.objectlist[0].stu_par_list[section].photo
+        let imgUrl = microblogImageUrl + pi!
+        let photourl = NSURL(string: imgUrl)
+        img.layer.cornerRadius = 15
+        img.clipsToBounds = true
+        img.sd_setImageWithURL(photourl, placeholderImage: UIImage(named: "默认头像"))
+        headerView.addSubview(img)
+        //组名
+        let titlelabel = UILabel()
+        titlelabel.frame = CGRectMake(50, 0, 150, 40)
+        titlelabel.text = self.dataSource.objectlist[0].stu_par_list[section].name
+        titlelabel.textColor = UIColor.blackColor()
+        headerView.addSubview(titlelabel)
+        
+        //分割线
+        let lineView = UIView()
+        lineView.frame = CGRectMake(0, 39.5, WIDTH, 0.5)
+        lineView.backgroundColor = tableView.separatorColor
+        headerView.addSubview(lineView)
+        
+        return headerView
+    }
+    
+    
+    func tableView(tableView: UITableView, cellForRowAtIndexPath indexPath: NSIndexPath) -> UITableViewCell {
+        
+        let cell = UITableViewCell(style: .Default, reuseIdentifier: String(indexPath.row))
+        cell.selectionStyle = .None
+        tableView.separatorStyle = .None
+        cell.backgroundColor = RGBA(242.0, g: 242.0, b: 242.0, a: 1)
+        
+        let model = self.dataSource.objectlist[0].stu_par_list[indexPath.section].parent_info[indexPath.row]
+        
+        let img = UIImageView()
+        img.frame = CGRectMake(30, 10, 50, 50)
+        let pi = model.photo
+        let imgUrl = microblogImageUrl + pi
+        let photourl = NSURL(string: imgUrl)
+        img.layer.cornerRadius = 25
+        img.clipsToBounds = true
+        img.sd_setImageWithURL(photourl, placeholderImage: UIImage(named: "默认头像"))
+        cell.contentView.addSubview(img)
+        
+        let name = UILabel()
+        name.frame = CGRectMake(90, 10, WIDTH - 100, 50)
+        name.text = (model.name) + "(" + model.appellation + ")"
+        name.textColor = UIColor.blackColor()
+        cell.contentView.addSubview(name)
         
         return cell
     }
-//    分区头的高度
-    func tableView(tableView: UITableView, heightForHeaderInSection section: Int) -> CGFloat{
-        return 30.0
+    
+
+    //MARK: click
+    //折叠展开点击事件
+    func outspread(sender:UIButton) -> Void {
+        if sender.selected {
+            sender.selected = false
+        }else{
+            sender.selected = true
+        }
+        
+        self.dataSource.objectlist[0].stu_par_list[sender.tag].isOpen = sender.selected
+        
+        table.reloadData()
     }
 
 }

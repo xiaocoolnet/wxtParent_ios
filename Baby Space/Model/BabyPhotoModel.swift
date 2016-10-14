@@ -52,29 +52,31 @@ class BabyPhotoList: JSONJoy {
 }
 
 class BabyPhotoInfo: JSONJoy{
-    var mid:String?
-    var type:String?
-    var schoolid:String?
-    var classid:String?
-    var userid:String?
-    var name:String?
-    var content:String?
-    var write_time:String?
-    var photo:String?
+    var mid:String
+    var type:String
+    var schoolid:String
+    var classid:String
+    var userid:String
+    var name:String
+    var content:String
+    var write_time:String
+    var photo:String
+    var status:String
     var pic = Array<BabyPicInfo>()
     var like = Array<BabyLikeInfo>()
     var comment = Array<BabyCommentInfo>()
     
     required init(_ decoder: JSONDecoder){
-        mid = decoder["mid"].string
-        type = decoder["type"].string
-        schoolid = decoder["schoolid"].string
-        classid = decoder["classid"].string
-        userid = decoder["userid"].string
-        name = decoder["name"].string
-        content = decoder["content"].string
-        write_time = decoder["write_time"].string
-        photo = decoder["photo"].string
+        mid = decoder["mid"].string ?? ""
+        type = decoder["type"].string ?? ""
+        schoolid = decoder["schoolid"].string ?? ""
+        classid = decoder["classid"].string ?? ""
+        userid = decoder["userid"].string ?? ""
+        name = decoder["name"].string ?? ""
+        content = decoder["content"].string ?? ""
+        write_time = decoder["write_time"].string ?? ""
+        photo = decoder["photo"].string ?? ""
+        status = decoder["status"].string ?? ""
         if decoder["pic"].array != nil {
             for childs: JSONDecoder in decoder["pic"].array!{
                 self.pic.append(BabyPicInfo(childs))
@@ -167,11 +169,11 @@ class BabyLikeInfo: JSONJoy {
     
     var userid:String
     var name:String
-    
+    var avatar:String
     required init(_ decoder: JSONDecoder){
         name = decoder["name"].string ?? ""
         userid = decoder["userid"].string ?? ""
-        
+        avatar = decoder["avatar"].string ?? ""
     }
     
 }
@@ -206,14 +208,14 @@ class BabyCommentInfo: JSONJoy {
     var content:String
     var avatar:String
     var comment_time:String
-    
+    var photo:String
     required init(_ decoder: JSONDecoder){
         name = decoder["name"].string ?? ""
         userid = decoder["userid"].string ?? ""
         content = decoder["content"].string ?? ""
         avatar = decoder["avatar"].string ?? ""
         comment_time = decoder["comment_time"].string ?? ""
-        
+        photo = decoder["photo"].string ?? ""
     }
     
 }

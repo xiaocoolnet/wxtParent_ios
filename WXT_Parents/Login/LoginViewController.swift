@@ -60,11 +60,15 @@ class LoginViewController: UIViewController ,UITextFieldDelegate{
         }
         //  http://wxt.xiaocool.net/index.php?g=apps&m=index&a=applogin&phone=18672910380&password=123
         let url = apiUrl+"applogin"
+//       let userDefaults = NSUserDefaults.standardUserDefaults()
+//       let deviceToken = userDefaults.stringForKey("deviceToken")
+        
         let param = [
             "phone":self.AccountText.text!,
-            "password":self.PasswordText.text!
+            "password":self.PasswordText.text!,
+//          "jgtoken":deviceToken
         ]
-        Alamofire.request(.GET, url, parameters: param).response { request, response, json, error in
+        Alamofire.request(.GET, url, parameters: param as![String:String]).response { request, response, json, error in
                 if(error != nil){
                 }
                 else{
@@ -103,6 +107,7 @@ class LoginViewController: UIViewController ,UITextFieldDelegate{
         }
     }
 //    获取孩子信息
+//      http://wxt.xiaocool.net/index.php?g=apps&m=index&a=GetUserRelation&userid=597
     //  http://wxt.xiaocool.net/index.php?g=apps&m=index&a=GetUserRelation&userid=681
     func GetChildrenUser(id:String){
         let url = apiUrl+"GetUserRelation"
@@ -134,9 +139,10 @@ class LoginViewController: UIViewController ,UITextFieldDelegate{
                 if(status.status == "success"){
                     var defalut:String?
                     self.dataSource = ChildrenList(status.data!)
-                    for i in 0..<self.dataSource.count{
-                        let chirdinfo = self.dataSource.objectlist[i]
+//                    for i in 0..<self.dataSource.count{
+                        let chirdinfo = self.dataSource.objectlist[0]
                         defalut = chirdinfo.preferred!
+                    var child = chirdinfo.classlist
                         print(chirdinfo.preferred!)
                         if(defalut == "0"){
                             let userDefaults = NSUserDefaults.standardUserDefaults()
@@ -144,9 +150,12 @@ class LoginViewController: UIViewController ,UITextFieldDelegate{
                             userDefaults.setValue(chirdinfo.studentid!, forKey: "chid")
                             
                             userDefaults.setValue(chirdinfo.studentname, forKey: "chidname")
-                            self.GetChildrenClass(chirdinfo.studentid!)
-
-                        }
+//                            self.GetChildrenClass(chirdinfo.studentid!)
+                            userDefaults.setValue(child[0].classid!, forKey: "classid")
+                            userDefaults.setValue(child[0].schoolid!, forKey: "schoolid")
+//                            userDefaults.setValue(child[0].classname!, forKey: "schoolid")
+                            print(chirdinfo.studentid)
+//                        }
                     }
 //                    环信登录
                     let easeMob:EaseMob = EaseMob()
@@ -160,6 +169,13 @@ class LoginViewController: UIViewController ,UITextFieldDelegate{
                     if(!isAutoLogin){
                         easeMob.chatManager?.asyncLoginWithUsername(id,password:id)
                     }
+                    print("++++++++++++++++++++++++++++++++")
+                    let defalutid = NSUserDefaults.standardUserDefaults()
+                    let studentid = defalutid.stringForKey("chid")
+                    JPUSHService.setTags(nil, aliasInbackground: studentid)
+                    let defau = NSNotificationCenter.defaultCenter()
+                    
+                    defau.addObserver(self, selector: #selector(self.networkDidLogin), name: kJPFNetworkDidLoginNotification, object: nil)
 //                    跳转界面
                     let mainStoryboard = UIStoryboard(name: "Main", bundle: NSBundle.mainBundle())
                     let vc : UIViewController = mainStoryboard.instantiateViewControllerWithIdentifier("MainView")
@@ -169,6 +185,18 @@ class LoginViewController: UIViewController ,UITextFieldDelegate{
             }
         }
     }
+    
+    func networkDidLogin(){
+        print("++++++++++++++++++++++++++++++++")
+        let defalutid = NSUserDefaults.standardUserDefaults()
+        let studentid = defalutid.stringForKey("userid")
+        JPUSHService.setTags(nil, aliasInbackground: studentid)
+        NSNotificationCenter.defaultCenter().removeObserver(self, name: kJPFNetworkDidLoginNotification, object: nil)
+        print(studentid)
+        print(callBack)
+    }
+
+    //  http://wxt.xiaocool.net/index.php?g=apps&m=index&a=GetUserRelation&userid=597
     //  http://wxt.xiaocool.net/index.php?g=apps&m=student&a=getclasslist&studentid=682
     func GetChildrenClass(id:String){
         //  进行数据请求
@@ -211,12 +239,15 @@ class LoginViewController: UIViewController ,UITextFieldDelegate{
                     
 //                    }
                     self.ClassData = ClassList(status.data!)
-                    for i in 0..<self.ClassData.count{
-                        let classInfo = self.ClassData.objectlist[i]
-                        userDefaults.setValue(classInfo.classid!, forKey: "classid")
-                        userDefaults.setValue(classInfo.classid!, forKey: "schoolid")
+//                    for i in 0..<self.ClassData.count{
+                    if self.ClassData.count != 0{
                         
+                        let classInfo = self.ClassData.objectlist[0]
+                        userDefaults.setValue(classInfo.classid!, forKey: "classid")
+                        userDefaults.setValue(classInfo.schoolid!, forKey: "schoolid")
                     }
+                    
+//                    }
                     
                 }
             }

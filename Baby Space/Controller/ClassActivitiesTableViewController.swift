@@ -22,9 +22,17 @@ class ClassActivitiesTableViewController: UITableViewController {
     var user_Source = user_List()
     let arrayPeople = NSMutableArray()
 
-    
     override func viewWillAppear(animated: Bool) {
+        
         self.DropDownUpdate()
+        let useDefaults = NSUserDefaults.standardUserDefaults()
+        useDefaults.removeObjectForKey("activityArr")
+    }
+    
+    override func viewWillDisappear(animated: Bool) {
+        let useDefaults = NSUserDefaults.standardUserDefaults()
+        useDefaults.removeObjectForKey("activityArr")
+        
     }
     
     override func viewDidLoad() {
@@ -32,8 +40,21 @@ class ClassActivitiesTableViewController: UITableViewController {
 //        self.DropDownUpdate()
 //        tableView.frame = CGRectMake(0, 0, WIDTH, HEIGHT + 20)
 //        tableView.backgroundColor = UIColor.lightGrayColor()
+//        NSNotificationCenter.defaultCenter().addObserver(self, selector: #selector(ClassActivitiesTableViewController.gameOver(_:)), name: "push", object: nil)
     
     }
+    
+    func gameOver(title:NSNotification)
+    {
+//        if title == 1{
+            let vc = TeacherCommentsTableViewController()
+            self.navigationController?.pushViewController(vc, animated: true)
+            
+//        }
+    }
+
+    
+    
     //    开始刷新
     func DropDownUpdate(){
         self.tableSource.headerView = XWRefreshNormalHeader(target: self, action: #selector(ClassActivitiesTableViewController.GetDate))
@@ -96,6 +117,7 @@ class ClassActivitiesTableViewController: UITableViewController {
     override func tableView(tableView: UITableView, cellForRowAtIndexPath indexPath: NSIndexPath) -> UITableViewCell {
         let cell = UITableViewCell(style: .Default, reuseIdentifier: String(indexPath.row))
         cell.selectionStyle = .None
+        tableSource.separatorStyle = .None
         let activityInfo = self.activitySource.activityList[indexPath.row]
         self.activity_listSource = activity_listList(activityInfo.activity_list!)
         self.apply_countSource = apply_countList(activityInfo.apply_count!)
@@ -110,6 +132,9 @@ class ClassActivitiesTableViewController: UITableViewController {
         titleLbl.textAlignment = NSTextAlignment.Center
         titleLbl.text = activity_listModel.title
         cell.contentView.addSubview(titleLbl)
+        
+        
+        
         //  活动内容
         let contentLbl = UILabel()
         contentLbl.frame = CGRectMake(10, 50, WIDTH - 20, 20)
@@ -120,43 +145,23 @@ class ClassActivitiesTableViewController: UITableViewController {
         
         //  活动图片
 
-        let pic = self.picSource.activityList
+        var pic = self.picSource.activityList
 //        print(picModel.count)
         
         
         
         //  图片
         var image_h = CGFloat()
-        var button:UIButton?
+        var button:CustomBtn?
         
         
         //判断图片张数显示
-        if pic.count == 1 {
-            image_h=(WIDTH - 40)/3.0
-            let pciInfo = pic[0]
-            let imgUrl = microblogImageUrl+(pciInfo.picture_url)!
-            let avatarUrl = NSURL(string: imgUrl)
-            let request: NSURLRequest = NSURLRequest(URL: avatarUrl!)
-            NSURLConnection.sendAsynchronousRequest(request, queue: NSOperationQueue.mainQueue(), completionHandler: {(response: NSURLResponse?,data: NSData?,error: NSError?)-> Void in
-                if(data != nil){
-                    button = UIButton()
-                    button!.frame = CGRectMake(12, 80, WIDTH - 24, (WIDTH - 40)/3.0)
-                    let imgTmp = UIImage(data: data!)
-                    
-                    button!.setImage(imgTmp, forState: .Normal)
-                    if button?.imageView?.image == nil{
-//                        button!.setImage(UIImage(named: "园所公告背景.png"), forState: .Normal)
-                        button?.setBackgroundImage(UIImage(named: "园所公告背景.png"), forState: .Normal)
-                    }
-                    button?.tag = indexPath.row
-                    button?.addTarget(self, action: #selector(self.clickBtn), forControlEvents: .TouchUpInside)
-                    cell.contentView.addSubview(button!)
-                    
-                }
-            })
-            
+        //解决数据返回有null和“”的错误图片显示
+        if pic.count==1&&(pic.first?.picture_url=="null"||pic.first?.picture_url=="") {
+            pic.removeAll()
         }
-        if(pic.count>1&&pic.count<=3){
+
+        if(pic.count>0&&pic.count<=3){
             image_h=(WIDTH - 40)/3.0
             for i in 1...pic.count{
                 var x = 12
@@ -172,7 +177,8 @@ class ClassActivitiesTableViewController: UITableViewController {
                     if(data != nil){
                         x = x+((i-1)*Int((WIDTH - 40)/3.0 + 10))
                         //                        blogimage = UIImageView(frame: CGRectMake(CGFloat(x), 150, 110, 80))
-                        button = UIButton()
+                        button = CustomBtn()
+                        button?.flag = i
                         button!.frame = CGRectMake(CGFloat(x), 80, (WIDTH - 40)/3.0, (WIDTH - 40)/3.0)
                         let imgTmp = UIImage(data: data!)
                     
@@ -208,7 +214,8 @@ class ClassActivitiesTableViewController: UITableViewController {
                         NSURLConnection.sendAsynchronousRequest(request, queue: NSOperationQueue.mainQueue(), completionHandler: {(response: NSURLResponse?,data: NSData?,error: NSError?)-> Void in
                             if(data != nil){
                                 x = x+((i-1)*Int((WIDTH - 40)/3.0 + 10))
-                                button = UIButton()
+                                button = CustomBtn()
+                                button?.flag = i
                                 button!.frame = CGRectMake(CGFloat(x), 80, (WIDTH - 40)/3.0, (WIDTH - 40)/3.0)
                                 
                                 let imgTmp = UIImage(data: data!)
@@ -235,7 +242,8 @@ class ClassActivitiesTableViewController: UITableViewController {
                         NSURLConnection.sendAsynchronousRequest(request, queue: NSOperationQueue.mainQueue(), completionHandler: {(response: NSURLResponse?,data: NSData?,error: NSError?)-> Void in
                             if(data != nil){
                                 x = x+((i-4)*Int((WIDTH - 40)/3.0 + 10))
-                                button = UIButton()
+                                button = CustomBtn()
+                                button?.flag = i
                                 button!.frame = CGRectMake(CGFloat(x), 80+(WIDTH - 40)/3.0 + 5, (WIDTH - 40)/3.0, (WIDTH - 40)/3.0)
                                 let imgTmp = UIImage(data: data!)
                             
@@ -268,7 +276,8 @@ class ClassActivitiesTableViewController: UITableViewController {
                         NSURLConnection.sendAsynchronousRequest(request, queue: NSOperationQueue.mainQueue(), completionHandler: {(response: NSURLResponse?,data: NSData?,error: NSError?)-> Void in
                             if(data != nil){
                                 x = x+((i-1)*Int((WIDTH - 40)/3.0 + 10))
-                                button = UIButton()
+                                button = CustomBtn()
+                                button?.flag = i
                                 button!.frame = CGRectMake(CGFloat(x), 80, (WIDTH - 40)/3.0, (WIDTH - 40)/3.0)
                                 let imgTmp = UIImage(data: data!)
                                 
@@ -295,7 +304,8 @@ class ClassActivitiesTableViewController: UITableViewController {
                         NSURLConnection.sendAsynchronousRequest(request, queue: NSOperationQueue.mainQueue(), completionHandler: {(response: NSURLResponse?,data: NSData?,error: NSError?)-> Void in
                             if(data != nil){
                                 x = x+((i-4)*Int((WIDTH - 40)/3.0 + 10))
-                                button = UIButton()
+                                button = CustomBtn()
+                                button?.flag = i
                                 button!.frame = CGRectMake(CGFloat(x), 80+(WIDTH - 40)/3.0 + 5, (WIDTH - 40)/3.0, (WIDTH - 40)/3.0)
                                 let imgTmp = UIImage(data: data!)
                                 
@@ -322,7 +332,8 @@ class ClassActivitiesTableViewController: UITableViewController {
                         NSURLConnection.sendAsynchronousRequest(request, queue: NSOperationQueue.mainQueue(), completionHandler: {(response: NSURLResponse?,data: NSData?,error: NSError?)-> Void in
                             if(data != nil){
                                 x = x+((i-7)*Int((WIDTH - 40)/3.0 + 10))
-                                button = UIButton()
+                                button = CustomBtn()
+                                button?.flag = i
                                 button!.frame = CGRectMake(CGFloat(x), 80+(WIDTH - 40)/3.0 + 5+(WIDTH - 40)/3.0 + 5, (WIDTH - 40)/3.0, (WIDTH - 40)/3.0)
                                 let imgTmp = UIImage(data: data!)
                                 
@@ -358,7 +369,8 @@ class ClassActivitiesTableViewController: UITableViewController {
                             if(data != nil){
                                 x = x+((i-1)*Int((WIDTH - 40)/3.0 + 10))
                                 print(x)
-                                button = UIButton()
+                                button = CustomBtn()
+                                button?.flag = i
                                 button!.frame = CGRectMake(CGFloat(x), 80, (WIDTH - 40)/3.0, (WIDTH - 40)/3.0)
                                 let imgTmp = UIImage(data: data!)
                                 
@@ -385,7 +397,8 @@ class ClassActivitiesTableViewController: UITableViewController {
                         NSURLConnection.sendAsynchronousRequest(request, queue: NSOperationQueue.mainQueue(), completionHandler: {(response: NSURLResponse?,data: NSData?,error: NSError?)-> Void in
                             if(data != nil){
                                 x = x+((i-4)*Int((WIDTH - 40)/3.0 + 10))
-                                button = UIButton()
+                                button = CustomBtn()
+                                button?.flag = i
                                 button!.frame = CGRectMake(CGFloat(x), 80+(WIDTH - 40)/3.0 + 5, (WIDTH - 40)/3.0, (WIDTH - 40)/3.0)
                                 let imgTmp = UIImage(data: data!)
                                
@@ -412,7 +425,8 @@ class ClassActivitiesTableViewController: UITableViewController {
                         NSURLConnection.sendAsynchronousRequest(request, queue: NSOperationQueue.mainQueue(), completionHandler: {(response: NSURLResponse?,data: NSData?,error: NSError?)-> Void in
                             if(data != nil){
                                 x = x+((i-7)*Int((WIDTH - 40)/3.0 + 10))
-                                button = UIButton()
+                                button = CustomBtn()
+                                button?.flag = i
                                 button!.frame = CGRectMake(CGFloat(x), 80+(WIDTH - 40)/3.0 + 5+(WIDTH - 40)/3.0 + 5, (WIDTH - 40)/3.0, (WIDTH - 40)/3.0)
                                 let imgTmp = UIImage(data: data!)
                             
@@ -473,7 +487,28 @@ class ClassActivitiesTableViewController: UITableViewController {
         baoming.frame = CGRectMake(15, 130 + image_h, WIDTH - 30, 20)
         baoming.text = "已报名\(self.apply_countSource.activityList.count)"
         baoming.textColor = UIColor.orangeColor()
-        cell.addSubview(baoming)
+        if activity_listModel.starttime != "0" {
+            
+            cell.addSubview(baoming)
+        }
+        
+        let state = UILabel()
+        state.frame = CGRectMake(WIDTH - 70, 130 + image_h, 60, 20)
+        cell.addSubview(state)
+        
+        var answerInfo = NSString()
+        for j in 0 ..< self.apply_countSource.activityList.count {
+            answerInfo = self.apply_countSource.activityList[j].userid!
+        }
+        let userid = NSUserDefaults.standardUserDefaults()
+        let uid = userid.stringForKey("userid")
+        if answerInfo != uid {
+//            state.text = "未报名"
+//            state.textColor = UIColor.orangeColor()
+        }else{
+            state.text = "已报名"
+            state.textColor = UIColor(red: 155/255, green: 229/255, blue: 180/255, alpha: 1)
+        }
         
         let view = UIView()
         view.frame = CGRectMake(0, 160 + image_h, WIDTH, 20)
@@ -492,7 +527,7 @@ class ClassActivitiesTableViewController: UITableViewController {
         return 0.01
     }
     
-    func clickBtn(sender:UIButton){
+    func clickBtn(sender:CustomBtn){
         let activityInfo = self.activitySource.activityList[sender.tag]
         let detailsVC = PicDetailViewController()
 
@@ -500,6 +535,7 @@ class ClassActivitiesTableViewController: UITableViewController {
         detailsVC.activity_listSource = activity_listList(activityInfo.activity_list!)
         detailsVC.apply_countSource = apply_countList(activityInfo.apply_count!)
         detailsVC.picSource = picList(activityInfo.pic!)
+        detailsVC.count = sender.flag!
         self.navigationController?.pushViewController(detailsVC, animated: true)
     }
 

@@ -35,19 +35,16 @@ class RegisterGetCodeViewController: UIViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        //  得到验证码
-        getCodeButton.addTarget(self, action: #selector(RegisterGetCodeViewController.GetCode), forControlEvents: UIControlEvents.TouchUpInside)
-        //  下一步
-        nextButton.addTarget(self, action: #selector(RegisterGetCodeViewController.Next), forControlEvents: UIControlEvents.TouchUpInside)
-        //  隐藏时间label
-        timeLabel.hidden = true
+        //      取消隐藏导航栏
         self.navigationController?.navigationBar.hidden = false
-        
+        getCodeButton.addTarget(self, action: #selector(ForgetPasswordViewController.GetCode), forControlEvents: UIControlEvents.TouchUpInside)
+        nextButton.addTarget(self, action: #selector(ForgetPasswordViewController.Next), forControlEvents: UIControlEvents.TouchUpInside)
+        timeLabel.hidden = true
     }
-//    发送验证码
+    //    发送验证码
     func GetCode(){
         let phoneNum:String =  (phoneNumberText.text)!
-        if (phoneNumberText.text!.isEmpty||phoneNumberText.text?.characters.count != 11)
+        if (phoneNum.isEmpty)
         {
             let alerView:UIAlertView = UIAlertView()
             alerView.title = "手机号输入错误"
@@ -57,13 +54,7 @@ class RegisterGetCodeViewController: UIViewController {
             alerView.delegate = self
             alerView.tag = 1
             alerView.show()
-        }else if (!isTelNumber(phoneNum)){//判断输入是否是电话号码
-            let alert = UIAlertController(title: "手机号输入错误", message: "请重新输入", preferredStyle: .Alert)
-            alert.addAction(UIAlertAction(title: "取消", style: .Cancel, handler: nil))
-            alert.addAction(UIAlertAction(title: "确定", style: .Default, handler: nil))
-            self.presentViewController(alert, animated: true, completion: nil)
-        }else
-        {
+        }else{
             let alerView:UIAlertView = UIAlertView()
             alerView.title = "发送验证码到"
             alerView.message = "\(phoneNumberText.text!)"
@@ -73,117 +64,100 @@ class RegisterGetCodeViewController: UIViewController {
             alerView.delegate = self
             alerView.tag = 0
             alerView.show()
-
         }
-
+        
     }
-//    下一步
+    
     func Next(){
         if PandKong()==true{
-            RegisterYanZheng()
+            Yanzheng()
         }
-
+        
     }
-//    注册验证
-    func RegisterYanZheng(){
-        let url = apiUrl+"UserVerify"
-        let param = [
-            "phone":self.phoneNumberText.text!,
-            "code":self.codeText.text!
+    //    验证
+    func Yanzheng(){
+        let url = apiUrl+"forgetPass_Verify"
+        let params = [
+            "phone":phoneNumberText.text!,
+            "code":codeText.text!
         ]
-        print(url)
-        Alamofire.request(.GET, url, parameters: param).response { request, response, json, error in
+        Alamofire.request(.GET, url, parameters: params).response { request, response, json, error in
             if(error != nil){
             }
             else{
                 print("request是")
                 print(request!)
+                print("response是")
+                print(response!)
+                print("data是")
+                print(json!)
                 print("====================")
                 let status = Httpresult(JSONDecoder(json!))
-                print(JSONDecoder(json!))
                 print("状态是")
                 print(status.status)
                 if(status.status == "error"){
-                    let hud = MBProgressHUD.showHUDAddedTo(self.view, animated: true)
-                    hud.mode = MBProgressHUDMode.Text;
-                    hud.labelText = status.errorData
-                    hud.margin = 10.0
-                    hud.removeFromSuperViewOnHide = true
-                    hud.hide(true, afterDelay: 3)
+                    messageHUD(self.view, messageData: status.errorData!)
                 }
                 
                 if(status.status == "success"){
-                    let userid = NSUserDefaults.standardUserDefaults()
-                    userid.setValue(status.data?.id, forKey: "userid")
-                    let uid = userid.valueForKey("userid")
-                    print(uid)
+                    print("Success")
+                    successHUD(self.view, successData: "登录成功")
+                    let userDefaults = NSUserDefaults.standardUserDefaults()
+                    userDefaults.setValue(status.data?.id, forKey: "userid")
+                    
                     let mainStoryboard = UIStoryboard(name: "Main", bundle: NSBundle.mainBundle())
-                    let vc : UIViewController = mainStoryboard.instantiateViewControllerWithIdentifier("SetPasswordView") 
+                    let vc : UIViewController = mainStoryboard.instantiateViewControllerWithIdentifier("ForgetPasswordView")
                     self.navigationController?.pushViewController(vc, animated: true)
+                    
+                    
                 }
                 
             }
             
         }
-
+        
     }
-//    判空
+    //    判空
     func PandKong()->Bool{
-        let phoneNum:String =  (phoneNumberText.text)!
+        
         if(phoneNumberText.text!.isEmpty){
-            let hud = MBProgressHUD.showHUDAddedTo(self.view, animated: true)
-            hud.mode = MBProgressHUDMode.Text
-            hud.labelText = "请输入手机号"
-            hud.margin = 10.0
-            hud.removeFromSuperViewOnHide = true
-            hud.hide(true, afterDelay: 1)
+            messageHUD(self.view, messageData: "请输入手机号")
             return false
-        }else if (!isTelNumber(phoneNum)){//判断输入是否是电话号码
-            let alert = UIAlertController(title: "手机号输入错误", message: "请重新输入", preferredStyle: .Alert)
-            alert.addAction(UIAlertAction(title: "取消", style: .Cancel, handler: nil))
-            alert.addAction(UIAlertAction(title: "确定", style: .Default, handler: nil))
-            self.presentViewController(alert, animated: true, completion: nil)
         }
         
         if(codeText.text!.isEmpty){
-            let hud = MBProgressHUD.showHUDAddedTo(self.view, animated: true)
-            hud.mode = MBProgressHUDMode.Text
-            hud.labelText = "请输入验证码"
-            hud.margin = 10.0
-            hud.removeFromSuperViewOnHide = true
-            hud.hide(true, afterDelay: 1)
+            messageHUD(self.view, messageData: "请输入验证码")
             return false
         }
         return true
     }
-//    考试倒计时
+    //   开始倒计时
     func timeDow()
     {
-        let time1 = NSTimer.scheduledTimerWithTimeInterval(1.0, target:self, selector: #selector(RegisterGetCodeViewController.updateTime), userInfo: nil, repeats: true)
+        let time1 = NSTimer.scheduledTimerWithTimeInterval(1.0, target:self, selector: #selector(ForgetPasswordViewController.updateTime), userInfo: nil, repeats: true)
         timeNow = time1
     }
-//    倒计时
+    //    倒计时
     func showRepeatButton()
     {
         timeLabel.hidden=true
         getCodeButton.hidden = false
         getCodeButton.enabled = true
     }
-//    更新时间
+    //    更新时间
     func updateTime()
     {
         count -= 1
         if (count <= 0)
         {
             count = 60
-            //  倒计时
             self.showRepeatButton()
             timeNow.invalidate()
         }
         timeLabel.text = "\(count)S"
         
     }
-//    提示框点击事件
+    //    提示框点击事件
     func alertView(alertView: UIAlertView, clickedButtonAtIndex buttonIndex: Int) {
         
         if alertView.tag == 0
@@ -193,7 +167,6 @@ class RegisterGetCodeViewController: UIViewController {
                 self.senderMessage()
                 getCodeButton.hidden = true
                 timeLabel.hidden = false
-                //  时间倒计时
                 self.timeDow()
             }
         }
@@ -202,51 +175,24 @@ class RegisterGetCodeViewController: UIViewController {
         if alertView.tag == 2
         {}
     }
-//    发送验证码
+    //    发送验证码
     func senderMessage()
     {
         let url = apiUrl+"SendMobileCode"
         let param = [
             "phone":self.phoneNumberText.text!,
-            
-        ]
+            ]
         Alamofire.request(.GET, url, parameters: param).response { request, response, json, error in
             if(error != nil){
             }else{
                 print(request)
             }
-                
         }
     }
-//    收键盘
+    //    收键盘
     override func touchesBegan(touches: Set<UITouch>, withEvent event: UIEvent?) {
         self.view.endEditing(true)
     }
-    //    判断是否为电话号码
-    func isTelNumber(num:NSString)->Bool
-    {
-        let mobile = "^1(3[0-9]|5[0-35-9]|8[025-9])\\d{8}$"
-        let  CM = "^1(34[0-8]|(3[5-9]|5[017-9]|8[278])\\d)\\d{7}$"
-        let  CU = "^1(3[0-2]|5[256]|8[56])\\d{8}$"
-        let  CT = "^1((33|53|8[09])[0-9]|349)\\d{7}$"
-        let regextestmobile = NSPredicate(format: "SELF MATCHES %@",mobile)
-        let regextestcm = NSPredicate(format: "SELF MATCHES %@",CM )
-        let regextestcu = NSPredicate(format: "SELF MATCHES %@" ,CU)
-        let regextestct = NSPredicate(format: "SELF MATCHES %@" ,CT)
-        if ((regextestmobile.evaluateWithObject(num) == true)
-            || (regextestcm.evaluateWithObject(num)  == true)
-            || (regextestct.evaluateWithObject(num) == true)
-            || (regextestcu.evaluateWithObject(num) == true))
-        {
-            return true
-        }
-        else
-        {
-            return false
-        }
-    }
-
     
-
-
+    
 }

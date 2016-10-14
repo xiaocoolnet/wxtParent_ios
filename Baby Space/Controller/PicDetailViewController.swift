@@ -18,6 +18,8 @@ class PicDetailViewController: UIViewController, UICollectionViewDelegate, UICol
     
     var collectV:UICollectionView?
     var flowLayout = UICollectionViewFlowLayout()
+    var count = NSInteger()
+    
 
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -43,6 +45,11 @@ class PicDetailViewController: UIViewController, UICollectionViewDelegate, UICol
         
     }
     
+    override func viewDidLayoutSubviews() {
+        collectV!.contentOffset = CGPointMake(CGFloat(Int(count) - 1)*WIDTH, 0)
+        
+    }
+    
     func collectionView(collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
         
         return self.picSource.activityList.count
@@ -56,7 +63,7 @@ class PicDetailViewController: UIViewController, UICollectionViewDelegate, UICol
         let pciInfo = self.picSource.activityList[indexPath.item]
         let imgUrl = microblogImageUrl+(pciInfo.picture_url)!
         let photourl = NSURL(string: imgUrl)
-        cell.imgView.sd_setImageWithURL(photourl, placeholderImage: (UIImage(named: "园所公告背景.png")))
+        cell.imgView.sd_setImageWithURL(photourl, placeholderImage: (UIImage(named: "图片默认加载")))
         cell.contentView.addSubview(cell.imgView)
         return cell
     }

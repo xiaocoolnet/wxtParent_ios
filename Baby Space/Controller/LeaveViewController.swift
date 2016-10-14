@@ -19,6 +19,15 @@ class LeaveViewController: UIViewController,UITableViewDelegate,UITableViewDataS
     override func viewWillAppear(animated: Bool) {
 //        self.loadData()
         self.DropDownUpdate()
+        self.tabBarController?.tabBar.hidden = false
+        let useDefaults = NSUserDefaults.standardUserDefaults()
+        useDefaults.removeObjectForKey("leaveArr")
+    }
+    
+    override func viewWillDisappear(animated: Bool) {
+        let useDefaults = NSUserDefaults.standardUserDefaults()
+        useDefaults.removeObjectForKey("leaveArr")
+        
     }
     
     override func viewDidLoad() {
@@ -99,7 +108,9 @@ class LeaveViewController: UIViewController,UITableViewDelegate,UITableViewDataS
         headImageView.frame = CGRectMake(10, 10, 40, 40)
         let imgUrl = microblogImageUrl + leaveInfo.parentavatar!
         let photourl = NSURL(string: imgUrl)
-        headImageView.yy_setImageWithURL(photourl, placeholder: UIImage(named: "Logo.png"))
+        headImageView.yy_setImageWithURL(photourl, placeholder: UIImage(named: "默认头像"))
+        headImageView.layer.cornerRadius = 20
+        headImageView.clipsToBounds = true
         cell.addSubview(headImageView)
         
         let studentNameLbl = UILabel()
@@ -133,35 +144,14 @@ class LeaveViewController: UIViewController,UITableViewDelegate,UITableViewDataS
         var button:UIButton?
         //判断图片张数显示
         
-        let pic  = leaveInfo.pic
+        var pic  = leaveInfo.pic
         print(pic.count)
         
-        if pic.count == 1 {
-            image_h=(WIDTH - 40)/3.0
-            let pciInfo = pic[0]
-            let imgUrl = microblogImageUrl+(pciInfo.picture_url)
-            let avatarUrl = NSURL(string: imgUrl)
-            let request: NSURLRequest = NSURLRequest(URL: avatarUrl!)
-            NSURLConnection.sendAsynchronousRequest(request, queue: NSOperationQueue.mainQueue(), completionHandler: {(response: NSURLResponse?,data: NSData?,error: NSError?)-> Void in
-                if(data != nil){
-                    button = UIButton()
-                    button!.frame = CGRectMake(12, height, WIDTH - 24, (WIDTH - 40)/3.0)
-                    let imgTmp = UIImage(data: data!)
-                    
-                    button!.setImage(imgTmp, forState: .Normal)
-                    if button?.imageView?.image == nil{
-                        //                        button!.setImage(UIImage(named: "园所公告背景.png"), forState: .Normal)
-                        button?.setBackgroundImage(UIImage(named: "园所公告背景.png"), forState: .Normal)
-                    }
-                    button?.tag = indexPath.row
-                    //                    button?.addTarget(self, action: #selector(self.clickBtn), forControlEvents: .TouchUpInside)
-                    cell.contentView.addSubview(button!)
-                    
-                }
-            })
-            
+        //解决数据返回有null和“”的错误图片显示
+        if pic.count==1&&(pic.first?.picture_url=="null"||pic.first?.picture_url=="") {
+            pic.removeAll()
         }
-        if(pic.count>1&&pic.count<=3){
+        if(pic.count>0&&pic.count<=3){
             image_h=(WIDTH - 40)/3.0
             for i in 1...pic.count{
                 var x = 12
@@ -449,14 +439,17 @@ class LeaveViewController: UIViewController,UITableViewDelegate,UITableViewDataS
         
         let statusLbl = UILabel()
         statusLbl.frame = CGRectMake(WIDTH - 60, 15, 60, 30)
-        statusLbl.textColor = UIColor.redColor()
+//        statusLbl.textColor = UIColor.redColor()
         statusLbl.font = UIFont.systemFontOfSize(16)
         if leaveInfo.status == "0" {
             statusLbl.text = "未反馈"
+            statusLbl.textColor = UIColor.orangeColor()
         }else if leaveInfo.status == "1" {
             statusLbl.text = "已同意"
+            statusLbl.textColor = UIColor(red: 155/255, green: 229/255, blue: 180/255, alpha: 1)
         }else{
             statusLbl.text = "不同意"
+            statusLbl.textColor = UIColor.orangeColor()
         }
         cell.contentView.addSubview(statusLbl)
 
