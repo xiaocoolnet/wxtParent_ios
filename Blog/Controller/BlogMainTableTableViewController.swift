@@ -50,7 +50,8 @@ class BlogMainTableTableViewController: UITableViewController,UITextFieldDelegat
     }
 //    发动态
     func addBlog(){
-        let vc = AddBlogViewController()
+//        let vc = AddBlogViewController()
+        let vc = WirteCommentViewController()
         vc.hidesBottomBarWhenPushed = true
         self.navigationController?.pushViewController(vc, animated: true)
     }

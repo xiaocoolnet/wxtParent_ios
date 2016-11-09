@@ -36,7 +36,8 @@ class GrowingDiaryMainViewController: UIViewController,UIScrollViewDelegate {
     }
     //    发图片
     func addDiary(){
-        let vc = AddDiaryViewController()
+//        let vc = AddDiaryViewController()
+        let vc = GDWriteCommentViewController()
         vc.hidesBottomBarWhenPushed = true
         self.navigationController?.pushViewController(vc, animated: true)
     }

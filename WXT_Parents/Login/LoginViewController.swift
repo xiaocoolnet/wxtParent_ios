@@ -68,7 +68,7 @@ class LoginViewController: UIViewController ,UITextFieldDelegate{
             "password":self.PasswordText.text!,
 //          "jgtoken":deviceToken
         ]
-        Alamofire.request(.GET, url, parameters: param as![String:String]).response { request, response, json, error in
+        Alamofire.request(.GET, url, parameters: param ).response { request, response, json, error in
                 if(error != nil){
                 }
                 else{

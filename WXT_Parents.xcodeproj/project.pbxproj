@@ -430,6 +430,8 @@
 		6434695D1DD1CC0F000E598A /* UIView+Layout.m in Sources */ = {isa = PBXBuildFile; fileRef = 643469531DD1CC0F000E598A /* UIView+Layout.m */; };
 		643469641DD1D678000E598A /* PicNumCollectionViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 643469621DD1D678000E598A /* PicNumCollectionViewCell.swift */; };
 		643469651DD1D678000E598A /* PicNumCollectionViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 643469631DD1D678000E598A /* PicNumCollectionViewCell.xib */; };
+		643469671DD307FF000E598A /* SendMessageViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 643469661DD307FF000E598A /* SendMessageViewController.swift */; };
+		643469691DD30A61000E598A /* SendMessageModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 643469681DD30A61000E598A /* SendMessageModel.swift */; };
 		6441EFE21D3B564D00986730 /* QCInvitationCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6441EFE11D3B564D00986730 /* QCInvitationCell.swift */; };
 		6443B7EE1D3E1A9400B1E05E /* QCChildrenClass.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6443B7ED1D3E1A9300B1E05E /* QCChildrenClass.swift */; };
 		6443B7F11D3E234B00B1E05E /* QCDetailsClassActiveVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6443B7F01D3E234B00B1E05E /* QCDetailsClassActiveVC.swift */; };
@@ -1055,6 +1057,8 @@
 		643469531DD1CC0F000E598A /* UIView+Layout.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "UIView+Layout.m"; sourceTree = "<group>"; };
 		643469621DD1D678000E598A /* PicNumCollectionViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PicNumCollectionViewCell.swift; sourceTree = "<group>"; };
 		643469631DD1D678000E598A /* PicNumCollectionViewCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = PicNumCollectionViewCell.xib; sourceTree = "<group>"; };
+		643469661DD307FF000E598A /* SendMessageViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SendMessageViewController.swift; sourceTree = "<group>"; };
+		643469681DD30A61000E598A /* SendMessageModel.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SendMessageModel.swift; sourceTree = "<group>"; };
 		6441EFE11D3B564D00986730 /* QCInvitationCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = QCInvitationCell.swift; sourceTree = "<group>"; };
 		6443B7ED1D3E1A9300B1E05E /* QCChildrenClass.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = QCChildrenClass.swift; sourceTree = "<group>"; };
 		6443B7F01D3E234B00B1E05E /* QCDetailsClassActiveVC.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = QCDetailsClassActiveVC.swift; sourceTree = "<group>"; };
@@ -2746,6 +2750,7 @@
 			isa = PBXGroup;
 			children = (
 				6497E9991D37667B00C4EC82 /* QCOnlineHelpVC.swift */,
+				643469661DD307FF000E598A /* SendMessageViewController.swift */,
 			);
 			name = "在线客服";
 			sourceTree = "<group>";
@@ -3238,6 +3243,7 @@
 				EAE0A5CD1C5094F500ECF86E /* ServiceModel.swift */,
 				0461F4D91C9E8F76001D6CFE /* CodeResult.swift */,
 				6450AFAD1D6C341E00C6D6CA /* MineChildrenModel.swift */,
+				643469681DD30A61000E598A /* SendMessageModel.swift */,
 				641387D11D53568F0019EE5F /* 邀请家人 */,
 			);
 			path = Model;
@@ -3917,6 +3923,7 @@
 				1FC2620C1CE45AB5003CE906 /* Data.swift in Sources */,
 				1F34977D1CD0B29300146B7A /* HomeworkList.swift in Sources */,
 				1FC262321CE45AB5003CE906 /* NVActivityIndicatorAnimationLineScale.swift in Sources */,
+				643469691DD30A61000E598A /* SendMessageModel.swift in Sources */,
 				EAEB9E821C5208F200EACE1B /* BlogMainTableTableViewController.swift in Sources */,
 				641387BF1D519E1D0019EE5F /* ActivityViewController.swift in Sources */,
 				0BABAC111D2375DB003BEF5E /* QCCommentCell.swift in Sources */,
@@ -4193,6 +4200,7 @@
 				1FE7DB5C1CD35C1700FF527F /* TeacherInfoTableViewCell.swift in Sources */,
 				1F8F39F41D001B0500A4F34D /* XQBDetailViewController.swift in Sources */,
 				1FC262121CE45AB5003CE906 /* Haneke.swift in Sources */,
+				643469671DD307FF000E598A /* SendMessageViewController.swift in Sources */,
 				1F888E7E1D01861900F8B33D /* SystemNewsTableViewCell.swift in Sources */,
 				1F64EA5B1CDB2D77002C6362 /* tool.swift in Sources */,
 				641387BC1D518E6F0019EE5F /* HappySchoolTableViewCell.swift in Sources */,

@@ -15,7 +15,6 @@ import Alamofire
 class AddDiaryViewController: UIViewController,UICollectionViewDataSource,UICollectionViewDelegate {
 
     var id:String?
-    
     var imageData:[NSData] = []
     var isuploading = false
     var imageUrl:String?

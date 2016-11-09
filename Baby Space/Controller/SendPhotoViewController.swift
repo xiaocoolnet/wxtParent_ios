@@ -26,19 +26,25 @@ class SendPhotoViewController: UIViewController,UIImagePickerControllerDelegate,
     var itemCount = 0
     var collectionV:UICollectionView?
     var flowLayout = UICollectionViewFlowLayout()
-    
+    var scrollView = UIScrollView()
     
     var image = UIImage()
     override func viewDidLoad() {
         super.viewDidLoad()
         //   打开手势交互
         self.view.userInteractionEnabled = true
-        let tap = UITapGestureRecognizer.init(target: self, action: #selector(tapAction(_:)))
-        self.view.addGestureRecognizer(tap)
         self.title = "发布照片"
         self.view.backgroundColor = UIColor.whiteColor()
         let rightItem = UIBarButtonItem(title: "发布", style: .Done, target: self, action: #selector(SendPhotoViewController.UpdateBlog))
         self.navigationItem.rightBarButtonItem = rightItem
+        
+        scrollView = UIScrollView(frame: CGRectMake(0, 0, WIDTH, HEIGHT-49))
+//        scrollView.backgroundColor = UIColor(red: 235/255.0, green: 235/255.0, blue: 235/255.0, alpha: 1)
+//        scrollView.contentSize = CGSizeMake(WIDTH, HEIGHT+200)
+        scrollView.showsVerticalScrollIndicator = false
+        self.view.addSubview(scrollView)
+        let tap = UITapGestureRecognizer.init(target: self, action: #selector(tapAction(_:)))
+        self.scrollView.addGestureRecognizer(tap)
         //        创建UI
         createPhotoName()
         self.createUI()
@@ -51,12 +57,12 @@ class SendPhotoViewController: UIViewController,UIImagePickerControllerDelegate,
         let nameField = UITextField()
         nameField.frame = CGRectMake(10, 0, WIDTH - 15, 40)
         nameField.placeholder = "相册名称"
-        self.view.addSubview(nameField)
+        self.scrollView.addSubview(nameField)
         
         let lable = UILabel()
         lable.frame = CGRectMake(0, 40, WIDTH, 10)
         lable.backgroundColor = RGBA(242.0, g: 242.0, b: 242.0, a: 1)
-        self.view.addSubview(lable)
+        self.scrollView.addSubview(lable)
         
     }
     //    创建输入框
@@ -73,12 +79,12 @@ class SendPhotoViewController: UIViewController,UIImagePickerControllerDelegate,
             hud.hide(true, afterDelay: 3)
         }
         
-        self.view.addSubview(contentTextView)
+        self.scrollView.addSubview(contentTextView)
         
         let line = UILabel()
         line.frame = CGRectMake(0, 171, WIDTH, 1)
         line.backgroundColor = RGBA(242.0, g: 242.0, b: 242.0, a: 1)
-        self.view.addSubview(line)
+        self.scrollView.addSubview(line)
         //        添加图片按钮
         addPictureBtn.frame = CGRectMake(8, 185, 55, 55)
         addPictureBtn.setBackgroundImage(UIImage(named: "add2"), forState: UIControlState.Normal)
@@ -86,7 +92,7 @@ class SendPhotoViewController: UIViewController,UIImagePickerControllerDelegate,
         addPictureBtn.layer.borderColor = UIColor.grayColor().CGColor
         addPictureBtn.addTarget(self, action: #selector(SendPhotoViewController.AddPictrures), forControlEvents: UIControlEvents.TouchUpInside)
         
-        self.view.addSubview(addPictureBtn)
+        self.scrollView.addSubview(addPictureBtn)
     }
     
     func addCollectionViewPicture(){
@@ -111,8 +117,9 @@ class SendPhotoViewController: UIViewController,UIImagePickerControllerDelegate,
         collectionV!.registerNib(UINib(nibName: "PicNumCollectionViewCell",bundle: nil), forCellWithReuseIdentifier: "photo")
 //        self.collectionV?.registerClass(ImageCollectionViewCell.self, forCellWithReuseIdentifier: "Photo")
         //        collectionV?.backgroundColor = UIColor.redColor()//测试用
-        self.view.addSubview(collectionV!)
-        
+        self.scrollView.addSubview(collectionV!)
+//        self.scrollView.frame = CGRectMake(0, 0, WIDTH, ((collectionV?.frame.maxY)! + 10))
+        scrollView.contentSize = CGSizeMake(WIDTH, ((collectionV?.frame.maxY)! + 20))
         
     }
     
@@ -195,88 +202,14 @@ class SendPhotoViewController: UIViewController,UIImagePickerControllerDelegate,
         imagePicker.sourceType = UIImagePickerControllerSourceType.PhotoLibrary
         self.presentViewController(imagePickerVc, animated: true, completion: nil)
     }
-//    //上传图片的协议与代理方法
-//    func imagePickerController(picker: UIImagePickerController, didFinishPickingMediaWithInfo info: [String : AnyObject]) {
-//        
-//        //        let image = info[UIImagePickerControllerEditedImage]as! UIImage
-//        //        self.photoArray.addObject(image)
-//        print(self.pictureArray)
-//        self.addCollectionViewPicture()
-//        let data = UIImageJPEGRepresentation((info[UIImagePickerControllerEditedImage] as? UIImage)!, 0.1)!
-//        let dateFormatter = NSDateFormatter()
-//        dateFormatter.dateFormat = "yyyyMMddHHmmss"
-//        let dateStr = dateFormatter.stringFromDate(NSDate())
-//        let imageName = "avatar" + dateStr
-//        
-//        //上传图片
-//        ConnectModel.uploadWithImageName(imageName, imageData: data, URL: "WriteMicroblog_upload") { [unowned self] (data) in
-//            dispatch_async(dispatch_get_main_queue(), {
-//                
-//                let result = Http(JSONDecoder(data))
-//                if result.status != nil {
-//                    dispatch_async(dispatch_get_main_queue(), {
-//                        if result.status! == "success"{
-//                            self.imagePath.addObject(result.data!)
-//                            self.imageUrl = self.imagePath.componentsJoinedByString(",")
-//                            
-//                        }else{
-//                            let hud = MBProgressHUD.showHUDAddedTo(self.view, animated: true)
-//                            hud.mode = MBProgressHUDMode.Text;
-//                            hud.labelText = "图片上传失败"
-//                            hud.margin = 10.0
-//                            hud.removeFromSuperViewOnHide = true
-//                            hud.hide(true, afterDelay: 1)
-//                        }
-//                    })
-//                }
-//            })
-//        }
-//        self.dismissViewControllerAnimated(true, completion: nil)
-//    }
     
     //   更新日记
     func UpdateBlog(){
-//        if(i != 0){
-//            //  图片
+
             self.fabu()
-//        }
-        //  发表日志
-//        self.PutBlog()
+
     }
-//    //    更新图片
-//    func UpdatePic(){
-//                for i in 0..<self.pictureArray.count{
-//                    let chid = NSUserDefaults.standardUserDefaults()
-//                    let studentid = chid.stringForKey("chid")
-//                    let date = NSDate()
-//                    let dateformate = NSDateFormatter()
-//                    dateformate.dateFormat = "yyyy-MM-dd HH:mm"//获得日期
-//                    let time:NSTimeInterval = (date.timeIntervalSince1970)
-//                    let RanNumber = String(arc4random_uniform(1000) + 1000)
-//                    let name = "\(studentid!)baby\(time)\(RanNumber)"
-//                    isuploading = true
-//                
-//
-//                    dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0)) { () -> Void in
-//                        ConnectModel.uploadWithImageName(name, imageData:self.imageData[i], URL: "WriteMicroblog_upload", finish: { (data) -> Void in
-//                            print("返回值")
-//                            print(data)
-//                            
-//                        })
-//        }
-//                    self.imagePath.addObject(name + ".png")
-//                }
-//        self.imageUrl = self.imagePath.componentsJoinedByString(",")
-//        print(self.imageUrl!)
-//        let hud = MBProgressHUD.showHUDAddedTo(self.view, animated: true)
-//        hud.mode = MBProgressHUDMode.Text
-//        hud.margin = 10
-//        hud.removeFromSuperViewOnHide = true
-//        hud.labelText = "上传完成"
-//        hud.hide(true, afterDelay: 1)
-//        self.isuploading = false
-//        
-//    }
+
 
     //    发表日记
     func PutBlog(){

@@ -36,7 +36,7 @@ class BlogCommentViewController: UIViewController,UITableViewDelegate,UITableVie
 //    写评论
     func writeComment(){
         let vc = WirteCommentViewController()
-        vc.id = self.id!
+//        vc.id = self.id!
         self.navigationController?.pushViewController(vc, animated: true)
     }
     //    开始刷新
