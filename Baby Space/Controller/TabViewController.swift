@@ -141,23 +141,28 @@ class TabViewController: UIViewController, UITableViewDelegate, UITableViewDataS
        
         //  标题
         let titleLbl = UILabel()
-        
+        titleLbl.textAlignment = .Center
         titleLbl.frame = CGRectMake(10, 10, WIDTH - 20, 30)
         titleLbl.text = model?.title
-        titleLbl.textAlignment = NSTextAlignment.Center
-//        titleLbl.setTitle(model?.title, forState: .Normal)
-//        titleLbl.setTitleColor(UIColor.blackColor(), forState: .Normal)
+        titleLbl.textColor=biaotiColor
+        titleLbl.font=biaotifont
         cell.contentView.addSubview(titleLbl)
         
         //  内容
         let contentLbl = UILabel()
         
         contentLbl.frame = CGRectMake(10, 50, WIDTH - 20, 20)
-//        contentLbl.textColor = UIColor.lightGrayColor()
+        contentLbl.font=neirongfont
+        contentLbl.textColor=neirongColor
         contentLbl.text = model?.content
+        if indexPath.row == 0{
+            let user = NSUserDefaults.standardUserDefaults()
+            user.setObject(contentLbl.text, forKey: "zuoye")
+            
+        }
         contentLbl.numberOfLines = 0
         contentLbl.sizeToFit()
-        contentLbl.font = UIFont.boldSystemFontOfSize(16)
+        
         cell.contentView.addSubview(contentLbl)
         //        自适应行高
         let options : NSStringDrawingOptions = NSStringDrawingOptions.UsesLineFragmentOrigin
@@ -174,30 +179,26 @@ class TabViewController: UIViewController, UITableViewDelegate, UITableViewDataS
         
         //判断图片张数显示
         if(pic.count>0&&pic.count<=3){
-            image_h=(WIDTH - 40)/3.0
-            for i in 1...pic.count{
-                var x = 12
-                let pciInfo = pic[i-1]
+            image_h=300
+            if pic.count==1 {
+                let pciInfo = pic[0]
                 let imgUrl = microblogImageUrl+(pciInfo.picture_url)
-                print(imgUrl)
-                
-                //let image = self.imageCache[imgUrl] as UIImage?
                 let avatarUrl = NSURL(string: imgUrl)
                 let request: NSURLRequest = NSURLRequest(URL: avatarUrl!)
                 
                 NSURLConnection.sendAsynchronousRequest(request, queue: NSOperationQueue.mainQueue(), completionHandler: {(response: NSURLResponse?,data: NSData?,error: NSError?)-> Void in
                     if(data != nil){
-                        x = x+((i-1)*Int((WIDTH - 40)/3.0 + 10))
-//                        blogimage = UIImageView(frame: CGRectMake(CGFloat(x), 150, 110, 80))
+                        
                         button = CustomBtn()
-                        button?.flag = i
-                        button!.frame = CGRectMake(CGFloat(x), height, (WIDTH - 40)/3.0, (WIDTH - 40)/3.0)
+                        button?.flag = 1
+                        button!.frame = CGRectMake(10, height, WIDTH - 20, 300)
                         let imgTmp = UIImage(data: data!)
+                        
                         button!.setImage(imgTmp, forState: .Normal)
                         button?.imageView?.contentMode = .ScaleAspectFill
                         button?.clipsToBounds = true
                         if button?.imageView?.image == nil{
-                            button!.setImage(UIImage(named: "图片默认加载"), forState: .Normal)
+                            button?.setBackgroundImage(UIImage(named: "图片默认加载"), forState: .Normal)
                         }
                         button?.tag = indexPath.row
                         button?.addTarget(self, action: #selector(self.clickBtn), forControlEvents: .TouchUpInside)
@@ -206,6 +207,36 @@ class TabViewController: UIViewController, UITableViewDelegate, UITableViewDataS
                     }
                 })
                 
+            }else{
+                image_h=(WIDTH - 40)/3.0
+                for i in 1...pic.count{
+                    var x = 12
+                    let pciInfo = pic[i-1]
+                    let imgUrl = microblogImageUrl+(pciInfo.picture_url)
+                    let avatarUrl = NSURL(string: imgUrl)
+                    let request: NSURLRequest = NSURLRequest(URL: avatarUrl!)
+                    
+                    NSURLConnection.sendAsynchronousRequest(request, queue: NSOperationQueue.mainQueue(), completionHandler: {(response: NSURLResponse?,data: NSData?,error: NSError?)-> Void in
+                        if(data != nil){
+                            x = x+((i-1)*Int((WIDTH - 40)/3.0 + 10))
+                            button = CustomBtn()
+                            button?.flag = i
+                            button!.frame = CGRectMake(CGFloat(x), height, (WIDTH - 40)/3.0, (WIDTH - 40)/3.0)
+                            let imgTmp = UIImage(data: data!)
+                            
+                            button!.setImage(imgTmp, forState: .Normal)
+                            button?.imageView?.contentMode = .ScaleAspectFill
+                            button?.clipsToBounds = true
+                            if button?.imageView?.image == nil{
+                                button?.setBackgroundImage(UIImage(named: "图片默认加载"), forState: .Normal)
+                            }
+                            button?.tag = indexPath.row
+                            button?.addTarget(self, action: #selector(self.clickBtn), forControlEvents: .TouchUpInside)
+                            cell.contentView.addSubview(button!)
+                            
+                        }
+                    })
+                }
             }
         }
         if(pic.count>3&&pic.count<=6){
@@ -486,14 +517,15 @@ class TabViewController: UIViewController, UITableViewDelegate, UITableViewDataS
         let senderLbl = UILabel()
         senderLbl.frame = CGRectMake(35, height+image_h + 10, 100, 21)
         senderLbl.text = model?.name
-        senderLbl.font = UIFont.systemFontOfSize(14)
+        senderLbl.font = timefont
+        senderLbl.textColor=timeColor
         cell.contentView.addSubview(senderLbl)
         
         //已读未读
         let readStatusLabel = UILabel()
         readStatusLabel.frame = CGRectMake(10, height+image_h + 41, 200, 30)
         readStatusLabel.textColor = UIColor.orangeColor()
-        readStatusLabel.font = UIFont.systemFontOfSize(15)
+        readStatusLabel.font = neirongfont
         cell.contentView.addSubview(readStatusLabel)
         
         //计算已读未读人数
@@ -512,7 +544,7 @@ class TabViewController: UIViewController, UITableViewDelegate, UITableViewDataS
         let readLabel = UILabel()
         readLabel.frame = CGRectMake(WIDTH - 60, height+image_h + 41, 40, 30)
         //        readLabel.text = "已读"
-        readLabel.font = UIFont.systemFontOfSize(17)
+        readLabel.font = neirongfont
         readLabel.textAlignment = NSTextAlignment.Right
         cell.contentView.addSubview(readLabel)
         if mode.read_time != nil {
@@ -525,10 +557,10 @@ class TabViewController: UIViewController, UITableViewDelegate, UITableViewDataS
 
         
         let timeLbl = UILabel()
-        timeLbl.frame = CGRectMake(WIDTH - 130, height+image_h + 10, 120, 21)
+        timeLbl.frame = CGRectMake(WIDTH - 130, height+image_h + 10, 125, 21)
 //        cell.timeLbl.text = "04-23 16:30"
-        timeLbl.textColor = UIColor.lightGrayColor()
-        timeLbl.font = UIFont.systemFontOfSize(14)
+        timeLbl.textColor = timeColor
+        timeLbl.font = timefont
         cell.contentView.addSubview(timeLbl)
 
         //  时间

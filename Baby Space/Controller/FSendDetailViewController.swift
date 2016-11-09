@@ -60,7 +60,8 @@ class FSendDetailViewController: UIViewController, UITableViewDelegate, UITableV
         let nameLab = UILabel()
         nameLab.frame = CGRectMake(70, 10, WIDTH - 70, 20)
         nameLab.text = messageModel.first!.send_user_name
-//        nameLab.textColor = UIColor.greenColor()
+        nameLab.textColor = biaotiColor
+        nameLab.font = biaotifont
         cell.contentView.addSubview(nameLab)
         
 
@@ -68,23 +69,23 @@ class FSendDetailViewController: UIViewController, UITableViewDelegate, UITableV
         let timeLabel = UILabel()
         timeLabel.frame = CGRectMake(70, 40, WIDTH - 80, 20)
         timeLabel.text = changeTime((model!.send_message.first?.message_time)!)
-        timeLabel.textColor = UIColor.lightGrayColor()
-        timeLabel.font = UIFont.systemFontOfSize(16)
+        timeLabel.textColor = timeColor
+        timeLabel.font = timefont
         cell.contentView.addSubview(timeLabel)
         
         
         //群发内容
         let contentLabel = UILabel()
         contentLabel.frame = CGRectMake(10, 70, WIDTH - 20, 20)
-        contentLabel.textColor = UIColor.lightGrayColor()
-        contentLabel.font = UIFont.systemFontOfSize(17)
+        contentLabel.textColor = neirongColor
+        contentLabel.font = neirongfont
         contentLabel.text = messageModel.first?.message_content
         cell.contentView.addSubview(contentLabel)
         
         // 计算群发内容高度
         let options : NSStringDrawingOptions = NSStringDrawingOptions.UsesLineFragmentOrigin
         let screenBounds:CGRect = UIScreen.mainScreen().bounds
-        let boundingRect = String(contentLabel.text).boundingRectWithSize(CGSizeMake(screenBounds.width, 0), options: options, attributes: [NSFontAttributeName:UIFont.systemFontOfSize(17)], context: nil)
+        let boundingRect = String(contentLabel.text).boundingRectWithSize(CGSizeMake(screenBounds.width, 0), options: options, attributes: [NSFontAttributeName:UIFont.systemFontOfSize(15)], context: nil)
         let contentheight = boundingRect.size.height + 80
         
         
@@ -101,33 +102,27 @@ class FSendDetailViewController: UIViewController, UITableViewDelegate, UITableV
         
         //判断图片张数显示
         if(pic.count>0&&pic.count<=3){
-            image_h=(WIDTH - 40)/3.0
-            for i in 1...pic.count{
-                var x = 12
-                let pciInfo = pic[i-1]
+            image_h=300
+            if pic.count==1 {
+                let pciInfo = pic[0]
                 let imgUrl = microblogImageUrl+(pciInfo.picture_url)
-                print(imgUrl)
-                
-                //let image = self.imageCache[imgUrl] as UIImage?
                 let avatarUrl = NSURL(string: imgUrl)
                 let request: NSURLRequest = NSURLRequest(URL: avatarUrl!)
                 
                 NSURLConnection.sendAsynchronousRequest(request, queue: NSOperationQueue.mainQueue(), completionHandler: {(response: NSURLResponse?,data: NSData?,error: NSError?)-> Void in
                     if(data != nil){
-                        x = x+((i-1)*Int((WIDTH - 40)/3.0 + 10))
                         
                         button = CustomBtn()
-                        button?.flag = i
-                        button!.frame = CGRectMake(CGFloat(x), contentheight+10, (WIDTH - 40)/3.0, (WIDTH - 40)/3.0)
+                        button?.flag = 1
+                        button!.frame = CGRectMake(10, contentheight, WIDTH - 20, 300)
                         let imgTmp = UIImage(data: data!)
                         
                         button!.setImage(imgTmp, forState: .Normal)
                         button?.imageView?.contentMode = .ScaleAspectFill
                         button?.clipsToBounds = true
                         if button?.imageView?.image == nil{
-                            button!.setImage(UIImage(named: "图片默认加载"), forState: .Normal)
+                            button?.setBackgroundImage(UIImage(named: "图片默认加载"), forState: .Normal)
                         }
-                        
                         button?.tag = indexPath.row
                         button?.addTarget(self, action: #selector(self.clickBtn), forControlEvents: .TouchUpInside)
                         cell.contentView.addSubview(button!)
@@ -135,6 +130,36 @@ class FSendDetailViewController: UIViewController, UITableViewDelegate, UITableV
                     }
                 })
                 
+            }else{
+                image_h=(WIDTH - 40)/3.0
+                for i in 1...pic.count{
+                    var x = 12
+                    let pciInfo = pic[i-1]
+                    let imgUrl = microblogImageUrl+(pciInfo.picture_url)
+                    let avatarUrl = NSURL(string: imgUrl)
+                    let request: NSURLRequest = NSURLRequest(URL: avatarUrl!)
+                    
+                    NSURLConnection.sendAsynchronousRequest(request, queue: NSOperationQueue.mainQueue(), completionHandler: {(response: NSURLResponse?,data: NSData?,error: NSError?)-> Void in
+                        if(data != nil){
+                            x = x+((i-1)*Int((WIDTH - 40)/3.0 + 10))
+                            button = CustomBtn()
+                            button?.flag = i
+                            button!.frame = CGRectMake(CGFloat(x), contentheight, (WIDTH - 40)/3.0, (WIDTH - 40)/3.0)
+                            let imgTmp = UIImage(data: data!)
+                            
+                            button!.setImage(imgTmp, forState: .Normal)
+                            button?.imageView?.contentMode = .ScaleAspectFill
+                            button?.clipsToBounds = true
+                            if button?.imageView?.image == nil{
+                                button?.setBackgroundImage(UIImage(named: "图片默认加载"), forState: .Normal)
+                            }
+                            button?.tag = indexPath.row
+                            button?.addTarget(self, action: #selector(self.clickBtn), forControlEvents: .TouchUpInside)
+                            cell.contentView.addSubview(button!)
+                            
+                        }
+                    })
+                }
             }
         }
         if(pic.count>3&&pic.count<=6){
@@ -409,7 +434,7 @@ class FSendDetailViewController: UIViewController, UITableViewDelegate, UITableV
         //已读未读
         let readStatusLabel = UILabel()
         readStatusLabel.textColor = UIColor.orangeColor()
-        readStatusLabel.font = UIFont.systemFontOfSize(15)
+        readStatusLabel.font = timefont
         cell.contentView.addSubview(readStatusLabel)
         
         //计算已读未读人数

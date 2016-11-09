@@ -36,22 +36,24 @@ class QCTakeBabyCell: UITableViewCell {
         
         nameLabel.frame = CGRectMake(80, 10, 100, 30)
         nameLabel.text = "老师名称"
+        nameLabel.textColor=neirongColor
+        nameLabel.font=neirongfont
         contentView.addSubview(nameLabel)
         
         banjiLable.frame = CGRectMake(80, 45, 100, 30)
-        banjiLable.textColor = UIColor.lightGrayColor()
+        banjiLable.textColor = timeColor
         banjiLable.text = "大幼一班"
-        banjiLable.font = UIFont.systemFontOfSize(14)
+        banjiLable.font = timefont
         contentView.addSubview(banjiLable)
         
         timeLabel.frame = CGRectMake(WIDTH - 150, 45, 150, 30)
         timeLabel.text = "今天16:30"
-        timeLabel.textColor = UIColor.lightGrayColor()
-        timeLabel.font = UIFont.systemFontOfSize(14)
+        timeLabel.textColor = timeColor
+        timeLabel.font = timefont
         contentView.addSubview(timeLabel)
         
         let view = UIView()
-        view.frame = CGRectMake(0, 80, WIDTH, 1)
+        view.frame = CGRectMake(0, 80, WIDTH, 0.4)
         view.backgroundColor = UIColor.lightGrayColor()
         contentView.addSubview(view)
         
@@ -61,12 +63,13 @@ class QCTakeBabyCell: UITableViewCell {
         
         somebodyLabel = UILabel()
         somebodyLabel.frame = CGRectMake(10, 380, WIDTH - 20, 20)
-        somebodyLabel.textColor = UIColor.grayColor()
+        somebodyLabel.textColor = neirongColor
+        somebodyLabel.font=neirongfont
         somebodyLabel.text = "\(somebodyLabel.text)家长，这个人可以接走孩子么？"
         contentView.addSubview(somebodyLabel)
         
         let view2 = UIView()
-        view2.frame = CGRectMake(0, 410, WIDTH, 1)
+        view2.frame = CGRectMake(0, 410, WIDTH, 0.4)
         view2.backgroundColor = UIColor.lightGrayColor()
         contentView.addSubview(view2)
         

@@ -38,7 +38,7 @@ class QCKindTakeVC: UIViewController {
         viewController3.title = "已过期"
 
         
-        let viewControllers = [viewController, viewController2,viewController3]
+        let viewControllers = [viewController, viewController2]
         
         let options = PagingMenuOptions()
         options.menuItemMargin = 5

@@ -122,7 +122,8 @@ class ClassViewController: UIViewController,UITableViewDelegate,UITableViewDataS
         let nameLab = UILabel()
         nameLab.frame = CGRectMake(80, 15, WIDTH - 70, 20)
         nameLab.text = model.name
-        nameLab.textColor = UIColor(red: 155/255, green: 229/255, blue: 180/255, alpha: 1)
+        nameLab.textColor = biaotiColor
+        nameLab.font=biaotifont
         cell.contentView.addSubview(nameLab)
         
         let dateformat = NSDateFormatter()
@@ -132,8 +133,8 @@ class ClassViewController: UIViewController,UITableViewDelegate,UITableViewDataS
         let timeLb = UILabel()
         timeLb.frame = CGRectMake(80, 45, WIDTH - 70, 20)
         timeLb.text = st
-        timeLb.font = UIFont.systemFontOfSize(16)
-        timeLb.textColor = UIColor.lightGrayColor()
+        timeLb.font = timefont
+        timeLb.textColor = timeColor
         cell.contentView.addSubview(timeLb)
 
         
@@ -143,6 +144,8 @@ class ClassViewController: UIViewController,UITableViewDelegate,UITableViewDataS
         contentlbl.text = model.content
         contentlbl.numberOfLines = 0
         contentlbl.sizeToFit()
+        contentlbl.textColor=neirongColor
+        contentlbl.font=neirongfont
         cell.contentView.addSubview(contentlbl)
         //        自适应行高
         let options : NSStringDrawingOptions = NSStringDrawingOptions.UsesLineFragmentOrigin
@@ -159,20 +162,19 @@ class ClassViewController: UIViewController,UITableViewDelegate,UITableViewDataS
         let pic  = model.pic
         
         if(pic.count>0&&pic.count<=3){
-            image_h=(WIDTH - 40)/3.0
-            for i in 1...pic.count{
-                var x = 12
-                let pciInfo = pic[i-1]
+            image_h=300
+            if pic.count==1 {
+                let pciInfo = pic[0]
                 let imgUrl = microblogImageUrl+(pciInfo.pictureurl)!
                 let avatarUrl = NSURL(string: imgUrl)
                 let request: NSURLRequest = NSURLRequest(URL: avatarUrl!)
                 
                 NSURLConnection.sendAsynchronousRequest(request, queue: NSOperationQueue.mainQueue(), completionHandler: {(response: NSURLResponse?,data: NSData?,error: NSError?)-> Void in
                     if(data != nil){
-                        x = x+((i-1)*Int((WIDTH - 40)/3.0 + 10))
+                        
                         button = CustomBtn()
-                        button?.flag = i
-                        button!.frame = CGRectMake(CGFloat(x), height, (WIDTH - 40)/3.0, (WIDTH - 40)/3.0)
+                        button?.flag = 1
+                        button!.frame = CGRectMake(10, height, WIDTH - 20, 300)
                         let imgTmp = UIImage(data: data!)
                         
                         button!.setImage(imgTmp, forState: .Normal)
@@ -188,6 +190,36 @@ class ClassViewController: UIViewController,UITableViewDelegate,UITableViewDataS
                     }
                 })
                 
+            }else{
+                image_h=(WIDTH - 40)/3.0
+                for i in 1...pic.count{
+                    var x = 12
+                    let pciInfo = pic[i-1]
+                    let imgUrl = microblogImageUrl+(pciInfo.pictureurl)!
+                    let avatarUrl = NSURL(string: imgUrl)
+                    let request: NSURLRequest = NSURLRequest(URL: avatarUrl!)
+                    
+                    NSURLConnection.sendAsynchronousRequest(request, queue: NSOperationQueue.mainQueue(), completionHandler: {(response: NSURLResponse?,data: NSData?,error: NSError?)-> Void in
+                        if(data != nil){
+                            x = x+((i-1)*Int((WIDTH - 40)/3.0 + 10))
+                            button = CustomBtn()
+                            button?.flag = i
+                            button!.frame = CGRectMake(CGFloat(x), height, (WIDTH - 40)/3.0, (WIDTH - 40)/3.0)
+                            let imgTmp = UIImage(data: data!)
+                            
+                            button!.setImage(imgTmp, forState: .Normal)
+                            button?.imageView?.contentMode = .ScaleAspectFill
+                            button?.clipsToBounds = true
+                            if button?.imageView?.image == nil{
+                                button?.setBackgroundImage(UIImage(named: "图片默认加载"), forState: .Normal)
+                            }
+                            button?.tag = indexPath.row
+                            button?.addTarget(self, action: #selector(self.clickBtn), forControlEvents: .TouchUpInside)
+                            cell.contentView.addSubview(button!)
+                            
+                        }
+                    })
+                }
             }
         }
         if(pic.count>3&&pic.count<=6){
@@ -436,7 +468,8 @@ class ClassViewController: UIViewController,UITableViewDelegate,UITableViewDataS
         senderLbl.frame = CGRectMake(40, height + image_h + 10, 120, 20)
         senderLbl.font = UIFont.systemFontOfSize(16)
         senderLbl.text = "发自 \(model.name)"
-        senderLbl.textColor = UIColor.lightGrayColor()
+        senderLbl.textColor = timeColor
+        senderLbl.font=timefont
         cell.contentView.addSubview(senderLbl)
         
         let dateformate = NSDateFormatter()
@@ -446,8 +479,8 @@ class ClassViewController: UIViewController,UITableViewDelegate,UITableViewDataS
         let timeLbl = UILabel()
         timeLbl.frame = CGRectMake(160, height + image_h + 10, WIDTH - 170, 20)
         timeLbl.text = str
-        timeLbl.font = UIFont.systemFontOfSize(16)
-        timeLbl.textColor = UIColor.lightGrayColor()
+        timeLbl.font = timefont
+        timeLbl.textColor = timeColor
         timeLbl.textAlignment = NSTextAlignment.Right
         cell.contentView.addSubview(timeLbl)
         
@@ -478,40 +511,53 @@ class ClassViewController: UIViewController,UITableViewDelegate,UITableViewDataS
             btn.frame = CGRectMake(10, 5, 20, 20)
             btn.setBackgroundImage(UIImage(named: "已点赞"), forState: .Normal)
             view.addSubview(btn)
+            let lable = UILabel()
+            lable.frame = CGRectMake(40, 5, (WIDTH - 50), 20)
+            lable.textColor = UIColor(red: 115/255.0, green: 229/255.0, blue: 180/255.0, alpha: 1.0)
+            lable.font = UIFont.systemFontOfSize(14)
+            view.addSubview(lable)
+            let arr = NSMutableArray()
             for i in 1...model.like.count {
                 let str = model.like[i - 1].name
-                let lable = UILabel()
-                var x = 40
-                x = x+((i-1)*Int((WIDTH - 40)/4 + 5))
-                lable.frame = CGRectMake(CGFloat(x), 5, (WIDTH - 50)/4, 20)
-                lable.text = str
-                lable.textColor = UIColor(red: 115/255.0, green: 229/255.0, blue: 180/255.0, alpha: 1.0)
-                lable.font = UIFont.systemFontOfSize(15)
-                view.addSubview(lable)
+                //                lable.text = str
+                arr.addObject(str)
             }
+            
+            let zanstr = arr.componentsJoinedByString("  ")
+            lable.text = zanstr
+            lable.numberOfLines = 0
+            lable.sizeToFit()
+            //        自适应行高
+            let options : NSStringDrawingOptions = NSStringDrawingOptions.UsesLineFragmentOrigin
+            let screenBounds:CGRect = UIScreen.mainScreen().bounds
+            let boundingRect = String(lable.text).boundingRectWithSize(CGSizeMake(screenBounds.width, 0), options: options, attributes: [NSFontAttributeName:UIFont.systemFontOfSize(15)], context: nil)
+            let heigh = boundingRect.size.height + 5
+            view.frame = CGRectMake(10, height + image_h + 80, WIDTH - 20, heigh)
         }
         
-        var pingView = UIView()
+        let pingView = UIView()
         var h = CGFloat()
         if model.comment.count != 0 {
             for i in 1...model.comment.count {
-                pingView = UIView()
-                h = CGFloat( 50 * (i))
+//                pingView = UIView()
+                h = CGFloat( 60 * (i))
                 pingView.frame = CGRectMake(10, height + image_h + 90 + view.frame.size.height , WIDTH - 20, h)
-//                pingView.backgroundColor = UIColor.lightGrayColor()
+                pingView.backgroundColor = UIColor.init(red: 242/255, green: 242/255, blue: 242/255, alpha: 1)
                 cell.contentView.addSubview(pingView)
                 let name = UILabel()
-                name.frame = CGRectMake(50, 5 + CGFloat( 50 * (i - 1)), 60, 20)
+                name.frame = CGRectMake(40, 5 + CGFloat( 60 * (i - 1)), 70, 20)
                 name.text = model.comment[i - 1].name
                 name.font = UIFont.systemFontOfSize(15)
                 pingView.addSubview(name)
                 
                 let img = UIImageView()
-                img.frame = CGRectMake(10, 5 + CGFloat( 50 * (i - 1)), 30, 30)
+                img.frame = CGRectMake(0, 5 + CGFloat( 60 * (i - 1)), 30, 30)
                 let pict = model.comment[i - 1].avatar
                 let imgUrl = microblogImageUrl + pict
                 let photourl = NSURL(string: imgUrl)
                 img.sd_setImageWithURL(photourl, placeholderImage: UIImage(named: "Logo"))
+                img.layer.masksToBounds=true
+                img.layer.cornerRadius=15
                 pingView.addSubview(img)
                 
                 let dateformat = NSDateFormatter()
@@ -519,28 +565,29 @@ class ClassViewController: UIViewController,UITableViewDelegate,UITableViewDataS
                 let date = NSDate(timeIntervalSince1970: NSTimeInterval(model.comment[i - 1].comment_time)!)
                 let st:String = dateformat.stringFromDate(date)
                 let time = UILabel()
-                time.frame = CGRectMake(110, 5 + CGFloat( 50 * (i - 1)), WIDTH - 130, 20)
-                time.font = UIFont.systemFontOfSize(15)
+                time.frame = CGRectMake(110, 5 + CGFloat( 60 * (i - 1)), WIDTH - 130, 20)
+                time.font = UIFont.systemFontOfSize(12)
                 time.textAlignment = NSTextAlignment.Right
                 time.text = st
                 pingView.addSubview(time)
                 
                 let con = UILabel()
-                con.frame = CGRectMake(50, 25 + CGFloat( 50 * (i - 1)), WIDTH - 50, 20)
-                con.font = UIFont.systemFontOfSize(15)
+                con.frame = CGRectMake(40, 25 + CGFloat( 60 * (i - 1)), WIDTH - 40, 30)
+                con.font = UIFont.systemFontOfSize(13)
                 con.text = model.comment[i - 1].content
                 con.numberOfLines = 0
                 con.sizeToFit()
+                con.textColor=neirongColor
                 pingView.addSubview(con)
             }
         }
         
         let aview = UIView()
-        aview.frame = CGRectMake(0, height + image_h + 90 + view.frame.size.height + h, WIDTH, 10)
+        aview.frame = CGRectMake(0, height + image_h + 100 + view.frame.size.height + h, WIDTH, 10)
         aview.backgroundColor = RGBA(242.0, g: 242.0, b: 242.0, a: 1)
         cell.contentView.addSubview(aview)
         
-        tableView.rowHeight = height + image_h + 100 + view.frame.size.height + h
+        tableView.rowHeight = height + image_h + 110 + view.frame.size.height + h
         
         
         return cell
@@ -551,7 +598,7 @@ class ClassViewController: UIViewController,UITableViewDelegate,UITableViewDataS
         vc.dataSource = self.dataSource.objectlist[indexPath.row]
         vc.num = indexPath.row
         vc.type = "2"
-        self.navigationController?.pushViewController(vc, animated: true)
+//        self.navigationController?.pushViewController(vc, animated: true)
     }
 
     

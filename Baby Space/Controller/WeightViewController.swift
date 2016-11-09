@@ -55,6 +55,7 @@ class WeightViewController: UIViewController, HisPickerViewDelegate, UITableView
         chartView = HisDatePicer()
         chartView?.frame = CGRectMake(0, HEIGHT - 345, WIDTH, 280)
         chartView?.delegate = self
+        self.chartView?.backgroundColor = RGBA(242.0, g: 242.0, b: 242.0, a: 1)
         self.view.addSubview(chartView!)
     }
     //  获取数据
@@ -219,7 +220,7 @@ class WeightViewController: UIViewController, HisPickerViewDelegate, UITableView
     }
     //    行高
     func tableView(tableView: UITableView, heightForRowAtIndexPath indexPath: NSIndexPath) -> CGFloat {
-        return 60
+        return 80
     }
     //    单元格
     func tableView(tableView: UITableView, cellForRowAtIndexPath indexPath: NSIndexPath) -> UITableViewCell {
@@ -228,23 +229,26 @@ class WeightViewController: UIViewController, HisPickerViewDelegate, UITableView
         
         let model = self.dataSource.objectlist[indexPath.row]
         let tizhong = UILabel()
-        tizhong.frame = CGRectMake(10, 15, 40, 30)
+        tizhong.frame = CGRectMake(10, 10, 40, 30)
         tizhong.text = "体重"
         cell.contentView.addSubview(tizhong)
         
         let weigt = UILabel()
-        weigt.frame = CGRectMake(60, 15, 60, 30)
+        weigt.frame = CGRectMake(60, 10, 60, 30)
         weigt.text = model.weight! + "kg"
         cell.contentView.addSubview(weigt)
         
         let time = UILabel()
-        time.frame = CGRectMake(WIDTH - 130, 15, 120, 30)
+        time.frame = CGRectMake(WIDTH - 130, 10, 120, 30)
         time.text = model.log_date
         time.textColor = UIColor.lightGrayColor()
         time.textAlignment = NSTextAlignment.Right
         cell.contentView.addSubview(time)
         
-        
+        let agelab = UILabel()
+        agelab.frame = CGRectMake(10, 40, WIDTH - 20, 30)
+        agelab.text = "年龄  一岁"
+        cell.contentView.addSubview(agelab)
         
         return cell
     }

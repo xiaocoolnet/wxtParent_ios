@@ -82,7 +82,7 @@ class ClassCoursewareTableViewController: UITableViewController {
         let typeLbl = UILabel()
         typeLbl.frame = CGRectMake(10, 10, 200, 40)
         typeLbl.text = (model.subject)
-        typeLbl.font = UIFont.systemFontOfSize(19)
+        typeLbl.font = UIFont.systemFontOfSize(17)
         cell.contentView.addSubview(typeLbl)
         let str = model.courseware_info
         let countLabel = UILabel()
@@ -94,7 +94,7 @@ class ClassCoursewareTableViewController: UITableViewController {
         cell.contentView.addSubview(countLabel)
         
         let line = UILabel()
-        line.frame = CGRectMake(2, 59.5, WIDTH - 2, 0.5)
+        line.frame = CGRectMake(2, 59.5, WIDTH - 2, 0.2)
         line.backgroundColor = UIColor.lightGrayColor()
         cell.contentView.addSubview(line)
         

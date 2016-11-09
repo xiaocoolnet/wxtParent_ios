@@ -209,8 +209,7 @@ class PersonTableViewController: UITableViewController,UIImagePickerControllerDe
         }
         return nil
     }
-    
-    
+        
     func textFieldDidEndEditing(textField: UITextField){
         if textField.tag == 1 {
             self.getBirthDate()

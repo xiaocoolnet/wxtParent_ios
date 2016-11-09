@@ -189,27 +189,26 @@ class MyPhotoDetailViewController: UIViewController,UITableViewDelegate,UITableV
         let pic  = model.pic
         
         if(pic.count>0&&pic.count<=3){
-            image_h=(WIDTH - 40)/3.0
-            for i in 1...pic.count{
-                var x = 12
-                let pciInfo = pic[i-1]
+            image_h=300
+            if pic.count==1 {
+                let pciInfo = pic[0]
                 let imgUrl = microblogImageUrl+(pciInfo.pictureurl)!
                 let avatarUrl = NSURL(string: imgUrl)
                 let request: NSURLRequest = NSURLRequest(URL: avatarUrl!)
                 
                 NSURLConnection.sendAsynchronousRequest(request, queue: NSOperationQueue.mainQueue(), completionHandler: {(response: NSURLResponse?,data: NSData?,error: NSError?)-> Void in
                     if(data != nil){
-                        x = x+((i-1)*Int((WIDTH - 40)/3.0 + 10))
+                        
                         button = CustomBtn()
-                        button?.flag = i
-                        button!.frame = CGRectMake(CGFloat(x), height, (WIDTH - 40)/3.0, (WIDTH - 40)/3.0)
+                        button?.flag = 1
+                        button!.frame = CGRectMake(10, height, WIDTH - 20, 300)
                         let imgTmp = UIImage(data: data!)
                         
                         button!.setImage(imgTmp, forState: .Normal)
                         button?.imageView?.contentMode = .ScaleAspectFill
                         button?.clipsToBounds = true
                         if button?.imageView?.image == nil{
-                            button?.setBackgroundImage(UIImage(named: "Logo"), forState: .Normal)
+                            button?.setBackgroundImage(UIImage(named: "图片默认加载"), forState: .Normal)
                         }
                         button?.tag = indexPath.row
                         button?.addTarget(self, action: #selector(self.clickBtn), forControlEvents: .TouchUpInside)
@@ -218,6 +217,36 @@ class MyPhotoDetailViewController: UIViewController,UITableViewDelegate,UITableV
                     }
                 })
                 
+            }else{
+                image_h=(WIDTH - 40)/3.0
+                for i in 2...pic.count{
+                    var x = 12
+                    let pciInfo = pic[i-1]
+                    let imgUrl = microblogImageUrl+(pciInfo.pictureurl)!
+                    let avatarUrl = NSURL(string: imgUrl)
+                    let request: NSURLRequest = NSURLRequest(URL: avatarUrl!)
+                    
+                    NSURLConnection.sendAsynchronousRequest(request, queue: NSOperationQueue.mainQueue(), completionHandler: {(response: NSURLResponse?,data: NSData?,error: NSError?)-> Void in
+                        if(data != nil){
+                            x = x+((i-1)*Int((WIDTH - 40)/3.0 + 10))
+                            button = CustomBtn()
+                            button?.flag = i
+                            button!.frame = CGRectMake(CGFloat(x), height, (WIDTH - 40)/3.0, (WIDTH - 40)/3.0)
+                            let imgTmp = UIImage(data: data!)
+                            
+                            button!.setImage(imgTmp, forState: .Normal)
+                            button?.imageView?.contentMode = .ScaleAspectFill
+                            button?.clipsToBounds = true
+                            if button?.imageView?.image == nil{
+                                button?.setBackgroundImage(UIImage(named: "图片默认加载"), forState: .Normal)
+                            }
+                            button?.tag = indexPath.row
+                            button?.addTarget(self, action: #selector(self.clickBtn), forControlEvents: .TouchUpInside)
+                            cell.contentView.addSubview(button!)
+                            
+                        }
+                    })
+                }
             }
         }
         if(pic.count>3&&pic.count<=6){

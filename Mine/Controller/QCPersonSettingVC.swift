@@ -14,7 +14,7 @@ class QCPersonSettingVC: UIViewController,UITableViewDataSource,UITableViewDeleg
     var tableView = UITableView()
     var indexPath = NSIndexPath()
     var cell = UITableViewCell()
-
+    var message = NSString()
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -52,6 +52,7 @@ class QCPersonSettingVC: UIViewController,UITableViewDataSource,UITableViewDeleg
             useDefaults.removeObjectForKey("classid")
             useDefaults.removeObjectForKey("chid")
             useDefaults.removeObjectForKey("chidname")
+            useDefaults.removeObjectForKey("school_name")
             useDefaults.synchronize()
             //            退出环信
             EaseMob.sharedInstance().chatManager.asyncLogoffWithUnbindDeviceToken(false)
@@ -133,8 +134,8 @@ class QCPersonSettingVC: UIViewController,UITableViewDataSource,UITableViewDeleg
                 }
             }
             // 提示框
-            let message = "\(big/(1024*1024))M缓存"
-            let alert = UIAlertController(title: "清除缓存", message: message, preferredStyle: UIAlertControllerStyle.Alert)
+            message = "\(big/(1024*1024))M缓存"
+            let alert = UIAlertController(title: "清除缓存", message: message as String, preferredStyle: UIAlertControllerStyle.Alert)
             
             let alertConfirm = UIAlertAction(title: "确定", style: UIAlertActionStyle.Default) { (alertConfirm) -> Void in
                 // 点击确定时开始删除
@@ -175,7 +176,5 @@ class QCPersonSettingVC: UIViewController,UITableViewDataSource,UITableViewDeleg
         label.frame = CGRectMake(10, 10, 80, 30)
         cell.addSubview(label)
     }
-
-    
 
 }

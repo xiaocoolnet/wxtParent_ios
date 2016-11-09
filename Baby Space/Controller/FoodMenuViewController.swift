@@ -313,7 +313,7 @@ class FoodMenuViewController: UIViewController,UITableViewDelegate,UITableViewDa
         if info.photo != nil {
             image_h=100
             let foodIV = UIImageView(frame: CGRectMake(90, 40, 80, 80))
-            let str = microblogImageUrl+info.photo!
+            let str = "http://wxt.xiaocool.net/data/upload/" + info.photo!
             let url = NSURL(string: str)
             foodIV.yy_setImageWithURL(url, placeholder: UIImage(named: "图片默认加载"))
             cell.contentView.addSubview(foodIV)

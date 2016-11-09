@@ -88,9 +88,9 @@ class TakeTableViewController: UITableViewController {
     }
 //    单元格
     override func tableView(tableView: UITableView, cellForRowAtIndexPath indexPath: NSIndexPath) -> UITableViewCell {
-//        let cell = tableView.dequeueReusableCellWithIdentifier("TakeCell", forIndexPath: indexPath) as!TakeTableViewCell
+
         let cell = tableView.dequeueReusableCellWithIdentifier("TakeCell", forIndexPath: indexPath) as? QCTakeBabyCell
-//        cell.textLabel?.text = "1"
+
         cell!.selectionStyle = .None
         tableView.separatorStyle = .None
         
@@ -104,7 +104,8 @@ class TakeTableViewController: UITableViewController {
             let date = NSDate(timeIntervalSince1970: NSTimeInterval(takeInfo.delivery_time!)!)
             let str:String = dateformate.stringFromDate(date)
             cell?.timeLabel.text = str
-            
+            cell?.textLabel?.textColor=timeColor
+            cell?.textLabel?.font=timefont
             cell?.nameLabel.text = takeInfo.teachername
             
             //        图片

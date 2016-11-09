@@ -185,6 +185,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate,UITabBarControllerDelegate
             useDefaults.removeObjectForKey("classid")
             useDefaults.removeObjectForKey("chid")
             useDefaults.removeObjectForKey("chidname")
+            useDefaults.removeObjectForKey("school_name")
             useDefaults.synchronize()
             //            退出环信
             EaseMob.sharedInstance().chatManager.asyncLogoffWithUnbindDeviceToken(false)

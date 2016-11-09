@@ -31,16 +31,16 @@ class AddBlogViewController: UIViewController,UICollectionViewDataSource,UIColle
         
         self.title = "发动态"
         self.view.backgroundColor = UIColor.whiteColor()
-        let rightItem = UIBarButtonItem(title: "发表", style: .Done, target: self, action: #selector(SendPhotoViewController.UpdateBlog))
+        let rightItem = UIBarButtonItem(title: "发布", style: .Done, target: self, action: #selector(SendPhotoViewController.UpdateBlog))
         self.navigationItem.rightBarButtonItem = rightItem
         //        创建UI
         self.createUI()
     }
     //    创建输入框
     func createUI(){
-        self.contentTextView.frame = CGRectMake(8, 5, self.view.bounds.width - 16, 200)
+        self.contentTextView.frame = CGRectMake(8, 5, self.view.bounds.width - 16, 150)
         self.contentTextView.font = UIFont.systemFontOfSize(15)
-        self.contentTextView.placeholder = "请输入内容～不能超过200字啦"
+        self.contentTextView.placeholder = "编写您的动态吧"
         self.contentTextView.addMaxTextLengthWithMaxLength(200) { (contentTextView) -> Void in
             let hud = MBProgressHUD.showHUDAddedTo(self.view, animated: true)
             hud.mode = MBProgressHUDMode.Text
@@ -50,7 +50,7 @@ class AddBlogViewController: UIViewController,UICollectionViewDataSource,UIColle
             hud.hide(true, afterDelay: 3)
         }
         //        添加图片按钮
-        addPictureBtn.frame = CGRectMake(8, 215, 80, 80)
+        addPictureBtn.frame = CGRectMake(8, 165, 80, 80)
         addPictureBtn.setBackgroundImage(UIImage(named: "add2"), forState: UIControlState.Normal)
         addPictureBtn.layer.borderWidth = 1.0
         addPictureBtn.layer.borderColor = UIColor.grayColor().CGColor
@@ -58,7 +58,7 @@ class AddBlogViewController: UIViewController,UICollectionViewDataSource,UIColle
         //        创建流视图
         flowLayout.scrollDirection = UICollectionViewScrollDirection.Vertical
         flowLayout.itemSize = CGSizeMake(80,80)
-        self.collectV = UICollectionView(frame: CGRectMake(8, 215, UIScreen.mainScreen().bounds.width-30, 359), collectionViewLayout: flowLayout)
+        self.collectV = UICollectionView(frame: CGRectMake(8, 165, UIScreen.mainScreen().bounds.width-30, 359), collectionViewLayout: flowLayout)
         //        注册
         self.collectV?.registerClass(ImageCollectionViewCell.self, forCellWithReuseIdentifier: "PhotoCell")
         

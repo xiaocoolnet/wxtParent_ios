@@ -20,6 +20,9 @@ class NoticePicViewController: UIViewController, UICollectionViewDelegate, UICol
     
     var arrayInfo = Array<ClassPicInfo>()
     
+    var lastScaleFactor : CGFloat! = 1  //放大、缩小
+    var imgView = UIImageView()
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         
@@ -49,38 +52,68 @@ class NoticePicViewController: UIViewController, UICollectionViewDelegate, UICol
         
     }
     
+    override func viewDidLayoutSubviews() {
+        collectV!.contentOffset = CGPointMake(CGFloat(Int(count) - 1)*WIDTH, 0)
+        
+    }
+    
     func collectionView(collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
      
         return nu
     }
     
     func collectionView(collectionView: UICollectionView, cellForItemAtIndexPath indexPath: NSIndexPath) -> UICollectionViewCell {
-        let cell = collectionView.dequeueReusableCellWithReuseIdentifier("cell", forIndexPath: indexPath) as! HomeWorkDetailCollectionViewCell
-        cell.imgView.frame = CGRectMake(0, 0, WIDTH, HEIGHT)
-        cell.imgView.contentMode = .ScaleAspectFit
+        let cell = collectionView.dequeueReusableCellWithReuseIdentifier("cell", forIndexPath: indexPath)
+        imgView = UIImageView()
+        imgView.frame = CGRectMake(0, 0, WIDTH, HEIGHT)
+        imgView.contentMode = .ScaleAspectFit
         cell.clipsToBounds = true
         let str = arrayInfo[indexPath.item].photo
         let imgUrl = microblogImageUrl + str
         let photourl = NSURL(string: imgUrl)
-        cell.imgView.sd_setImageWithURL(photourl, placeholderImage: (UIImage(named: "无网络的背景.png")))
-        cell.contentView.addSubview(cell.imgView)
+        imgView.sd_setImageWithURL(photourl, placeholderImage: (UIImage(named: "无网络的背景.png")))
+        cell.contentView.addSubview(imgView)
+        //手势为捏的姿势:按住option按钮配合鼠标来做这个动作在虚拟器上
+        let pinchGesture = UIPinchGestureRecognizer(target: self, action: #selector(self.handlePinchGesture))
+        imgView.addGestureRecognizer(pinchGesture)
+        
+        //1.双击手势
+        let doubleTap = UITapGestureRecognizer(target: self, action: #selector(self.clickDoubleTap))
+        doubleTap.numberOfTapsRequired = 2
+        imgView.addGestureRecognizer(doubleTap);
+        
         return cell
     }
-
-    override func didReceiveMemoryWarning() {
-        super.didReceiveMemoryWarning()
-        // Dispose of any resources that can be recreated.
+    
+    
+    //实现手势方法  双击手势
+    func clickDoubleTap(sender: UITapGestureRecognizer)
+    {
+        if imgView.contentMode == UIViewContentMode.ScaleAspectFit{
+            //把imageView模式改成UIViewContentModeCenter，按照图片原先的大小显示中心的一部分在imageView
+            imgView.contentMode = UIViewContentMode.Center
+        }else{
+            imgView.contentMode = UIViewContentMode.ScaleAspectFit
+        }
     }
     
-
-    /*
-    // MARK: - Navigation
-
-    // In a storyboard-based application, you will often want to do a little preparation before navigation
-    override func prepareForSegue(segue: UIStoryboardSegue, sender: AnyObject?) {
-        // Get the new view controller using segue.destinationViewController.
-        // Pass the selected object to the new view controller.
+    //捏的手势，使图片放大和缩小，捏的动作是一个连续的动作
+    func handlePinchGesture(sender: UIPinchGestureRecognizer){
+        let factor = sender.scale
+        if factor > 1{
+            //图片放大
+            imgView.transform = CGAffineTransformMakeScale(lastScaleFactor+factor-1, lastScaleFactor+factor-1)
+        }else{
+            //缩小
+            imgView.transform = CGAffineTransformMakeScale(lastScaleFactor*factor, lastScaleFactor*factor)
+        }
+        //状态是否结束，如果结束保存数据
+        if sender.state == UIGestureRecognizerState.Ended{
+            if factor > 1{
+                lastScaleFactor = lastScaleFactor + factor - 1
+            }else{
+                lastScaleFactor = lastScaleFactor * factor
+            }
+        }
     }
-    */
-
 }

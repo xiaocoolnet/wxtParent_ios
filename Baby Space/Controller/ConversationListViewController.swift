@@ -17,6 +17,7 @@ class ConversationListViewController: EaseConversationListViewController,EaseCon
     
 
     override func viewWillAppear(animated: Bool) {
+        tableView.reloadData()
         self.tabBarController?.tabBar.hidden = false
         refreshDataSource()
         let chid = NSUserDefaults.standardUserDefaults()
@@ -107,9 +108,15 @@ class ConversationListViewController: EaseConversationListViewController,EaseCon
         let lbl2 = UILabel(frame:CGRectMake(70,10,100,20))
         lbl2.text = "群发消息"
         v.addSubview(lbl2)
+        let user = NSUserDefaults.standardUserDefaults()
         
         let lbl21 = UILabel(frame:CGRectMake(70,40,100,20))
-        lbl21.text = "最新群发消息"
+        let qunfa = user.valueForKey("qunfa") as? String
+        if qunfa=="" || qunfa==nil {
+            lbl21.text = "暂无消息"
+        }else{
+        lbl21.text = qunfa
+        }
         lbl21.font = UIFont.systemFontOfSize(14)
         lbl21.textColor = UIColor.lightGrayColor()
         v.addSubview(lbl21)
@@ -145,10 +152,16 @@ class ConversationListViewController: EaseConversationListViewController,EaseCon
         
         let lbl3 = UILabel(frame:CGRectMake(70,80,100,20))
         lbl3.text = "我的作业"
+        let zuoye = user.valueForKey("zuoye") as? String
+        
         v.addSubview(lbl3)
         
         let lbl31 = UILabel(frame:CGRectMake(70,110,100,20))
-        lbl31.text = "今天作业"
+        if zuoye=="" || zuoye==nil {
+            lbl31.text = "暂无消息"
+        }else{
+        lbl31.text = zuoye
+        }
         lbl31.font = UIFont.systemFontOfSize(14)
         lbl31.textColor = UIColor.lightGrayColor()
         v.addSubview(lbl31)

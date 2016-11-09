@@ -48,11 +48,11 @@ class AddDiaryViewController: UIViewController,UICollectionViewDataSource,UIColl
     }
     //    创建输入框
     func createUI(){
-        self.contentTextView.frame = CGRectMake(8, 5, self.view.bounds.width - 16, 200)
+        self.contentTextView.frame = CGRectMake(8, 5, self.view.bounds.width - 16, 150)
         self.contentTextView.font = UIFont.systemFontOfSize(15)
         self.contentTextView.placeholder = "编辑宝贝的精彩日记"
         //        添加图片按钮
-        addPictureBtn.frame = CGRectMake(8, 215, 80, 80)
+        addPictureBtn.frame = CGRectMake(8, 160, 80, 80)
         addPictureBtn.setBackgroundImage(UIImage(named: "add2"), forState: UIControlState.Normal)
         addPictureBtn.layer.borderWidth = 1.0
         addPictureBtn.layer.borderColor = UIColor.grayColor().CGColor
@@ -60,7 +60,7 @@ class AddDiaryViewController: UIViewController,UICollectionViewDataSource,UIColl
         //        创建流视图
         flowLayout.scrollDirection = UICollectionViewScrollDirection.Vertical
         flowLayout.itemSize = CGSizeMake(80,80)
-        self.collectV = UICollectionView(frame: CGRectMake(8, 215, UIScreen.mainScreen().bounds.width-30, 359), collectionViewLayout: flowLayout)
+        self.collectV = UICollectionView(frame: CGRectMake(8, 165, UIScreen.mainScreen().bounds.width-30, 359), collectionViewLayout: flowLayout)
         //        注册
         self.collectV?.registerClass(ImageCollectionViewCell.self, forCellWithReuseIdentifier: "PhotoCell")
         
@@ -288,6 +288,45 @@ class AddDiaryViewController: UIViewController,UICollectionViewDataSource,UIColl
             
         }
 
+    }
+    
+    func fabu(){
+        
+        for ima in pictureArray{
+            
+            let dataPhoto:NSData = UIImageJPEGRepresentation(ima as! UIImage, 1.0)!
+            var myImagess = UIImage()
+            myImagess = UIImage.init(data: dataPhoto)!
+            
+            let data = UIImageJPEGRepresentation(myImagess, 0.1)!
+            let chid = NSUserDefaults.standardUserDefaults()
+            let studentid = chid.stringForKey("chid")
+            let date = NSDate()
+            let dateformate = NSDateFormatter()
+            dateformate.dateFormat = "yyyy-MM-dd HH:mm"//获得日期
+            let time:NSTimeInterval = (date.timeIntervalSince1970)
+            let RanNumber = String(arc4random_uniform(1000) + 1000)
+            let name = "\(studentid!)baby\(time)\(RanNumber)"
+            
+            //上传图片
+            dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0)) { () -> Void in
+                ConnectModel.uploadWithImageName(name, imageData:data, URL: "WriteMicroblog_upload", finish: { (data) -> Void in
+                    print("返回值")
+                    print(data)
+                    
+                })
+            }
+            self.imagePath.addObject(name + ".png")
+        }
+        self.imageUrl = self.imagePath.componentsJoinedByString(",")
+        print(self.imageUrl!)
+        let hud = MBProgressHUD.showHUDAddedTo(self.view, animated: true)
+        hud.mode = MBProgressHUDMode.Text
+        hud.margin = 10
+        hud.removeFromSuperViewOnHide = true
+        hud.labelText = "上传完成"
+        hud.hide(true, afterDelay: 1)
+        self.PutBlog()
     }
 //    收键盘
     override func touchesBegan(touches: Set<UITouch>, withEvent event: UIEvent?) {

@@ -373,6 +373,8 @@ class QCTeacherCommentCell: UITableViewCell {
             }
             
             contentLable.text = info!.comment_content
+            contentLable.font = neirongfont
+            contentLable.textColor = neirongColor
         }
     }
     

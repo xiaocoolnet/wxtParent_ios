@@ -499,7 +499,9 @@ class BabySpaceMainTableViewController: UITableViewController, IChatManagerDeleg
         //        设置宝宝名字
         let chid = NSUserDefaults.standardUserDefaults()
         let chidname = chid.stringForKey("chidname")
+        let schoolname = chid.stringForKey("school_name")
         self.childrenName.text = chidname
+        self.childrenSchoole.text = schoolname
         if chid.valueForKey("count") != nil || chid.valueForKey("homework") != nil {
             
             let arr = chid.valueForKey("count") as! NSArray

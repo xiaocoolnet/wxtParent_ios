@@ -24,6 +24,7 @@ class QCNotTokenCompleteVC: UITableViewController {
         super.viewDidLoad()
         initUI()
         self.tableView.registerClass(QCTakeBabyCell.self, forCellReuseIdentifier: "TakeCell")
+        self.tableView.tableFooterView=UIView()
         //        let cellNib = UINib(nibName: "TakeTableViewCell", bundle: nil)
         //        tableView.registerNib(cellNib, forCellReuseIdentifier: "TakeCell")
 //        self.DropDownUpdate()

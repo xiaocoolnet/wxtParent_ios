@@ -31,6 +31,8 @@
 
 #import "JPUSHService.h"
 
+#import "TZImagePickerController.h"
+
 //#import <AlipaySDK/AlipaySDK.h>
 //#import "Order.h"
 //#import "DataSigner.h"

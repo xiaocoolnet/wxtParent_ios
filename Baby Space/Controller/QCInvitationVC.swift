@@ -322,7 +322,8 @@ class QCInvitationVC: UIViewController,UITableViewDelegate,UITableViewDataSource
         let textField = UITextField()
         textField.frame = CGRectMake(120, 5, WIDTH - 180, 50)
         textField.placeholder = content
-        
+        textField.delegate = self
+        textField.returnKeyType = .Done
         //   打开手势交互
         textField.userInteractionEnabled = true
         let tap = UITapGestureRecognizer.init(target: self, action: #selector(tapAction(_:)))
@@ -582,6 +583,22 @@ class QCInvitationVC: UIViewController,UITableViewDelegate,UITableViewDataSource
         self.view.endEditing(true)
         
     }
-
     
+    func textFieldDidEndEditing(textField: UITextField) {
+        nameTextField.resignFirstResponder()
+        phoneTextField.resignFirstResponder()
+        self.view.endEditing(true)
+    }
+    
+    func textFieldShouldReturn(textField: UITextField) -> Bool {
+        nameTextField.resignFirstResponder()
+        phoneTextField.resignFirstResponder()
+        self.view.endEditing(true)
+        return true
+    }
+    
+    //    收键盘
+    override func touchesBegan(touches: Set<UITouch>, withEvent event: UIEvent?) {
+        self.view.endEditing(true)
+    }
 }

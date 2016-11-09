@@ -269,4 +269,5 @@
     _placeholder_color=placeholder_color;
     _PlaceholderLabel.textColor=placeholder_color;
 }
+
 @end

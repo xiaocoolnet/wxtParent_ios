@@ -130,6 +130,8 @@ class ClassActivitiesTableViewController: UITableViewController {
         let titleLbl = UILabel()
         titleLbl.frame = CGRectMake(10, 10, WIDTH - 20, 30)
         titleLbl.textAlignment = NSTextAlignment.Center
+        titleLbl.font=biaotifont
+        titleLbl.textColor = biaotiColor
         titleLbl.text = activity_listModel.title
         cell.contentView.addSubview(titleLbl)
         
@@ -138,11 +140,15 @@ class ClassActivitiesTableViewController: UITableViewController {
         //  活动内容
         let contentLbl = UILabel()
         contentLbl.frame = CGRectMake(10, 50, WIDTH - 20, 20)
-        contentLbl.font = UIFont.systemFontOfSize(16)
-        contentLbl.textColor = UIColor.lightGrayColor()
+        contentLbl.font = neirongfont
+        contentLbl.textColor = neirongColor
         contentLbl.text = activity_listModel.content
         cell.contentView.addSubview(contentLbl)
-        
+        //        自适应行高
+        let options : NSStringDrawingOptions = NSStringDrawingOptions.UsesLineFragmentOrigin
+        let screenBounds:CGRect = UIScreen.mainScreen().bounds
+        let boundingRect = String(contentLbl.text).boundingRectWithSize(CGSizeMake(screenBounds.width, 0), options: options, attributes: [NSFontAttributeName:UIFont.systemFontOfSize(15)], context: nil)
+        let height = boundingRect.size.height + 10 + 50
         //  活动图片
 
         var pic = self.picSource.activityList
@@ -162,30 +168,26 @@ class ClassActivitiesTableViewController: UITableViewController {
         }
 
         if(pic.count>0&&pic.count<=3){
-            image_h=(WIDTH - 40)/3.0
-            for i in 1...pic.count{
-                var x = 12
-                let pciInfo = pic[i-1]
+            image_h=300
+            if pic.count==1 {
+                let pciInfo = pic[0]
                 let imgUrl = microblogImageUrl+(pciInfo.picture_url)!
-                print(imgUrl)
-                
-                //let image = self.imageCache[imgUrl] as UIImage?
                 let avatarUrl = NSURL(string: imgUrl)
                 let request: NSURLRequest = NSURLRequest(URL: avatarUrl!)
                 
                 NSURLConnection.sendAsynchronousRequest(request, queue: NSOperationQueue.mainQueue(), completionHandler: {(response: NSURLResponse?,data: NSData?,error: NSError?)-> Void in
                     if(data != nil){
-                        x = x+((i-1)*Int((WIDTH - 40)/3.0 + 10))
-                        //                        blogimage = UIImageView(frame: CGRectMake(CGFloat(x), 150, 110, 80))
+                        
                         button = CustomBtn()
-                        button?.flag = i
-                        button!.frame = CGRectMake(CGFloat(x), 80, (WIDTH - 40)/3.0, (WIDTH - 40)/3.0)
+                        button?.flag = 1
+                        button!.frame = CGRectMake(10, height, WIDTH - 20, 300)
                         let imgTmp = UIImage(data: data!)
-                    
+                        
                         button!.setImage(imgTmp, forState: .Normal)
+                        button?.imageView?.contentMode = .ScaleAspectFill
+                        button?.clipsToBounds = true
                         if button?.imageView?.image == nil{
-//                            button!.setImage(UIImage(named: "Logo"), forState: .Normal)
-                            button?.setBackgroundImage(UIImage(named: "Logo"), forState: .Normal)
+                            button?.setBackgroundImage(UIImage(named: "图片默认加载"), forState: .Normal)
                         }
                         button?.tag = indexPath.row
                         button?.addTarget(self, action: #selector(self.clickBtn), forControlEvents: .TouchUpInside)
@@ -194,6 +196,36 @@ class ClassActivitiesTableViewController: UITableViewController {
                     }
                 })
                 
+            }else{
+                image_h=(WIDTH - 40)/3.0
+                for i in 1...pic.count{
+                    var x = 12
+                    let pciInfo = pic[i-1]
+                    let imgUrl = microblogImageUrl+(pciInfo.picture_url)!
+                    let avatarUrl = NSURL(string: imgUrl)
+                    let request: NSURLRequest = NSURLRequest(URL: avatarUrl!)
+                    
+                    NSURLConnection.sendAsynchronousRequest(request, queue: NSOperationQueue.mainQueue(), completionHandler: {(response: NSURLResponse?,data: NSData?,error: NSError?)-> Void in
+                        if(data != nil){
+                            x = x+((i-1)*Int((WIDTH - 40)/3.0 + 10))
+                            button = CustomBtn()
+                            button?.flag = i
+                            button!.frame = CGRectMake(CGFloat(x), height, (WIDTH - 40)/3.0, (WIDTH - 40)/3.0)
+                            let imgTmp = UIImage(data: data!)
+                            
+                            button!.setImage(imgTmp, forState: .Normal)
+                            button?.imageView?.contentMode = .ScaleAspectFill
+                            button?.clipsToBounds = true
+                            if button?.imageView?.image == nil{
+                                button?.setBackgroundImage(UIImage(named: "图片默认加载"), forState: .Normal)
+                            }
+                            button?.tag = indexPath.row
+                            button?.addTarget(self, action: #selector(self.clickBtn), forControlEvents: .TouchUpInside)
+                            cell.contentView.addSubview(button!)
+                            
+                        }
+                    })
+                }
             }
         }
         if(pic.count>3&&pic.count<=6){
@@ -216,7 +248,7 @@ class ClassActivitiesTableViewController: UITableViewController {
                                 x = x+((i-1)*Int((WIDTH - 40)/3.0 + 10))
                                 button = CustomBtn()
                                 button?.flag = i
-                                button!.frame = CGRectMake(CGFloat(x), 80, (WIDTH - 40)/3.0, (WIDTH - 40)/3.0)
+                                button!.frame = CGRectMake(CGFloat(x), height, (WIDTH - 40)/3.0, (WIDTH - 40)/3.0)
                                 
                                 let imgTmp = UIImage(data: data!)
                             
@@ -244,7 +276,7 @@ class ClassActivitiesTableViewController: UITableViewController {
                                 x = x+((i-4)*Int((WIDTH - 40)/3.0 + 10))
                                 button = CustomBtn()
                                 button?.flag = i
-                                button!.frame = CGRectMake(CGFloat(x), 80+(WIDTH - 40)/3.0 + 5, (WIDTH - 40)/3.0, (WIDTH - 40)/3.0)
+                                button!.frame = CGRectMake(CGFloat(x), height+(WIDTH - 40)/3.0 + 5, (WIDTH - 40)/3.0, (WIDTH - 40)/3.0)
                                 let imgTmp = UIImage(data: data!)
                             
                                 button!.setImage(imgTmp, forState: .Normal)
@@ -278,7 +310,7 @@ class ClassActivitiesTableViewController: UITableViewController {
                                 x = x+((i-1)*Int((WIDTH - 40)/3.0 + 10))
                                 button = CustomBtn()
                                 button?.flag = i
-                                button!.frame = CGRectMake(CGFloat(x), 80, (WIDTH - 40)/3.0, (WIDTH - 40)/3.0)
+                                button!.frame = CGRectMake(CGFloat(x), height, (WIDTH - 40)/3.0, (WIDTH - 40)/3.0)
                                 let imgTmp = UIImage(data: data!)
                                 
                                 button!.setImage(imgTmp, forState: .Normal)
@@ -306,7 +338,7 @@ class ClassActivitiesTableViewController: UITableViewController {
                                 x = x+((i-4)*Int((WIDTH - 40)/3.0 + 10))
                                 button = CustomBtn()
                                 button?.flag = i
-                                button!.frame = CGRectMake(CGFloat(x), 80+(WIDTH - 40)/3.0 + 5, (WIDTH - 40)/3.0, (WIDTH - 40)/3.0)
+                                button!.frame = CGRectMake(CGFloat(x), height+(WIDTH - 40)/3.0 + 5, (WIDTH - 40)/3.0, (WIDTH - 40)/3.0)
                                 let imgTmp = UIImage(data: data!)
                                 
                                 button!.setImage(imgTmp, forState: .Normal)
@@ -334,7 +366,7 @@ class ClassActivitiesTableViewController: UITableViewController {
                                 x = x+((i-7)*Int((WIDTH - 40)/3.0 + 10))
                                 button = CustomBtn()
                                 button?.flag = i
-                                button!.frame = CGRectMake(CGFloat(x), 80+(WIDTH - 40)/3.0 + 5+(WIDTH - 40)/3.0 + 5, (WIDTH - 40)/3.0, (WIDTH - 40)/3.0)
+                                button!.frame = CGRectMake(CGFloat(x), height+(WIDTH - 40)/3.0 + 5+(WIDTH - 40)/3.0 + 5, (WIDTH - 40)/3.0, (WIDTH - 40)/3.0)
                                 let imgTmp = UIImage(data: data!)
                                 
                                 button!.setImage(imgTmp, forState: .Normal)
@@ -371,7 +403,7 @@ class ClassActivitiesTableViewController: UITableViewController {
                                 print(x)
                                 button = CustomBtn()
                                 button?.flag = i
-                                button!.frame = CGRectMake(CGFloat(x), 80, (WIDTH - 40)/3.0, (WIDTH - 40)/3.0)
+                                button!.frame = CGRectMake(CGFloat(x), height, (WIDTH - 40)/3.0, (WIDTH - 40)/3.0)
                                 let imgTmp = UIImage(data: data!)
                                 
                                 button!.setImage(imgTmp, forState: .Normal)
@@ -399,7 +431,7 @@ class ClassActivitiesTableViewController: UITableViewController {
                                 x = x+((i-4)*Int((WIDTH - 40)/3.0 + 10))
                                 button = CustomBtn()
                                 button?.flag = i
-                                button!.frame = CGRectMake(CGFloat(x), 80+(WIDTH - 40)/3.0 + 5, (WIDTH - 40)/3.0, (WIDTH - 40)/3.0)
+                                button!.frame = CGRectMake(CGFloat(x), height+(WIDTH - 40)/3.0 + 5, (WIDTH - 40)/3.0, (WIDTH - 40)/3.0)
                                 let imgTmp = UIImage(data: data!)
                                
                                 button!.setImage(imgTmp, forState: .Normal)
@@ -427,7 +459,7 @@ class ClassActivitiesTableViewController: UITableViewController {
                                 x = x+((i-7)*Int((WIDTH - 40)/3.0 + 10))
                                 button = CustomBtn()
                                 button?.flag = i
-                                button!.frame = CGRectMake(CGFloat(x), 80+(WIDTH - 40)/3.0 + 5+(WIDTH - 40)/3.0 + 5, (WIDTH - 40)/3.0, (WIDTH - 40)/3.0)
+                                button!.frame = CGRectMake(CGFloat(x), height+(WIDTH - 40)/3.0 + 5+(WIDTH - 40)/3.0 + 5, (WIDTH - 40)/3.0, (WIDTH - 40)/3.0)
                                 let imgTmp = UIImage(data: data!)
                             
                                 button!.setImage(imgTmp, forState: .Normal)
@@ -445,20 +477,21 @@ class ClassActivitiesTableViewController: UITableViewController {
                 }
                 
             }}
-        tableView.rowHeight = 80 + image_h + 100
+        tableView.rowHeight = height + image_h + 100
         
         let imageView = UIImageView()
-        imageView.frame = CGRectMake(10, 80 + image_h + 10, 21, 21)
+        imageView.frame = CGRectMake(10, height + image_h + 10, 21, 21)
         imageView.image = UIImage.init(named: "ic_fasong")
         cell.contentView.addSubview(imageView)
         
         let senderLbl = UILabel()
-        senderLbl.frame = CGRectMake(40, 80 + image_h + 10, 60, 20)
+        senderLbl.frame = CGRectMake(40, height + image_h + 10, 100, 20)
         senderLbl.font = UIFont.systemFontOfSize(16)
         self.user_Source = user_List(activity_listModel.user_info!)
         if self.user_Source.activityList.count != 0 {
             let userModel = self.user_Source.activityList[0]
-            senderLbl.textColor = UIColor.lightGrayColor()
+            senderLbl.textColor = timeColor
+            senderLbl.font = timefont
             senderLbl.text = userModel.name
             cell.contentView.addSubview(senderLbl)
             print("aaaaaaaaaaa")
@@ -471,21 +504,22 @@ class ClassActivitiesTableViewController: UITableViewController {
         let date = NSDate(timeIntervalSince1970: NSTimeInterval(activity_listModel.create_time!)!)
         let str:String = dateformate.stringFromDate(date)
         let timeLbl = UILabel()
-        timeLbl.frame = CGRectMake(110, 80+image_h+10, WIDTH - 120, 20)
+        timeLbl.frame = CGRectMake(110, height+image_h+10, WIDTH - 120, 20)
         timeLbl.textAlignment = NSTextAlignment.Right
-        timeLbl.font = UIFont.systemFontOfSize(15)
-        timeLbl.textColor = UIColor.lightGrayColor()
+        timeLbl.font = timefont
+        timeLbl.textColor = timeColor
         timeLbl.text = str
         cell.contentView.addSubview(timeLbl)
         
         let line = UILabel()
-        line.frame = CGRectMake(1, 119.5 + image_h, WIDTH - 2, 0.5)
+        line.frame = CGRectMake(1, height + 39.5 + image_h, WIDTH - 2, 0.5)
         line.backgroundColor = UIColor.lightGrayColor()
         cell.addSubview(line)
         
         let baoming = UILabel()
-        baoming.frame = CGRectMake(15, 130 + image_h, WIDTH - 30, 20)
+        baoming.frame = CGRectMake(15, height + 50 + image_h, WIDTH - 30, 20)
         baoming.text = "已报名\(self.apply_countSource.activityList.count)"
+        baoming.font=UIFont.systemFontOfSize(15)
         baoming.textColor = UIColor.orangeColor()
         if activity_listModel.starttime != "0" {
             
@@ -493,7 +527,7 @@ class ClassActivitiesTableViewController: UITableViewController {
         }
         
         let state = UILabel()
-        state.frame = CGRectMake(WIDTH - 70, 130 + image_h, 60, 20)
+        state.frame = CGRectMake(WIDTH - 70, height + 50 + image_h, 60, 20)
         cell.addSubview(state)
         
         var answerInfo = NSString()
@@ -507,11 +541,12 @@ class ClassActivitiesTableViewController: UITableViewController {
 //            state.textColor = UIColor.orangeColor()
         }else{
             state.text = "已报名"
+            state.font=UIFont.systemFontOfSize(15)
             state.textColor = UIColor(red: 155/255, green: 229/255, blue: 180/255, alpha: 1)
         }
         
         let view = UIView()
-        view.frame = CGRectMake(0, 160 + image_h, WIDTH, 20)
+        view.frame = CGRectMake(0, height + 80 + image_h, WIDTH, 20)
         view.backgroundColor = RGBA(242.0, g: 242.0, b: 242.0, a: 1)
         cell.addSubview(view)
         

@@ -1,0 +1,35 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="10117" systemVersion="15D21" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES">
+    <dependencies>
+        <deployment identifier="iOS"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="10085"/>
+    </dependencies>
+    <objects>
+        <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner"/>
+        <placeholder placeholderIdentifier="IBFirstResponder" id="-2" customClass="UIResponder"/>
+        <collectionViewCell opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" id="gTV-IL-0wX" customClass="PicNumCollectionViewCell" customModule="WXT_Parents" customModuleProvider="target">
+            <rect key="frame" x="0.0" y="0.0" width="168" height="148"/>
+            <autoresizingMask key="autoresizingMask"/>
+            <view key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center">
+                <rect key="frame" x="0.0" y="0.0" width="168" height="148"/>
+                <subviews>
+                    <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="wYc-vq-atp">
+                        <rect key="frame" x="5" y="5" width="158" height="138"/>
+                    </button>
+                </subviews>
+                <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
+            </view>
+            <constraints>
+                <constraint firstItem="wYc-vq-atp" firstAttribute="leading" secondItem="gTV-IL-0wX" secondAttribute="leading" constant="5" id="1eA-Th-I0I"/>
+                <constraint firstItem="wYc-vq-atp" firstAttribute="top" secondItem="gTV-IL-0wX" secondAttribute="top" constant="5" id="3ui-WE-lnm"/>
+                <constraint firstAttribute="bottom" secondItem="wYc-vq-atp" secondAttribute="bottom" constant="5" id="euD-bP-d9r"/>
+                <constraint firstAttribute="trailing" secondItem="wYc-vq-atp" secondAttribute="trailing" constant="5" id="fLe-95-cgt"/>
+            </constraints>
+            <size key="customSize" width="168" height="148"/>
+            <connections>
+                <outlet property="imgBtn" destination="wYc-vq-atp" id="Hr3-Fg-cA2"/>
+            </connections>
+            <point key="canvasLocation" x="362" y="291"/>
+        </collectionViewCell>
+    </objects>
+</document>

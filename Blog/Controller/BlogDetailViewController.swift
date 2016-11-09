@@ -31,13 +31,13 @@ class BlogDetailViewController: UIViewController,UITableViewDelegate,UITableView
     
     
     
-    override func viewDidAppear(animated: Bool) {
+    override func viewWillAppear(animated: Bool) {
         self.tabBarController?.tabBar.hidden = true
     }
     
     override func viewDidLoad() {
         super.viewDidLoad()
-//        self.createTable()
+        self.createTable()
         self.DropDownUpdate()
         self.view.backgroundColor = UIColor.whiteColor()
         
@@ -62,7 +62,6 @@ class BlogDetailViewController: UIViewController,UITableViewDelegate,UITableView
         NSNotificationCenter.defaultCenter().addObserver(self, selector: #selector(MyPhotoViewController.keyboardWillDisappear(_:)), name:UIKeyboardWillHideNotification, object: nil)
         
         self.title = "评论"
-        
         self.loadData()
     }
     //    刷新
@@ -124,8 +123,8 @@ class BlogDetailViewController: UIViewController,UITableViewDelegate,UITableView
                     //                    self.table.reloadData()
                     print("13456789765432134567")
                     print(self.data.objectlist.count)
-//                    self.table.reloadData()
-                    self.createTable()
+                    self.table.reloadData()
+                    
                 }
             }
             
@@ -135,12 +134,12 @@ class BlogDetailViewController: UIViewController,UITableViewDelegate,UITableView
     
     //    行数
     func tableView(tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-//        if self.data.objectlist.count == 0 {
-//            return 0
-//        }else{
-        
+        if self.data.objectlist.count == 0 {
+            return 0
+        }else{
+            
             return 1
-//        }
+        }
     }
     
 
@@ -166,7 +165,8 @@ class BlogDetailViewController: UIViewController,UITableViewDelegate,UITableView
         let nameLab = UILabel()
         nameLab.frame = CGRectMake(60, 10, WIDTH - 70, 20)
         nameLab.text = model.name
-        nameLab.textColor = UIColor(red: 155/255, green: 229/255, blue: 180/255, alpha: 1)
+        nameLab.textColor = biaotiColor
+        nameLab.font = biaotifont
         cell.contentView.addSubview(nameLab)
         
         
@@ -176,11 +176,13 @@ class BlogDetailViewController: UIViewController,UITableViewDelegate,UITableView
         contentlbl.text = model.content
         contentlbl.numberOfLines = 0
         contentlbl.sizeToFit()
+        contentlbl.textColor = neirongColor
+        contentlbl.font = neirongfont
         cell.contentView.addSubview(contentlbl)
         //        自适应行高
         let options : NSStringDrawingOptions = NSStringDrawingOptions.UsesLineFragmentOrigin
         let screenBounds:CGRect = UIScreen.mainScreen().bounds
-        let boundingRect = String(contentlbl.text).boundingRectWithSize(CGSizeMake(screenBounds.width, 0), options: options, attributes: [NSFontAttributeName:UIFont.systemFontOfSize(17)], context: nil)
+        let boundingRect = String(contentlbl.text).boundingRectWithSize(CGSizeMake(screenBounds.width, 0), options: options, attributes: [NSFontAttributeName:UIFont.systemFontOfSize(15)], context: nil)
         let height = boundingRect.size.height + 80
         
         
@@ -192,35 +194,64 @@ class BlogDetailViewController: UIViewController,UITableViewDelegate,UITableView
         let pic  = model.pic
         
         if(pic.count>0&&pic.count<=3){
-            image_h=(WIDTH - 40)/3.0
-            for i in 1...pic.count{
-                var x = 12
-                let pciInfo = pic[i-1]
+            image_h=300
+            if pic.count==1 {
+                let pciInfo = pic[0]
                 let imgUrl = microblogImageUrl+(pciInfo.pictureurl)!
                 let avatarUrl = NSURL(string: imgUrl)
                 let request: NSURLRequest = NSURLRequest(URL: avatarUrl!)
                 
                 NSURLConnection.sendAsynchronousRequest(request, queue: NSOperationQueue.mainQueue(), completionHandler: {(response: NSURLResponse?,data: NSData?,error: NSError?)-> Void in
                     if(data != nil){
-                        x = x+((i-1)*Int((WIDTH - 40)/3.0 + 10))
+                        
                         button = CustomBtn()
-                        button!.frame = CGRectMake(CGFloat(x), height, (WIDTH - 40)/3.0, (WIDTH - 40)/3.0)
+                        button?.flag = 1
+                        button!.frame = CGRectMake(10, height, WIDTH - 20, 300)
                         let imgTmp = UIImage(data: data!)
                         
                         button!.setImage(imgTmp, forState: .Normal)
                         button?.imageView?.contentMode = .ScaleAspectFill
                         button?.clipsToBounds = true
                         if button?.imageView?.image == nil{
-                            button?.setBackgroundImage(UIImage(named: "Logo"), forState: .Normal)
+                            button?.setBackgroundImage(UIImage(named: "图片默认加载"), forState: .Normal)
                         }
                         button?.tag = indexPath.row
-                        button?.flag = i
                         button?.addTarget(self, action: #selector(self.clickBtn), forControlEvents: .TouchUpInside)
                         cell.contentView.addSubview(button!)
                         
                     }
                 })
                 
+            }else{
+                image_h=(WIDTH - 40)/3.0
+                for i in 1...pic.count{
+                    var x = 12
+                    let pciInfo = pic[i-1]
+                    let imgUrl = microblogImageUrl+(pciInfo.pictureurl)!
+                    let avatarUrl = NSURL(string: imgUrl)
+                    let request: NSURLRequest = NSURLRequest(URL: avatarUrl!)
+                    
+                    NSURLConnection.sendAsynchronousRequest(request, queue: NSOperationQueue.mainQueue(), completionHandler: {(response: NSURLResponse?,data: NSData?,error: NSError?)-> Void in
+                        if(data != nil){
+                            x = x+((i-1)*Int((WIDTH - 40)/3.0 + 10))
+                            button = CustomBtn()
+                            button?.flag = i
+                            button!.frame = CGRectMake(CGFloat(x), height, (WIDTH - 40)/3.0, (WIDTH - 40)/3.0)
+                            let imgTmp = UIImage(data: data!)
+                            
+                            button!.setImage(imgTmp, forState: .Normal)
+                            button?.imageView?.contentMode = .ScaleAspectFill
+                            button?.clipsToBounds = true
+                            if button?.imageView?.image == nil{
+                                button?.setBackgroundImage(UIImage(named: "图片默认加载"), forState: .Normal)
+                            }
+                            button?.tag = indexPath.row
+                            button?.addTarget(self, action: #selector(self.clickBtn), forControlEvents: .TouchUpInside)
+                            cell.contentView.addSubview(button!)
+                            
+                        }
+                    })
+                }
             }
         }
         if(pic.count>3&&pic.count<=6){
@@ -470,8 +501,8 @@ class BlogDetailViewController: UIViewController,UITableViewDelegate,UITableView
         let timeLbl = UILabel()
         timeLbl.frame = CGRectMake(60, 40, WIDTH - 70, 20)
         timeLbl.text = str
-        timeLbl.font = UIFont.systemFontOfSize(16)
-        timeLbl.textColor = UIColor.lightGrayColor()
+        timeLbl.font = timefont
+        timeLbl.textColor = timeColor
         //        timeLbl.textAlignment = NSTextAlignment.Right
         cell.contentView.addSubview(timeLbl)
         
@@ -502,17 +533,28 @@ class BlogDetailViewController: UIViewController,UITableViewDelegate,UITableView
             btn.frame = CGRectMake(10, 5, 20, 20)
             btn.setBackgroundImage(UIImage(named: "已点赞"), forState: .Normal)
             view.addSubview(btn)
+            let lable = UILabel()
+            lable.frame = CGRectMake(40, 5, (WIDTH - 50), 20)
+            lable.textColor = UIColor(red: 115/255.0, green: 229/255.0, blue: 180/255.0, alpha: 1.0)
+            lable.font = UIFont.systemFontOfSize(14)
+            view.addSubview(lable)
+            let arr = NSMutableArray()
             for i in 1...model.like.count {
                 let str = model.like[i - 1].name
-                let lable = UILabel()
-                var x = 40
-                x = x+((i-1)*Int((WIDTH - 40)/4 + 5))
-                lable.frame = CGRectMake(CGFloat(x), 5, (WIDTH - 50)/4, 20)
-                lable.text = str
-                lable.textColor = UIColor(red: 115/255.0, green: 229/255.0, blue: 180/255.0, alpha: 1.0)
-                lable.font = UIFont.systemFontOfSize(15)
-                view.addSubview(lable)
+                //                lable.text = str
+                arr.addObject(str)
             }
+            
+            let zanstr = arr.componentsJoinedByString("  ")
+            lable.text = zanstr
+            lable.numberOfLines = 0
+            lable.sizeToFit()
+            //        自适应行高
+            let options : NSStringDrawingOptions = NSStringDrawingOptions.UsesLineFragmentOrigin
+            let screenBounds:CGRect = UIScreen.mainScreen().bounds
+            let boundingRect = String(lable.text).boundingRectWithSize(CGSizeMake(screenBounds.width, 0), options: options, attributes: [NSFontAttributeName:UIFont.systemFontOfSize(15)], context: nil)
+            let heigh = boundingRect.size.height + 5
+            view.frame = CGRectMake(10, height + image_h + 50, WIDTH - 20, heigh)
         }
         
         var pingView = UIView()
@@ -520,17 +562,17 @@ class BlogDetailViewController: UIViewController,UITableViewDelegate,UITableView
         if model.comment.count != 0 {
             for i in 1...model.comment.count {
                 pingView = UIView()
-                h = CGFloat( 50 * (i))
+                h = CGFloat( 60 * (i))
                 pingView.frame = CGRectMake(10, height + image_h + 70 + view.frame.size.height , WIDTH - 20, h)
                 cell.contentView.addSubview(pingView)
                 let name = UILabel()
-                name.frame = CGRectMake(50, 5 + CGFloat( 50 * (i - 1)), 60, 20)
+                name.frame = CGRectMake(50, 5 + CGFloat( 60 * (i - 1)), 60, 20)
                 name.text = model.comment[i - 1].name
                 name.font = UIFont.systemFontOfSize(15)
                 pingView.addSubview(name)
                 
                 let img = UIImageView()
-                img.frame = CGRectMake(10, 5 + CGFloat( 50 * (i - 1)), 30, 30)
+                img.frame = CGRectMake(10, 5 + CGFloat( 60 * (i - 1)), 30, 30)
                 let pict = model.comment[i - 1].avatar
                 let imgUrl = microblogImageUrl + pict
                 let photourl = NSURL(string: imgUrl)
@@ -542,15 +584,15 @@ class BlogDetailViewController: UIViewController,UITableViewDelegate,UITableView
                 let date = NSDate(timeIntervalSince1970: NSTimeInterval(model.comment[i - 1].comment_time)!)
                 let st:String = dateformat.stringFromDate(date)
                 let time = UILabel()
-                time.frame = CGRectMake(110, 5 + CGFloat( 50 * (i - 1)), WIDTH - 130, 20)
-                time.font = UIFont.systemFontOfSize(15)
+                time.frame = CGRectMake(110, 5 + CGFloat( 60 * (i - 1)), WIDTH - 130, 30)
+                time.font = UIFont.systemFontOfSize(12)
                 time.textAlignment = NSTextAlignment.Right
                 time.text = st
                 pingView.addSubview(time)
                 
                 let con = UILabel()
                 con.frame = CGRectMake(50, 25 + CGFloat( 50 * (i - 1)), WIDTH - 50, 20)
-                con.font = UIFont.systemFontOfSize(15)
+                con.font = UIFont.systemFontOfSize(13)
                 con.text = model.comment[i - 1].content
                 con.numberOfLines = 0
                 con.sizeToFit()
@@ -559,11 +601,11 @@ class BlogDetailViewController: UIViewController,UITableViewDelegate,UITableView
         }
         
         let aview = UIView()
-        aview.frame = CGRectMake(0, height + image_h + 90 + view.frame.size.height + h, WIDTH, 10)
+        aview.frame = CGRectMake(0, height + image_h + 100 + view.frame.size.height + h, WIDTH, 10)
         aview.backgroundColor = RGBA(242.0, g: 242.0, b: 242.0, a: 1)
         cell.contentView.addSubview(aview)
         
-        table.rowHeight = height + image_h + 100 + view.frame.size.height + h
+        table.rowHeight = height + image_h + 110 + view.frame.size.height + h
         
         
         return cell
@@ -604,7 +646,7 @@ class BlogDetailViewController: UIViewController,UITableViewDelegate,UITableView
                 "userid":uid!,
                 "type":self.type
             ]
-            Alamofire.request(.GET, url, parameters: param as? [String:String] ).response { request, response, json, error in
+            Alamofire.request(.GET, url, parameters: param).response { request, response, json, error in
                 print(request)
                 if(error != nil){
                     
@@ -646,7 +688,7 @@ class BlogDetailViewController: UIViewController,UITableViewDelegate,UITableView
                 "userid":uid!,
                 "type":type
             ]
-            Alamofire.request(.GET, url, parameters: param as? [String:String]).response { request, response, json, error in
+            Alamofire.request(.GET, url, parameters: param).response { request, response, json, error in
                 print(request)
                 if(error != nil){
                     

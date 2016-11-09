@@ -133,37 +133,51 @@ class ClassScheduleTableViewController: UITableViewController {
         if indexPath.section == 0 {
             
             if self.oneArr.count > 0 {
-                oneLable.text = self.oneArr[indexPath.row][String(indexPath.row+1)]!.string ?? ""
+                let str = self.oneArr[indexPath.row][String(indexPath.row+1)]!.string ?? ""
+                
+                oneLable.text = "第\(indexPath.row+1)节课:" + str
                 print("oneLabel.text == \(oneLable.text)")
             }
         }else if indexPath.section == 1{
             if self.twoArr.count > 0 {
-                oneLable.text = self.twoArr[indexPath.row][String(indexPath.row+1)]!.string ?? ""
+                let str = self.twoArr[indexPath.row][String(indexPath.row+1)]!.string ?? ""
+                
+                oneLable.text = "第\(indexPath.row+1)节课:" + str
                 print("oneLabel.text == \(oneLable.text)")
             }
         }else if indexPath.section == 2{
             if self.threeArr.count > 0 {
-                oneLable.text = self.threeArr[indexPath.row][String(indexPath.row+1)]!.string ?? ""
+                let str = self.threeArr[indexPath.row][String(indexPath.row+1)]!.string ?? ""
+                
+                oneLable.text = "第\(indexPath.row+1)节课:" + str
                 print("oneLabel.text == \(oneLable.text)")
             }
         }else if indexPath.section == 3{
             if self.fourArr.count > 0 {
-                oneLable.text = self.fourArr[indexPath.row][String(indexPath.row+1)]!.string ?? ""
+                let str = self.fourArr[indexPath.row][String(indexPath.row+1)]!.string ?? ""
+                
+                oneLable.text = "第\(indexPath.row+1)节课:" + str
                 print("oneLabel.text == \(oneLable.text)")
             }
         }else if indexPath.section == 4{
             if self.fiveArr.count > 0 {
-                oneLable.text = self.fiveArr[indexPath.row][String(indexPath.row+1)]!.string ?? ""
+                let str = self.fiveArr[indexPath.row][String(indexPath.row+1)]!.string ?? ""
+                
+                oneLable.text = "第\(indexPath.row+1)节课:" + str
                 print("oneLabel.text == \(oneLable.text)")
             }
         }else if indexPath.section == 5{
             if self.sixArr.count > 0 {
-                oneLable.text = self.sixArr[indexPath.row][String(indexPath.row+1)]!.string ?? ""
+                let str = self.sixArr[indexPath.row][String(indexPath.row+1)]!.string ?? ""
+                
+                oneLable.text = "第\(indexPath.row+1)节课:" + str
                 print("oneLabel.text == \(oneLable.text)")
             }
         }else{
             if self.sevenArr.count > 0 {
-                oneLable.text = self.sevenArr[indexPath.row][String(indexPath.row+1)]!.string ?? ""
+                let str = self.sevenArr[indexPath.row][String(indexPath.row+1)]!.string ?? ""
+                
+                oneLable.text = "第\(indexPath.row+1)节课:" + str
                 print("oneLabel.text == \(oneLable.text)")
             }
         }

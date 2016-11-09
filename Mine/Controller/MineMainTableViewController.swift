@@ -35,7 +35,7 @@ class MineMainTableViewController: UITableViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        self.title = "个人中心"
+        self.title = "我的"
         //  设置右按钮
         //  进入的加载
         let hud = MBProgressHUD.showHUDAddedTo(self.view, animated: true)

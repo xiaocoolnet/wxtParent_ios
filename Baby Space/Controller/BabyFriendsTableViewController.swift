@@ -129,24 +129,29 @@ class BabyFriendsTableViewController: UITableViewController{
             let name = UILabel()
             name.frame = CGRectMake(90, 10, 120, 30)
             name.text = model.name
+            name.font = biaotifont
+            name.textColor = biaotiColor
             cell.contentView.addSubview(name)
             
             let phone = UILabel()
             phone.frame = CGRectMake(90, 50, 25, 30)
             phone.text = "共"
-            phone.textColor = UIColor.lightGrayColor()
+            phone.font = neirongfont
+            phone.textColor = neirongColor
             cell.contentView.addSubview(phone)
             
             let phon = UILabel()
             phon.frame = CGRectMake(115, 50, 20, 30)
             phon.text = model.blog_coutn
-            phon.textColor = UIColor.lightGrayColor()
+            phon.font = neirongfont
+            phon.textColor = neirongColor
             cell.contentView.addSubview(phon)
 
             let pho = UILabel()
             pho.frame = CGRectMake(135, 50, WIDTH - 165, 30)
             pho.text = "条成长日记"
-            pho.textColor = UIColor.lightGrayColor()
+            pho.font = neirongfont
+            pho.textColor = neirongColor
             cell.contentView.addSubview(pho)
 
             
@@ -166,6 +171,7 @@ class BabyFriendsTableViewController: UITableViewController{
     override func tableView(tableView: UITableView, didSelectRowAtIndexPath indexPath: NSIndexPath) {
         if indexPath.section == 0 {
             let vc = AddFriendViewController()
+            vc.hidesBottomBarWhenPushed = true
             self.navigationController?.pushViewController(vc, animated: true)
             
         }

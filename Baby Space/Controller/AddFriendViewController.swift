@@ -26,7 +26,7 @@ class AddFriendViewController: UIViewController, UITableViewDelegate, UITableVie
         
         self.view.backgroundColor = UIColor.whiteColor()
         
-        myTableView.frame = CGRectMake(0, 0, WIDTH, HEIGHT)
+        myTableView.frame = CGRectMake(0, 0, WIDTH, HEIGHT - 64)
         myTableView.delegate = self
         myTableView.dataSource = self
         myTableView.separatorStyle = .None

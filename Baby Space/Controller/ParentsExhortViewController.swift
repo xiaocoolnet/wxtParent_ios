@@ -113,50 +113,83 @@ class ParentsExhortViewController: UIViewController,UITableViewDelegate,UITableV
         // 描述详情
         let content = UILabel()
         content.frame = CGRectMake(10, 40, WIDTH - 20, 20)
-        content.textColor = UIColor.lightGrayColor()
+        content.textColor = neirongColor
         content.font = UIFont.systemFontOfSize(15)
         content.text = exhortInfo.content
         cell.contentView.addSubview(content)
+        //        自适应行高
+        let options : NSStringDrawingOptions = NSStringDrawingOptions.UsesLineFragmentOrigin
+        let screenBounds:CGRect = UIScreen.mainScreen().bounds
+        let boundingRect = String(content.text).boundingRectWithSize(CGSizeMake(screenBounds.width, 0), options: options, attributes: [NSFontAttributeName:UIFont.systemFontOfSize(15)], context: nil)
+        let heigh = boundingRect.size.height + 50
+        
         //  图片
         var image_h = CGFloat()
-        var button:UIButton?
+        var button:CustomBtn?
         //判断图片张数显示
         //解决数据返回有null和“”的错误图片显示
         if pic.count==1&&(pic.first?.picture_url=="null"||pic.first?.picture_url=="") {
             pic.removeAll()
         }
         if(pic.count>0&&pic.count<=3){
-            image_h=(WIDTH - 40)/3.0
-            for i in 1...pic.count{
-                var x = 12
-                let pciInfo = pic[i-1]
+            image_h=300
+            if pic.count==1 {
+                let pciInfo = pic[0]
                 let imgUrl = microblogImageUrl+(pciInfo.picture_url)!
-                print(imgUrl)
-                
-                //let image = self.imageCache[imgUrl] as UIImage?
                 let avatarUrl = NSURL(string: imgUrl)
                 let request: NSURLRequest = NSURLRequest(URL: avatarUrl!)
                 
                 NSURLConnection.sendAsynchronousRequest(request, queue: NSOperationQueue.mainQueue(), completionHandler: {(response: NSURLResponse?,data: NSData?,error: NSError?)-> Void in
                     if(data != nil){
-                        x = x+((i-1)*Int((WIDTH - 40)/3.0 + 10))
                         
-                        button = UIButton()
-                        button!.frame = CGRectMake(CGFloat(x), 70, (WIDTH - 40)/3.0, (WIDTH - 40)/3.0)
+                        button = CustomBtn()
+                        button?.flag = 1
+                        button!.frame = CGRectMake(10, heigh, WIDTH - 20, 300)
                         let imgTmp = UIImage(data: data!)
                         
                         button!.setImage(imgTmp, forState: .Normal)
+                        button?.imageView?.contentMode = .ScaleAspectFill
+                        button?.clipsToBounds = true
                         if button?.imageView?.image == nil{
-                           
-                            button?.setBackgroundImage(UIImage(named: "Logo"), forState: .Normal)
+                            button?.setBackgroundImage(UIImage(named: "图片默认加载"), forState: .Normal)
                         }
                         button?.tag = indexPath.row
-
+                        button?.addTarget(self, action: #selector(self.clickBtn), forControlEvents: .TouchUpInside)
                         cell.contentView.addSubview(button!)
                         
                     }
                 })
                 
+            }else{
+                image_h=(WIDTH - 40)/3.0
+                for i in 1...pic.count{
+                    var x = 12
+                    let pciInfo = pic[i-1]
+                    let imgUrl = microblogImageUrl+(pciInfo.picture_url)!
+                    let avatarUrl = NSURL(string: imgUrl)
+                    let request: NSURLRequest = NSURLRequest(URL: avatarUrl!)
+                    
+                    NSURLConnection.sendAsynchronousRequest(request, queue: NSOperationQueue.mainQueue(), completionHandler: {(response: NSURLResponse?,data: NSData?,error: NSError?)-> Void in
+                        if(data != nil){
+                            x = x+((i-1)*Int((WIDTH - 40)/3.0 + 10))
+                            button = CustomBtn()
+                            button?.flag = i
+                            button!.frame = CGRectMake(CGFloat(x), heigh, (WIDTH - 40)/3.0, (WIDTH - 40)/3.0)
+                            let imgTmp = UIImage(data: data!)
+                            
+                            button!.setImage(imgTmp, forState: .Normal)
+                            button?.imageView?.contentMode = .ScaleAspectFill
+                            button?.clipsToBounds = true
+                            if button?.imageView?.image == nil{
+                                button?.setBackgroundImage(UIImage(named: "图片默认加载"), forState: .Normal)
+                            }
+                            button?.tag = indexPath.row
+                            button?.addTarget(self, action: #selector(self.clickBtn), forControlEvents: .TouchUpInside)
+                            cell.contentView.addSubview(button!)
+                            
+                        }
+                    })
+                }
             }
         }
         if(pic.count>3&&pic.count<=6){
@@ -166,8 +199,7 @@ class ParentsExhortViewController: UIViewController,UITableViewDelegate,UITableV
                     var x = 12
                     let pciInfo = pic[i-1]
                     if pciInfo.picture_url != "" {
-                        
-                        
+
                         let imgUrl = microblogImageUrl+(pciInfo.picture_url)!
                         
                         //let image = self.imageCache[imgUrl] as UIImage?
@@ -177,8 +209,9 @@ class ParentsExhortViewController: UIViewController,UITableViewDelegate,UITableV
                         NSURLConnection.sendAsynchronousRequest(request, queue: NSOperationQueue.mainQueue(), completionHandler: {(response: NSURLResponse?,data: NSData?,error: NSError?)-> Void in
                             if(data != nil){
                                 x = x+((i-1)*Int((WIDTH - 40)/3.0 + 10))
-                                button = UIButton()
-                                button!.frame = CGRectMake(CGFloat(x), 70, (WIDTH - 40)/3.0, (WIDTH - 40)/3.0)
+                                button = CustomBtn()
+                                button?.flag = i
+                                button!.frame = CGRectMake(CGFloat(x), heigh, (WIDTH - 40)/3.0, (WIDTH - 40)/3.0)
                                 
                                 let imgTmp = UIImage(data: data!)
                                 
@@ -187,7 +220,7 @@ class ParentsExhortViewController: UIViewController,UITableViewDelegate,UITableV
                                     button!.setImage(UIImage(named: "Logo"), forState: .Normal)
                                 }
                                 button?.tag = indexPath.row
-//                                button?.addTarget(self, action: #selector(self.clickBtn), forControlEvents: .TouchUpInside)
+                                button?.addTarget(self, action: #selector(self.clickBtn), forControlEvents: .TouchUpInside)
                                 cell.contentView.addSubview(button!)
                             }
                         })
@@ -204,8 +237,9 @@ class ParentsExhortViewController: UIViewController,UITableViewDelegate,UITableV
                         NSURLConnection.sendAsynchronousRequest(request, queue: NSOperationQueue.mainQueue(), completionHandler: {(response: NSURLResponse?,data: NSData?,error: NSError?)-> Void in
                             if(data != nil){
                                 x = x+((i-4)*Int((WIDTH - 40)/3.0 + 10))
-                                button = UIButton()
-                                button!.frame = CGRectMake(CGFloat(x), 70+(WIDTH - 40)/3.0 + 5, (WIDTH - 40)/3.0, (WIDTH - 40)/3.0)
+                                button = CustomBtn()
+                                button?.flag = i
+                                button!.frame = CGRectMake(CGFloat(x), heigh+(WIDTH - 40)/3.0 + 5, (WIDTH - 40)/3.0, (WIDTH - 40)/3.0)
                                 let imgTmp = UIImage(data: data!)
                                 
                                 button!.setImage(imgTmp, forState: .Normal)
@@ -213,7 +247,7 @@ class ParentsExhortViewController: UIViewController,UITableViewDelegate,UITableV
                                     button!.setImage(UIImage(named: "Logo"), forState: .Normal)
                                 }
                                 button?.tag = indexPath.row
-//                                button?.addTarget(self, action: #selector(self.clickBtn), forControlEvents: .TouchUpInside)
+                                button?.addTarget(self, action: #selector(self.clickBtn), forControlEvents: .TouchUpInside)
                                 cell.contentView.addSubview(button!)
                             }
                         })
@@ -237,8 +271,9 @@ class ParentsExhortViewController: UIViewController,UITableViewDelegate,UITableV
                         NSURLConnection.sendAsynchronousRequest(request, queue: NSOperationQueue.mainQueue(), completionHandler: {(response: NSURLResponse?,data: NSData?,error: NSError?)-> Void in
                             if(data != nil){
                                 x = x+((i-1)*Int((WIDTH - 40)/3.0 + 10))
-                                button = UIButton()
-                                button!.frame = CGRectMake(CGFloat(x), 70, (WIDTH - 40)/3.0, (WIDTH - 40)/3.0)
+                                button = CustomBtn()
+                                button?.flag = i
+                                button!.frame = CGRectMake(CGFloat(x), heigh, (WIDTH - 40)/3.0, (WIDTH - 40)/3.0)
                                 let imgTmp = UIImage(data: data!)
                                 
                                 button!.setImage(imgTmp, forState: .Normal)
@@ -246,7 +281,7 @@ class ParentsExhortViewController: UIViewController,UITableViewDelegate,UITableV
                                     button!.setImage(UIImage(named: "Logo"), forState: .Normal)
                                 }
                                 button?.tag = indexPath.row
-//                                button?.addTarget(self, action: #selector(self.clickBtn), forControlEvents: .TouchUpInside)
+                                button?.addTarget(self, action: #selector(self.clickBtn), forControlEvents: .TouchUpInside)
                                 cell.contentView.addSubview(button!)
                             }
                         })
@@ -264,8 +299,9 @@ class ParentsExhortViewController: UIViewController,UITableViewDelegate,UITableV
                         NSURLConnection.sendAsynchronousRequest(request, queue: NSOperationQueue.mainQueue(), completionHandler: {(response: NSURLResponse?,data: NSData?,error: NSError?)-> Void in
                             if(data != nil){
                                 x = x+((i-4)*Int((WIDTH - 40)/3.0 + 10))
-                                button = UIButton()
-                                button!.frame = CGRectMake(CGFloat(x), 70+(WIDTH - 40)/3.0 + 5, (WIDTH - 40)/3.0, (WIDTH - 40)/3.0)
+                                button = CustomBtn()
+                                button?.flag = i
+                                button!.frame = CGRectMake(CGFloat(x), heigh+(WIDTH - 40)/3.0 + 5, (WIDTH - 40)/3.0, (WIDTH - 40)/3.0)
                                 let imgTmp = UIImage(data: data!)
                                 
                                 button!.setImage(imgTmp, forState: .Normal)
@@ -273,7 +309,7 @@ class ParentsExhortViewController: UIViewController,UITableViewDelegate,UITableV
                                     button!.setImage(UIImage(named: "Logo"), forState: .Normal)
                                 }
                                 button?.tag = indexPath.row
-//                                button?.addTarget(self, action: #selector(self.clickBtn), forControlEvents: .TouchUpInside)
+                                button?.addTarget(self, action: #selector(self.clickBtn), forControlEvents: .TouchUpInside)
                                 cell.contentView.addSubview(button!)
                             }
                         })
@@ -291,8 +327,9 @@ class ParentsExhortViewController: UIViewController,UITableViewDelegate,UITableV
                         NSURLConnection.sendAsynchronousRequest(request, queue: NSOperationQueue.mainQueue(), completionHandler: {(response: NSURLResponse?,data: NSData?,error: NSError?)-> Void in
                             if(data != nil){
                                 x = x+((i-7)*Int((WIDTH - 40)/3.0 + 10))
-                                button = UIButton()
-                                button!.frame = CGRectMake(CGFloat(x), 70+(WIDTH - 40)/3.0 + 5+(WIDTH - 40)/3.0 + 5, (WIDTH - 40)/3.0, (WIDTH - 40)/3.0)
+                                button = CustomBtn()
+                                button?.flag = i
+                                button!.frame = CGRectMake(CGFloat(x), heigh+(WIDTH - 40)/3.0 + 5+(WIDTH - 40)/3.0 + 5, (WIDTH - 40)/3.0, (WIDTH - 40)/3.0)
                                 let imgTmp = UIImage(data: data!)
                                 
                                 button!.setImage(imgTmp, forState: .Normal)
@@ -300,7 +337,7 @@ class ParentsExhortViewController: UIViewController,UITableViewDelegate,UITableV
                                     button!.setImage(UIImage(named: "Logo"), forState: .Normal)
                                 }
                                 button?.tag = indexPath.row
-//                                button?.addTarget(self, action: #selector(self.clickBtn), forControlEvents: .TouchUpInside)
+                                button?.addTarget(self, action: #selector(self.clickBtn), forControlEvents: .TouchUpInside)
                                 cell.contentView.addSubview(button!)
                             }
                         })
@@ -327,8 +364,9 @@ class ParentsExhortViewController: UIViewController,UITableViewDelegate,UITableV
                             if(data != nil){
                                 x = x+((i-1)*Int((WIDTH - 40)/3.0 + 10))
                                 print(x)
-                                button = UIButton()
-                                button!.frame = CGRectMake(CGFloat(x), 70, (WIDTH - 40)/3.0, (WIDTH - 40)/3.0)
+                                button = CustomBtn()
+                                button?.flag = i
+                                button!.frame = CGRectMake(CGFloat(x), heigh, (WIDTH - 40)/3.0, (WIDTH - 40)/3.0)
                                 let imgTmp = UIImage(data: data!)
                                 
                                 button!.setImage(imgTmp, forState: .Normal)
@@ -336,7 +374,7 @@ class ParentsExhortViewController: UIViewController,UITableViewDelegate,UITableV
                                     button!.setImage(UIImage(named: "Logo"), forState: .Normal)
                                 }
                                 button?.tag = indexPath.row
-//                                button?.addTarget(self, action: #selector(self.clickBtn), forControlEvents: .TouchUpInside)
+                                button?.addTarget(self, action: #selector(self.clickBtn), forControlEvents: .TouchUpInside)
                                 cell.contentView.addSubview(button!)
                             }
                         })
@@ -354,8 +392,9 @@ class ParentsExhortViewController: UIViewController,UITableViewDelegate,UITableV
                         NSURLConnection.sendAsynchronousRequest(request, queue: NSOperationQueue.mainQueue(), completionHandler: {(response: NSURLResponse?,data: NSData?,error: NSError?)-> Void in
                             if(data != nil){
                                 x = x+((i-4)*Int((WIDTH - 40)/3.0 + 10))
-                                button = UIButton()
-                                button!.frame = CGRectMake(CGFloat(x), 70+(WIDTH - 40)/3.0 + 5, (WIDTH - 40)/3.0, (WIDTH - 40)/3.0)
+                                button = CustomBtn()
+                                button?.flag = i
+                                button!.frame = CGRectMake(CGFloat(x), heigh+(WIDTH - 40)/3.0 + 5, (WIDTH - 40)/3.0, (WIDTH - 40)/3.0)
                                 let imgTmp = UIImage(data: data!)
                                 
                                 button!.setImage(imgTmp, forState: .Normal)
@@ -363,7 +402,7 @@ class ParentsExhortViewController: UIViewController,UITableViewDelegate,UITableV
                                     button!.setImage(UIImage(named: "Logo"), forState: .Normal)
                                 }
                                 button?.tag = indexPath.row
-//                                button?.addTarget(self, action: #selector(self.clickBtn), forControlEvents: .TouchUpInside)
+                                button?.addTarget(self, action: #selector(self.clickBtn), forControlEvents: .TouchUpInside)
                                 cell.contentView.addSubview(button!)
                             }
                         })
@@ -381,8 +420,9 @@ class ParentsExhortViewController: UIViewController,UITableViewDelegate,UITableV
                         NSURLConnection.sendAsynchronousRequest(request, queue: NSOperationQueue.mainQueue(), completionHandler: {(response: NSURLResponse?,data: NSData?,error: NSError?)-> Void in
                             if(data != nil){
                                 x = x+((i-7)*Int((WIDTH - 40)/3.0 + 10))
-                                button = UIButton()
-                                button!.frame = CGRectMake(CGFloat(x), 70+(WIDTH - 40)/3.0 + 5+(WIDTH - 40)/3.0 + 5, (WIDTH - 40)/3.0, (WIDTH - 40)/3.0)
+                                button = CustomBtn()
+                                button?.flag = i
+                                button!.frame = CGRectMake(CGFloat(x), heigh+(WIDTH - 40)/3.0 + 5+(WIDTH - 40)/3.0 + 5, (WIDTH - 40)/3.0, (WIDTH - 40)/3.0)
                                 let imgTmp = UIImage(data: data!)
                                 
                                 button!.setImage(imgTmp, forState: .Normal)
@@ -390,7 +430,7 @@ class ParentsExhortViewController: UIViewController,UITableViewDelegate,UITableV
                                     button!.setImage(UIImage(named: "Logo"), forState: .Normal)
                                 }
                                 button?.tag = indexPath.row
-//                                button?.addTarget(self, action: #selector(self.clickBtn(_:)), forControlEvents: .TouchUpInside)
+                                button?.addTarget(self, action: #selector(self.clickBtn), forControlEvents: .TouchUpInside)
                                 cell.contentView.addSubview(button!)
                             }
                         })
@@ -402,14 +442,14 @@ class ParentsExhortViewController: UIViewController,UITableViewDelegate,UITableV
             }}
        
         let imgBtn = UIButton()
-        imgBtn.frame = CGRectMake(10, 70 + image_h + 10, 20, 20)
+        imgBtn.frame = CGRectMake(10, heigh + image_h + 10, 20, 20)
 //        let imgUrl = microblogImageUrl + exhortInfo.teacheravatar!
 //        let teacheravatar = NSURL(string: imgUrl)
         imgBtn.setImage(UIImage(named: "ic_jieshouren"), forState: .Normal)
         cell.contentView.addSubview(imgBtn)
         //  老师名字
         let teachername = UILabel()
-        teachername.frame = CGRectMake(40, 80 + image_h, 140, 20)
+        teachername.frame = CGRectMake(40, heigh + image_h + 10, 140, 20)
         teachername.textColor = UIColor.lightGrayColor()
         teachername.text = exhortInfo.teachername
         cell.contentView.addSubview(teachername)
@@ -420,7 +460,7 @@ class ParentsExhortViewController: UIViewController,UITableViewDelegate,UITableV
         let str:String = dateformate.stringFromDate(date)
         
         let create_time = UILabel()
-        create_time.frame = CGRectMake(180, 80 + image_h, WIDTH - 190, 20)
+        create_time.frame = CGRectMake(180, heigh + image_h + 10, WIDTH - 190, 20)
         create_time.textColor = UIColor.lightGrayColor()
         create_time.font = UIFont.systemFontOfSize(15)
         create_time.text = str
@@ -438,7 +478,7 @@ class ParentsExhortViewController: UIViewController,UITableViewDelegate,UITableV
             agreeLable.text = "已回复"
             agreeLable.textColor = UIColor(red: 155/255, green: 229/255, blue: 180/255, alpha: 1)
             let view = UIView()
-            view.frame = CGRectMake(8, 100 + image_h, WIDTH - 16 , 60 * CGFloat(commentModel.count))
+            view.frame = CGRectMake(8, heigh + 40 + image_h, WIDTH - 16 , 60 * CGFloat(commentModel.count))
             view.backgroundColor = RGBA(242.0, g: 242.0, b: 242.0, a: 1)
             cell.contentView.addSubview(view)
             for i in 1...commentModel.count {
@@ -460,7 +500,7 @@ class ParentsExhortViewController: UIViewController,UITableViewDelegate,UITableV
                 let conLab = UILabel()
                 conLab.frame = CGRectMake(60, 30 * CGFloat(i), WIDTH - 196, 30)
                 conLab.backgroundColor = RGBA(242.0, g: 242.0, b: 242.0, a: 1)
-                conLab.text = com.name
+                conLab.text = com.content
                 conLab.numberOfLines = 0
                 conLab.textColor = UIColor.lightGrayColor()
                 conLab.font = UIFont.systemFontOfSize(15)
@@ -487,11 +527,19 @@ class ParentsExhortViewController: UIViewController,UITableViewDelegate,UITableV
         }
         let line = UILabel()
         line.backgroundColor = UIColor.lightGrayColor()
-        line.frame = CGRectMake(1, 70 + image_h + 30 + 60 * CGFloat(commentModel.count) + 9.5, WIDTH - 2, 0.5)
+        line.frame = CGRectMake(1, heigh + image_h + 40 + 60 * CGFloat(commentModel.count) + 9.5, WIDTH - 2, 0.5)
         cell.contentView.addSubview(line)
-         tableView.rowHeight = 70 + image_h + 30 + 60 * CGFloat(commentModel.count) + 10
+         tableView.rowHeight = heigh + image_h + 40 + 60 * CGFloat(commentModel.count) + 10
         return cell
     }
     
-    
+    func clickBtn(sender:CustomBtn){
+        let vc = ExhortPicViewController()
+        vc.arrayInfo = self.parentsExhortSource.objectlist[(sender.tag)].pic
+        vc.nu = vc.arrayInfo.count
+        vc.count = sender.flag!
+        vc.hidesBottomBarWhenPushed = true
+        self.navigationController?.pushViewController(vc, animated: true)
+        
+    }
 }

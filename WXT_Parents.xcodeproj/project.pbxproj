@@ -418,6 +418,18 @@
 		641387DA1D54A4CB0019EE5F /* MessageUI.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 641387D91D54A4CA0019EE5F /* MessageUI.framework */; };
 		6419DFAA1D42218000F3D5B9 /* QCYuerModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6419DFA91D42218000F3D5B9 /* QCYuerModel.swift */; };
 		642ED7DF1D3CBBF000719541 /* QCFriendsCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 642ED7DE1D3CBBF000719541 /* QCFriendsCell.swift */; };
+		643469541DD1CC0F000E598A /* TZAssetCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 643469421DD1CC0F000E598A /* TZAssetCell.m */; };
+		643469551DD1CC0F000E598A /* TZAssetModel.m in Sources */ = {isa = PBXBuildFile; fileRef = 643469441DD1CC0F000E598A /* TZAssetModel.m */; };
+		643469561DD1CC0F000E598A /* TZImageManager.m in Sources */ = {isa = PBXBuildFile; fileRef = 643469461DD1CC0F000E598A /* TZImageManager.m */; };
+		643469571DD1CC0F000E598A /* TZImagePickerController.bundle in Resources */ = {isa = PBXBuildFile; fileRef = 643469471DD1CC0F000E598A /* TZImagePickerController.bundle */; };
+		643469581DD1CC0F000E598A /* TZImagePickerController.m in Sources */ = {isa = PBXBuildFile; fileRef = 643469491DD1CC0F000E598A /* TZImagePickerController.m */; };
+		643469591DD1CC0F000E598A /* TZPhotoPickerController.m in Sources */ = {isa = PBXBuildFile; fileRef = 6434694B1DD1CC0F000E598A /* TZPhotoPickerController.m */; };
+		6434695A1DD1CC0F000E598A /* TZPhotoPreviewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 6434694D1DD1CC0F000E598A /* TZPhotoPreviewCell.m */; };
+		6434695B1DD1CC0F000E598A /* TZPhotoPreviewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 6434694F1DD1CC0F000E598A /* TZPhotoPreviewController.m */; };
+		6434695C1DD1CC0F000E598A /* TZVideoPlayerController.m in Sources */ = {isa = PBXBuildFile; fileRef = 643469511DD1CC0F000E598A /* TZVideoPlayerController.m */; };
+		6434695D1DD1CC0F000E598A /* UIView+Layout.m in Sources */ = {isa = PBXBuildFile; fileRef = 643469531DD1CC0F000E598A /* UIView+Layout.m */; };
+		643469641DD1D678000E598A /* PicNumCollectionViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 643469621DD1D678000E598A /* PicNumCollectionViewCell.swift */; };
+		643469651DD1D678000E598A /* PicNumCollectionViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 643469631DD1D678000E598A /* PicNumCollectionViewCell.xib */; };
 		6441EFE21D3B564D00986730 /* QCInvitationCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6441EFE11D3B564D00986730 /* QCInvitationCell.swift */; };
 		6443B7EE1D3E1A9400B1E05E /* QCChildrenClass.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6443B7ED1D3E1A9300B1E05E /* QCChildrenClass.swift */; };
 		6443B7F11D3E234B00B1E05E /* QCDetailsClassActiveVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6443B7F01D3E234B00B1E05E /* QCDetailsClassActiveVC.swift */; };
@@ -439,6 +451,8 @@
 		6450AFA91D6AA1C500C6D6CA /* SystemDetailViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6450AFA81D6AA1C500C6D6CA /* SystemDetailViewController.swift */; };
 		6450AFAC1D6AEF1000C6D6CA /* H5DetailViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6450AFAB1D6AEF1000C6D6CA /* H5DetailViewController.swift */; };
 		6450AFAE1D6C341E00C6D6CA /* MineChildrenModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6450AFAD1D6C341E00C6D6CA /* MineChildrenModel.swift */; };
+		64690E951DBAF81E00D41D49 /* LeavePicViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 64690E941DBAF81E00D41D49 /* LeavePicViewController.swift */; };
+		64690E971DBAF9C100D41D49 /* ExhortPicViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 64690E961DBAF9C100D41D49 /* ExhortPicViewController.swift */; };
 		647D14CD1D756F5F00F2A9F5 /* CustomBtn.swift in Sources */ = {isa = PBXBuildFile; fileRef = 647D14CC1D756F5F00F2A9F5 /* CustomBtn.swift */; };
 		648624901D7EB4810022B6D8 /* jpush-ios-2.1.8.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 6486248E1D7EB4810022B6D8 /* jpush-ios-2.1.8.a */; };
 		648624B21D815A1A0022B6D8 /* QuartzCore.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 648624B11D815A1A0022B6D8 /* QuartzCore.framework */; };
@@ -1020,6 +1034,27 @@
 		641387D91D54A4CA0019EE5F /* MessageUI.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = MessageUI.framework; path = System/Library/Frameworks/MessageUI.framework; sourceTree = SDKROOT; };
 		6419DFA91D42218000F3D5B9 /* QCYuerModel.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = QCYuerModel.swift; sourceTree = "<group>"; };
 		642ED7DE1D3CBBF000719541 /* QCFriendsCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = QCFriendsCell.swift; sourceTree = "<group>"; };
+		643469411DD1CC0F000E598A /* TZAssetCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TZAssetCell.h; sourceTree = "<group>"; };
+		643469421DD1CC0F000E598A /* TZAssetCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TZAssetCell.m; sourceTree = "<group>"; };
+		643469431DD1CC0F000E598A /* TZAssetModel.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TZAssetModel.h; sourceTree = "<group>"; };
+		643469441DD1CC0F000E598A /* TZAssetModel.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TZAssetModel.m; sourceTree = "<group>"; };
+		643469451DD1CC0F000E598A /* TZImageManager.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TZImageManager.h; sourceTree = "<group>"; };
+		643469461DD1CC0F000E598A /* TZImageManager.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TZImageManager.m; sourceTree = "<group>"; };
+		643469471DD1CC0F000E598A /* TZImagePickerController.bundle */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.plug-in"; path = TZImagePickerController.bundle; sourceTree = "<group>"; };
+		643469481DD1CC0F000E598A /* TZImagePickerController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TZImagePickerController.h; sourceTree = "<group>"; };
+		643469491DD1CC0F000E598A /* TZImagePickerController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TZImagePickerController.m; sourceTree = "<group>"; };
+		6434694A1DD1CC0F000E598A /* TZPhotoPickerController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TZPhotoPickerController.h; sourceTree = "<group>"; };
+		6434694B1DD1CC0F000E598A /* TZPhotoPickerController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TZPhotoPickerController.m; sourceTree = "<group>"; };
+		6434694C1DD1CC0F000E598A /* TZPhotoPreviewCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TZPhotoPreviewCell.h; sourceTree = "<group>"; };
+		6434694D1DD1CC0F000E598A /* TZPhotoPreviewCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TZPhotoPreviewCell.m; sourceTree = "<group>"; };
+		6434694E1DD1CC0F000E598A /* TZPhotoPreviewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TZPhotoPreviewController.h; sourceTree = "<group>"; };
+		6434694F1DD1CC0F000E598A /* TZPhotoPreviewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TZPhotoPreviewController.m; sourceTree = "<group>"; };
+		643469501DD1CC0F000E598A /* TZVideoPlayerController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TZVideoPlayerController.h; sourceTree = "<group>"; };
+		643469511DD1CC0F000E598A /* TZVideoPlayerController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TZVideoPlayerController.m; sourceTree = "<group>"; };
+		643469521DD1CC0F000E598A /* UIView+Layout.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "UIView+Layout.h"; sourceTree = "<group>"; };
+		643469531DD1CC0F000E598A /* UIView+Layout.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "UIView+Layout.m"; sourceTree = "<group>"; };
+		643469621DD1D678000E598A /* PicNumCollectionViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PicNumCollectionViewCell.swift; sourceTree = "<group>"; };
+		643469631DD1D678000E598A /* PicNumCollectionViewCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = PicNumCollectionViewCell.xib; sourceTree = "<group>"; };
 		6441EFE11D3B564D00986730 /* QCInvitationCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = QCInvitationCell.swift; sourceTree = "<group>"; };
 		6443B7ED1D3E1A9300B1E05E /* QCChildrenClass.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = QCChildrenClass.swift; sourceTree = "<group>"; };
 		6443B7F01D3E234B00B1E05E /* QCDetailsClassActiveVC.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = QCDetailsClassActiveVC.swift; sourceTree = "<group>"; };
@@ -1042,6 +1077,8 @@
 		6450AFA81D6AA1C500C6D6CA /* SystemDetailViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SystemDetailViewController.swift; sourceTree = "<group>"; };
 		6450AFAB1D6AEF1000C6D6CA /* H5DetailViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = H5DetailViewController.swift; sourceTree = "<group>"; };
 		6450AFAD1D6C341E00C6D6CA /* MineChildrenModel.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MineChildrenModel.swift; sourceTree = "<group>"; };
+		64690E941DBAF81E00D41D49 /* LeavePicViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = LeavePicViewController.swift; sourceTree = "<group>"; };
+		64690E961DBAF9C100D41D49 /* ExhortPicViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ExhortPicViewController.swift; sourceTree = "<group>"; };
 		647D14CC1D756F5F00F2A9F5 /* CustomBtn.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CustomBtn.swift; sourceTree = "<group>"; };
 		6486248E1D7EB4810022B6D8 /* jpush-ios-2.1.8.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; path = "jpush-ios-2.1.8.a"; sourceTree = "<group>"; };
 		6486248F1D7EB4810022B6D8 /* JPUSHService.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = JPUSHService.h; sourceTree = "<group>"; };
@@ -1618,6 +1655,8 @@
 				EA780BD81C75C88A0071BF47 /* ClassViewController.swift */,
 				641387691D4DDEEE0019EE5F /* MyPhotoDetailViewController.swift */,
 				1F77F8661CDC8B2400BEEE26 /* SendPhotoViewController.swift */,
+				643469621DD1D678000E598A /* PicNumCollectionViewCell.swift */,
+				643469631DD1D678000E598A /* PicNumCollectionViewCell.xib */,
 				1FF0DE1B1CDD949F001F1D27 /* ImagesViewController.swift */,
 				1FE6CE1F1CE81C0C00686AC1 /* PCommentViewController.swift */,
 				1FE6CE211CE81C1E00686AC1 /* PWriteViewController.swift */,
@@ -2591,10 +2630,37 @@
 			name = "好友";
 			sourceTree = "<group>";
 		};
+		643469401DD1CC0F000E598A /* TZImagePickerController */ = {
+			isa = PBXGroup;
+			children = (
+				643469411DD1CC0F000E598A /* TZAssetCell.h */,
+				643469421DD1CC0F000E598A /* TZAssetCell.m */,
+				643469431DD1CC0F000E598A /* TZAssetModel.h */,
+				643469441DD1CC0F000E598A /* TZAssetModel.m */,
+				643469451DD1CC0F000E598A /* TZImageManager.h */,
+				643469461DD1CC0F000E598A /* TZImageManager.m */,
+				643469471DD1CC0F000E598A /* TZImagePickerController.bundle */,
+				643469481DD1CC0F000E598A /* TZImagePickerController.h */,
+				643469491DD1CC0F000E598A /* TZImagePickerController.m */,
+				6434694A1DD1CC0F000E598A /* TZPhotoPickerController.h */,
+				6434694B1DD1CC0F000E598A /* TZPhotoPickerController.m */,
+				6434694C1DD1CC0F000E598A /* TZPhotoPreviewCell.h */,
+				6434694D1DD1CC0F000E598A /* TZPhotoPreviewCell.m */,
+				6434694E1DD1CC0F000E598A /* TZPhotoPreviewController.h */,
+				6434694F1DD1CC0F000E598A /* TZPhotoPreviewController.m */,
+				643469501DD1CC0F000E598A /* TZVideoPlayerController.h */,
+				643469511DD1CC0F000E598A /* TZVideoPlayerController.m */,
+				643469521DD1CC0F000E598A /* UIView+Layout.h */,
+				643469531DD1CC0F000E598A /* UIView+Layout.m */,
+			);
+			path = TZImagePickerController;
+			sourceTree = "<group>";
+		};
 		6443B7EA1D3DB65F00B1E05E /* 在线请假 */ = {
 			isa = PBXGroup;
 			children = (
 				1F77F85E1CDC7E5400BEEE26 /* LeaveViewController.swift */,
+				64690E941DBAF81E00D41D49 /* LeavePicViewController.swift */,
 			);
 			name = "在线请假";
 			sourceTree = "<group>";
@@ -2611,6 +2677,7 @@
 			isa = PBXGroup;
 			children = (
 				1FE7DB401CD3523500FF527F /* ParentsExhortViewController.swift */,
+				64690E961DBAF9C100D41D49 /* ExhortPicViewController.swift */,
 			);
 			name = "家长叮嘱";
 			sourceTree = "<group>";
@@ -3103,6 +3170,7 @@
 		EA40E3E21C3138A800072EC8 /* Tool */ = {
 			isa = PBXGroup;
 			children = (
+				643469401DD1CC0F000E598A /* TZImagePickerController */,
 				1F0EB71E1CD1A67D0049DA34 /* images */,
 				EAEB9E771C51FEC200EACE1B /* CornerRadiusViewController.swift */,
 				EA40E3E31C3138A800072EC8 /* Jsonjoy */,
@@ -3647,6 +3715,7 @@
 				1F0EB7F41CD1A67D0049DA34 /* group_joinpublicgroup@2x.png in Resources */,
 				EA59A3CF1C313C48003FBE82 /* Readme in Resources */,
 				1F0EB7F21CD1A67D0049DA34 /* group_header@2x.png in Resources */,
+				643469571DD1CC0F000E598A /* TZImagePickerController.bundle in Resources */,
 				1F0EB7F11CD1A67D0049DA34 /* group_creategroup@2x.png in Resources */,
 				1F0EB7EF1CD1A67D0049DA34 /* titleBar.png in Resources */,
 				1FC2617F1CE42281003CE906 /* KaoQinTableViewCell.xib in Resources */,
@@ -3707,6 +3776,7 @@
 				1F2444171CFEC65E0004BED3 /* WeightTableViewCell.xib in Resources */,
 				1FE275611CFFD8C200D6ECDA /* FoodMenuTableViewCell.xib in Resources */,
 				EA74AA2D1C77111000E93092 /* PageTestViewController.xib in Resources */,
+				643469651DD1D678000E598A /* PicNumCollectionViewCell.xib in Resources */,
 				1F0EB7BD1CD1A67D0049DA34 /* chat_receiver_audio_playing_full@2x.png in Resources */,
 				1F0EB7D91CD1A67D0049DA34 /* icon_022.gif in Resources */,
 				1F0EB7FA1CD1A67D0049DA34 /* newFriends@2x.png in Resources */,
@@ -3875,7 +3945,9 @@
 				1FC262191CE45AB5003CE906 /* UIButton+Haneke.swift in Sources */,
 				EAE0A5CE1C5094F500ECF86E /* ServiceModel.swift in Sources */,
 				0BAC19C31D20C08200FC146C /* HappySchoolVC.swift in Sources */,
+				6434695A1DD1CC0F000E598A /* TZPhotoPreviewCell.m in Sources */,
 				1FC2620B1CE45AB5003CE906 /* CryptoSwiftMD5.swift in Sources */,
+				643469561DD1CC0F000E598A /* TZImageManager.m in Sources */,
 				6450AF371D58A96000C6D6CA /* BabyViewController.swift in Sources */,
 				EA3ADD821C5DB3FD002FCA2D /* XingquCellTableViewCell.swift in Sources */,
 				EA4A70671C487DF100DAD9A1 /* RegisterGetCodeViewController.swift in Sources */,
@@ -3892,6 +3964,7 @@
 				044EC79B1C9CEB49004C11CC /* TeaList.swift in Sources */,
 				040A55991C9D4BBE00F95EB7 /* KnowList.swift in Sources */,
 				0461F4DC1C9E8F8D001D6CFE /* ErweimaTableViewCell.swift in Sources */,
+				64690E951DBAF81E00D41D49 /* LeavePicViewController.swift in Sources */,
 				1F3497801CD0B37000146B7A /* HomeworkTableViewCell.swift in Sources */,
 				1FC262461CE45AB5003CE906 /* Layout.swift in Sources */,
 				1FC2623C1CE45AB5003CE906 /* NVActivityIndicatorShape.swift in Sources */,
@@ -4021,8 +4094,10 @@
 				048D795B1C95854F00F6761C /* NoticeList.swift in Sources */,
 				040F8B341C7A9B8A00FD377B /* ClassCoursewareTableViewController.swift in Sources */,
 				1F94B2511D02BB6B00F1FD31 /* CKReadAllViewController.swift in Sources */,
+				6434695B1DD1CC0F000E598A /* TZPhotoPreviewController.m in Sources */,
 				6419DFAA1D42218000F3D5B9 /* QCYuerModel.swift in Sources */,
 				64F9F2F51D40D79700C3691B /* QCKindTakeVC.swift in Sources */,
+				643469591DD1CC0F000E598A /* TZPhotoPickerController.m in Sources */,
 				6497E99A1D37667B00C4EC82 /* QCOnlineHelpVC.swift in Sources */,
 				1FC262151CE45AB5003CE906 /* NSFileManager+Haneke.swift in Sources */,
 				1FC262081CE45AB5003CE906 /* ViewController+SnapKit.swift in Sources */,
@@ -4034,14 +4109,17 @@
 				1F8F39F71D001E0E00A4F34D /* XQBMemberViewController.swift in Sources */,
 				64DA5E241D48889E00C46696 /* ActivityModel.swift in Sources */,
 				64DDF3471D3B2D83000F14B5 /* QCChoosePersonVC.swift in Sources */,
+				6434695D1DD1CC0F000E598A /* UIView+Layout.m in Sources */,
 				1FC262361CE45AB5003CE906 /* NVActivityIndicatorAnimationLineSpinFadeLoader.swift in Sources */,
 				1FC2620A1CE45AB5003CE906 /* CGSize+Swift.swift in Sources */,
 				641387C21D51C0630019EE5F /* ActivityTableViewCell.swift in Sources */,
 				647D14CD1D756F5F00F2A9F5 /* CustomBtn.swift in Sources */,
 				641387CA1D51C8AB0019EE5F /* SpicyClassViewController.swift in Sources */,
+				6434695C1DD1CC0F000E598A /* TZVideoPlayerController.m in Sources */,
 				1F888E6B1D01580000F8B33D /* TeacherInfoViewController.swift in Sources */,
 				1FC261901CE45A65003CE906 /* DisplayView.swift in Sources */,
 				EAF181A91C53772A007706CE /* BlogList.swift in Sources */,
+				643469581DD1CC0F000E598A /* TZImagePickerController.m in Sources */,
 				64F9F2F31D40B24400C3691B /* QCSecondMessagesModel.swift in Sources */,
 				1FF06C271D026AB600B7DC48 /* YNPLViewController.swift in Sources */,
 				1F6E7BB81CEC5E91009C46F2 /* NCommentList.swift in Sources */,
@@ -4072,6 +4150,7 @@
 				1FE7DB531CD35A5600FF527F /* TeacherListViewController.swift in Sources */,
 				EA40E3971C30D33200072EC8 /* ViewController.swift in Sources */,
 				1FC261F91CE45AB5003CE906 /* PhotoBrowserView.swift in Sources */,
+				643469541DD1CC0F000E598A /* TZAssetCell.m in Sources */,
 				1FCE4AE51D10F1710078DE6F /* GroupNewsDetailViewController.swift in Sources */,
 				1FE6CE1E1CE807EA00686AC1 /* NWriteCommentViewController.swift in Sources */,
 				EA5A8D841C7321EE004D8308 /* ExamplesDefaults.swift in Sources */,
@@ -4091,6 +4170,7 @@
 				64F9F2FF1D40F1CB00C3691B /* QCTokenCompleteVC.swift in Sources */,
 				EA7608161C4CD8BA00169C50 /* BabySpaceMainTableViewController.swift in Sources */,
 				6413876C1D4DFF7D0019EE5F /* FoodMenuModel.swift in Sources */,
+				643469551DD1CC0F000E598A /* TZAssetModel.m in Sources */,
 				1F1AA59F1CD9CB9B00744DE7 /* TakeChilrenList.swift in Sources */,
 				EA93A7CC1C5C641C009D4A1F /* ScollViewController.swift in Sources */,
 				1FCE4AE81D10F2470078DE6F /* GroupNewsDetailTableViewCell.swift in Sources */,
@@ -4203,11 +4283,13 @@
 				649D175E1D477C8300892929 /* FSendNewsViewController.swift in Sources */,
 				1F8F39EA1D0009B300A4F34D /* ZPDetailTableViewCell.swift in Sources */,
 				046939EB1C7DA64500729BF9 /* ClassScheduleTableViewController.swift in Sources */,
+				643469641DD1D678000E598A /* PicNumCollectionViewCell.swift in Sources */,
 				64FD58A21D28A2BC00BFE4F5 /* QCFirendCell.swift in Sources */,
 				1FD5361F1CFFD798004FA8D7 /* FoodMenuViewController.swift in Sources */,
 				64EBC9AA1D3F5CC00037AE13 /* QCBabyFirendModel.swift in Sources */,
 				1FE6CE1A1CE8035600686AC1 /* NUnreadViewController.swift in Sources */,
 				EA010E611C4A25E400BBED0B /* ForgetPasswordViewController.swift in Sources */,
+				64690E971DBAF9C100D41D49 /* ExhortPicViewController.swift in Sources */,
 				EA40E3E71C3138A800072EC8 /* Http.swift in Sources */,
 				1FC262481CE45AB5003CE906 /* PhotoBrowser.swift in Sources */,
 				046939EF1C7DB0C000729BF9 /* ClassActivitiesTableViewCell.swift in Sources */,
@@ -4399,7 +4481,7 @@
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				PROVISIONING_PROFILE = "";
 				STRIP_INSTALLED_PRODUCT = YES;
-				SWIFT_OBJC_BRIDGING_HEADER = "/Users/shen/Desktop/7.25/wxt_parent  3 3/WXT_Parents/WXT_Parents-Bridging-Header.h";
+				SWIFT_OBJC_BRIDGING_HEADER = "/Users/shen/Desktop/wxt_parent  3 3 3/WXT_Parents/WXT_Parents-Bridging-Header.h";
 				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
 				USER_HEADER_SEARCH_PATHS = "${SRCROOT}/** /**";
 			};
@@ -4466,7 +4548,7 @@
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				PROVISIONING_PROFILE = "";
 				STRIP_INSTALLED_PRODUCT = YES;
-				SWIFT_OBJC_BRIDGING_HEADER = "/Users/shen/Desktop/7.25/wxt_parent  3 3/WXT_Parents/WXT_Parents-Bridging-Header.h";
+				SWIFT_OBJC_BRIDGING_HEADER = "/Users/shen/Desktop/wxt_parent  3 3 3/WXT_Parents/WXT_Parents-Bridging-Header.h";
 				USER_HEADER_SEARCH_PATHS = "${SRCROOT}/** /**";
 			};
 			name = Release;

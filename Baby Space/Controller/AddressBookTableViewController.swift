@@ -139,14 +139,19 @@ class AddressBookTableViewController: UIViewController,UITableViewDelegate,UITab
             cell.headImageView.sd_setImageWithURL(photourl, placeholderImage: UIImage(named: "默认头像"))
             cell.headImageView.layer.cornerRadius = 25
             cell.headImageView.clipsToBounds = true
+            //分割线
+            let lineView = UIView()
+            lineView.frame = CGRectMake(0, 69.5, WIDTH, 0.5)
+            lineView.backgroundColor = tableView.separatorColor
+            cell.contentView.addSubview(lineView)
         }
 
         return cell
     }
-//    分区头的高度
-//    func tableView(tableView: UITableView, heightForHeaderInSection section: Int) -> CGFloat{
-//        return 30.0
-//    }
+    
+    func tableView(tableView: UITableView, heightForRowAtIndexPath indexPath: NSIndexPath) -> CGFloat {
+        return 70
+    }
     
 //    打电话
     func callNumber(sender:AnyObject){

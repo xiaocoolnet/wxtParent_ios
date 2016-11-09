@@ -38,7 +38,7 @@ class WriteExhortViewController: UIViewController,UICollectionViewDataSource,UIC
     
         self.tabBarController?.tabBar.hidden = true
         self.title = "叮嘱"
-        self.view.backgroundColor = UIColor(red: 235/255.0, green: 235/255.0, blue: 235/255.0, alpha: 1)
+        self.view.backgroundColor = RGBA(242.0, g: 242.0, b: 242.0, a: 1)
         let rightItem = UIBarButtonItem(title: "发送", style: .Done, target: self, action: #selector(WriteExhortViewController.sendExhort))
         self.navigationItem.rightBarButtonItem = rightItem
         self.createUI()
@@ -66,12 +66,18 @@ class WriteExhortViewController: UIViewController,UICollectionViewDataSource,UIC
         let btn1 = UIButton(type: .Custom)
         btn1.frame = CGRectMake(WIDTH-30, 20, 20, 20)
         btn1.setImage(UIImage(named: "右边剪头.png"), forState: .Normal)
-        btn1.addTarget(self, action: #selector(WriteExhortViewController.chooseStudent), forControlEvents: .TouchUpInside)
+//        btn1.addTarget(self, action: #selector(WriteExhortViewController.chooseStudent), forControlEvents: .TouchUpInside)
         v1.addSubview(btn1)
         
+        let button1 = UIButton(type: .Custom)
+        button1.frame = CGRectMake(10, 20, WIDTH, 60)
+        button1.backgroundColor = UIColor.clearColor()
+        button1.addTarget(self, action: #selector(WriteExhortViewController.chooseStudent), forControlEvents: .TouchUpInside)
+        v1.addSubview(button1)
+        
         let lineView = UIView()
-        lineView.frame = CGRectMake(0, 61, self.view.frame.size.width, 1)
-        lineView.backgroundColor = UIColor(red: 235/255.0, green: 235/255.0, blue: 235/255.0, alpha: 1)
+        lineView.frame = CGRectMake(0, 61, self.view.frame.size.width, 9)
+        lineView.backgroundColor = RGBA(242.0, g: 242.0, b: 242.0, a: 1)
         v1.addSubview(lineView)
         
         let lbl3 = UILabel()
@@ -88,12 +94,18 @@ class WriteExhortViewController: UIViewController,UICollectionViewDataSource,UIC
         let btn2 = UIButton(type: .Custom)
         btn2.frame = CGRectMake(WIDTH-30, 81, 20, 20)
         btn2.setImage(UIImage(named: "右边剪头.png"), forState: .Normal)
-        btn2.addTarget(self, action: #selector(WriteExhortViewController.chooseTeacher), forControlEvents: .TouchUpInside)
+//        btn2.addTarget(self, action: #selector(WriteExhortViewController.chooseTeacher), forControlEvents: .TouchUpInside)
         v1.addSubview(btn2)
         
-        self.contentTextView.frame = CGRectMake(0, 131, self.view.bounds.width , 200)
+        let button2 = UIButton(type: .Custom)
+        button2.frame = CGRectMake(10, 61, WIDTH, 59)
+        button2.backgroundColor = UIColor.clearColor()
+        button2.addTarget(self, action: #selector(WriteExhortViewController.chooseTeacher), forControlEvents: .TouchUpInside)
+        v1.addSubview(button2)
+        
+        self.contentTextView.frame = CGRectMake(0, 131, self.view.bounds.width , 150)
         self.contentTextView.font = UIFont.systemFontOfSize(15)
-        self.contentTextView.placeholder = "请输入内容～不能超过200字啦"
+        self.contentTextView.placeholder = "说说您的叮嘱"
         self.contentTextView.addMaxTextLengthWithMaxLength(200) { (contentTextView) -> Void in
             let hud = MBProgressHUD.showHUDAddedTo(self.view, animated: true)
             hud.mode = MBProgressHUDMode.Text
@@ -102,9 +114,10 @@ class WriteExhortViewController: UIViewController,UICollectionViewDataSource,UIC
             hud.removeFromSuperViewOnHide = true
             hud.hide(true, afterDelay: 3)
         }
-        let backGroudView = UIView(frame: CGRectMake(0,331,WIDTH,HEIGHT-331-49))
+    
+        let backGroudView = UIView(frame: CGRectMake(0,281,WIDTH,HEIGHT-281-49))
 //        let height = HEIGHT-331-49
-        backGroudView.backgroundColor = UIColor.whiteColor()
+        backGroudView.backgroundColor = RGBA(242.0, g: 242.0, b: 242.0, a: 1)
         self.view.addSubview(backGroudView)
         addPictureBtn.frame = CGRectMake(10,10, 80, 80)
         addPictureBtn.setBackgroundImage(UIImage(named: "add2"), forState: .Normal)
@@ -371,6 +384,26 @@ class WriteExhortViewController: UIViewController,UICollectionViewDataSource,UIC
         hud.hide(true, afterDelay: 1)
         self.isuploading = false
         
+    }
+    
+    //    收键盘
+    func keyboardHidden(){
+        self.contentTextView.endEditing(true)
+    }
+    //        键盘消失的通知方法
+    func keyboardWillHideNotification(notification:NSNotification){
+        UIView.animateWithDuration(0.3) { () -> Void in
+            self.view.frame.origin.y = self.view.frame.origin.y + 200
+            self.view.layoutIfNeeded()
+        }
+        
+    }
+    //     键盘出现的通知方法
+    func keyboardWillShowNotification(notification:NSNotification){
+        UIView.animateWithDuration(0.3) { () -> Void in
+            self.view.frame.origin.y = self.view.frame.origin.y - 200
+            self.view.layoutIfNeeded()
+        }
     }
     
     //    收键盘

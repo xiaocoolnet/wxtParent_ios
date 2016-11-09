@@ -179,9 +179,9 @@ class KaoQinViewController: UIViewController,UITableViewDelegate, UICollectionVi
         for index in  0...5 {
             for (var i:Int=0 ; i<7 ; i++){
                 let btn  = UIButton(frame: CGRect(x: CGFloat(i)*_width + 1, y: CGFloat(index)*_heigth, width: _width - 5, height: _heigth - 5))
-                btn.titleLabel?.font=UIFont.systemFontOfSize(14)
-                btn.backgroundColor = UIColor.redColor()
-                btn.setTitleColor(UIColor.blackColor(), forState: .Normal)
+                btn.titleLabel?.font=UIFont.systemFontOfSize(13)
+                btn.backgroundColor = UIColor(red: 255/255, green: 68/255, blue: 68/255, alpha: 1)
+                btn.setTitleColor(UIColor.whiteColor(), forState: .Normal)
                 btn.tag=indexday
                 btn.layer.cornerRadius=0
                 btn.layer.borderColor=UIColor(red: 51/255, green: 161/255, blue: 202/255, alpha: 1).CGColor
@@ -190,19 +190,19 @@ class KaoQinViewController: UIViewController,UITableViewDelegate, UICollectionVi
                 //创建一个点击的时候有勾选的lable
                 let check_lb  = UILabel(frame:CGRect( x:0,y: btn.frame.height/2,width: btn.frame.width,height: btn.frame.height/2))
                 //                check_lb.backgroundColor = UIColor.whiteColor()
-                check_lb.font=UIFont.boldSystemFontOfSize(14)
+                check_lb.font=UIFont.boldSystemFontOfSize(13)
                 check_lb.tag = btn.tag
                 btn.addSubview(check_lb)
                 if(indexday==today){  //因为是第0开始的  索引天数后面需要+1
                     if(toYear==nowDate.currentYear&&toMonth==nowDate.currentMonth){ //判断是否是今年今月
                         
-                        btn.titleLabel?.font=UIFont.boldSystemFontOfSize(15)
-                        btn.setTitleColor(UIColor(red: 227/255, green:23/255, blue: 13/255, alpha: 1), forState: .Normal)
+                        btn.titleLabel?.font=UIFont.boldSystemFontOfSize(13)
+                        btn.setTitleColor(UIColor.whiteColor(), forState: .Normal)
                     }
                 }
                 if indexday > today {
                     if(toYear==nowDate.currentYear&&toMonth==nowDate.currentMonth){
-                        btn.backgroundColor = UIColor(red: 45/255, green:160/255, blue: 230/255, alpha: 1)                        
+                        btn.backgroundColor = UIColor(red: 45/255, green:179/255, blue: 248/255, alpha: 1)
                     }
                 }
                 MainView.addSubview(btn)
@@ -219,32 +219,28 @@ class KaoQinViewController: UIViewController,UITableViewDelegate, UICollectionVi
                         if self.dataArray.count > 0 {
                             for i in 0...self.dataArray.count - 1 {
                                 let str = self.dataArray[i] as! KaoqinInfo
-                                if str.arrivetime != nil{
-                                    
-                                    let st = str.arrivetime
-                                    if st != "" {
-                                        let dateformat = NSDateFormatter()
-                                        dateformat.dateFormat = "yyyy-MM-dd HH:mm"
-                                        let date = NSDate(timeIntervalSince1970: NSTimeInterval(st!)!)
-                                        let string:String = dateformat.stringFromDate(date)
-                                        let ns3=(string as NSString).substringWithRange(NSMakeRange(8, 2))
-                                        let a = Int(ns3)
-                                        if a == indexday {
-                                            (label as! UILabel).text = "已签到"
-                                            let btn =  sub as!  UIButton
-                                            btn.backgroundColor = UIColor(red: 0/255, green: 185/255, blue: 16/255, alpha: 1)
-                                        }else{
-                                            (label as! UILabel).text = "未签到"
-                                        }
-                                        
-                                        (label as! UILabel).text = "已签到"
+                                let st = str.arrivetime
+                                if st != "" && st != nil {
+                                    let dateformat = NSDateFormatter()
+                                    dateformat.dateFormat = "yyyy-MM-dd HH:mm"
+                                    let date = NSDate(timeIntervalSince1970: NSTimeInterval(st!)!)
+                                    let string:String = dateformat.stringFromDate(date)
+                                    let ns3=(string as NSString).substringWithRange(NSMakeRange(8, 2))
+                                    let a = Int(ns3)
+                                    if a == indexday {
+                                        (label as! UILabel).text = " "
+                                        let btn =  sub as!  UIButton
+                                        btn.backgroundColor = UIColor(red: 156/255, green: 204/255, blue: 101/255, alpha: 1)
                                     }else{
                                         (label as! UILabel).text = "未签到"
                                     }
+                                    
+                                    (label as! UILabel).text = ""
+                                }else{
+                                    (label as! UILabel).text = "未签到"
                                 }
                             }
-                                }
-                        (label as! UILabel).text = "未签到"
+                        }
                     }
                 }
                 indexday += 1
@@ -254,8 +250,12 @@ class KaoQinViewController: UIViewController,UITableViewDelegate, UICollectionVi
             if(indexday>1){
                 if(indexday<=daycount){ //当前的天数如果小于等于当总天数
                     btn.setTitle(indexday.description, forState: .Normal)
+//                    btn.backgroundColor = UIColor(red: 255/255, green: 68/255, blue: 68/255, alpha: 1)
+//                    btn.setTitleColor(UIColor.whiteColor(), forState: .Normal)
                     let arra = NSMutableArray()
                     for label in btn.subviews {
+                        (label as!UILabel).font = UIFont.systemFontOfSize(13)
+                        (label as!UILabel).textColor = UIColor.whiteColor()
                         if label.tag == btn.tag {
                             if self.dataArray.count > 0 {
                                 
@@ -273,9 +273,9 @@ class KaoQinViewController: UIViewController,UITableViewDelegate, UICollectionVi
                                         (label as! UILabel).text = "未签到"
                                         for j in 0...arra.count - 1 {
                                             if Int(arra[j] as! NSNumber) == indexday {
-                                                (label as! UILabel).text = "已签到"
+                                                (label as! UILabel).text = ""
                                                 let btn =  sub as!  UIButton
-                                                btn.backgroundColor = UIColor(red: 0/255, green: 185/255, blue: 16/255, alpha: 1)
+                                                btn.backgroundColor = UIColor(red: 156/255, green: 204/255, blue: 101/255, alpha: 1)
 //                                            }else{
 //                                                (label as! UILabel).text = "未签到"
                                             }
@@ -347,7 +347,7 @@ class KaoQinViewController: UIViewController,UITableViewDelegate, UICollectionVi
             date = dateFormatter.dateFromString("\(nowDate.currentYear+1)-\(01)-01 00:00:00")!
         }
         else{
-            date = dateFormatter.dateFromString("\(nowDate.currentYear)-\(nowDate.currentMonth+1)-01 23:59:59")!
+            date = dateFormatter.dateFromString("\(nowDate.currentYear)-\(nowDate.currentMonth+1)-01 00:00:00")!
         }
         nowDate=date    //更新当前的年月
         getOneweek = date.toMonthOneDayWeek(date)    //更新当前年月周
@@ -614,7 +614,9 @@ class KaoQinViewController: UIViewController,UITableViewDelegate, UICollectionVi
         
         let qian = UILabel()
         qian.frame = CGRectMake(10, 50, 50, 40)
-        qian.text = "签到"
+        qian.text = "签到:"
+        qian.textColor = neirongColor
+        qian.font = neirongfont
         cell.contentView.addSubview(qian)
         
         let dateformate = NSDateFormatter()
@@ -627,28 +629,37 @@ class KaoQinViewController: UIViewController,UITableViewDelegate, UICollectionVi
             qianTime.frame = CGRectMake(70, 50, 100, 40)
             let s = (str as NSString).substringWithRange(NSMakeRange(11, 5))
             qianTime.text = s
+            qianTime.textColor = neirongColor
+            qianTime.font = neirongfont
             cell.addSubview(qianTime)
             let mon = UILabel()
             mon.frame = CGRectMake(0, 0, WIDTH, 40)
-            mon.backgroundColor = UIColor.lightGrayColor()
-            mon.text = (str as NSString).substringWithRange(NSMakeRange(5, 5))
+            mon.backgroundColor = RGBA(242.0, g: 242.0, b: 242.0, a: 1)
+            mon.text = (str as NSString).substringWithRange(NSMakeRange(0, 10))
             cell.addSubview(mon)
         }
         
         
         let tui = UILabel()
         tui.frame = CGRectMake(10, 100, 50, 40)
-        tui.text = "签退"
+        tui.text = "签退:"
+        tui.textColor = neirongColor
+        tui.font = neirongfont
         cell.contentView.addSubview(tui)
         
-//        let dateformat = NSDateFormatter()
-//        dateformat.dateFormat = "yyyy-MM-dd HH:mm"
-//        let dat = NSDate(timeIntervalSince1970: NSTimeInterval(model.leavetime!)!)
-//        let st:String = dateformate.stringFromDate(dat)
-//        let tuiTime = UILabel()
-//        tuiTime.frame = CGRectMake(70, 60, 100, 40)
-//        tuiTime.text = (st as NSString).substringWithRange(NSMakeRange(11, 4))
-//        cell.addSubview(tuiTime)
+        let dateformat = NSDateFormatter()
+        dateformat.dateFormat = "yyyy-MM-dd HH:mm"
+        let dat = NSDate(timeIntervalSince1970: NSTimeInterval(model.leavetime!)!)
+        let st:String = dateformate.stringFromDate(dat)
+        let tuiTime = UILabel()
+        tuiTime.frame = CGRectMake(70, 100, 100, 40)
+        tuiTime.text = (st as NSString).substringWithRange(NSMakeRange(11, 5))
+        tuiTime.textColor = neirongColor
+        tuiTime.font = neirongfont
+        if model.leavetime != "0" {
+            
+            cell.addSubview(tuiTime)
+        }
         
         table.rowHeight = 140
         

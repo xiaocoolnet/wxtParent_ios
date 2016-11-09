@@ -148,7 +148,7 @@ class LoginViewController: UIViewController ,UITextFieldDelegate{
                             let userDefaults = NSUserDefaults.standardUserDefaults()
                             print(chirdinfo.studentid!)
                             userDefaults.setValue(chirdinfo.studentid!, forKey: "chid")
-                            
+                            userDefaults.setValue(chirdinfo.school_name, forKey: "school_name")
                             userDefaults.setValue(chirdinfo.studentname, forKey: "chidname")
 //                            self.GetChildrenClass(chirdinfo.studentid!)
                             userDefaults.setValue(child[0].classid!, forKey: "classid")

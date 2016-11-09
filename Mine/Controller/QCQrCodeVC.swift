@@ -23,7 +23,7 @@ class QCQrCodeVC: UIViewController {
         let imageView = UIImageView()
         imageView.frame = CGRectMake(WIDTH / 4, HEIGHT / 2 - WIDTH / 4 - 60, WIDTH / 2, WIDTH
          / 2)
-        imageView.image = UIImage.init(named: "1.png")
+        imageView.image = UIImage.init(named: "weixiaotongjiazhang")
         self.view.addSubview(imageView)
         
         let titleLabel = UILabel()
@@ -37,7 +37,7 @@ class QCQrCodeVC: UIViewController {
         sureButton.setTitle("分享", forState: .Normal)
         sureButton.backgroundColor = RGBA(155, g: 229, b: 180, a: 1)
         sureButton.addTarget(self, action: #selector(shareAction), forControlEvents: .TouchUpInside)
-        self.view.addSubview(sureButton)
+//        self.view.addSubview(sureButton)
         
         
         

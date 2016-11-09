@@ -152,13 +152,14 @@ class GDFriendsViewController: UIViewController, UITableViewDelegate, UITableVie
         let model = self.arr[indexPath.row]
         
         let time = UILabel()
-        time.frame = CGRectMake(10, 20, 60, 30)
-        //        time.text = "星期一"
+        time.frame = CGRectMake(10, 20, 50, 20)
+        time.font = timefont
+//        time.textColor = neirongColor
         cell.contentView.addSubview(time)
         
         let view = UIView()
         view.backgroundColor = UIColor.whiteColor()
-        view.frame = CGRectMake(80, 20, WIDTH - 90, 500)
+        view.frame = CGRectMake(70, 20, WIDTH - 80, 500)
         cell.contentView.addSubview(view)
         //        let heigh = view.frame.size.height
         let width = view.frame.size.width
@@ -168,6 +169,8 @@ class GDFriendsViewController: UIViewController, UITableViewDelegate, UITableVie
         content.text = model["content"] as? String
         content.numberOfLines = 0
         content.sizeToFit()
+        content.textColor=neirongColor
+        content.font=neirongfont
         view.addSubview(content)
         
         //        自适应行高
@@ -186,39 +189,67 @@ class GDFriendsViewController: UIViewController, UITableViewDelegate, UITableVie
         //  图片
         var button:CustomBtn?
         
-        if(pic.count>0&&pic.count<=3){
-            image_h=(width - 40)/3.0
-            for i in 1...pic.count{
-                var x = 12
-                let pciInfo = pic[i-1]
-                let imgUrl = microblogImageUrl+(pciInfo.pictureurl)
-                let avatarUrl = NSURL(string: imgUrl)
-                let request: NSURLRequest = NSURLRequest(URL: avatarUrl!)
-                
-                NSURLConnection.sendAsynchronousRequest(request, queue: NSOperationQueue.mainQueue(), completionHandler: {(response: NSURLResponse?,data: NSData?,error: NSError?)-> Void in
-                    if(data != nil){
-                        x = x+((i-1)*Int((width - 40)/3.0 + 10))
-                        button = CustomBtn()
-                        button?.flag = i
-                        button!.frame = CGRectMake(CGFloat(x), height, (width - 40)/3.0, (width - 40)/3.0)
-                        let imgTmp = UIImage(data: data!)
-                        
-                        button!.setImage(imgTmp, forState: .Normal)
-
-                        button?.imageView?.contentMode = .ScaleAspectFill
-                        button?.clipsToBounds = true
-                        if button?.imageView?.image == nil{
-                            button?.setBackgroundImage(UIImage(named: "Logo"), forState: .Normal)
+            if(pic.count>0&&pic.count<=3){
+                image_h=300
+                if pic.count==1 {
+                    let pciInfo = pic[0]
+                    let imgUrl = microblogImageUrl+(pciInfo.pictureurl)
+                    let avatarUrl = NSURL(string: imgUrl)
+                    let request: NSURLRequest = NSURLRequest(URL: avatarUrl!)
+                    
+                    NSURLConnection.sendAsynchronousRequest(request, queue: NSOperationQueue.mainQueue(), completionHandler: {(response: NSURLResponse?,data: NSData?,error: NSError?)-> Void in
+                        if(data != nil){
+                            
+                            button = CustomBtn()
+                            button?.flag = 1
+                            button!.frame = CGRectMake(10, height, width - 20, 300)
+                            let imgTmp = UIImage(data: data!)
+                            
+                            button!.setImage(imgTmp, forState: .Normal)
+                            button?.imageView?.contentMode = .ScaleAspectFill
+                            button?.clipsToBounds = true
+                            if button?.imageView?.image == nil{
+                                button?.setBackgroundImage(UIImage(named: "图片默认加载"), forState: .Normal)
+                            }
+                            button?.tag = indexPath.row
+                            button?.addTarget(self, action: #selector(self.clickBtn), forControlEvents: .TouchUpInside)
+                            view.addSubview(button!)
+                            
                         }
-                        button?.tag = indexPath.row
-                        button?.addTarget(self, action: #selector(self.clickBtn), forControlEvents: .TouchUpInside)
-                        view.addSubview(button!)
+                    })
+                    
+                }else{
+                    image_h=(WIDTH - 40)/3.0
+                    for i in 1...pic.count{
+                        var x = 12
+                        let pciInfo = pic[i-1]
+                        let imgUrl = microblogImageUrl+(pciInfo.pictureurl)
+                        let avatarUrl = NSURL(string: imgUrl)
+                        let request: NSURLRequest = NSURLRequest(URL: avatarUrl!)
                         
+                        NSURLConnection.sendAsynchronousRequest(request, queue: NSOperationQueue.mainQueue(), completionHandler: {(response: NSURLResponse?,data: NSData?,error: NSError?)-> Void in
+                            if(data != nil){
+                                x = x+((i-1)*Int((width - 40)/3.0 + 5))
+                                button = CustomBtn()
+                                button?.flag = i
+                                button!.frame = CGRectMake(CGFloat(x), height, (width - 40)/3.0, (width - 40)/3.0)
+                                let imgTmp = UIImage(data: data!)
+                                
+                                button!.setImage(imgTmp, forState: .Normal)
+                                button?.imageView?.contentMode = .ScaleAspectFill
+                                button?.clipsToBounds = true
+                                if button?.imageView?.image == nil{
+                                    button?.setBackgroundImage(UIImage(named: "图片默认加载"), forState: .Normal)
+                                }
+                                button?.tag = indexPath.row
+                                button?.addTarget(self, action: #selector(self.clickBtn), forControlEvents: .TouchUpInside)
+                                view.addSubview(button!)
+                                
+                            }
+                        })
                     }
-                })
-                
+                }
             }
-        }
         if(pic.count>3&&pic.count<=6){
             image_h=(width - 40)/3.0*2 + 10
             for i in 1...pic.count{
@@ -231,7 +262,7 @@ class GDFriendsViewController: UIViewController, UITableViewDelegate, UITableVie
                         let request: NSURLRequest = NSURLRequest(URL: avatarUrl!)
                         NSURLConnection.sendAsynchronousRequest(request, queue: NSOperationQueue.mainQueue(), completionHandler: {(response: NSURLResponse?,data: NSData?,error: NSError?)-> Void in
                             if(data != nil){
-                                x = x+((i-1)*Int((width - 40)/3.0 + 10))
+                                x = x+((i-1)*Int((width - 40)/3.0 + 5))
                                 button = CustomBtn()
                                 button?.flag = i
                                 button!.frame = CGRectMake(CGFloat(x), height, (width - 40)/3.0, (width - 40)/3.0)
@@ -256,7 +287,7 @@ class GDFriendsViewController: UIViewController, UITableViewDelegate, UITableVie
                         let request: NSURLRequest = NSURLRequest(URL: avatarUrl!)
                         NSURLConnection.sendAsynchronousRequest(request, queue: NSOperationQueue.mainQueue(), completionHandler: {(response: NSURLResponse?,data: NSData?,error: NSError?)-> Void in
                             if(data != nil){
-                                x = x+((i-4)*Int((width - 40)/3.0 + 10))
+                                x = x+((i-4)*Int((width - 40)/3.0 + 5))
                                 button = CustomBtn()
                                 button?.flag = i
                                 button!.frame = CGRectMake(CGFloat(x), height+(width - 40)/3.0 + 5, (width - 40)/3.0, (width - 40)/3.0)
@@ -288,7 +319,7 @@ class GDFriendsViewController: UIViewController, UITableViewDelegate, UITableVie
                         let request: NSURLRequest = NSURLRequest(URL: avatarUrl!)
                         NSURLConnection.sendAsynchronousRequest(request, queue: NSOperationQueue.mainQueue(), completionHandler: {(response: NSURLResponse?,data: NSData?,error: NSError?)-> Void in
                             if(data != nil){
-                                x = x+((i-1)*Int((width - 40)/3.0 + 10))
+                                x = x+((i-1)*Int((width - 40)/3.0 + 5))
                                 button = CustomBtn()
                                 button?.flag = i
                                 button!.frame = CGRectMake(CGFloat(x), height, (width - 40)/3.0, (width - 40)/3.0)
@@ -314,7 +345,7 @@ class GDFriendsViewController: UIViewController, UITableViewDelegate, UITableVie
                         let request: NSURLRequest = NSURLRequest(URL: avatarUrl!)
                         NSURLConnection.sendAsynchronousRequest(request, queue: NSOperationQueue.mainQueue(), completionHandler: {(response: NSURLResponse?,data: NSData?,error: NSError?)-> Void in
                             if(data != nil){
-                                x = x+((i-4)*Int((width - 40)/3.0 + 10))
+                                x = x+((i-4)*Int((width - 40)/3.0 + 5))
                                 button = CustomBtn()
                                 button?.flag = i
                                 button!.frame = CGRectMake(CGFloat(x), height+(width - 40)/3.0 + 5, (width - 40)/3.0, (width - 40)/3.0)
@@ -341,7 +372,7 @@ class GDFriendsViewController: UIViewController, UITableViewDelegate, UITableVie
                         let request: NSURLRequest = NSURLRequest(URL: avatarUrl!)
                         NSURLConnection.sendAsynchronousRequest(request, queue: NSOperationQueue.mainQueue(), completionHandler: {(response: NSURLResponse?,data: NSData?,error: NSError?)-> Void in
                             if(data != nil){
-                                x = x+((i-7)*Int((width - 40)/3.0 + 10))
+                                x = x+((i-7)*Int((width - 40)/3.0 + 5))
                                 button = CustomBtn()
                                 button?.flag = i
                                 button!.frame = CGRectMake(CGFloat(x), height+(width - 40)/3.0 + 5+(width - 40)/3.0 + 5, (width - 40)/3.0, (width - 40)/3.0)
@@ -376,7 +407,7 @@ class GDFriendsViewController: UIViewController, UITableViewDelegate, UITableVie
                         
                         NSURLConnection.sendAsynchronousRequest(request, queue: NSOperationQueue.mainQueue(), completionHandler: {(response: NSURLResponse?,data: NSData?,error: NSError?)-> Void in
                             if(data != nil){
-                                x = x+((i-1)*Int((width - 40)/3.0 + 10))
+                                x = x+((i-1)*Int((width - 40)/3.0 + 5))
                                 button = CustomBtn()
                                 button?.flag = i
                                 button!.frame = CGRectMake(CGFloat(x), height, (width - 40)/3.0, (width - 40)/3.0)
@@ -403,7 +434,7 @@ class GDFriendsViewController: UIViewController, UITableViewDelegate, UITableVie
                         
                         NSURLConnection.sendAsynchronousRequest(request, queue: NSOperationQueue.mainQueue(), completionHandler: {(response: NSURLResponse?,data: NSData?,error: NSError?)-> Void in
                             if(data != nil){
-                                x = x+((i-4)*Int((width - 40)/3.0 + 10))
+                                x = x+((i-4)*Int((width - 40)/3.0 + 5))
                                 button = CustomBtn()
                                 button?.flag = i
                                 button!.frame = CGRectMake(CGFloat(x), height+(width - 40)/3.0 + 5, (width - 40)/3.0, (width - 40)/3.0)
@@ -431,7 +462,7 @@ class GDFriendsViewController: UIViewController, UITableViewDelegate, UITableVie
                         
                         NSURLConnection.sendAsynchronousRequest(request, queue: NSOperationQueue.mainQueue(), completionHandler: {(response: NSURLResponse?,data: NSData?,error: NSError?)-> Void in
                             if(data != nil){
-                                x = x+((i-7)*Int((width - 40)/3.0 + 10))
+                                x = x+((i-7)*Int((width - 40)/3.0 + 5))
                                 button = CustomBtn()
                                 button?.flag = i
                                 button!.frame = CGRectMake(CGFloat(x), height+(width - 40)/3.0 + 5+(width - 40)/3.0 + 5, (width - 40)/3.0, (width - 40)/3.0)
@@ -462,18 +493,20 @@ class GDFriendsViewController: UIViewController, UITableViewDelegate, UITableVie
         let date = NSDate(timeIntervalSince1970: NSTimeInterval((model["write_time"] as? String)!)!)
         let str:String = dateformate.stringFromDate(date)
         timeLable.text = str
-        timeLable.textColor = UIColor.lightGrayColor()
-        timeLable.font = UIFont.systemFontOfSize(16)
+        timeLable.textColor = timeColor
+        timeLable.font = timefont
         view.addSubview(timeLable)
         
         let string=(str as NSString).substringToIndex(5)
         
         let lable = UILabel()
-        lable.frame = CGRectMake(10, 50, 60, 30)
+        lable.frame = CGRectMake(10, 40, 50, 20)
         lable.backgroundColor = UIColor(red: 155/255, green: 229/255, blue: 180/255, alpha: 1)
         lable.textColor = UIColor.whiteColor()
-        lable.font = UIFont.systemFontOfSize(16)
+        lable.font = timefont
         lable.textAlignment = NSTextAlignment.Center
+        lable.layer.cornerRadius = 5
+        lable.layer.masksToBounds = true
         cell.contentView.addSubview(lable)
         if oldDate != string {
             //  获取当前星期几
@@ -523,23 +556,34 @@ class GDFriendsViewController: UIViewController, UITableViewDelegate, UITableVie
         let likes = model["like"] as! Array<BabyFriendLikeInfo>
         
         if likes.count != 0 {
-            aview.frame = CGRectMake(10, height + image_h + 40, width - 20, 30)
+            aview.frame = CGRectMake(0, height + image_h + 40, width, 30)
             view.addSubview(aview)
             let btn = UIButton()
             btn.frame = CGRectMake(10, 5, 20, 20)
             btn.setBackgroundImage(UIImage(named: "已点赞"), forState: .Normal)
             aview.addSubview(btn)
+            let lable = UILabel()
+            lable.frame = CGRectMake(40, 5, (WIDTH - 50), 20)
+            lable.textColor = UIColor(red: 115/255.0, green: 229/255.0, blue: 180/255.0, alpha: 1.0)
+            lable.font = UIFont.systemFontOfSize(13)
+            aview.addSubview(lable)
+            let arr = NSMutableArray()
             for i in 1...likes.count {
                 let str = likes[i - 1].name
-                let lable = UILabel()
-                var x = 40
-                x = x+((i-1)*Int((WIDTH - 40)/4 + 5))
-                lable.frame = CGRectMake(CGFloat(x), 5, (width - 50)/4, 20)
-                lable.text = str
-                lable.textColor = UIColor(red: 115/255.0, green: 229/255.0, blue: 180/255.0, alpha: 1.0)
-                lable.font = UIFont.systemFontOfSize(15)
-                aview.addSubview(lable)
+                //                lable.text = str
+                arr.addObject(str)
             }
+            
+            let zanstr = arr.componentsJoinedByString("  ")
+            lable.text = zanstr
+            lable.numberOfLines = 0
+            lable.sizeToFit()
+            //        自适应行高
+            let options : NSStringDrawingOptions = NSStringDrawingOptions.UsesLineFragmentOrigin
+            let screenBounds:CGRect = UIScreen.mainScreen().bounds
+            let boundingRect = String(lable.text).boundingRectWithSize(CGSizeMake(screenBounds.width, 0), options: options, attributes: [NSFontAttributeName:UIFont.systemFontOfSize(15)], context: nil)
+            let heigh = boundingRect.size.height + 5
+            aview.frame = CGRectMake(0, height + image_h + 40, width, heigh)
         }
 
         var pingView = UIView()
@@ -548,18 +592,18 @@ class GDFriendsViewController: UIViewController, UITableViewDelegate, UITableVie
         if comments.count != 0 {
             for i in 1...comments.count {
                 pingView = UIView()
-                h = CGFloat( 50 * (i))
-                pingView.frame = CGRectMake(10, height + image_h + 50 + aview.frame.size.height , width - 20, h)
-                //                pingView.backgroundColor = RGBA(242.0, g: 242.0, b: 242.0, a: 1)
+                h = CGFloat( 60 * (i))
+                pingView.frame = CGRectMake(0, height + image_h + 50 + aview.frame.size.height , width, h)
+//                                pingView.backgroundColor = RGBA(242.0, g: 242.0, b: 242.0, a: 1)
                 view.addSubview(pingView)
                 let name = UILabel()
-                name.frame = CGRectMake(50, 5 + CGFloat( 50 * (i - 1)), 60, 20)
+                name.frame = CGRectMake(50, 5 + CGFloat( 60 * (i - 1)), 60, 20)
                 name.text = comments[i - 1].name
-                name.font = UIFont.systemFontOfSize(15)
+                name.font = UIFont.systemFontOfSize(13)
                 pingView.addSubview(name)
                 
                 let img = UIImageView()
-                img.frame = CGRectMake(10, 5 + CGFloat( 50 * (i - 1)), 30, 30)
+                img.frame = CGRectMake(10, 5 + CGFloat( 60 * (i - 1)), 30, 30)
                 let pict = comments[i - 1].avatar
                 let imgUrl = microblogImageUrl + pict
                 let photourl = NSURL(string: imgUrl)
@@ -573,15 +617,15 @@ class GDFriendsViewController: UIViewController, UITableViewDelegate, UITableVie
                 let date = NSDate(timeIntervalSince1970: NSTimeInterval(comments[i - 1].comment_time)!)
                 let st:String = dateformat.stringFromDate(date)
                 let time = UILabel()
-                time.frame = CGRectMake(110, 5 + CGFloat( 50 * (i - 1)), width - 130, 20)
-                time.font = UIFont.systemFontOfSize(15)
+                time.frame = CGRectMake(110, 5 + CGFloat( 60 * (i - 1)), width - 130, 20)
+                time.font = UIFont.systemFontOfSize(12)
                 time.textAlignment = NSTextAlignment.Right
                 time.text = st
                 pingView.addSubview(time)
                 
                 let con = UILabel()
-                con.frame = CGRectMake(50, 25 + CGFloat( 50 * (i - 1)), width - 50, 20)
-                con.font = UIFont.systemFontOfSize(15)
+                con.frame = CGRectMake(50, 25 + CGFloat( 60 * (i - 1)), width - 50, 30)
+                con.font = UIFont.systemFontOfSize(13)
                 con.text = comments[i - 1].content
                 con.numberOfLines = 0
                 con.sizeToFit()
@@ -590,7 +634,7 @@ class GDFriendsViewController: UIViewController, UITableViewDelegate, UITableVie
         }
         
 
-        view.frame = CGRectMake(80, 20, WIDTH - 90, height + image_h + 45 + h + aview.frame.size.height)
+        view.frame = CGRectMake(70, 20, WIDTH - 80, height + image_h + 45 + h + aview.frame.size.height)
         self.table.rowHeight = view.frame.size.height + 20
         
         return cell
@@ -600,7 +644,7 @@ class GDFriendsViewController: UIViewController, UITableViewDelegate, UITableVie
         let vc = GDFriendDetailViewController()
         vc.arr = self.arr
         vc.num = indexPath.row
-        self.navigationController?.pushViewController(vc, animated: true)
+//        self.navigationController?.pushViewController(vc, animated: true)
         
     }
     

@@ -238,7 +238,7 @@
             </objects>
             <point key="canvasLocation" x="1331.5" y="3141.5"/>
         </scene>
-        <!--个人中心-->
+        <!--我的-->
         <scene sceneID="Ffo-7K-ETp">
             <objects>
                 <tableViewController id="oBH-hT-6dL" customClass="MineMainTableViewController" customModule="WXT_Parents" customModuleProvider="target" sceneMemberID="viewController">
@@ -689,7 +689,7 @@
                             <outlet property="delegate" destination="oBH-hT-6dL" id="WKH-zL-OTM"/>
                         </connections>
                     </tableView>
-                    <navigationItem key="navigationItem" title="个人中心" id="Yem-rF-Ivl">
+                    <navigationItem key="navigationItem" title="我的" id="Yem-rF-Ivl">
                         <barButtonItem key="rightBarButtonItem" style="plain" id="uEO-Hk-3jJ">
                             <button key="customView" opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" id="FaT-gQ-Z7z">
                                 <rect key="frame" x="324" y="13" width="35" height="17"/>
@@ -1739,8 +1739,8 @@
                                                         <constraint firstAttribute="height" constant="209" id="44C-U8-qv7"/>
                                                     </constraints>
                                                 </imageView>
-                                                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="微校通" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Tw4-zC-0OM">
-                                                    <rect key="frame" x="159" y="103" width="56" height="19"/>
+                                                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" misplaced="YES" text="微校通" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Tw4-zC-0OM">
+                                                    <rect key="frame" x="347" y="103" width="56" height="19"/>
                                                     <color key="backgroundColor" red="0.60784313729999995" green="0.8980392157" blue="0.70588235290000001" alpha="1" colorSpace="calibratedRGB"/>
                                                     <constraints>
                                                         <constraint firstAttribute="width" constant="56" id="L5W-A8-ztN"/>
@@ -1771,10 +1771,10 @@
                                                     <color key="textColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
                                                     <nil key="highlightedColor"/>
                                                 </label>
-                                                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="清华幼儿园" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Z1N-gq-S3m">
-                                                    <rect key="frame" x="197" y="181" width="70" height="11"/>
+                                                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="清华幼儿园" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Z1N-gq-S3m">
+                                                    <rect key="frame" x="197" y="181" width="120" height="11"/>
                                                     <constraints>
-                                                        <constraint firstAttribute="width" constant="70" id="p6B-bh-MVm"/>
+                                                        <constraint firstAttribute="width" constant="120" id="p6B-bh-MVm"/>
                                                     </constraints>
                                                     <fontDescription key="fontDescription" type="system" pointSize="13"/>
                                                     <color key="textColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
@@ -1811,6 +1811,7 @@
                                                 <constraint firstItem="Nb2-EX-CSl" firstAttribute="centerX" secondItem="yVz-Gt-vNP" secondAttribute="centerX" id="Z2K-Kj-MTB"/>
                                                 <constraint firstItem="Oo4-Qs-HVa" firstAttribute="top" secondItem="Tw4-zC-0OM" secondAttribute="bottom" constant="59" id="ZXy-ka-ur1"/>
                                                 <constraint firstItem="Oo4-Qs-HVa" firstAttribute="centerY" secondItem="0Xv-kG-v48" secondAttribute="centerY" id="Zv1-1w-tRD"/>
+                                                <constraint firstAttribute="trailingMargin" secondItem="Z1N-gq-S3m" secondAttribute="trailing" constant="50" id="dWS-s9-83h"/>
                                                 <constraint firstAttribute="bottomMargin" secondItem="iPw-NC-bsT" secondAttribute="bottom" constant="-8" id="flS-yD-dBA"/>
                                                 <constraint firstItem="tPH-Wn-RAA" firstAttribute="top" secondItem="yVz-Gt-vNP" secondAttribute="top" constant="25" id="jcc-xK-pMg"/>
                                                 <constraint firstItem="0Xv-kG-v48" firstAttribute="leading" secondItem="Oo4-Qs-HVa" secondAttribute="trailing" id="jej-cL-GdH"/>

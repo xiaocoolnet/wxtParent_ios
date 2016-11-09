@@ -177,14 +177,15 @@ class BabyViewController: UIViewController,UITableViewDelegate,UITableViewDataSo
         //        cell.fillCellWithModel(model)
         
         let time = UILabel()
-        time.frame = CGRectMake(10, 20, 60, 30)
-        //        time.text = "星期一"
+        time.frame = CGRectMake(10, 20, 50, 20)
+        time.font = timefont
+//        time.textColor = neirongColor
         cell.contentView.addSubview(time)
         
         
         let view = UIView()
         view.backgroundColor = UIColor.whiteColor()
-        view.frame = CGRectMake(80, 20, WIDTH - 90, 500)
+        view.frame = CGRectMake(60, 20, WIDTH - 70, 500)
         cell.contentView.addSubview(view)
         //        let heigh = view.frame.size.height
         let width = view.frame.size.width
@@ -194,11 +195,12 @@ class BabyViewController: UIViewController,UITableViewDelegate,UITableViewDataSo
         content.text = model.content
         content.numberOfLines = 0
         content.sizeToFit()
+        content.textColor = neirongColor
         view.addSubview(content)
         //        自适应行高
         let options : NSStringDrawingOptions = NSStringDrawingOptions.UsesLineFragmentOrigin
         let screenBounds:CGRect = UIScreen.mainScreen().bounds
-        let boundingRect = String(content.text).boundingRectWithSize(CGSizeMake(screenBounds.width, 0), options: options, attributes: [NSFontAttributeName:UIFont.systemFontOfSize(17)], context: nil)
+        let boundingRect = String(content.text).boundingRectWithSize(CGSizeMake(screenBounds.width, 0), options: options, attributes: [NSFontAttributeName:UIFont.systemFontOfSize(15)], context: nil)
         let height = boundingRect.size.height + 20
         
         //  图片
@@ -208,20 +210,19 @@ class BabyViewController: UIViewController,UITableViewDelegate,UITableViewDataSo
         
         let pic  = model.pic
         if(pic.count>0&&pic.count<=3){
-            image_h=(width - 40)/3.0
-            for i in 1...pic.count{
-                var x = 12
-                let pciInfo = pic[i-1]
+            image_h=300
+            if pic.count==1 {
+                let pciInfo = pic[0]
                 let imgUrl = microblogImageUrl+(pciInfo.pictureurl)!
                 let avatarUrl = NSURL(string: imgUrl)
                 let request: NSURLRequest = NSURLRequest(URL: avatarUrl!)
                 
                 NSURLConnection.sendAsynchronousRequest(request, queue: NSOperationQueue.mainQueue(), completionHandler: {(response: NSURLResponse?,data: NSData?,error: NSError?)-> Void in
                     if(data != nil){
-                        x = x+((i-1)*Int((width - 40)/3.0 + 10))
+                        
                         button = CustomBtn()
-                        button?.flag = i
-                        button!.frame = CGRectMake(CGFloat(x), height, (width - 40)/3.0, (width - 40)/3.0)
+                        button?.flag = 1
+                        button!.frame = CGRectMake(10, height, width - 20, 300)
                         let imgTmp = UIImage(data: data!)
                         
                         button!.setImage(imgTmp, forState: .Normal)
@@ -237,6 +238,36 @@ class BabyViewController: UIViewController,UITableViewDelegate,UITableViewDataSo
                     }
                 })
                 
+            }else{
+                image_h=(WIDTH - 40)/3.0
+                for i in 1...pic.count{
+                    var x = 12
+                    let pciInfo = pic[i-1]
+                    let imgUrl = microblogImageUrl+(pciInfo.pictureurl)!
+                    let avatarUrl = NSURL(string: imgUrl)
+                    let request: NSURLRequest = NSURLRequest(URL: avatarUrl!)
+                    
+                    NSURLConnection.sendAsynchronousRequest(request, queue: NSOperationQueue.mainQueue(), completionHandler: {(response: NSURLResponse?,data: NSData?,error: NSError?)-> Void in
+                        if(data != nil){
+                            x = x+((i-1)*Int((width - 40)/3.0 + 5))
+                            button = CustomBtn()
+                            button?.flag = i
+                            button!.frame = CGRectMake(CGFloat(x), height, (width - 40)/3.0, (width - 40)/3.0)
+                            let imgTmp = UIImage(data: data!)
+                            
+                            button!.setImage(imgTmp, forState: .Normal)
+                            button?.imageView?.contentMode = .ScaleAspectFill
+                            button?.clipsToBounds = true
+                            if button?.imageView?.image == nil{
+                                button?.setBackgroundImage(UIImage(named: "图片默认加载"), forState: .Normal)
+                            }
+                            button?.tag = indexPath.row
+                            button?.addTarget(self, action: #selector(self.clickBtn), forControlEvents: .TouchUpInside)
+                            view.addSubview(button!)
+                            
+                        }
+                    })
+                }
             }
         }
         if(pic.count>3&&pic.count<=6){
@@ -251,7 +282,7 @@ class BabyViewController: UIViewController,UITableViewDelegate,UITableViewDataSo
                         let request: NSURLRequest = NSURLRequest(URL: avatarUrl!)
                         NSURLConnection.sendAsynchronousRequest(request, queue: NSOperationQueue.mainQueue(), completionHandler: {(response: NSURLResponse?,data: NSData?,error: NSError?)-> Void in
                             if(data != nil){
-                                x = x+((i-1)*Int((width - 40)/3.0 + 10))
+                                x = x+((i-1)*Int((width - 40)/3.0 + 5))
                                 button = CustomBtn()
                                 button?.flag = i
                                 button!.frame = CGRectMake(CGFloat(x), height, (width - 40)/3.0, (width - 40)/3.0)
@@ -276,7 +307,7 @@ class BabyViewController: UIViewController,UITableViewDelegate,UITableViewDataSo
                         let request: NSURLRequest = NSURLRequest(URL: avatarUrl!)
                         NSURLConnection.sendAsynchronousRequest(request, queue: NSOperationQueue.mainQueue(), completionHandler: {(response: NSURLResponse?,data: NSData?,error: NSError?)-> Void in
                             if(data != nil){
-                                x = x+((i-4)*Int((width - 40)/3.0 + 10))
+                                x = x+((i-4)*Int((width - 40)/3.0 + 5))
                                 button = CustomBtn()
                                 button?.flag = i
                                 button!.frame = CGRectMake(CGFloat(x), height+(width - 40)/3.0 + 5, (width - 40)/3.0, (width - 40)/3.0)
@@ -308,7 +339,7 @@ class BabyViewController: UIViewController,UITableViewDelegate,UITableViewDataSo
                         let request: NSURLRequest = NSURLRequest(URL: avatarUrl!)
                         NSURLConnection.sendAsynchronousRequest(request, queue: NSOperationQueue.mainQueue(), completionHandler: {(response: NSURLResponse?,data: NSData?,error: NSError?)-> Void in
                             if(data != nil){
-                                x = x+((i-1)*Int((width - 40)/3.0 + 10))
+                                x = x+((i-1)*Int((width - 40)/3.0 + 5))
                                 button = CustomBtn()
                                 button?.flag = i
                                 button!.frame = CGRectMake(CGFloat(x), height, (width - 40)/3.0, (width - 40)/3.0)
@@ -334,7 +365,7 @@ class BabyViewController: UIViewController,UITableViewDelegate,UITableViewDataSo
                         let request: NSURLRequest = NSURLRequest(URL: avatarUrl!)
                         NSURLConnection.sendAsynchronousRequest(request, queue: NSOperationQueue.mainQueue(), completionHandler: {(response: NSURLResponse?,data: NSData?,error: NSError?)-> Void in
                             if(data != nil){
-                                x = x+((i-4)*Int((width - 40)/3.0 + 10))
+                                x = x+((i-4)*Int((width - 40)/3.0 + 5))
                                 button = CustomBtn()
                                 button?.flag = i
                                 button!.frame = CGRectMake(CGFloat(x), height+(width - 40)/3.0 + 5, (width - 40)/3.0, (width - 40)/3.0)
@@ -361,7 +392,7 @@ class BabyViewController: UIViewController,UITableViewDelegate,UITableViewDataSo
                         let request: NSURLRequest = NSURLRequest(URL: avatarUrl!)
                         NSURLConnection.sendAsynchronousRequest(request, queue: NSOperationQueue.mainQueue(), completionHandler: {(response: NSURLResponse?,data: NSData?,error: NSError?)-> Void in
                             if(data != nil){
-                                x = x+((i-7)*Int((width - 40)/3.0 + 10))
+                                x = x+((i-7)*Int((width - 40)/3.0 + 5))
                                 button = CustomBtn()
                                 button?.flag = i
                                 button!.frame = CGRectMake(CGFloat(x), height+(width - 40)/3.0 + 5+(width - 40)/3.0 + 5, (width - 40)/3.0, (width - 40)/3.0)
@@ -399,11 +430,13 @@ class BabyViewController: UIViewController,UITableViewDelegate,UITableViewDataSo
         let string=(str as NSString).substringToIndex(5)
         
         let lable = UILabel()
-        lable.frame = CGRectMake(10, 50, 60, 30)
+        lable.frame = CGRectMake(10, 40, 50, 20)
         lable.backgroundColor = UIColor(red: 155/255, green: 229/255, blue: 180/255, alpha: 1)
         lable.textColor = UIColor.whiteColor()
-        lable.font = UIFont.systemFontOfSize(16)
+        lable.font = timefont
         lable.textAlignment = NSTextAlignment.Center
+        lable.layer.cornerRadius = 5
+        lable.layer.masksToBounds = true
         cell.contentView.addSubview(lable)
         
         if oldDate != string {
@@ -458,27 +491,38 @@ class BabyViewController: UIViewController,UITableViewDelegate,UITableViewDataSo
             btn.frame = CGRectMake(10, 5, 20, 20)
             btn.setBackgroundImage(UIImage(named: "已点赞"), forState: .Normal)
             aview.addSubview(btn)
+            let lable = UILabel()
+            lable.frame = CGRectMake(40, 5, (width - 50), 20)
+            lable.textColor = UIColor(red: 115/255.0, green: 229/255.0, blue: 180/255.0, alpha: 1.0)
+            lable.font = UIFont.systemFontOfSize(14)
+            aview.addSubview(lable)
+            let arr = NSMutableArray()
             for i in 1...model.like.count {
                 let str = model.like[i - 1].name
-                let lable = UILabel()
-                var x = 40
-                x = x+((i-1)*Int((WIDTH - 40)/4 + 5))
-                lable.frame = CGRectMake(CGFloat(x), 5, (width - 50)/4, 20)
-                lable.text = str
-                lable.textColor = UIColor(red: 115/255.0, green: 229/255.0, blue: 180/255.0, alpha: 1.0)
-                lable.font = UIFont.systemFontOfSize(15)
-                aview.addSubview(lable)
+//                lable.text = str
+                arr.addObject(str)
             }
+
+            let zanstr = arr.componentsJoinedByString("  ")
+            lable.text = zanstr
+            lable.numberOfLines = 0
+            lable.sizeToFit()
+            //        自适应行高
+            let options : NSStringDrawingOptions = NSStringDrawingOptions.UsesLineFragmentOrigin
+            let screenBounds:CGRect = UIScreen.mainScreen().bounds
+            let boundingRect = String(lable.text).boundingRectWithSize(CGSizeMake(screenBounds.width, 0), options: options, attributes: [NSFontAttributeName:UIFont.systemFontOfSize(15)], context: nil)
+            let heigh = boundingRect.size.height + 5
+            aview.frame = CGRectMake(10, height + image_h + 40, width - 20, heigh)
         }
         
-        var pingView = UIView()
+        let pingView = UIView()
         var h = CGFloat()
         if model.comment.count != 0 {
             for i in 1...model.comment.count {
-                pingView = UIView()
+//                pingView = UIView()
                 h = CGFloat( 50 * (i))
-                pingView.frame = CGRectMake(10, height + image_h + 50 + aview.frame.size.height , width - 20, h)
-                //                pingView.backgroundColor = RGBA(242.0, g: 242.0, b: 242.0, a: 1)
+                pingView.frame = CGRectMake(0, height + image_h + 50 + aview.frame.size.height , width, h)
+//                pingView.backgroundColor = RGBA(242.0, g: 242.0, b: 242.0, a: 1)
                 view.addSubview(pingView)
                 let name = UILabel()
                 name.frame = CGRectMake(50, 5 + CGFloat( 50 * (i - 1)), 60, 20)
@@ -518,7 +562,7 @@ class BabyViewController: UIViewController,UITableViewDelegate,UITableViewDataSo
         }
         
         
-        view.frame = CGRectMake(80, 20, WIDTH - 90, height + image_h + 45 + h + aview.frame.size.height)
+        view.frame = CGRectMake(70, 20, WIDTH - 80, height + image_h + 45 + h + aview.frame.size.height)
         self.table.rowHeight = view.frame.size.height + 20
         
         return cell
@@ -531,7 +575,7 @@ class BabyViewController: UIViewController,UITableViewDelegate,UITableViewDataSo
         vc.type = "7"
         vc.idtype = "1"
         vc.mid = self.noticeSource.objectlist[indexPath.row].userid
-        self.navigationController?.pushViewController(vc, animated: true)
+//        self.navigationController?.pushViewController(vc, animated: true)
         print(2344)
     }
     
@@ -566,7 +610,7 @@ class BabyViewController: UIViewController,UITableViewDelegate,UITableViewDataSo
                 "userid":uid!,
                 "type":"7"
             ]
-            Alamofire.request(.GET, url, parameters: param as? [String:String] ).response { request, response, json, error in
+            Alamofire.request(.GET, url, parameters: param).response { request, response, json, error in
                 print(request)
                 if(error != nil){
                     
@@ -605,7 +649,7 @@ class BabyViewController: UIViewController,UITableViewDelegate,UITableViewDataSo
                 "userid":uid!,
                 "type":"7"
             ]
-            Alamofire.request(.GET, url, parameters: param as? [String:String]).response { request, response, json, error in
+            Alamofire.request(.GET, url, parameters: param ).response { request, response, json, error in
                 print(request)
                 if(error != nil){
                     

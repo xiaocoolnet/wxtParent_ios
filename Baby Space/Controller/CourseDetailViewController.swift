@@ -58,7 +58,8 @@ class CourseDetailViewController: UIViewController,UITableViewDelegate,UITableVi
         title.frame = CGRectMake(10, 10, WIDTH - 20, 30)
         title.text = model?.courseware_title
         title.textAlignment = NSTextAlignment.Center
-        title.font = UIFont.systemFontOfSize(18)
+        title.font = biaotifont
+        title.textColor = biaotiColor
         cell.contentView.addSubview(title)
         // 内容
         let content = UILabel()
@@ -66,12 +67,12 @@ class CourseDetailViewController: UIViewController,UITableViewDelegate,UITableVi
         content.text = model?.courseware_content
         content.numberOfLines = 0
         content.sizeToFit()
+        content.textColor = neirongColor
         cell.contentView.addSubview(content)
         //        自适应行高
         let options : NSStringDrawingOptions = NSStringDrawingOptions.UsesLineFragmentOrigin
         let screenBounds:CGRect = UIScreen.mainScreen().bounds
-        let boundingRect = String(content.text).boundingRectWithSize(CGSizeMake(screenBounds.width, 0), options: options, attributes: [NSFontAttributeName:UIFont.systemFontOfSize(17)], context: nil)
-        content.textColor = UIColor.lightGrayColor()
+        let boundingRect = String(content.text).boundingRectWithSize(CGSizeMake(screenBounds.width, 0), options: options, attributes: [NSFontAttributeName:UIFont.systemFontOfSize(15)], context: nil)
         let height = boundingRect.size.height + 20 + 50
         
         //  图片
@@ -81,20 +82,19 @@ class CourseDetailViewController: UIViewController,UITableViewDelegate,UITableVi
         
         let pic  = model?.coursewarePic
         if(pic!.count>0&&pic!.count<=3){
-            image_h=(WIDTH - 40)/3.0
-            for i in 1...pic!.count{
-                var x = 12
-                let pciInfo = pic![i-1]
+            image_h=300
+            if pic!.count==1 {
+                let pciInfo = pic![0]
                 let imgUrl = microblogImageUrl+(pciInfo.picture_url)
                 let avatarUrl = NSURL(string: imgUrl)
                 let request: NSURLRequest = NSURLRequest(URL: avatarUrl!)
                 
                 NSURLConnection.sendAsynchronousRequest(request, queue: NSOperationQueue.mainQueue(), completionHandler: {(response: NSURLResponse?,data: NSData?,error: NSError?)-> Void in
                     if(data != nil){
-                        x = x+((i-1)*Int((WIDTH - 40)/3.0 + 10))
+                        
                         button = CustomBtn()
-                        button?.flag = i
-                        button!.frame = CGRectMake(CGFloat(x), height, (WIDTH - 40)/3.0, (WIDTH - 40)/3.0)
+                        button?.flag = 1
+                        button!.frame = CGRectMake(10, height, WIDTH - 20, 300)
                         let imgTmp = UIImage(data: data!)
                         
                         button!.setImage(imgTmp, forState: .Normal)
@@ -110,6 +110,36 @@ class CourseDetailViewController: UIViewController,UITableViewDelegate,UITableVi
                     }
                 })
                 
+            }else{
+                image_h=(WIDTH - 40)/3.0
+                for i in 1...pic!.count{
+                    var x = 12
+                    let pciInfo = pic![i-1]
+                    let imgUrl = microblogImageUrl+(pciInfo.picture_url)
+                    let avatarUrl = NSURL(string: imgUrl)
+                    let request: NSURLRequest = NSURLRequest(URL: avatarUrl!)
+                    
+                    NSURLConnection.sendAsynchronousRequest(request, queue: NSOperationQueue.mainQueue(), completionHandler: {(response: NSURLResponse?,data: NSData?,error: NSError?)-> Void in
+                        if(data != nil){
+                            x = x+((i-1)*Int((WIDTH - 40)/3.0 + 10))
+                            button = CustomBtn()
+                            button?.flag = i
+                            button!.frame = CGRectMake(CGFloat(x), height, (WIDTH - 40)/3.0, (WIDTH - 40)/3.0)
+                            let imgTmp = UIImage(data: data!)
+                            
+                            button!.setImage(imgTmp, forState: .Normal)
+                            button?.imageView?.contentMode = .ScaleAspectFill
+                            button?.clipsToBounds = true
+                            if button?.imageView?.image == nil{
+                                button?.setBackgroundImage(UIImage(named: "图片默认加载"), forState: .Normal)
+                            }
+                            button?.tag = indexPath.row
+                            button?.addTarget(self, action: #selector(self.clickBtn), forControlEvents: .TouchUpInside)
+                            cell.contentView.addSubview(button!)
+                            
+                        }
+                    })
+                }
             }
         }
         if(pic!.count>3&&pic!.count<=6){
@@ -358,6 +388,8 @@ class CourseDetailViewController: UIViewController,UITableViewDelegate,UITableVi
         let teacher = UILabel()
         teacher.frame = CGRectMake(41, 10 + image_h + height, 100, 20)
         teacher.text = model?.teacher_name
+        teacher.font = timefont
+        teacher.textColor = timeColor
         cell.contentView.addSubview(teacher)
         
         let dateformate = NSDateFormatter()
@@ -367,8 +399,8 @@ class CourseDetailViewController: UIViewController,UITableViewDelegate,UITableVi
         let timeLbl = UILabel()
         timeLbl.frame = CGRectMake(160, height + image_h + 10, WIDTH - 170, 20)
         timeLbl.text = str
-        timeLbl.font = UIFont.systemFontOfSize(16)
-        timeLbl.textColor = UIColor.lightGrayColor()
+        timeLbl.font = timefont
+        timeLbl.textColor = timeColor
         timeLbl.textAlignment = NSTextAlignment.Right
         cell.contentView.addSubview(timeLbl)
 
@@ -394,7 +426,7 @@ class CourseDetailViewController: UIViewController,UITableViewDelegate,UITableVi
     func tableView(tableView: UITableView, didSelectRowAtIndexPath indexPath: NSIndexPath) {
         let vc = CDWirteCommentViewController()
         vc.dataSource = self.dataSource?.courseware_info[indexPath.row]
-        self.navigationController?.pushViewController(vc, animated: true)
+//        self.navigationController?.pushViewController(vc, animated: true)
     }
 
     

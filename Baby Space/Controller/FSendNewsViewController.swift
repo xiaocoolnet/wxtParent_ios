@@ -128,6 +128,7 @@ class FSendNewsViewController: UIViewController,UITableViewDelegate,UITableViewD
         cell.selectionStyle = .None
         // 修改之后
         let model = self.dataSource.objectlist[indexPath.row]
+       
         let messageModel = model.send_message
         //        let picModel = model.picture
         let receiveModel = (model.receiver)
@@ -152,8 +153,8 @@ class FSendNewsViewController: UIViewController,UITableViewDelegate,UITableViewD
         cell.contentView.addSubview(teacherLabel)
         cell.contentView.addSubview(comment)
         
-        timeLabel.textColor = UIColor.lightGrayColor()
-        timeLabel.font = UIFont.systemFontOfSize(15)
+        timeLabel.textColor = timeColor
+        timeLabel.font = timefont
         cell.contentView.addSubview(timeLabel)
         cell.contentView.addSubview(dianzanBtn)
         cell.contentView.addSubview(allLable)
@@ -171,6 +172,11 @@ class FSendNewsViewController: UIViewController,UITableViewDelegate,UITableViewD
         
         contentLabel.frame = CGRectMake(10, 10, WIDTH - 20, 30)
         contentLabel.text = messageModel.first?.message_content
+        if indexPath.row==0 {
+            let user = NSUserDefaults.standardUserDefaults()
+            user.setObject(contentLabel.text, forKey: "qunfa")
+            
+        }
         contentLabel.numberOfLines = 0
         contentLabel.sizeToFit()
         // 计算群发内容高度
@@ -194,33 +200,27 @@ class FSendNewsViewController: UIViewController,UITableViewDelegate,UITableViewD
         }
         
         if(pic.count>0&&pic.count<=3){
-            image_h=(WIDTH - 40)/3.0
-            for i in 1...pic.count{
-                var x = 12
-                let pciInfo = pic[i-1]
+            image_h=300
+            if pic.count==1 {
+                let pciInfo = pic[0]
                 let imgUrl = microblogImageUrl+(pciInfo.picture_url)
-                print(imgUrl)
-                
-                //let image = self.imageCache[imgUrl] as UIImage?
                 let avatarUrl = NSURL(string: imgUrl)
                 let request: NSURLRequest = NSURLRequest(URL: avatarUrl!)
                 
                 NSURLConnection.sendAsynchronousRequest(request, queue: NSOperationQueue.mainQueue(), completionHandler: {(response: NSURLResponse?,data: NSData?,error: NSError?)-> Void in
                     if(data != nil){
-                        x = x+((i-1)*Int((WIDTH - 40)/3.0 + 10))
-                        //                        blogimage = UIImageView(frame: CGRectMake(CGFloat(x), 150, 110, 80))
+                        
                         button = CustomBtn()
-                        button?.flag = i
-                        button!.frame = CGRectMake(CGFloat(x), contentheight + 10, (WIDTH - 40)/3.0, (WIDTH - 40)/3.0)
+                        button?.flag = 1
+                        button!.frame = CGRectMake(10, contentheight, WIDTH - 20, 300)
                         let imgTmp = UIImage(data: data!)
-                    
+                        
                         button!.setImage(imgTmp, forState: .Normal)
                         button?.imageView?.contentMode = .ScaleAspectFill
                         button?.clipsToBounds = true
                         if button?.imageView?.image == nil{
-                            button!.setImage(UIImage(named: "图片默认加载"), forState: .Normal)
+                            button?.setBackgroundImage(UIImage(named: "图片默认加载"), forState: .Normal)
                         }
-
                         button?.tag = indexPath.row
                         button?.addTarget(self, action: #selector(self.clickBtn), forControlEvents: .TouchUpInside)
                         cell.contentView.addSubview(button!)
@@ -228,6 +228,36 @@ class FSendNewsViewController: UIViewController,UITableViewDelegate,UITableViewD
                     }
                 })
                 
+            }else{
+                image_h=(WIDTH - 40)/3.0
+                for i in 1...pic.count{
+                    var x = 12
+                    let pciInfo = pic[i-1]
+                    let imgUrl = microblogImageUrl+(pciInfo.picture_url)
+                    let avatarUrl = NSURL(string: imgUrl)
+                    let request: NSURLRequest = NSURLRequest(URL: avatarUrl!)
+                    
+                    NSURLConnection.sendAsynchronousRequest(request, queue: NSOperationQueue.mainQueue(), completionHandler: {(response: NSURLResponse?,data: NSData?,error: NSError?)-> Void in
+                        if(data != nil){
+                            x = x+((i-1)*Int((WIDTH - 40)/3.0 + 10))
+                            button = CustomBtn()
+                            button?.flag = i
+                            button!.frame = CGRectMake(CGFloat(x), contentheight, (WIDTH - 40)/3.0, (WIDTH - 40)/3.0)
+                            let imgTmp = UIImage(data: data!)
+                            
+                            button!.setImage(imgTmp, forState: .Normal)
+                            button?.imageView?.contentMode = .ScaleAspectFill
+                            button?.clipsToBounds = true
+                            if button?.imageView?.image == nil{
+                                button?.setBackgroundImage(UIImage(named: "图片默认加载"), forState: .Normal)
+                            }
+                            button?.tag = indexPath.row
+                            button?.addTarget(self, action: #selector(self.clickBtn), forControlEvents: .TouchUpInside)
+                            cell.contentView.addSubview(button!)
+                            
+                        }
+                    })
+                }
             }
         }
         if(pic.count>3&&pic.count<=6){
@@ -500,28 +530,30 @@ class FSendNewsViewController: UIViewController,UITableViewDelegate,UITableViewD
         
         teacherLabel.frame = CGRectMake(40, contentheight + image_h + 20, 100, 20)
         teacherLabel.text = messageModel.first?.send_user_name
+        teacherLabel.textColor=timeColor
+        teacherLabel.font=timefont
         timeLabel.frame = CGRectMake(WIDTH - 150, contentheight + image_h + 20, 140, 20)
         timeLabel.textAlignment = NSTextAlignment.Right
         timeLabel.text = changeTime((model.send_message.first?.message_time)!)
         
         
         zong.frame = CGRectMake(10, 10 + contentLabel.frame.height + 10 + image_h + 40, 30, 30)
-        zong.font = UIFont.systemFontOfSize(15)
+        zong.font = neirongfont
         zong.textColor = UIColor.orangeColor()
         allLable.frame = CGRectMake(40, 10 + contentLabel.frame.height + 10 + image_h + 40, 20, 30)
-        allLable.font = UIFont.systemFontOfSize(15)
+        allLable.font = neirongfont
         allLable.textColor = UIColor.orangeColor()
         yiDu.frame = CGRectMake(65, 10 + contentLabel.frame.height + 10 + image_h + 40, 40, 30)
-        yiDu.font = UIFont.systemFontOfSize(15)
+        yiDu.font = neirongfont
         yiDu.textColor = UIColor.orangeColor()
         already.frame = CGRectMake(100, 10 + contentLabel.frame.height + 10 + image_h + 40, 20, 30)
-        already.font = UIFont.systemFontOfSize(15)
+        already.font = neirongfont
         already.textColor = UIColor.orangeColor()
         meiDu.frame = CGRectMake(125, 10 + contentLabel.frame.height + 10 + image_h + 40, 40, 30)
-        meiDu.font = UIFont.systemFontOfSize(15)
+        meiDu.font = neirongfont
         meiDu.textColor = UIColor.orangeColor()
         weiDu.frame = CGRectMake(155, 10 + contentLabel.frame.height + 10 + image_h + 40, 40, 30)
-        weiDu.font = UIFont.systemFontOfSize(15)
+        weiDu.font = neirongfont
         weiDu.textColor = UIColor.orangeColor()
         
         let line = UILabel()
@@ -559,7 +591,7 @@ class FSendNewsViewController: UIViewController,UITableViewDelegate,UITableViewD
         let readLabel = UILabel()
         readLabel.frame = CGRectMake(WIDTH - 60, 10 + contentLabel.frame.height + 10 + image_h + 40, 50, 30)
         //        readLabel.text = "已读"
-        readLabel.font = UIFont.systemFontOfSize(17)
+        readLabel.font = neirongfont
 //        readLabel.textColor = UIColor.redColor()
         cell.contentView.addSubview(readLabel)
         

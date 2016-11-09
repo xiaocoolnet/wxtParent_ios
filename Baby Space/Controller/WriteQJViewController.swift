@@ -110,8 +110,14 @@ class WriteQJViewController: UIViewController,HZQDatePickerViewDelegate,ToolTwoP
         let btn11 = UIButton(type: .Custom)
         btn11.frame = CGRectMake(WIDTH-30, 20, 20, 20)
         btn11.setImage(UIImage(named: "右边剪头.png"), forState: .Normal)
-        btn11.addTarget(self, action: #selector(WriteQJViewController.chooseStudent), forControlEvents: .TouchUpInside)
+//        btn11.addTarget(self, action: #selector(WriteQJViewController.chooseStudent), forControlEvents: .TouchUpInside)
         v1.addSubview(btn11)
+        
+        let firstBtn = UIButton(type: .Custom)
+        firstBtn.frame = CGRectMake(10, 20, WIDTH - 10, 60)
+        firstBtn.backgroundColor = UIColor.clearColor()
+        firstBtn.addTarget(self, action: #selector(WriteQJViewController.chooseStudent), forControlEvents: .TouchUpInside)
+        v1.addSubview(firstBtn)
         
         let lineView = UIView()
         lineView.frame = CGRectMake(0, 61, self.view.frame.size.width, 1)
@@ -135,6 +141,12 @@ class WriteQJViewController: UIViewController,HZQDatePickerViewDelegate,ToolTwoP
         btn2.addTarget(self, action: #selector(WriteQJViewController.chooseTeacher), forControlEvents: .TouchUpInside)
         v1.addSubview(btn2)
         
+        let secondBtn = UIButton(type: .Custom)
+        secondBtn.frame = CGRectMake(10, 61, WIDTH, 59)
+        secondBtn.backgroundColor = UIColor.clearColor()
+        secondBtn.addTarget(self, action: #selector(WriteQJViewController.chooseTeacher), forControlEvents: .TouchUpInside)
+        v1.addSubview(secondBtn)
+        
         let v2 = UIView()
         v2.frame = CGRectMake(0, 131, self.view.frame.size.width, 121)
         v2.backgroundColor = UIColor.whiteColor()
@@ -147,8 +159,8 @@ class WriteQJViewController: UIViewController,HZQDatePickerViewDelegate,ToolTwoP
         lbl5.textColor = UIColor.blackColor()
         v2.addSubview(lbl5)
         
-        btn.frame = CGRectMake(WIDTH-150, 20, 120, 20)
-        btn.setTitle("选择时间", forState: .Normal)
+        btn.frame = CGRectMake(10, 0, WIDTH - 10, 60)
+//        btn.setTitle("选择时间", forState: .Normal)
         btn.setTitleColor(UIColor.blackColor(), forState: .Normal)
         btn.addTarget(self, action: #selector(WriteQJViewController.selectTime(_:)), forControlEvents: .TouchUpInside)
         btn.tag = 99
@@ -171,8 +183,8 @@ class WriteQJViewController: UIViewController,HZQDatePickerViewDelegate,ToolTwoP
         lbl6.textColor = UIColor.blackColor()
         v2.addSubview(lbl6)
         
-        btn1.frame = CGRectMake(WIDTH-150, 81, 120, 20)
-        btn1.setTitle("选择时间", forState: .Normal)
+        btn1.frame = CGRectMake(10, 61, WIDTH, 60)
+//        btn1.setTitle("选择时间", forState: .Normal)
         btn1.setTitleColor(UIColor.blackColor(), forState: .Normal)
         btn1.addTarget(self, action: #selector(WriteQJViewController.selectTime(_:)), forControlEvents: .TouchUpInside)
         btn1.tag = 100
@@ -204,11 +216,17 @@ class WriteQJViewController: UIViewController,HZQDatePickerViewDelegate,ToolTwoP
         let typeBtn = UIButton(type: .Custom)
         typeBtn.frame = CGRectMake(WIDTH-20, 15, 10, 20)
         typeBtn.setImage(UIImage(named: "右边剪头.png"), forState: .Normal)
-        typeBtn.addTarget(self, action: #selector(WriteQJViewController.chooseType), forControlEvents: .TouchUpInside)
+//        typeBtn.addTarget(self, action: #selector(WriteQJViewController.chooseType), forControlEvents: .TouchUpInside)
         v3.addSubview(typeBtn)
         
+        let type = UIButton(type: .Custom)
+        type.frame = CGRectMake(10, 0, WIDTH - 10, 50)
+        type.backgroundColor = UIColor.clearColor()
+        type.addTarget(self, action: #selector(WriteQJViewController.chooseType), forControlEvents: .TouchUpInside)
+        v3.addSubview(type)
         
-        self.contentTextView.frame = CGRectMake(0, 322, self.view.bounds.width, 200)
+        
+        self.contentTextView.frame = CGRectMake(0, 322, self.view.bounds.width, 150)
         self.contentTextView.font = UIFont.systemFontOfSize(15)
         self.contentTextView.placeholder = "请输入请假事由"
         scrollView.addSubview(self.contentTextView)
@@ -217,7 +235,7 @@ class WriteQJViewController: UIViewController,HZQDatePickerViewDelegate,ToolTwoP
         
         //  添加图片
         let addImageButton = UIButton()
-        addImageButton.frame = CGRectMake(10, 530, 80, 80)
+        addImageButton.frame = CGRectMake(10, 480, 80, 80)
         addImageButton.setBackgroundImage(UIImage(named: "add2"), forState: .Normal)
         addImageButton.addTarget(self, action: #selector(addImage), forControlEvents: .TouchUpInside)
         
@@ -549,7 +567,7 @@ class WriteQJViewController: UIViewController,HZQDatePickerViewDelegate,ToolTwoP
     //        键盘消失的通知方法
     func keyboardWillHideNotification(notification:NSNotification){
         UIView.animateWithDuration(0.3) { () -> Void in
-            self.view.frame.origin.y = self.view.frame.origin.y + 100
+            self.view.frame.origin.y = self.view.frame.origin.y + 200
             self.view.layoutIfNeeded()
         }
         
@@ -557,10 +575,11 @@ class WriteQJViewController: UIViewController,HZQDatePickerViewDelegate,ToolTwoP
     //     键盘出现的通知方法
     func keyboardWillShowNotification(notification:NSNotification){
         UIView.animateWithDuration(0.3) { () -> Void in
-            self.view.frame.origin.y = self.view.frame.origin.y - 100
+            self.view.frame.origin.y = self.view.frame.origin.y - 200
             self.view.layoutIfNeeded()
         }
     }
+    
     
     func scrollViewWillBeginDragging(scrollView: UIScrollView) {
         self.contentTextView.resignFirstResponder()

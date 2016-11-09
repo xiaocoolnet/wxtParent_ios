@@ -30,13 +30,13 @@ class QCOnlineHelpVC: UIViewController {
     }
     
     func createTextView(){
-        self.contentTextView.frame = CGRectMake(8, 5, self.view.bounds.width - 16, 250)
+        self.contentTextView.frame = CGRectMake(8, 5, self.view.bounds.width - 16, 150)
         self.contentTextView.font = UIFont.systemFontOfSize(15)
         self.contentTextView.placeholder = "请添加留言"
         self.view.backgroundColor = UIColor.whiteColor()
         self.view.addSubview(contentTextView)
         
-        btn.frame = CGRectMake(20, 310, WIDTH - 40, 40)
+        btn.frame = CGRectMake(20, 190, WIDTH - 40, 40)
         btn.setTitle("提交", forState: .Normal)
         btn.backgroundColor = UIColor(red: 155/255, green: 229/255, blue: 180/255, alpha: 1)
         btn.layer.cornerRadius = 10

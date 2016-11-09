@@ -58,6 +58,7 @@ class ChildrenInfo: JSONJoy{
     var id:String?
     var relation_rank:String?
     var studentid:String?
+    var school_name:String?
     var studentname:String?
     var studentavatar:String?
     var classlist = Array<ChildrenClassInfo>()
@@ -73,6 +74,7 @@ class ChildrenInfo: JSONJoy{
         relation_rank = decoder["relation_rank"].string
         studentid = decoder["studentid"].string
         studentname = decoder["studentname"].string
+        school_name = decoder["school_name"].string
         studentavatar = decoder["studentavatar"].string
         if decoder["classlist"].array != nil {
             for childs: JSONDecoder in decoder["classlist"].array!{
