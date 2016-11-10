@@ -91,9 +91,20 @@ class GDPicViewController: UIViewController,UICollectionViewDelegate,UICollectio
         let doubleTap = UITapGestureRecognizer(target: self, action: #selector(self.clickDoubleTap))
         doubleTap.numberOfTapsRequired = 2
         imgView.addGestureRecognizer(doubleTap);
+        imgView.userInteractionEnabled = true
         return cell
     }
 
+    //实现手势方法  双击手势
+    func clickDoubleTap(sender: UITapGestureRecognizer)
+    {
+        if imgView.contentMode == UIViewContentMode.ScaleAspectFit{
+            //把imageView模式改成UIViewContentModeCenter，按照图片原先的大小显示中心的一部分在imageView
+            imgView.contentMode = UIViewContentMode.Center
+        }else{
+            imgView.contentMode = UIViewContentMode.ScaleAspectFit
+        }
+    }
     //捏的手势，使图片放大和缩小，捏的动作是一个连续的动作
     func handlePinchGesture(sender: UIPinchGestureRecognizer){
         let factor = sender.scale
@@ -114,15 +125,5 @@ class GDPicViewController: UIViewController,UICollectionViewDelegate,UICollectio
         }
     }
     
-    //实现手势方法  双击手势
-    func clickDoubleTap(sender: UITapGestureRecognizer)
-    {
-        if imgView.contentMode == UIViewContentMode.ScaleAspectFit{
-            //把imageView模式改成UIViewContentModeCenter，按照图片原先的大小显示中心的一部分在imageView
-            imgView.contentMode = UIViewContentMode.Center
-        }else{
-            imgView.contentMode = UIViewContentMode.ScaleAspectFit
-        }
-    }
 
 }

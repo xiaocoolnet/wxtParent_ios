@@ -418,7 +418,10 @@ class AppDelegate: UIResponder, UIApplicationDelegate,UITabBarControllerDelegate
             userDefaults.setValue(commentArr, forKey: "commentArr")
             let str = userDefaults.valueForKey("commentArr")
             NSNotificationCenter.defaultCenter().postNotificationName("commentArr", object: str)
+        }else if type == "newMessage"{
+            NSNotificationCenter.defaultCenter().postNotificationName("message", object: "message")
         }
+            
     }
     
     func goToMssageViewControllerWith(userInfo:NSDictionary){

@@ -7,19 +7,26 @@
 //
 
 import UIKit
+import Alamofire
+import YYWebImage
+import XWSwiftRefresh
+import MBProgressHUD
 
-class ConversationListViewController: EaseConversationListViewController,EaseConversationListViewControllerDelegate, EaseConversationListViewControllerDataSource{
+class ConversationListViewController: UIViewController, UITableViewDelegate, UITableViewDataSource{
 
     let conversationsArray = NSMutableArray()
     let networkStateView = UIView()
     var lable = UILabel()
     var homework = UILabel()
-    
+    let tableView = UITableView()
+    var dataSource = MessageList()
+    var dataSource3 = chatList()
+    var str = String()
 
     override func viewWillAppear(animated: Bool) {
-        tableView.reloadData()
-        self.tabBarController?.tabBar.hidden = false
-        refreshDataSource()
+       
+        self.tabBarController?.tabBar.hidden = true
+        
         let chid = NSUserDefaults.standardUserDefaults()
         
         if chid.valueForKey("homeworkArr") != nil {
@@ -42,7 +49,7 @@ class ConversationListViewController: EaseConversationListViewController,EaseCon
         if lable.text == "0" {
             lable.removeFromSuperview()
         }
-       
+       GetMessageList()
     }
     
     func game(count:NSNotification){
@@ -63,17 +70,9 @@ class ConversationListViewController: EaseConversationListViewController,EaseCon
         NSNotificationCenter.defaultCenter().addObserver(self, selector: #selector(self.game(_:)), name: "messageArr", object: nil)
         
         self.title = "聊天列表"
-        self.showRefreshHeader = true
-        self.delegate = self
-        self.dataSource = self
         
-        self.tableViewDidTriggerHeaderRefresh()
-        self.createUI()
-        //  改变了tableView 的高度
-        self.tableView.frame = CGRectMake(0, 281, WIDTH, HEIGHT-281 + 64)
-//        网络出现故障时
-        self.NetworkStateView()
-
+        createUI()
+        addTableView()
     }
 //    创建界面
     func createUI(){
@@ -172,6 +171,7 @@ class ConversationListViewController: EaseConversationListViewController,EaseCon
         
         let imageView4 = UIImageView(frame:CGRectMake(10,150,50,50))
         imageView4.layer.cornerRadius = 25
+        imageView4.clipsToBounds = true
         imageView4.image = UIImage(named: "Logo")
         v.addSubview(imageView4)
         
@@ -223,11 +223,7 @@ class ConversationListViewController: EaseConversationListViewController,EaseCon
         let vc = AddressViewController()
         self.navigationController?.pushViewController(vc, animated: true)
     }
-//    系统消息
-//    func systemNewsBtn(){
-//        let vc = SystemNewsViewController()
-//        self.navigationController?.pushViewController(vc, animated: true)
-//    }
+
 //    群发消息
     func groupNewsBtn(){
 //        let vc = GroupNewsViewController()
@@ -235,51 +231,188 @@ class ConversationListViewController: EaseConversationListViewController,EaseCon
         
         self.navigationController?.pushViewController(vc, animated: true)
     }
-//    网络判断
-    func NetworkStateView()->UIView{
-        if self.networkStateView.isKindOfClass(NSNull) {
-           self.networkStateView.frame = CGRectMake(0, 0, self.tableView.frame.size.width, 44)
-            self.networkStateView.backgroundColor = UIColor(red: 255 / 255.0, green: 199 / 255.0, blue: 199 / 255.0, alpha: 0.5)
-            
-            let imageView = UIImageView(frame: CGRectMake(10, (self.networkStateView.frame.size.height - 20) / 2, 20, 20))
-            imageView.image = UIImage(named: "messageSendFail.png")
-            self.networkStateView.addSubview(imageView)
-            
-            let label = UILabel(frame:CGRectMake(CGRectGetMaxX(imageView.frame) + 5, 0, self.networkStateView.frame.size.width - (CGRectGetMaxX(imageView.frame) + 15), self.networkStateView.frame.size.height))
-            label.font = UIFont.systemFontOfSize(15.0)
-            label.textColor = UIColor.grayColor()
-            label.backgroundColor = UIColor.clearColor()
-            label.text = NSLocalizedString("网络连接中", comment: "网络未连接")
-            self.networkStateView.addSubview(label)
-        }
-        return self.networkStateView
+    
+    func addTableView(){
+        tableView.frame = CGRectMake(0, 215, WIDTH, HEIGHT - 64 - 215)
+        tableView.delegate = self
+        tableView.dataSource = self
+        //  隐藏线
+        tableView.separatorStyle = .None
+        self.view.addSubview(tableView)
     }
     
-//    Delegate方法
-    func conversationListViewController(conversationListViewController: EaseConversationListViewController!, didSelectConversationModel conversationModel: IConversationModel!) {
+    //    分区数
+    func numberOfSectionsInTableView(tableView: UITableView) -> Int {
+        return 1
+    }
+    //    行数
+    func tableView(tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
+        return self.dataSource.objectlist.count
+    }
+    //    行高
+    func tableView(tableView: UITableView, heightForRowAtIndexPath indexPath: NSIndexPath) -> CGFloat {
+        return 60
+    }
+    //    单元格
+    func tableView(tableView: UITableView, cellForRowAtIndexPath indexPath: NSIndexPath) -> UITableViewCell {
+        let cell = UITableViewCell(style: .Default, reuseIdentifier: String(indexPath.row))
+        cell.selectionStyle = .None
+        let model = self.dataSource.objectlist[indexPath.row]
         
-        if conversationModel != nil {
-            let conversation:EMConversation = conversationModel.conversation
-            let chatView = ChatViewController(conversationChatter: conversation.chatter, conversationType: EMConversationType.eConversationTypeChat)
-            chatView.title = conversationModel.title
-            self.navigationController?.pushViewController(chatView, animated: true)
-        }
-    }
-//    DataSource方法
-    func conversationListViewController(conversationListViewController: EaseConversationListViewController!, modelForConversation conversation: EMConversation!) -> IConversationModel! {
-        let model = EaseConversationModel(conversation: conversation)
-        return model
+        let imgView = UIImageView.init(frame: CGRectMake(10, 10, 40, 40));
+        let pi = model.other_face
+        let imgUrl = microblogImageUrl + pi
+        let photourl = NSURL(string: imgUrl)
+        imgView.layer.cornerRadius = 20
+        imgView.clipsToBounds = true
+        imgView.sd_setImageWithURL(photourl, placeholderImage: UIImage(named: "Logo"))
+        cell.contentView.addSubview(imgView)
+        
+        let name = UILabel.init(frame: CGRectMake(60, 10, WIDTH - 150, 20));
+        name.text = model.other_nickname
+        name.font = UIFont.systemFontOfSize(16)
+        cell.contentView.addSubview(name)
+        
+        let time = UILabel.init(frame: CGRectMake(WIDTH - 90, 10, 80, 20))
+        time.text = model.create_time
+        time.textColor = UIColor.lightGrayColor()
+        time.textAlignment = .Right
+        time.font = UIFont.systemFontOfSize(13)
+        cell.contentView.addSubview(time)
+        
+        let content = UILabel.init(frame: CGRectMake(60, 35, WIDTH - 70, 20))
+        content.textColor = UIColor.lightGrayColor()
+        content.text = model.last_content
+        content.font = UIFont.systemFontOfSize(14)
+        cell.contentView.addSubview(content)
+        
+        let aview = UIView()
+        aview.frame = CGRectMake(0, 59.5, WIDTH, 0.5)
+        aview.backgroundColor = RGBA(242.0, g: 242.0, b: 242.0, a: 1)
+        cell.contentView.addSubview(aview)
+        
+        return cell
     }
     
-    func refreshDataSource(){
-       self.tableViewDidTriggerHeaderRefresh()
-    }
-    func isConnect(isConnect:Bool){
-        if !isConnect{
-            self.tableView.tableHeaderView = self.networkStateView
-        }else{
-            self.tableView.tableHeaderView = nil
+    func GetMessageList(){
+        let defalutid = NSUserDefaults.standardUserDefaults()
+        let chid = defalutid.stringForKey("userid")
+        let url = "http://wxt.xiaocool.net/index.php?g=apps&m=message&a=xcGetChatListData"
+        let param = [
+            "uid":chid!,
+            ]
+        Alamofire.request(.GET, url, parameters: param).response { request, response, json, error in
+            if(error != nil){
+            }
+            else{
+                print("request是")
+                print(request!)
+                print("====================")
+                let status = Http(JSONDecoder(json!))
+                print("状态是")
+                print(status.status)
+                if(status.status == "error"){
+                    let hud = MBProgressHUD.showHUDAddedTo(self.view, animated: true)
+                    hud.mode = MBProgressHUDMode.Text
+                    hud.labelText = status.errorData
+                    hud.margin = 10.0
+                    hud.removeFromSuperViewOnHide = true
+                    hud.hide(true, afterDelay: 1)
+                }
+                if(status.status == "success"){
+                    
+                    self.dataSource = MessageList(status.data!)
+                    
+                    self.tableView.reloadData()
+                   
+                }
+            }
         }
     }
     
+    func tableView(tableView: UITableView, didSelectRowAtIndexPath indexPath: NSIndexPath) {
+        let model = self.dataSource.objectlist[indexPath.row]
+        
+        let defalutid = NSUserDefaults.standardUserDefaults()
+        let chid = defalutid.stringForKey("userid")
+        let studentid = defalutid.stringForKey("chid");
+        let url = "http://wxt.xiaocool.net/index.php?g=apps&m=message&a=xcGetChatData"
+        let param = [
+            "send_uid":chid!,
+            "receive_uid":model.chat_uid,
+            "studentid":studentid
+        ]
+        Alamofire.request(.GET, url, parameters: param as? [String:String]).response { request, response, json, error in
+            if(error != nil){
+            }
+            else{
+                print("request是")
+                print(request!)
+                print("====================")
+                let status = Http(JSONDecoder(json!))
+                print("状态是")
+                print(status.status)
+                if(status.status == "error"){
+                    let hud = MBProgressHUD.showHUDAddedTo(self.view, animated: true)
+                    hud.mode = MBProgressHUDMode.Text
+                    hud.labelText = status.errorData
+                    hud.margin = 10.0
+                    hud.removeFromSuperViewOnHide = true
+                    hud.hide(true, afterDelay: 1)
+                }
+                if(status.status == "success"){
+                    let vc = ChetViewController()
+                    let dat = NSMutableArray()
+                    self.dataSource3 = chatList(status.data!)
+                    print(self.dataSource3)
+                    if self.dataSource3.objectlist.count != 0{
+                        for num in 0...self.dataSource3.objectlist.count-1{
+                            let dic = NSMutableDictionary()
+                            dic.setObject(self.dataSource3.objectlist[num].id!, forKey: "id")
+                            dic.setObject(self.dataSource3.objectlist[num].send_uid!, forKey: "send_uid")
+                            dic.setObject(self.dataSource3.objectlist[num].receive_uid!, forKey: "receive_uid")
+                            dic.setObject(self.dataSource3.objectlist[num].content!, forKey: "content")
+                            dic.setObject(self.dataSource3.objectlist[num].status!, forKey: "status")
+                            dic.setObject(self.dataSource3.objectlist[num].create_time!, forKey: "create_time")
+                            if self.dataSource3.objectlist[num].send_face != nil{
+                                dic.setObject(self.dataSource3.objectlist[num].send_face!, forKey: "send_face")
+                            }
+                            
+                            if self.dataSource3.objectlist[num].send_nickname != nil{
+                                dic.setObject(self.dataSource3.objectlist[num].send_nickname!, forKey: "send_nickname")
+                            }
+                            
+                            if self.dataSource3.objectlist[num].receive_face != nil{
+                                dic.setObject(self.dataSource3.objectlist[num].receive_face!, forKey: "receive_face")
+                            }
+                            
+                            if self.dataSource3.objectlist[num].receive_nickname != nil{
+                                dic.setObject(self.dataSource3.objectlist[num].receive_nickname!, forKey: "receive_nickname")
+                            }
+                            
+                            
+                            dat.addObject(dic)
+                            
+                            //                vc.datasource2.addObject(dic)
+                            
+                        }
+                        
+                        print(dat)
+                        vc.datasource2 = NSArray.init(array: dat) as Array
+                        vc.receive_uid = model.chat_uid
+                        print(vc.receive_uid)
+                        self.navigationController?.pushViewController(vc, animated: true)
+                        
+                    }else{
+                        vc.receive_uid = model.chat_uid
+                        vc.titleTop = model.other_nickname
+                        self.navigationController?.pushViewController(vc, animated: true)
+                    }
+                    
+                    
+                }
+            }
+        }
+
+    }
 }

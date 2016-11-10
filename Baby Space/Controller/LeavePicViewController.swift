@@ -82,6 +82,8 @@ class LeavePicViewController: UIViewController, UICollectionViewDelegate, UIColl
         doubleTap.numberOfTapsRequired = 2
         imgView.addGestureRecognizer(doubleTap);
         
+        imgView.userInteractionEnabled = true
+        
         return cell
     }
     

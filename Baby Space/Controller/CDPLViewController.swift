@@ -74,6 +74,8 @@ class CDPLViewController: UIViewController,UICollectionViewDelegate,UICollection
         doubleTap.numberOfTapsRequired = 2
         imgView.addGestureRecognizer(doubleTap);
         
+        imgView.userInteractionEnabled = true
+        
         return cell
     }
     

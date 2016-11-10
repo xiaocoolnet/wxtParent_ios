@@ -216,7 +216,7 @@ class WriteQJViewController: UIViewController,HZQDatePickerViewDelegate,ToolTwoP
         let typeBtn = UIButton(type: .Custom)
         typeBtn.frame = CGRectMake(WIDTH-20, 15, 10, 20)
         typeBtn.setImage(UIImage(named: "右边剪头.png"), forState: .Normal)
-//        typeBtn.addTarget(self, action: #selector(WriteQJViewController.chooseType), forControlEvents: .TouchUpInside)
+        typeBtn.addTarget(self, action: #selector(WriteQJViewController.chooseType), forControlEvents: .TouchUpInside)
         v3.addSubview(typeBtn)
         
         let type = UIButton(type: .Custom)
@@ -349,7 +349,7 @@ class WriteQJViewController: UIViewController,HZQDatePickerViewDelegate,ToolTwoP
     }
     //   更新日记
     func sendQJ(){
-        if teacherid == nil || studentid == nil || (btn.titleLabel?.text!)! == "" || self.contentTextView.text == "" || (btn1.titleLabel?.text!)! == "" {
+        if teacherid == nil || studentid == nil || (btn.titleLabel?.text!)! == "" || self.contentTextView.text == "" || (btn1.titleLabel?.text!)! == "" || self.lbl8.text == nil{
             messageHUD(self.view, messageData: "请补全假条信息")
             
         }else{
@@ -469,7 +469,8 @@ class WriteQJViewController: UIViewController,HZQDatePickerViewDelegate,ToolTwoP
                 "begintime":begintime,
                 "endtime":endtime,
                 "reason":self.contentTextView.text,
-                "picture_url":imageUrl!
+                "picture_url":imageUrl!,
+                "leavetype":String(self.lbl8.text)
             ]
             
             Alamofire.request(.GET, url, parameters: param as? [String : AnyObject]).response { request, response, json, error in

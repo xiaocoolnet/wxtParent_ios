@@ -32,6 +32,7 @@
 #import "JPUSHService.h"
 
 #import "TZImagePickerController.h"
+#import "ChetViewController.h"
 
 //#import <AlipaySDK/AlipaySDK.h>
 //#import "Order.h"

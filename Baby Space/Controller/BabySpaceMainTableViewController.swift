@@ -148,7 +148,9 @@ class BabySpaceMainTableViewController: UITableViewController, IChatManagerDeleg
         NSNotificationCenter.defaultCenter().addObserver(self, selector: #selector(self.activity(_:)), name: "activityArr", object: nil)
         NSNotificationCenter.defaultCenter().addObserver(self, selector: #selector(self.comment(_:)), name: "commentArr", object: nil)
         NSNotificationCenter.defaultCenter().addObserver(self, selector: #selector(self.homework(_:)), name: "homeworkArr", object: nil)
+        
     }
+    
     
     func game(count:NSNotification){
 //        let arr = count.object as! NSArray
@@ -257,7 +259,11 @@ class BabySpaceMainTableViewController: UITableViewController, IChatManagerDeleg
         }else if title.object as! String == "comment"{
             let vc = TeacherCommentsTableViewController()
             self.navigationController?.pushViewController(vc, animated: true)
+        }else if title.object as! String == "newMessage"{
+            let vc = ChetViewController()
+            self.navigationController?.pushViewController(vc, animated: true)
         }
+            
     }
     
     
