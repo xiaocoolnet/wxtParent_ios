@@ -43,7 +43,7 @@ class BlogMainTableTableViewController: UITableViewController,UITextFieldDelegat
         self.tableView.separatorStyle = .None
         ScrollViewImage()
         DropDownUpdate()
-//        UpPullAdd()
+        UpPullAdd()
     
         
         
@@ -69,12 +69,13 @@ class BlogMainTableTableViewController: UITableViewController,UITextFieldDelegat
     func DropDownUpdate(){
         self.tableView.headerView = XWRefreshNormalHeader(target: self, action: #selector(BlogMainTableTableViewController.GetDate))
         //self.sourceList.reloadData()
-        self.tableView.reloadData()
+//        self.tableView.reloadData()
         self.tableView.headerView?.beginRefreshing()
     }
 //    加载
     func UpPullAdd(){
         self.tableView.footerView = XWRefreshAutoNormalFooter(target: self, action: #selector(BlogMainTableTableViewController.GetDate))
+        self.tableView.footerView?.beginRefreshing()
     }
 //    加载数据
     func GetDate(){
@@ -91,7 +92,7 @@ class BlogMainTableTableViewController: UITableViewController,UITextFieldDelegat
             "classid":clid!,
             "userid":userid,
             "type":"1",
-            "beginid":""
+            "beginid":String(self.dataSource.count)
             
         ]
         Alamofire.request(.GET, url, parameters: param as? [String:String]).response { request, response, json, error in
@@ -121,6 +122,7 @@ class BlogMainTableTableViewController: UITableViewController,UITextFieldDelegat
             
         }
         self.tableView.headerView?.endRefreshing()
+        self.tableView.footerView?.endRefreshing()
     }
 //    刷新
     func downPlullLoadData(){
@@ -634,6 +636,7 @@ class BlogMainTableTableViewController: UITableViewController,UITextFieldDelegat
         vc.dataSource = self.dataSource.objectlist[indexPath.row]
         vc.num = indexPath.row
         vc.type = "1"
+        vc.beiginid = self.dataSource.count
         self.navigationController?.pushViewController(vc, animated: true)
     }
 
@@ -643,6 +646,7 @@ class BlogMainTableTableViewController: UITableViewController,UITextFieldDelegat
         vc.arrayInfo = self.dataSource.objectlist[sender.tag].pic
         vc.nu = vc.arrayInfo.count
         vc.count = sender.flag!
+        
         self.navigationController?.pushViewController(vc, animated: true)
         
     }

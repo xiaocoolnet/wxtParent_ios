@@ -44,14 +44,23 @@ class MyPhotoViewController: UIViewController,UITableViewDelegate,UITableViewDat
         self.view.addSubview(bview)
         self.createTable()
         self.DropDownUpdate()
+        UpPullAdd()
     }
     //    刷新
     func DropDownUpdate(){
         self.table.headerView = XWRefreshNormalHeader(target: self, action: #selector(MyPhotoViewController.loadData))
         //self.sourceList.reloadData()
         self.table.reloadData()
+//        self.dataSource.count = 0
         self.table.headerView?.beginRefreshing()
     }
+    
+    //    加载
+    func UpPullAdd(){
+        self.table.footerView = XWRefreshAutoNormalFooter(target: self, action: #selector(self.loadData))
+        self.table.footerView?.beginRefreshing()
+    }
+    
     //    创建表
     func createTable(){
         table.frame = CGRectMake(0, 0, self.view.frame.size.width, self.view.frame.size.height-40 - 64)
@@ -76,9 +85,10 @@ class MyPhotoViewController: UIViewController,UITableViewDelegate,UITableViewDat
         let param = [
             "schoolid":scid!,
             "classid":clid!,
-            "type":"3"
+            "type":"3",
+            "beginid":self.dataSource.count
         ]
-        Alamofire.request(.GET, url, parameters: param).response { request, response, json, error in
+        Alamofire.request(.GET, url, parameters: param as? [String : AnyObject]).response { request, response, json, error in
             if(error != nil){
             }
             else{
@@ -99,6 +109,7 @@ class MyPhotoViewController: UIViewController,UITableViewDelegate,UITableViewDat
                 
                 if(status.status == "success"){
                     self.dataSource = BabyPhotoList(status.data!)
+                    self.table.footerView?.endRefreshing()
                     self.table.reloadData()
                 }
             }

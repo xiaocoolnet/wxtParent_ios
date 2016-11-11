@@ -29,7 +29,7 @@ class BlogDetailViewController: UIViewController,UITableViewDelegate,UITableView
     var data = BabyPhotoList()
     var type = String()
     
-    
+    var beiginid = Int()
     
     override func viewWillAppear(animated: Bool) {
         self.tabBarController?.tabBar.hidden = true
@@ -96,7 +96,7 @@ class BlogDetailViewController: UIViewController,UITableViewDelegate,UITableView
             "classid":clid!,
             "userid":userid,
             "type":"1",
-            "beginid":""
+            "beginid":String(beiginid)
             
         ]
         Alamofire.request(.GET, url, parameters: param as? [String : String]).response { request, response, json, error in

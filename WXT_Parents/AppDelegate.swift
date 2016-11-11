@@ -163,7 +163,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate,UITabBarControllerDelegate
     func networkDidLogin(){
         print("++++++++++++++++++++++++++++++++")
         let defalutid = NSUserDefaults.standardUserDefaults()
-        let studentid = defalutid.stringForKey("chid")
+        let studentid = defalutid.stringForKey("userid")
         JPUSHService.setTags(nil, aliasInbackground: studentid)
         NSNotificationCenter.defaultCenter().removeObserver(self, name: kJPFNetworkDidLoginNotification, object: nil)
         print(studentid)

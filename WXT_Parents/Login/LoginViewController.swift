@@ -171,7 +171,7 @@ class LoginViewController: UIViewController ,UITextFieldDelegate{
                     }
                     print("++++++++++++++++++++++++++++++++")
                     let defalutid = NSUserDefaults.standardUserDefaults()
-                    let studentid = defalutid.stringForKey("chid")
+                    let studentid = defalutid.stringForKey("userid")
                     JPUSHService.setTags(nil, aliasInbackground: studentid)
                     let defau = NSNotificationCenter.defaultCenter()
                     

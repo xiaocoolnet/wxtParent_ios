@@ -36,6 +36,7 @@ class ClassViewController: UIViewController,UITableViewDelegate,UITableViewDataS
         self.view.addSubview(bview)
         self.createTable()
         self.DropDownUpdate()
+        UpPullAdd()
     }
     //    刷新
     func DropDownUpdate(){
@@ -44,6 +45,13 @@ class ClassViewController: UIViewController,UITableViewDelegate,UITableViewDataS
         self.table.reloadData()
         self.table.headerView?.beginRefreshing()
     }
+    
+    //    加载
+    func UpPullAdd(){
+        self.table.footerView = XWRefreshAutoNormalFooter(target: self, action: #selector(self.loadData))
+        self.table.footerView?.beginRefreshing()
+    }
+    
     //    创建表
     func createTable(){
         table.frame = CGRectMake(0, 0, self.view.frame.size.width, self.view.frame.size.height-40 - 64)
@@ -67,9 +75,10 @@ class ClassViewController: UIViewController,UITableViewDelegate,UITableViewDataS
         let param = [
             "schoolid":scid!,
             "classid":clid!,
-            "type":"2"
+            "type":"2",
+            "beginid":self.dataSource.count
         ]
-        Alamofire.request(.GET, url, parameters: param).response { request, response, json, error in
+        Alamofire.request(.GET, url, parameters: param as? [String : AnyObject]).response { request, response, json, error in
             if(error != nil){
             }
             else{
@@ -96,6 +105,7 @@ class ClassViewController: UIViewController,UITableViewDelegate,UITableViewDataS
             
         }
         self.table.headerView?.endRefreshing()
+        self.table.footerView?.endRefreshing()
     }
     //    行数
     func tableView(tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
