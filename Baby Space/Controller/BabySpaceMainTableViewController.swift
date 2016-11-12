@@ -271,29 +271,29 @@ class BabySpaceMainTableViewController: UITableViewController, IChatManagerDeleg
     
     func createButton() {
         oneBtn = UIButton()
-        oneBtn.frame = CGRectMake(276, 90, 35, 35)
+        oneBtn.frame = CGRectMake((childrenAvator.frame.maxX)+50, 80, 35, 35)
         oneBtn.layer.cornerRadius = 17.5
         oneBtn.clipsToBounds = true
         oneBtn.tag = 1
         
         twoBtn = UIButton()
-        twoBtn.frame = CGRectMake(232, 126, 35, 35)
+        twoBtn.frame = CGRectMake((childrenAvator.frame.maxX)+10, 116, 35, 35)
         twoBtn.layer.cornerRadius = 17.5
         twoBtn.clipsToBounds = true
         
         threeBtn = UIButton()
-        threeBtn.frame = CGRectMake(170, 144, 35, 35)
+        threeBtn.frame = CGRectMake((childrenAvator.frame.maxX)-52, 134, 35, 35)
 //        threeBtn.backgroundColor = UIColor.lightGrayColor()
         threeBtn.layer.cornerRadius = 17.5
         threeBtn.clipsToBounds = true
         
         fourBtn = UIButton()
-        fourBtn.frame = CGRectMake(104, 126, 35, 35)
+        fourBtn.frame = CGRectMake((childrenAvator.frame.maxX)-118, 116, 35, 35)
         fourBtn.layer.cornerRadius = 17.5
         fourBtn.clipsToBounds = true
         
         fiveBtn = UIButton()
-        fiveBtn.frame = CGRectMake(68, 90, 35, 35)
+        fiveBtn.frame = CGRectMake((childrenAvator.frame.maxX)-154, 80, 35, 35)
         fiveBtn.layer.cornerRadius = 17.5
         fiveBtn.clipsToBounds = true
         

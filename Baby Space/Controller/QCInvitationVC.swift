@@ -374,7 +374,7 @@ class QCInvitationVC: UIViewController,UITableViewDelegate,UITableViewDataSource
         self.view.window!.addSubview(invite)
         
         let view = UIView()
-        view.frame = CGRectMake(60, 150, WIDTH - 120, HEIGHT - 300)
+        view.frame = CGRectMake(60, 150, WIDTH - 120, 350)
         view.backgroundColor = UIColor.whiteColor()
         invite.addSubview(view)
         let width = view.frame.size.width

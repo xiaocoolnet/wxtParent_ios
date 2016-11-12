@@ -113,8 +113,7 @@ class ClassViewController: UIViewController,UITableViewDelegate,UITableViewDataS
     }
     //    单元格
     func tableView(tableView: UITableView, cellForRowAtIndexPath indexPath: NSIndexPath) -> UITableViewCell {
-        //        let cell = tableView.dequeueReusableCellWithIdentifier("PhotoCellID", forIndexPath: indexPath)
-        //            as! PhotoTableViewCell
+        
         let cell = UITableViewCell(style: .Default, reuseIdentifier:String(indexPath.row))
         cell.selectionStyle = .None
         let model = self.dataSource.objectlist[indexPath.row]
