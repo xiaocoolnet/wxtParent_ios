@@ -35,6 +35,14 @@ class TabViewController: UIViewController, UITableViewDelegate, UITableViewDataS
     override func viewWillAppear(animated: Bool) {
         //        self.createTable()
                 self.loadData()
+        let useDefaults = NSUserDefaults.standardUserDefaults()
+        useDefaults.removeObjectForKey("homeworkArr")
+    }
+    
+    override func viewWillDisappear(animated: Bool) {
+        let useDefaults = NSUserDefaults.standardUserDefaults()
+        useDefaults.removeObjectForKey("homeworkArr")
+        
     }
     override func viewDidLoad() {
         super.viewDidLoad()

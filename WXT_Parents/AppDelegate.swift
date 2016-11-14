@@ -401,9 +401,12 @@ class AppDelegate: UIResponder, UIApplicationDelegate,UITabBarControllerDelegate
                 activityArr.removeAllObjects()
             }
             activityArr.addObject(userInfo)
+            
             userDefaults.setValue(activityArr, forKey: "activityArr")
             let str = userDefaults.valueForKey("activityArr")
+            print(str?.count)
             NSNotificationCenter.defaultCenter().postNotificationName("activityArr", object: str)
+            
         }else if type == "comment"{
             let userDefaults = NSUserDefaults.standardUserDefaults()
             if userDefaults.valueForKey("commentArr") != nil {
@@ -425,9 +428,11 @@ class AppDelegate: UIResponder, UIApplicationDelegate,UITabBarControllerDelegate
     }
     
     func goToMssageViewControllerWith(userInfo:NSDictionary){
-        let type = userInfo["type"] as? String
-        NSNotificationCenter.defaultCenter().postNotificationName("push", object: type)
-        
+//        let type = userInfo["type"] as? String
+        print("注册")
+        print(userInfo)
+        NSNotificationCenter.defaultCenter().postNotificationName("push", object: userInfo)
+//        NSNotificationCenter.defaultCenter().postNotificationName("push", object: nil, userInfo: ["1":"123"])
     }
     
     func network(not:NSNotification){

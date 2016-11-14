@@ -40,6 +40,7 @@ class BabySpaceMainTableViewController: UITableViewController, IChatManagerDeleg
     var dataSource = InviteList()
     var array = NSMutableArray()
     var personDate = personList()
+    var dataSource3 = chatList()
     
     
     var weightSource = sta_weiInfomationList()
@@ -138,6 +139,7 @@ class BabySpaceMainTableViewController: UITableViewController, IChatManagerDeleg
         
         EaseMob.sharedInstance().chatManager.removeDelegate(self)
         EaseMob.sharedInstance().chatManager.addDelegate(self, delegateQueue: nil)
+//        NSNotificationCenter.defaultCenter().addObserver(self, selector: #selector(self.gameOver(_:)), name: "push", object: nil)
         NSNotificationCenter.defaultCenter().addObserver(self, selector: #selector(self.gameOver(_:)), name: "push", object: nil)
         
         NSNotificationCenter.defaultCenter().addObserver(self, selector: #selector(self.game(_:)), name: "count", object: nil)
@@ -234,34 +236,118 @@ class BabySpaceMainTableViewController: UITableViewController, IChatManagerDeleg
 
     }
     
-    func gameOver(title:NSNotification){
-        if title.object as! String == "message"{
+    
+    func gameOver(type:NSNotification){
+        print(type)
+        let title = type.object?.valueForKey("type") as! String
+//        let title = type["type"] as! String
+        if title == "message"{
             let vc = FSendNewsViewController()
             self.navigationController?.pushViewController(vc, animated: true)
-        }else if title.object as! String == "trust"{
+        }else if title == "trust"{
             let vc = ParentsExhortViewController()
             self.navigationController?.pushViewController(vc, animated: true)
-        }else if title.object as! String == "notice"{
+        }else if title == "notice"{
             let vc = NoticeTableViewController()
             self.navigationController?.pushViewController(vc, animated: true)
-        }else if title.object as! String == "delivery"{
+        }else if title == "delivery"{
             let vc = QCTokenCompleteVC()
             self.navigationController?.pushViewController(vc, animated: true)
-        }else if title.object as! String == "homework"{
+        }else if title == "homework"{
             let vc = TabViewController()
             self.navigationController?.pushViewController(vc, animated: true)
-        }else if title.object as! String == "leave"{
+        }else if title == "leave"{
             let vc = LeaveViewController()
             self.navigationController?.pushViewController(vc, animated: true)
-        }else if title.object as! String == "activity"{
+        }else if title == "activity"{
             let vc = ClassActivitiesTableViewController()
             self.navigationController?.pushViewController(vc, animated: true)
-        }else if title.object as! String == "comment"{
+        }else if title == "comment"{
             let vc = TeacherCommentsTableViewController()
             self.navigationController?.pushViewController(vc, animated: true)
-        }else if title.object as! String == "newMessage"{
-            let vc = ChetViewController()
-            self.navigationController?.pushViewController(vc, animated: true)
+        }else if title == "newMessage"{
+            print(111111)
+            let otherId = type.object?.valueForKey("txt") as! String
+            let defalutid = NSUserDefaults.standardUserDefaults()
+            let chid = defalutid.stringForKey("userid")
+            let studentid = defalutid.stringForKey("chid");
+            let url = "http://wxt.xiaocool.net/index.php?g=apps&m=message&a=xcGetChatData"
+            let param = [
+                "send_uid":chid!,
+                "receive_uid":otherId,
+                "studentid":studentid
+            ]
+            Alamofire.request(.GET, url, parameters: param as? [String:String]).response { request, response, json, error in
+                if(error != nil){
+                }
+                else{
+                    print("request是")
+                    print(request!)
+                    print("====================")
+                    let status = Http(JSONDecoder(json!))
+                    print("状态是")
+                    print(status.status)
+                    if(status.status == "error"){
+                        let hud = MBProgressHUD.showHUDAddedTo(self.view, animated: true)
+                        hud.mode = MBProgressHUDMode.Text
+                        hud.labelText = status.errorData
+                        hud.margin = 10.0
+                        hud.removeFromSuperViewOnHide = true
+                        hud.hide(true, afterDelay: 1)
+                    }
+                    if(status.status == "success"){
+                        let vc = ChetViewController()
+                        let dat = NSMutableArray()
+                        self.dataSource3 = chatList(status.data!)
+                        print(self.dataSource3)
+                        if self.dataSource3.objectlist.count != 0{
+                            for num in 0...self.dataSource3.objectlist.count-1{
+                                let dic = NSMutableDictionary()
+                                dic.setObject(self.dataSource3.objectlist[num].id!, forKey: "id")
+                                dic.setObject(self.dataSource3.objectlist[num].send_uid!, forKey: "send_uid")
+                                dic.setObject(self.dataSource3.objectlist[num].receive_uid!, forKey: "receive_uid")
+                                dic.setObject(self.dataSource3.objectlist[num].content!, forKey: "content")
+                                dic.setObject(self.dataSource3.objectlist[num].status!, forKey: "status")
+                                dic.setObject(self.dataSource3.objectlist[num].create_time!, forKey: "create_time")
+                                if self.dataSource3.objectlist[num].send_face != nil{
+                                    dic.setObject(self.dataSource3.objectlist[num].send_face!, forKey: "send_face")
+                                }
+                                
+                                if self.dataSource3.objectlist[num].send_nickname != nil{
+                                    dic.setObject(self.dataSource3.objectlist[num].send_nickname!, forKey: "send_nickname")
+                                }
+                                
+                                if self.dataSource3.objectlist[num].receive_face != nil{
+                                    dic.setObject(self.dataSource3.objectlist[num].receive_face!, forKey: "receive_face")
+                                }
+                                
+                                if self.dataSource3.objectlist[num].receive_nickname != nil{
+                                    dic.setObject(self.dataSource3.objectlist[num].receive_nickname!, forKey: "receive_nickname")
+                                }
+                                
+                                
+                                dat.addObject(dic)
+                                
+                                //                vc.datasource2.addObject(dic)
+                                
+                            }
+                            
+                            print(dat)
+                            vc.datasource2 = NSArray.init(array: dat) as Array
+                            vc.receive_uid = otherId
+                            print(vc.receive_uid)
+                            self.navigationController?.pushViewController(vc, animated: true)
+                            
+                        }else{
+                            vc.receive_uid = otherId
+//                            vc.titleTop = self.str
+                            self.navigationController?.pushViewController(vc, animated: true)
+                        }
+                        
+                        
+                    }
+                }
+            }
         }
             
     }
@@ -580,7 +666,6 @@ class BabySpaceMainTableViewController: UITableViewController, IChatManagerDeleg
             commentLab.removeFromSuperview()
         }
         
-       
     }
     
     
